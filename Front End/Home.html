@@ -2,25 +2,91 @@
 <html lang="en">
     <head>
         <title>
-            Welcome!
+            Home Page
         </title>
-        <link rel="stylesheet" href="Style.css">
-        <script src="Script.js"></script>
+        <link rel="stylesheet" href="home.css">
     </head>
     <body>
-        <div id="menubar">
-            <div class="bar">Home</div>
-            <div class="bar">Products</div>
-            <div class="bar">Branches</div>
-            <div class="bar">Contact Us</div>
-            <div class="bar">About</div>
-            <div class="bar">
+        <div id="bar">
+            <ul class="barr">
+                <li>
+                    <a href="home.html">Home</a>
+                </li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="barr">
                 <form>
-                    <input type="text" class="search">
-                    <input type="submit" class="search" id="search">
+                    <input type="text" id="search" name="Search" style="width: 85%;" id="search">
+                    <input type="submit" value="Search" style="width: 10%; text-align: center; height: 20px;" onclick="validation()">
                 </form>
+                <script>
+                    a = document.getElementById("search");
+                    function validation() {
+                        if (a.value.length<1){
+                            alert("Cannot search for empty string")
+                        }
+                        
+                    }
+                    
+                    
+                </script>
+                <select >
+                    <option>Persian</option>
+                    <option>Pashto</option>
+                    <option>English</option>
+                </select>
             </div>
-        </div>
+        </div>  
+        
+        <div id="main">
+            <div id="top">
+                <img src="cover.jpg" id="cover">
+                <div class="in">
+                    <p class="desc">Visualize your Dreams with us!</p>
+                </div>
+                <div class="in" id="under">
+                    <p class="title">Website Developement Services</p>
+                </div>
+            </div>
+            <div id="mid">
+                <div class="mid">
+                    <p class="title">Something</p>
+                </div>
+                <div class="mid">
+                    <p class="title">Something</p>
+                </div>
+                <div class="mid">
+                    <p class="title">Something</p>
+                </div>
+            </div>
+            <div id="low">
+                
+            </div>
+            <div id="bottom">
+                <div class="bott">
+                    <h3>Something...</h3>
+                    <h3>Something...</h3>
+                    <h3>Something...</h3>
+                    <h3>Something...</h3>
+                    <h3>Something...</h3>
+                </div>
+                <div class="bott">
+                    <h3>Something...</h3>
+                    <h3>Something...</h3>
+                    <h3>Something...</h3>
+                </div>
+                <div class="bott">
+                    <h3>Something...</h3>
+                    <h3>Something...</h3>
+                    <h3>Something...</h3>
+                    <h3>Something...</h3>
+                </div>
+            </div>
 
+
+
+        </div>
     </body>
 </html>
