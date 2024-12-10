@@ -1,0 +1,91 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales</title>
+    <link rel="stylesheet" type="text/css" href="file:///C:/Program%20Files%20(x86)/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <script type="text/javascript" src="file:///C:/Program%20Files%20(x86)/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <h1>Sales</h1>
+    <form name="sale" action="sales.php" method="post">
+   <table class="table table-success">
+    <thead>
+    <tr>
+        <th>Sale ID</th>
+        <th>Drug ID</th>
+        <th>Date</th>
+        <th>Quantity</th>
+        <th>Discount</th>
+        <th>Employee Cut ID</th>
+        <th>Total</th>
+        <th>Location ID</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input type="number" name="Sale_ID" id="sid" autocomplete="off"></td>
+            <td><input type="number" name="Drug_ID" id="did" autocomplete="off"></td>
+            <td><input type="date" name="Date" id="de" autocomplete="off"></td>
+            <td><input type="number" name="Quantity" id="qy" autocomplete="off"></td>
+            <td><input type="number" name="Discount" id="dt" autocomplete="off"></td>
+            <td><input type="number" name="Employee_Cut" id="ec" autocomplete="off"></td>
+            <td><input type="number" name="Total" id="tl" autocomplete="off"></td>
+            <td><input type="number" name="Location_ID" id="lid" autocomplete="off"></td>
+        </tr>
+
+        <tr>
+            <td id="nsid"></td>
+            <td id="ndid"></td>
+            <td id="nde"></td>
+            <td id="nqy"></td>
+            <td id="ndt"></td>
+            <td id="nec"></td>
+            <td id="ntl"></td>
+            <td id="nlid"></td>
+        </tr>
+    <tr>
+        <td id="noty" class="table"></td>
+    </tr>
+    </tbody>
+   </table>
+   <button type="submit" class="btn btn-success" onclick="validate()">Save</button>
+   <button type="button" class="btn btn-primary">Add</button>
+   <button type="button" class="btn btn-warning">Edit</button>
+   <button type="button" class="btn btn-danger" onclick="remove()">Delete</button>
+    </form>
+</body>
+<script>
+    function validate(){
+        var message = document.getElementById("noty");
+        message.style.color = "green";
+        message.innerHTML = "Your record has been saved.";
+
+        let valid = true;
+        let sale = document.getElementById("sid").value;
+
+        if(!/^\d+$/.test(sale) || sale === ""){
+                document.getElementById("nsid").innerHTML = "Please enter a valid Drug ID.";
+                valid = false;
+            } else {
+                document.getElementById("nsid").innerHTML = "";
+            }
+
+        let drug = document.getElementById("did");
+
+        if(!/^\d+$/.test(drug) || drug === ""){
+                document.getElementById("ndid").innerHTML = "Please enter a valid Drug ID.";
+                valid = false;
+            } else {
+                document.getElementById("ndid").innerHTML = "";
+            }
+
+    }
+
+    function remove(){
+        var message = document.getElementById("noty");
+        message.style.color = "red";
+        message.innerHTML = "The selected record is deleted."
+    }
+</script>
+</html>
