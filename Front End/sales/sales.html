@@ -1,0 +1,162 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales</title>
+    <link rel="stylesheet" type="text/css" href="file:///C:/Program%20Files%20(x86)/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <script type="text/javascript" src="file:///C:/Program%20Files%20(x86)/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <h1>Sales</h1>
+    <form name="sale" action="insertsales.php" method="post">
+   <table class="table table-success">
+    <thead>
+    <tr>
+        <th>Sale ID</th>
+        <th>Drug ID</th>
+        <th>Date</th>
+        <th>Quantity</th>
+        <th>Discount</th>
+        <th>Price</th>
+        <th>Employee Cut ID</th>
+        <th>Location ID</th>
+        <th>Total</th>
+        
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input type="number" name="Sale_ID" id="sid" autocomplete="off"></td>
+            <td><input type="number" name="Drug_ID" id="did" autocomplete="off"></td>
+            <td><input type="date" name="Date" id="de" autocomplete="off"></td>
+            <td><input type="number" name="Quantity" id="qy" autocomplete="off"></td>
+            <td><input type="number" name="Discount" id="dt" autocomplete="off"></td>
+            <td><input type="number" name="Price" id="pr" autocomplete="off"></td>
+            <td><input type="number" name="Cut_ID" id="ci" autocomplete="off"></td>
+            <td><input type="number" name="Location_ID" id="lid" autocomplete="off"></td>
+            <td><input type="number" name="Total" id="tl" autocomplete="off"></td>
+            
+        </tr>
+
+        <tr>
+            <td id="nsid"></td>
+            <td id="ndid"></td>
+            <td id="nde"></td>
+            <td id="nqy"></td>
+            <td id="ndt"></td>
+            <td id="npr"></td>
+            <td id="nec"></td>
+            <td id="nlid"></td>
+            <td id="ntl"></td>
+            
+        </tr>
+    <tr>
+        <td id="noty" class="table"></td>
+    </tr>
+    </tbody>
+   </table>
+   <button type="submit" class="btn btn-success" onclick="validate()" >Save</button>
+    </form>
+    <h1>Delete Record</h1>
+    <form action="php/deletesales.php" method="post">
+        <table>
+            <thead>    
+                <tr>
+                    <th>Sales ID</th>
+                </tr>
+            </thead>
+            <tr>
+                <td><input type="number" name="Sale_ID" id="sid" autocomplete="off"></td>
+            </tr>
+        </table>
+        <button type="submit" class="btn btn-danger" onclick="remove()">Delete</button>
+    </form>
+    <button type="button" class="btn btn-primary" >Add</button>
+    <h1>Update Record</h1>
+    <form name="Update" action="php/updatesales.php" method="post">
+        <table class="table table-success">
+         <thead>
+         <tr>
+             <th>Sale ID</th>
+             <th>Drug ID</th>
+             <th>Date</th>
+             <th>Quantity</th>
+             <th>Discount</th>
+             <th>Price</th>
+             <th>Employee Cut ID</th>
+             <th>Location ID</th>
+             <th>Total</th>
+             
+         </tr>
+         </thead>
+         <tbody>
+             <tr>
+                 <td><input type="number" name="Sale_ID" id="sid" autocomplete="off"></td>
+                 <td><input type="number" name="Drug_ID" id="did" autocomplete="off"></td>
+                 <td><input type="date" name="Date" id="de" autocomplete="off"></td>
+                 <td><input type="number" name="Quantity" id="qy" autocomplete="off"></td>
+                 <td><input type="number" name="Discount" id="dt" autocomplete="off"></td>
+                 <td><input type="number" name="Price" id="pr" autocomplete="off"></td>
+                 <td><input type="number" name="Cut_ID" id="ci" autocomplete="off"></td>
+                 <td><input type="number" name="Location_ID" id="lid" autocomplete="off"></td>
+                 <td><input type="number" name="Total" id="tl" autocomplete="off"></td>
+                 
+             </tr>
+     
+             <tr>
+                 <td id="nsid"></td>
+                 <td id="ndid"></td>
+                 <td id="nde"></td>
+                 <td id="nqy"></td>
+                 <td id="ndt"></td>
+                 <td id="npr"></td>
+                 <td id="nec"></td>
+                 <td id="nlid"></td>
+                 <td id="ntl"></td>
+                 
+             </tr>
+         <tr>
+             <td id="noty" class="table"></td>
+         </tr>
+         </tbody>
+        </table>
+        <button type="submit" class="btn btn-success" >Update</button>
+         </form>
+   
+</body>
+<script>
+    function validate(){
+        var message = document.getElementById("noty");
+        message.style.color = "green";
+        message.innerHTML = "Your record has been saved.";
+
+        let valid = true;
+        let sale = document.getElementById("sid").value;
+
+        if(!/^\d+$/.test(sale) || sale === ""){
+                document.getElementById("nsid").innerHTML = "Please enter a valid Drug ID.";
+                valid = false;
+            } else {
+
+                document.getElementById("nsid").innerHTML = "";
+
+            }
+
+        let drug = document.getElementById("did");
+
+        if(!/^\d+$/.test(drug) || drug === ""){
+                document.getElementById("ndid").innerHTML = "Please enter a valid Drug ID.";
+                valid = false;
+            } else {
+                document.getElementById("ndid").innerHTML = "";
+            }
+
+    }
+
+    function remove(){
+        var message = document.getElementById("noty");
+        message.style.color = "red";
+        message.innerHTML = "The selected record is deleted."
+    }
+</script>
+</html>

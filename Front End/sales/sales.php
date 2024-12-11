@@ -4,7 +4,7 @@
         <title>
             Sales Page
         </title>
-        <link rel="stylesheet" href="home.css">
+        <link rel="stylesheet" href="../css/home.css">
     </head>
     <body>
         <div id="bar">
@@ -12,9 +12,10 @@
                 <li>
                     <a href="home.html">Home</a>
                 </li>
-                <li><a href="sales.php">Sales</a></li>
-                <li><a href="company.php">Companies</a></li>
-                <li><a href="customer.php">Customers</a></li>
+                <li><a href="../sales/sales.php">Sales</a></li>
+                <li><a href="../company.php">Companies</a></li>
+                <li><a href="../customer.php">Customers</a></li>
+                <li><a href="../Inventory/inventory.php">Inventory</a></li>
             </ul>
             <div class="barr">
                 <form>
@@ -41,7 +42,7 @@
         </div>  
         <div id="over"><h1>Sales</h1></div>
         <div id="report">
-            <?php include 'php/salesreport.php';?>
+            <?php include '../php/salesreport.php';?>
         </div>
         <div id="buttons">
             <button><a href="deletesales.html">Delete</a> </button>
