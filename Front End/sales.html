@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Sales</h1>
-    <form name="sale" action="sales.php" method="post">
+    <form name="sale" action="insertsales.php" method="post">
    <table class="table table-success">
     <thead>
     <tr>
@@ -17,9 +17,11 @@
         <th>Date</th>
         <th>Quantity</th>
         <th>Discount</th>
+        <th>Price</th>
         <th>Employee Cut ID</th>
-        <th>Total</th>
         <th>Location ID</th>
+        <th>Total</th>
+        
     </tr>
     </thead>
     <tbody>
@@ -29,9 +31,11 @@
             <td><input type="date" name="Date" id="de" autocomplete="off"></td>
             <td><input type="number" name="Quantity" id="qy" autocomplete="off"></td>
             <td><input type="number" name="Discount" id="dt" autocomplete="off"></td>
-            <td><input type="number" name="Employee_Cut" id="ec" autocomplete="off"></td>
-            <td><input type="number" name="Total" id="tl" autocomplete="off"></td>
+            <td><input type="number" name="Price" id="pr" autocomplete="off"></td>
+            <td><input type="number" name="Cut_ID" id="ci" autocomplete="off"></td>
             <td><input type="number" name="Location_ID" id="lid" autocomplete="off"></td>
+            <td><input type="number" name="Total" id="tl" autocomplete="off"></td>
+            
         </tr>
 
         <tr>
@@ -40,20 +44,85 @@
             <td id="nde"></td>
             <td id="nqy"></td>
             <td id="ndt"></td>
+            <td id="npr"></td>
             <td id="nec"></td>
-            <td id="ntl"></td>
             <td id="nlid"></td>
+            <td id="ntl"></td>
+            
         </tr>
     <tr>
         <td id="noty" class="table"></td>
     </tr>
     </tbody>
    </table>
-   <button type="submit" class="btn btn-success" onclick="validate()">Save</button>
-   <button type="button" class="btn btn-primary">Add</button>
-   <button type="button" class="btn btn-warning">Edit</button>
-   <button type="button" class="btn btn-danger" onclick="remove()">Delete</button>
+   <button type="submit" class="btn btn-success" onclick="validate()" >Save</button>
     </form>
+    <h1>Delete Record</h1>
+    <form action="deletesales.php" method="post">
+        <table>
+            <thead>    
+                <tr>
+                    <th>Sales ID</th>
+                </tr>
+            </thead>
+            <tr>
+                <td><input type="number" name="Sale_ID" id="sid" autocomplete="off"></td>
+            </tr>
+        </table>
+        <button type="submit" class="btn btn-danger" onclick="remove()">Delete</button>
+    </form>
+    <button type="button" class="btn btn-primary" >Add</button>
+    <h1>Update Record</h1>
+    <form name="Update" action="updatesales.php" method="post">
+        <table class="table table-success">
+         <thead>
+         <tr>
+             <th>Sale ID</th>
+             <th>Drug ID</th>
+             <th>Date</th>
+             <th>Quantity</th>
+             <th>Discount</th>
+             <th>Price</th>
+             <th>Employee Cut ID</th>
+             <th>Location ID</th>
+             <th>Total</th>
+             
+         </tr>
+         </thead>
+         <tbody>
+             <tr>
+                 <td><input type="number" name="Sale_ID" id="sid" autocomplete="off"></td>
+                 <td><input type="number" name="Drug_ID" id="did" autocomplete="off"></td>
+                 <td><input type="date" name="Date" id="de" autocomplete="off"></td>
+                 <td><input type="number" name="Quantity" id="qy" autocomplete="off"></td>
+                 <td><input type="number" name="Discount" id="dt" autocomplete="off"></td>
+                 <td><input type="number" name="Price" id="pr" autocomplete="off"></td>
+                 <td><input type="number" name="Cut_ID" id="ci" autocomplete="off"></td>
+                 <td><input type="number" name="Location_ID" id="lid" autocomplete="off"></td>
+                 <td><input type="number" name="Total" id="tl" autocomplete="off"></td>
+                 
+             </tr>
+     
+             <tr>
+                 <td id="nsid"></td>
+                 <td id="ndid"></td>
+                 <td id="nde"></td>
+                 <td id="nqy"></td>
+                 <td id="ndt"></td>
+                 <td id="npr"></td>
+                 <td id="nec"></td>
+                 <td id="nlid"></td>
+                 <td id="ntl"></td>
+                 
+             </tr>
+         <tr>
+             <td id="noty" class="table"></td>
+         </tr>
+         </tbody>
+        </table>
+        <button type="submit" class="btn btn-success" >Update</button>
+         </form>
+   
 </body>
 <script>
     function validate(){
@@ -68,7 +137,9 @@
                 document.getElementById("nsid").innerHTML = "Please enter a valid Drug ID.";
                 valid = false;
             } else {
+
                 document.getElementById("nsid").innerHTML = "";
+
             }
 
         let drug = document.getElementById("did");
