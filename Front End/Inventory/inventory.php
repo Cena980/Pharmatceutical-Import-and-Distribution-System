@@ -40,14 +40,14 @@
                 </select>
             </div>
         </div>  
-        <div id="over"><h1>Sales</h1></div>
+        <div id="over"><h1>Incentory</h1></div>
         <div id="report">
             <?php include '../php/inventoryreport.php';?>
         </div>
         <div id="buttons">
             <button><a href="deleteinventory.html">Delete</a> </button>
             <button><a href="updateinventory.html">Update</a> </button>
-            <button><a href="addinventory.html">Add</a> </button>
+            <button><a href="insertinventory.html">Add</a> </button>
         </div>
             <div id="bottom">
                 <div class="bott">

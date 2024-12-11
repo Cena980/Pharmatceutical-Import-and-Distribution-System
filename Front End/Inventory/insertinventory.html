@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Insertion Page
+        </title>
+        <link rel="stylesheet" href="../css/home.css">
+    </head>
+    <body>
+        <div id="bar">
+            <ul class="barr">
+                <li>
+                    <a href="home.html">Home</a>
+                </li>
+                <li><a href="../sales/sales.php">Sales</a></li>
+                <li><a href="../company.php">Companies</a></li>
+                <li><a href="../customer.php">Customers</a></li>
+                <li><a href="../Inventory/inventory.php">Inventory</a></li>
+            </ul>
+            <div class="barr">
+                <form>
+                    <input type="text" id="search" name="Search" style="width: 85%;" id="search">
+                    <input type="submit" value="Search" style="width: 10%; text-align: center; height: 20px;" onclick="validation()">
+                </form>
+                <script>
+                    a = document.getElementById("search");
+                    function validation() {
+                        if (a.value.length<1){
+                            alert("Cannot search for empty string")
+                        }
+                        
+                    }
+                    
+                    
+                </script>
+                <select >
+                    <option>Persian</option>
+                    <option>Pashto</option>
+                    <option>English</option>
+                </select>
+            </div>
+        </div>  
+        <div id="over"><h1>Insert into inventory</h1></div>
+        <form name="sale" action="../php/insertinventory.php" method="post">
+            <table class="table table-success">
+             <thead>
+             <tr>
+                <th>Inventory ID</th>
+                <th>Drug ID</th>
+                <th>Amount Sold</th>
+                <th>Initial Amount</th>
+                <th>Stock</th>
+                 
+             </tr>
+             </thead>
+             <tbody>
+                 <tr>
+                     <td><input type="number" name="Inventory_ID" id="sid" autocomplete="off"></td>
+                     <td><input type="number" name="Drug_ID" id="did" autocomplete="off"></td>
+                     <td><input type="number" name="Amount_Sold" id="de" autocomplete="off"></td>
+                     <td><input type="number" name="Initial Amount" id="qy" autocomplete="off"></td>
+                     <td><input type="number" name="Stock" id="dt" autocomplete="off"></td>
+                 </tr>
+         
+             <tr>
+                 <td id="noty" class="table"></td>
+             </tr>
+             </tbody>
+            </table>
+            <button type="submit" class="btn btn-success" onclick="validate()" >Save</button>
+            <div id="bottom">
+                <div class="bott">
+                    <h3>Something...</h3>
+                    <h3>Something...</h3>
+                    <h3>Something...</h3>
+                </div>
+                <div class="bott">
+                    <h3>Something...</h3>
+                    <h3>Something...</h3>
+                    <h3>Something...</h3>
+                </div>
+                <div class="bott">
+                    <h3>Something...</h3>
+                    <h3>Something...</h3>
+
+                </div>
+            </div>
+
+
+
+        </div>
+        <script>
+            function validate(){
+                var message = document.getElementById("noty");
+                message.style.color = "green";
+                message.innerHTML = "Your record has been saved.";
+        
+                let valid = true;
+                let sale = document.getElementById("sid").value;
+        
+                if(!/^\d+$/.test(sale) || sale === ""){
+                        document.getElementById("nsid").innerHTML = "Please enter a valid Drug ID.";
+                        valid = false;
+                    } else {
+        
+                        document.getElementById("nsid").innerHTML = "";
+        
+                    }
+        
+                let drug = document.getElementById("did");
+        
+                if(!/^\d+$/.test(drug) || drug === ""){
+                        document.getElementById("ndid").innerHTML = "Please enter a valid Drug ID.";
+                        valid = false;
+                    } else {
+                        document.getElementById("ndid").innerHTML = "";
+                    }
+        
+            }
+            </script>
+    </body>
+</html>
