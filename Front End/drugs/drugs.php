@@ -2,14 +2,14 @@
 <html lang="en">
     <head>
         <title>
-            Employee Page
+            Drug Page
         </title>
         <link rel="stylesheet" href="../css/home.css">
     </head>
     <body>
         <div id="bar">
             <ul class="barr">
-            <li>
+                <li>
                     <a href="../home.php">Home</a>
                 </li>
                 <li><a href="../sales/sales.php">Sales</a></li>
@@ -40,14 +40,14 @@
                 </select>
             </div>
         </div>  
-        <div id="over"><h1>Employee records</h1></div>
+        <div id="over"><h1>Drug records</h1></div>
         <div id="report">
-            <?php include '../php/employeereport.php';?>
+            <?php include '../php/drugreport.php';?>
         </div>
         <div id="buttons">
-            <button><a href="Deleteemployee.html">Delete</a> </button>
-            <button><a href="updateemployee.html">Update</a> </button>
-            <button><a href="Insertemployee.html">Add</a> </button>
+            <button><a href="Deletedrug.html">Delete</a> </button>
+            <button><a href="updatedrug.html">Update</a> </button>
+            <button><a href="Insertdrug.html">Add</a> </button>
         </div>
         <div id="bottom">
                 <div class="bott">
@@ -62,10 +62,6 @@
                     <h3>...</h3>
                 </div>
             </div>
-
-
-
-        </div>
 
 
 

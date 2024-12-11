@@ -106,11 +106,11 @@ a {
 }
 #mid {
     display: flex;
+    height: max-content;
 
 }
 .mid {
     width: 30%;
-    height: 200px;
     margin-left: 2.5%;
     background-color: rgb(6, 45, 31);
     color: white;

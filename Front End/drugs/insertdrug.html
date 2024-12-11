@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Insertion Page
+        </title>
+        <link rel="stylesheet" href="../css/home.css">
+    </head>
+    <body>
+        <div id="bar">
+            <ul class="barr">
+                <li>
+                    <a href="../home.php">Home</a>
+                </li>
+                <li><a href="../sales/sales.php">Sales</a></li>
+                <li><a href="../drugs/drugs.php">Drugs</a></li>
+                <li><a href="../employee/employee.php">Employee</a></li>
+                <li><a href="../Inventory/inventory.php">Inventory</a></li>
+            </ul>
+            <div class="barr">
+                <form>
+                    <input type="text" id="search" name="Search" style="width: 85%;" id="search">
+                    <input type="submit" value="Search" style="width: 10%; text-align: center; height: 20px;" onclick="validation()">
+                </form>
+                <script>
+                    a = document.getElementById("search");
+                    function validation() {
+                        if (a.value.length<1){
+                            alert("Cannot search for empty string")
+                        }
+                        
+                    }
+                    
+                    
+                </script>
+                <select >
+                    <option>Persian</option>
+                    <option>Pashto</option>
+                    <option>English</option>
+                </select>
+            </div>
+        </div>  
+        <div id="over"><h1>Insert</h1>
+            <form action="../php/insertdrug.php" method="post">
+                <table class="table table-warning">
+                    <thead>
+                        <tr>
+                            <th>Drug ID</th>
+                            <th>Company ID</th>
+                            <th>Drug Name</th>
+                            <th>Ingredient</th>
+                            <th>Tablet per Box</th>
+                            <th>Expiration</th>
+                            <th>Type ID</th>
+                            <th>Demography ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="number" name="Drug_ID" id="d1"></td>
+                            <td><input type="number" name="Comp_ID" id="c1"></td>
+                            <td><input type="text" name="Drug_Name" id="dr1"></td>
+                            <td><input type="text" name="Ingredients" id="i1"></td>
+                            <td><input type="number" name="Tablet_PB" id="t1"></td>
+                            <td><input type="date" name="Expiration" id="e1"></td>
+                            <td><input type="number" name="Type_ID" id="ty1"></td>
+                            <td><input type="number" name="Demo_ID" id="de1"></td>
+                        </tr>
+                        <tr>
+                            <td id="nd1"></td>
+                            <td id="nc1"></td>
+                            <td id="ndr1"></td>
+                            <td id="ni1"></td>
+                            <td id="nt1"></td>
+                            <td id="np1"></td>
+                            <td id="np2"></td>
+                            <td id="ne1"></td>
+                        </tr>
+                        <tr>
+                            <td id="noty" class="table"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-danger" onclick="remove()">Insert</button>
+            </form>
+        
+            <script>
+                function validate(){
+                    let valid = true;
+        
+                    // Drug ID validation
+                    let drugId = document.getElementById("d1").value;
+                    if(!/^\d+$/.test(drugId) || drugId === ""){
+                        document.getElementById("nd1").innerHTML = "Please enter a valid Drug ID.";
+                        valid = false;
+                    } else {
+                        document.getElementById("nd1").innerHTML = "";
+                    }
+        
+                    // Company ID validation
+                    let companyId = document.getElementById("c1");
+                    if(!/^\d+$/.test(companyId) || companyId === ""){
+                        document.getElementById("nc1").innerHTML = "Please enter a valid Company ID.";
+                        valid = false;
+                    } else {
+                        document.getElementById("nc1").innerHTML = "";
+                    }
+        
+                    // Drug Name validation (only letters allowed)
+                    let drugName = document.getElementById("dr1").value;
+                    if(!/^[A-Za-z\s]+$/.test(drugName) || drugName === ""){
+                        document.getElementById("ndr1").innerHTML = "Please enter a valid Drug Name (letters only).";
+                        valid = false;
+                    } else {
+                        document.getElementById("ndr1").innerHTML = "";
+                    }
+        
+                    // Ingredient validation (only letters allowed)
+                    let ingredient = document.getElementById("i1").value;
+                    if(!/^[A-Za-z\s]+$/.test(ingredient) || ingredient === ""){
+                        document.getElementById("ni1").innerHTML = "Please enter a valid Ingredient (letters only).";
+                        valid = false;
+                    } else {
+                        document.getElementById("ni1").innerHTML = "";
+                    }
+        
+                    // Tablet per Box validation (numbers only)
+                    let tablets = document.getElementById("t1").value;
+                    if(!/^\d+$/.test(tablets) || tablets === ""){
+                        document.getElementById("nt1").innerHTML = "Please enter a valid number for Tablets per Box.";
+                        valid = false;
+                    } else {
+                        document.getElementById("nt1").innerHTML = "";
+                    }
+        
+                    // Initial Price validation (numbers only)
+                    let initialPrice = document.getElementById("p1").value;
+                    if(!/^\d+(\.\d{1,2})?$/.test(initialPrice) || initialPrice === ""){
+                        document.getElementById("np1").innerHTML = "Please enter a valid Initial Price (numbers with up to 2 decimal places).";
+                        valid = false;
+                    } else {
+                        document.getElementById("np1").innerHTML = "";
+                    }
+        
+                    // Sale Price validation (numbers only)
+                    let salePrice = document.getElementById("p2").value;
+                    if(!/^\d+(\.\d{1,2})?$/.test(salePrice) || salePrice === ""){
+                        document.getElementById("np2").innerHTML = "Please enter a valid Sale Price (numbers with up to 2 decimal places).";
+                        valid = false;
+                    } else {
+                        document.getElementById("np2").innerHTML = "";
+                    }
+        
+                    // Expiration date validation (should be a valid date)
+                    let expiration = document.getElementById("e1").value;
+                    if(!expiration){
+                        document.getElementById("ne1").innerHTML = "Please enter a valid Expiration Date.";
+                        valid = false;
+                    } else {
+                        document.getElementById("ne1").innerHTML = "";
+                    }
+        
+                    // Type ID validation
+                    let typeId = document.getElementById("ty1").value;
+                    if(!/^\d+$/.test(typeId) || typeId === ""){
+                        document.getElementById("nty1").innerHTML = "Please enter a valid Type ID.";
+                        valid = false;
+                    } else {
+                        document.getElementById("nty1").innerHTML = "";
+                    }
+        
+                    // Demography ID validation
+                    let demoId = document.getElementById("de1").value;
+                    if(!/^\d+$/.test(demoId) || demoId === ""){
+                        document.getElementById("nde1").innerHTML = "Please enter a valid Demography ID.";
+                        valid = false;
+                    } else {
+                        document.getElementById("nde1").innerHTML = "";
+                    }
+        
+                    // If all fields are valid
+                    if(valid) {
+                        var message = document.getElementById("noty");
+                        message.style.color = "green";
+                        message.innerHTML = "Your record has been saved.";
+                    }
+                }
+        
+                function remove(){
+                    var message = document.getElementById("noty");
+                    message.style.color = "red";
+                    message.innerHTML = "The selected record is deleted."
+                }
+            </script>
+        </div>
+        
+        <div id="bottom">
+            <div class="bott">
+                <h3>Abdul Bashir Arsine</h3>
+
+            </div>
+            <div class="bott">
+                <h3>Ali Sina Nazari</h3>
+
+            </div>
+            <div class="bott">
+                <h3>...</h3>
+            </div>
+        </div>
+    </body>
+</html>

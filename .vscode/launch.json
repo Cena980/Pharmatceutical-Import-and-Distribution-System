@@ -1,0 +1,11 @@
+{
+    "configurations": [
+    {
+        "name": "Launch Chrome",
+        "request": "launch",
+        "type": "chrome",
+        "url": "http://localhost/Pharmatceutical-Import-and-Distribution-System/Front%20End/home.php",
+        "webRoot": "${workspaceFolder}"
+    }
+    ]
+}

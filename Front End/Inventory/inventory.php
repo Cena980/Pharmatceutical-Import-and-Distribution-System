@@ -10,10 +10,10 @@
         <div id="bar">
             <ul class="barr">
                 <li>
-                    <a href="home.html">Home</a>
+                    <a href="../home.php">Home</a>
                 </li>
                 <li><a href="../sales/sales.php">Sales</a></li>
-                <li><a href="../company/company.php">Companies</a></li>
+                <li><a href="../drugs/drugs.php">Drugs</a></li>
                 <li><a href="../employee/employee.php">Employee</a></li>
                 <li><a href="../Inventory/inventory.php">Inventory</a></li>
             </ul>
@@ -49,23 +49,23 @@
             <button><a href="updateinventory.html">Update</a> </button>
             <button><a href="insertinventory.html">Add</a> </button>
         </div>
-            <div id="bottom">
+        <div id="bottom">
                 <div class="bott">
-                    <h3>Something...</h3>
-                    <h3>Something...</h3>
-                    <h3>Something...</h3>
-                </div>
-                <div class="bott">
-                    <h3>Something...</h3>
-                    <h3>Something...</h3>
-                    <h3>Something...</h3>
-                </div>
-                <div class="bott">
-                    <h3>Something...</h3>
-                    <h3>Something...</h3>
+                    <h3>Abdul Bashir Arsine</h3>
 
                 </div>
+                <div class="bott">
+                    <h3>Ali Sina Nazari</h3>
+
+                </div>
+                <div class="bott">
+                    <h3>...</h3>
+                </div>
             </div>
+
+
+
+        </div>
 
 
 

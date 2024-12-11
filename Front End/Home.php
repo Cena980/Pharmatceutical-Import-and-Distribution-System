@@ -4,17 +4,18 @@
         <title>
             Home Page
         </title>
-        <link rel="stylesheet" href="home.css">
+        <link rel="stylesheet" href="css/home.css">
     </head>
     <body>
         <div id="bar">
             <ul class="barr">
                 <li>
-                    <a href="home.html">Home</a>
+                    <a href="home.php">Home</a>
                 </li>
-                <li><a href="sales.php">Sales</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="about.html">About</a></li>
+                <li><a href="sales/sales.php">Sales</a></li>
+                <li><a href="drugs/drugs.php">Drug</a></li>
+                <li><a href="employee/employee.php">Employee</a></li>
+                <li><a href="Inventory/inventory.php">Inventory</a></li>
             </ul>
             <div class="barr">
                 <form>
@@ -53,33 +54,13 @@
             <div id="mid">
                 <div class="mid">
                     <p class="title">Products</p>
-                    <table class="data">
-                        <tr>
-                            <th class="info">Name</th>
-                            <th class="info">Company</th>
-                            <th class="info">Price</th>
-                        </tr>
-                        <tr>
-                            <td class="info"></td>
-                            <td class="info"></td>
-                            <td class="info"></td>
-                        </tr>
-                    </table>
+                    <div id="report">
+                        <?php include 'php/drugreport.php';?>
+                    </div>
                 </div>
                 <div class="mid">
-                    <p class="title">Shareholders</p>
-                    <table class="data">
-                        <tr>
-                            <th class="info">Name</th>
-                            <th class="info">Last Name</th>
-                            <th class="info">Email</th>
-                        </tr>
-                        <tr>
-                            <td class="info"></td>
-                            <td class="info"></td>
-                            <td class="info"></td>
-                        </tr>
-                    </table>
+                    <p class="title">Employee</p>
+                    <?php include 'php/employeereport.php'; ?>
                 </div>
                 <div class="mid">
                     <p class="title">Companies</p>
@@ -102,22 +83,15 @@
             </div>
             <div id="bottom">
                 <div class="bott">
-                    <h3>Something...</h3>
-                    <h3>Something...</h3>
-                    <h3>Something...</h3>
-                    <h3>Something...</h3>
-                    <h3>Something...</h3>
+                    <h3>Abdul Bashir Arsine</h3>
+
                 </div>
                 <div class="bott">
-                    <h3>Something...</h3>
-                    <h3>Something...</h3>
-                    <h3>Something...</h3>
+                    <h3>Ali Sina Nazari</h3>
+
                 </div>
                 <div class="bott">
-                    <h3>Something...</h3>
-                    <h3>Something...</h3>
-                    <h3>Something...</h3>
-                    <h3>Something...</h3>
+                    <h3>...</h3>
                 </div>
             </div>
 
