@@ -13,8 +13,8 @@
                     <a href="home.html">Home</a>
                 </li>
                 <li><a href="../sales/sales.php">Sales</a></li>
-                <li><a href="../company.php">Companies</a></li>
-                <li><a href="../customer.php">Customers</a></li>
+                <li><a href="../company/company.php">Companies</a></li>
+                <li><a href="../employee/employee.php">Employee</a></li>
                 <li><a href="../Inventory/inventory.php">Inventory</a></li>
             </ul>
             <div class="barr">

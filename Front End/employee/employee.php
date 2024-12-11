@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <title>
-            Inventory Page
+            Employee Page
         </title>
         <link rel="stylesheet" href="../css/home.css">
     </head>
@@ -40,14 +40,14 @@
                 </select>
             </div>
         </div>  
-        <div id="over"><h1>Incentory</h1></div>
+        <div id="over"><h1>Employee records</h1></div>
         <div id="report">
-            <?php include '../php/inventoryreport.php';?>
+            <?php include '../php/employeereport.php';?>
         </div>
         <div id="buttons">
-            <button><a href="deleteinventory.html">Delete</a> </button>
-            <button><a href="updateinventory.html">Update</a> </button>
-            <button><a href="insertinventory.html">Add</a> </button>
+            <button><a href="Deleteemployee.html">Delete</a> </button>
+            <button><a href="updateemployee.html">Update</a> </button>
+            <button><a href="Insertemployee.html">Add</a> </button>
         </div>
             <div id="bottom">
                 <div class="bott">
