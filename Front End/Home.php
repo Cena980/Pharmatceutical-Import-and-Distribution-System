@@ -1,3 +1,4 @@
+<?php require 'php/functions.php' ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -40,63 +41,66 @@
                 </select>
             </div>
         </div>  
-        
-        <div id="main">
-            <div id="top">
-                <img src="cover.jpg" id="cover" alt="Cover">
-                <div class="in">
-                    <p class="desc">Improve your Health with us!</p>
-                </div>
-                <div class="in" id="under">
-                    <p class="title">... Pharmaceuticals</p>
+        <main>
+            <div class="left">
+                <div class="section_title">Go To</div>
+                <?php $tables = getTables() ?>
+                <?php
+                foreach ($tables as $table) {
+                    $tableName = $table['table'] ?? null;
+                    if ($tableName) {
+                        ?>
+                        <a href="table.php?table=<?php echo urlencode($tableName) ?>">
+                            <?php echo htmlspecialchars(ucfirst($tableName)) ?>
+                        </a>
+                        <?php
+                    } else {
+                        echo "Invalid table data.";
+                    }
+                }
+                ?>
+                    
+            </div>
+            <div class="right">
+                <div class="section_title">Products</div>
+                <?php $Drugs = getDrugs(5) ?>
+                <div class="product">
+                    <?php
+                        foreach($Drugs as $Drug){
+                            ?>
+                                <div class="product_left">
+                                <img src="product.png" alt="product">
+                            </div>
+                            <div class="product_right" >
+                                <p class="title">
+                                    <a href="Drug.php?Drug=<?php echo $Drug['Drug_Name']?>"><?php echo $Drug['Drug_Name'] ?></a>
+                                </p>
+                                <p class="description">
+                                    <?php echo $Drug['Ingredient'] ?>
+                                </p>
+                                <p class="price"><?php echo $Drug['Expiration']?> ؋</p>
+                            </div>
+
+                            <?php
+                        }
+                    ?>
+                    
                 </div>
             </div>
-            <div id="mid">
-                <div class="mid">
-                    <p class="title">Products</p>
-                    <div id="report">
-                        <?php include 'php/drugreport.php';?>
-                    </div>
-                </div>
-                <div class="mid">
-                    <p class="title">Employee</p>
-                    <?php include 'php/employeereport.php'; ?>
-                </div>
-                <div class="mid">
-                    <p class="title">Companies</p>
-                    <table class="data">
-                        <tr>
-                            <th class="info">Name</th>
-                            <th class="info">Specialty</th>
-                            <th class="info">Email</th>
-                        </tr>
-                        <tr>
-                            <td class="info"></td>
-                            <td class="info"></td>
-                            <td class="info"></td>
-                        </tr>
-                    </table>
-                </div>
+            
+        </main>
+        <div id="bottom">
+            <div class="bott">
+                <h3>Abdul Bashir Arsine</h3>
+
             </div>
-            <div id="low">
-                
+            <div class="bott">
+                <h3>Ali Sina Nazari</h3>
+
             </div>
-            <div id="bottom">
-                <div class="bott">
-                    <h3>Abdul Bashir Arsine</h3>
-
-                </div>
-                <div class="bott">
-                    <h3>Ali Sina Nazari</h3>
-
-                </div>
-                <div class="bott">
-                    <h3>...</h3>
-                </div>
+            <div class="bott">
+                <h3>...</h3>
             </div>
-
-
-
         </div>
     </body>
 </html>

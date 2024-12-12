@@ -104,21 +104,63 @@ a {
     font-size: 30pt;
     margin-top: -200px;
 }
-#mid {
-    display: flex;
-    height: max-content;
+main {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-column-gap: 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+main .section_title{
+    font-size: 22px;
+    margin-bottom: 30px;
+}
+main .left {
+    border-right: thin solid black;
+    padding-right: 20px;
+}
+main .left a {
+    display: block;
+    text-decoration: none;
+    color: darkgray;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+main .left a:hover{
+    text-decoration: underline;
+}
+main .right{
 
 }
-.mid {
-    width: 30%;
-    margin-left: 2.5%;
-    background-color: rgb(6, 45, 31);
-    color: white;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 14;
-    border-radius: 30px;
-    text-align: center;
-
+main .right .product{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-column-gap: 50px;
+    grid-row-gap: 50px;
+}
+main .right .product_left img{
+    height: 150px;
+    display: block;
+    margin: 0 auto;
+}
+main .right .title a{
+    font-weight: bold;
+    font-size: 18px;
+    text-decoration: none;
+    color: darkgray;
+    line-height: 26px;
+}
+main .right .title a:hover{
+    text-decoration: underline;
+}
+main .right .description{
+    margin-top: 18px;
+}
+main .right .price{
+    font-size: 24px;
+    margin-top: 30px;
+    color: darkred;
 }
 #report{
     margin-top: 10px;
