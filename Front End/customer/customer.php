@@ -2,14 +2,14 @@
 <html lang="en">
     <head>
         <title>
-            Inventory Page
+            Customer Page
         </title>
         <link rel="stylesheet" href="../css/home.css">
     </head>
     <body>
         <div id="bar">
             <ul class="barr">
-                <li>
+            <li>
                     <a href="../home.php">Home</a>
                 </li>
                 <li><a href="../sales/sales.php">Sales</a></li>
@@ -40,14 +40,14 @@
                 </select>
             </div>
         </div>  
-        <div id="over"><h1>Incentory</h1></div>
+        <div id="over"><h1>Customer records</h1></div>
         <div id="report">
-            <?php include '../php/inventoryreport.php';?>
+            <?php include '../php/customerreport.php';?>
         </div>
         <div id="buttons">
-            <button><a href="deleteinventory.html">Delete</a> </button>
-            <button><a href="updateinventory.html">Update</a> </button>
-            <button><a href="insertinventory.html">Add</a> </button>
+            <button><a href="Deletecustomer.html">Delete</a> </button>
+            <button><a href="updatecustomer.html">Update</a> </button>
+            <button><a href="Insertcustomer.html">Add</a> </button>
         </div>
         <div id="bottom">
                 <div class="bott">

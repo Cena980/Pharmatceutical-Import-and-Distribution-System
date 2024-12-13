@@ -14,7 +14,7 @@
                 </li>
                 <li><a href="../sales/sales.php">Sales</a></li>
                 <li><a href="../drugs/drugs.php">Drug</a></li>
-                <li><a href="../employee/employee.php">Employee</a></li>
+                <li><a href="../employees/employees.php">Employee</a></li>
                 <li><a href="../Inventory/inventory.php">Inventory</a></li>
             </ul>
             <div class="barr">

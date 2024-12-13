@@ -15,7 +15,7 @@
                 </li>
                 <li><a href="sales/sales.php">Sales</a></li>
                 <li><a href="drugs/drugs.php">Drug</a></li>
-                <li><a href="employee/employee.php">Employee</a></li>
+                <li><a href="employees/employees.php">Employee</a></li>
                 <li><a href="Inventory/inventory.php">Inventory</a></li>
             </ul>
             <div class="barr">
@@ -50,9 +50,12 @@
                     $tableName = $table['table'] ?? null;
                     if ($tableName) {
                         ?>
-                        <a href="table.php?table=<?php echo urlencode($tableName) ?>">
-                            <?php echo htmlspecialchars(ucfirst($tableName)) ?>
-                        </a>
+                        <div class="tables">
+                            <a href="<?php echo strtolower($tableName)?>/<?php echo strtolower($tableName)?>.php">
+                                
+                                <?php echo htmlspecialchars(ucfirst($tableName))?>
+                            </a>
+                        </div>
                         <?php
                     } else {
                         echo "Invalid table data.";
@@ -86,6 +89,10 @@
                     ?>
                     
                 </div>
+            </div>
+            <div class="far_right">
+                <div class="section_title">Sales Reports</div>
+                <?php include 'php/salesreport.php'?>
             </div>
             
         </main>

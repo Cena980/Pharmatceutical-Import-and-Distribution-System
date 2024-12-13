@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <title>
-            Employee Page
+            Companies Page
         </title>
         <link rel="stylesheet" href="../css/home.css">
     </head>
@@ -14,7 +14,7 @@
                 </li>
                 <li><a href="../sales/sales.php">Sales</a></li>
                 <li><a href="../drugs/drugs.php">Drugs</a></li>
-                <li><a href="../employee/employee.php">Employee</a></li>
+                <li><a href="../employees/employees.php">Employee</a></li>
                 <li><a href="../Inventory/inventory.php">Inventory</a></li>
             </ul>
             <div class="barr">
@@ -40,14 +40,14 @@
                 </select>
             </div>
         </div>  
-        <div id="over"><h1>Employee records</h1></div>
+        <div id="over"><h1>Company records</h1></div>
         <div id="report">
-            <?php include '../php/employeereport.php';?>
+            <?php include '../php/companiesreport.php';?>
         </div>
         <div id="buttons">
-            <button><a href="Deleteemployee.html">Delete</a> </button>
-            <button><a href="updateemployee.html">Update</a> </button>
-            <button><a href="Insertemployee.html">Add</a> </button>
+            <button><a href="deletecompanies.html">Delete</a> </button>
+            <button><a href="updatecompanies.html">Update</a> </button>
+            <button><a href="insertcompanies.html">Add</a> </button>
         </div>
         <div id="bottom">
                 <div class="bott">
