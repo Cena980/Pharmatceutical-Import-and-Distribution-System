@@ -67,7 +67,7 @@
             </div>
             <div class="right">
                 <div class="section_title">Products</div>
-                <?php $Drugs = getDrugs(5) ?>
+                <?php $Drugs = getDrugs(3) ?>
                 <div class="product">
                     <?php
                         foreach($Drugs as $Drug){
@@ -82,7 +82,8 @@
                                 <p class="description">
                                     <?php echo $Drug['Ingredient'] ?>
                                 </p>
-                                <p class="price"><?php echo $Drug['Expiration']?> ؋</p>
+                                <P class="expiration"><?php echo $Drug['Expiration']?></P>
+                                <p class="price">00.00 ؋</p>
                             </div>
 
                             <?php

@@ -49,8 +49,8 @@
                 foreach($Shareholders as $Shareholder){
                     ?>
                     <div class="card">
-                        <img src="avatar.jpeg" alt="Avatar" style="width:100%">
-                        <div class="container">
+                        <img src="avatar.jpeg" alt="dp" style="width:100%">
+                        <div class="container_card">
                             <h3><b><?php echo $Shareholder['Holder_Name']?></b></h3>
                             <h4><b><?php echo $Shareholder['Phone']?></b></h4>
                         </div>
