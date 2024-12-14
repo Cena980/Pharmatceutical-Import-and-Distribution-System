@@ -1,1 +1,6 @@
-# Pharmatceutical-Import-and-Distribution-System
+# Drug Whole Sale
+
+
+
+### Ali Sina Nazari
+### Abdul Bashir Arsine
