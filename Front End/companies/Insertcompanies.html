@@ -14,7 +14,7 @@
                 </li>
                 <li><a href="../sales/sales.php">Sales</a></li>
                 <li><a href="../drugs/drugs.php">Drugs</a></li>
-                <li><a href="../employee/employee.php">Employee</a></li>
+                <li><a href="../employees/employees.php">Employee</a></li>
                 <li><a href="../Inventory/inventory.php">Inventory</a></li>
             </ul>
             <div class="barr">
@@ -40,35 +40,34 @@
                 </select>
             </div>
         </div>  
-        <div id="over"><h1>Insert into Employee</h1></div>
-        <form name="sale" action="../php/insertemployee.php" method="post">
+        <div id="over"><h1>Insert into Companies</h1></div>
+        <form name="sale" action="../php/insertcompanies.php" method="post">
             <table class="table table-success">
-             <thead>
-             <tr>
-                <th>Employee ID</th>
-                <th>Tazkira</th>
-                <th>Name</th>
-                <th>Last Name</th>
-                <th>Job ID</th>
-                <th>Salary</th>
-                 
-             </tr>
-             </thead>
-             <tbody>
-                 <tr>
-                     <td><input type="number" name="Emp_ID" id="sid" autocomplete="off"></td>
-                     <td><input type="number" name="Tazkira" id="did" autocomplete="off"></td>
-                     <td><input type="text" name="Emp_Name" id="de" autocomplete="off"></td>
-                     <td><input type="text" name="Emp_Last_Name" id="qy" autocomplete="off"></td>
-                     <td><input type="number" name="Job_ID" id="dt" autocomplete="off"></td>
-                     <td><input type="number" name="Salary" id="dt" autocomplete="off"></td>
-                 </tr>
-         
-             <tr>
-                 
-             </tr>
-             </tbody>
-            </table>
+                <thead>
+                <tr>
+                   <th>Company ID</th>
+                   <th>Company Name</th>
+                   <th>Head Quarters</th>
+                   <th>Phone</th>
+                   <th>Email</th>
+                    
+                </tr>
+                </thead>
+                <tbody>
+                   <tr>
+                       <td><input type="number" name="Comp_ID" id="sid" autocomplete="off"></td>
+                       <td><input type="text" name="Comp_Name" id="did" autocomplete="off"></td>
+                       <td><input type="text" name="Head_Quarters" id="de" autocomplete="off"></td>
+                       <td><input type="text" name="Phone" id="qy" autocomplete="off"></td>
+                       <td><input type="text" name="Email" id="dt" autocomplete="off"></td>
+               
+                   </tr>
+            
+                <tr>
+                    
+                </tr>
+                </tbody>
+               </table>
             <button type="submit" class="btn btn-success" onclick="validate()" >Save</button>
             <div id="bottom">
                 <div class="bott">

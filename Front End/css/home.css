@@ -1,5 +1,7 @@
 #bar {
-    width: 100%;
+    margin-left: -7.5px;
+    margin-top: -7.5px;
+    padding-right: 10px;
     display: flex;
     position: sticky;
     background-color: rgb(40, 90, 90);
@@ -8,38 +10,41 @@
 .barr {
     width: 50%;
     display: inline-flex;
-    padding: 10px;
 }
 ul {
     list-style: none;
     font-family: 'Times New Roman', Times, serif;
     font-size: 12pt;
     font-weight: bold;
-    display: inline-flexbox;  
-    margin-top: 0;
+    display: grid;  
+    grid-template-columns: auto auto auto auto auto;
+    margin: auto;
 }
 li {
-    width: 12.5%;
-    /*background-color: rgb(60, 110,120);*/
-    margin-left: 5px;
+    margin-left: 10px;
+    width: auto;
     text-align: center;
-    height: 20px;
-    /*border-left: solid white 2pt;*/
-    padding-top: 2px;
-    border-radius: 5px;
+    padding-top: 15px;
+    padding-bottom: 20px;
+
     
+}
+li a {
+    margin: auto;
 }
 li:hover {
     background-color: rgb(60, 120, 130);
 }
-a:hover {
+li a:hover {
     color: rgb(149, 148, 148);
     
 }
 form {
+    margin-top: 15px;
     width: 90%;
 }
 select {
+    margin-top: 15px;
     font-family: 'Times New Roman', Times, serif;
     font-weight: bold;
     width: 12.5%;
@@ -107,7 +112,7 @@ a {
 main {
     padding: 20px;
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto 1fr 1fr;
     grid-column-gap: 30px;
     margin-top: 30px;
     margin-bottom: 30px;
@@ -120,15 +125,23 @@ main .left {
     border-right: thin solid black;
     padding-right: 20px;
 }
+main .left .tables{
+    background: linear-gradient(to top, rgba(150, 212, 212, 1), rgb(255, 255, 255));
+}
+main .left .tables:hover{
+    background-color: darkgrey;
+}
 main .left a {
     display: block;
+    height: 30px;
+    padding-top: 5px;
     text-decoration: none;
-    color: darkgray;
+    color: black;
     font-size: 18px;
     margin-bottom: 10px;
+    padding-left: 5px;
 }
 main .left a:hover{
-    text-decoration: underline;
 }
 main .right{
 
@@ -162,6 +175,10 @@ main .right .price{
     margin-top: 30px;
     color: darkred;
 }
+main .far_right {
+    border-left: 1px solid black;
+    padding-left: 10px;
+}
 #report{
     margin-top: 10px;
     width: 100%;
@@ -175,6 +192,7 @@ main .right .price{
     color: white;
     font-family: 'Times New Roman', Times, serif;
     font-size: 10pt;
+    margin-left: -7.5px;
     position: fixed;
     bottom: 0;
 
@@ -210,6 +228,32 @@ button a{
     color: black;
     text-decoration: none;
 }
-tblreport td, th{
-    width: 12%;
+#tblreport{
+    border-collapse: collapse;
 }
+#tblreport th{
+    width: 150px;
+}
+#tblreport td{
+    width: 150px;
+}
+#tblreport tr:nth-child(even) {
+    background-color: rgba(150, 212, 212, 0.4);
+}
+#tblreport th:nth-child(even),td:nth-child(even) {
+    background-color: rgba(150, 212, 212, 0.4);
+  }
+
+
+  /*Contact US*/
+
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px;
+  }
+  
+
+  img {
+    border-radius: 5px 5px 0 0;
+  }

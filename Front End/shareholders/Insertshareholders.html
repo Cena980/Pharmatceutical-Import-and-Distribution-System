@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <title>
-            Update Page
+            Insertion Page
         </title>
         <link rel="stylesheet" href="../css/home.css">
     </head>
@@ -13,7 +13,7 @@
                     <a href="../home.php">Home</a>
                 </li>
                 <li><a href="../sales/sales.php">Sales</a></li>
-                <li><a href="../drugs/drugs.php">Drug</a></li>
+                <li><a href="../drugs/drugs.php">Drugs</a></li>
                 <li><a href="../employees/employees.php">Employee</a></li>
                 <li><a href="../Inventory/inventory.php">Inventory</a></li>
             </ul>
@@ -40,58 +40,34 @@
                 </select>
             </div>
         </div>  
-        <div id="over"><h1>Update</h1></div>
-        <form name="sale" action="../php/updatesales.php" method="post">
+        <div id="over"><h1>Insert into Shareholders</h1></div>
+        <form name="sale" action="../php/insertshareholders.php" method="post">
             <table class="table table-success">
-             <thead>
-             <tr>
-                 <th>Sale ID</th>
-                 <th>Drug ID</th>
-                 <th>Date</th>
-                 <th>Quantity</th>
-                 <th>Discount</th>
-                 <th>Price</th>
-                 <th>Employee Cut ID</th>
-                 <th>Customer ID</th>
-                 <th>Total</th>
-                 
-             </tr>
-             </thead>
-             <tbody>
-                 <tr>
-                     <td><input type="number" name="Sale_ID" id="sid" autocomplete="off"></td>
-                     <td><input type="number" name="Drug_ID" id="did" autocomplete="off"></td>
-                     <td><input type="date" name="Date" id="de" autocomplete="off"></td>
-                     <td><input type="number" name="Quantity" id="qy" autocomplete="off"></td>
-                     <td><input type="number" name="Discount" id="dt" autocomplete="off"></td>
-                     <td><input type="number" name="Price" id="pr" autocomplete="off"></td>
-                     <td><input type="number" name="Cut_ID" id="ci" autocomplete="off"></td>
-                     <td><input type="number" name="Location_ID" id="lid" autocomplete="off"></td>
-                     <td><input type="number" name="Total" id="tl" autocomplete="off"></td>
-                     
-                 </tr>
-         
-                 <tr>
-                     <td id="nsid"></td>
-                     <td id="ndid"></td>
-                     <td id="nde"></td>
-                     <td id="nqy"></td>
-                     <td id="ndt"></td>
-                     <td id="npr"></td>
-                     <td id="nec"></td>
-                     <td id="nlid"></td>
-                     <td id="ntl"></td>
-                     
-                 </tr>
-             <tr>
-                 <td id="noty" class="table"></td>
-             </tr>
-             </tbody>
-            </table>
-            <button type="submit" class="btn btn-success" onclick="validate()" >Save</button>
+                <thead>
+                   <tr>
+                       <th>Shareholder ID</th>
+                       <th>Shareholder Name</th>
+                       <th>Phone</th>
+                      
+                   </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="number" name="Share_ID" id="sid" autocomplete="off"></td>
+                        <td><input type="text" name="Holder_Name" id="did" autocomplete="off"></td>
+                        <td><input type="text" name="Phone" id="did" autocomplete="off"></td>
+                    </tr>
+            
+                <tr>
+                    
+                </tr>
+                </tbody>
+               </table>
+            <button type="submit" class="btn btn-success" onclick="validate()" >Insert</button>
             <div id="bottom">
                 <div class="bott">
                     <h3>Abdul Bashir Arsine</h3>
+
                 </div>
                 <div class="bott">
                     <h3>Ali Sina Nazari</h3>
@@ -99,10 +75,12 @@
                 </div>
                 <div class="bott">
                     <h3>...</h3>
-
-
                 </div>
             </div>
+
+
+
+        </div>
 
 
 

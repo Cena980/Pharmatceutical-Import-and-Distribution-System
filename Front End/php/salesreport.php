@@ -6,7 +6,7 @@
 
     $num_rows = mysqli_num_rows($res);
     if($num_rows>0){
-        echo "<table border='1' id='tblreport'>";
+        echo "<table border='1' border-collapse=collapse id='tblreport'>";
         echo "<tr>
                     <th>Sale ID</th><th>Drug ID</th><th>Date</th><th>Quantity</th>
                     <th>Discount</th><th>Price</th><th>Cut ID</th><th>Customer ID</th>

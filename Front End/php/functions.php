@@ -23,3 +23,12 @@
         }
         return $Drugs;
     }
+
+    function getShareholders() {
+        $mysqli = dbConnect();
+        $result = $mysqli->query("Select * from shareholders");
+        while($row = $result->fetch_assoc()){
+            $Shareholders[] =$row; 
+        }
+        return $Shareholders;
+    }
