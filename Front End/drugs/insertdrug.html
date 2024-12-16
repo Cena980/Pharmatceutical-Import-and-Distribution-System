@@ -40,7 +40,7 @@
                 </select>
             </div>
         </div>  
-        <div id="over"><h1>Insert</h1>
+        <div id="over"><h1>Insert</h1></div>
             <form action="../php/insertdrug.php" method="post">
                 <table class="table table-warning">
                     <thead>
@@ -48,144 +48,164 @@
                             <th>Drug ID</th>
                             <th>Company ID</th>
                             <th>Drug Name</th>
-                            <th>Ingredient</th>
-                            <th>Tablet per Box</th>
-                            <th>Expiration</th>
+                            <th>Ingredients</th>
+                            <th>Quantity per Box</th>
                             <th>Type ID</th>
                             <th>Demography ID</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><input type="number" name="Drug_ID" id="d1"></td>
-                            <td><input type="number" name="Comp_ID" id="c1"></td>
-                            <td><input type="text" name="Drug_Name" id="dr1"></td>
-                            <td><input type="text" name="Ingredients" id="i1"></td>
-                            <td><input type="number" name="Tablet_PB" id="t1"></td>
-                            <td><input type="date" name="Expiration" id="e1"></td>
-                            <td><input type="number" name="Type_ID" id="ty1"></td>
-                            <td><input type="number" name="Demo_ID" id="de1"></td>
-                        </tr>
-                        <tr>
-                            <td id="nd1"></td>
-                            <td id="nc1"></td>
-                            <td id="ndr1"></td>
-                            <td id="ni1"></td>
-                            <td id="nt1"></td>
-                            <td id="np1"></td>
-                            <td id="np2"></td>
-                            <td id="ne1"></td>
-                        </tr>
-                        <tr>
-                            <td id="noty" class="table"></td>
+                            <td>
+                                <input type="number" name="Drug_ID" id="d1">
+                                <div id="nd1" class="error"></div>
+                            </td>
+                            <td>
+                                <input type="number" name="Comp_ID" id="c1">
+                                <div id="nc1" class="error"></div>
+                            </td>
+                            <td>
+                                <input type="text" name="Drug_Name" id="dr1">
+                                <div id="ndr1" class="error"></div>
+                            </td>
+                            <td>
+                                <input type="text" name="Ingredients" id="i1">
+                                <div id="ni1" class="error"></div>
+                            </td>
+                            <td>
+                                <input type="number" name="Tablet_PB" id="t1">
+                                <div id="nt1" class="error"></div>
+                            </td>
+                            <td>
+                                <input type="number" name="Type_ID" id="ty1">
+                                <div id="nty1" class="error"></div>
+                            </td>
+                            <td>
+                                <input type="number" name="Demo_ID" id="de1">
+                                <div id="nde1" class="error"></div>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
-                <button type="submit" class="btn btn-danger" onclick="remove()">Insert</button>
+                <button type="submit" class="btn btn-danger" onclick="validate()">Insert</button>
             </form>
         
             <script>
                 function validate(){
-                    let valid = true;
-        
-                    // Drug ID validation
-                    let drugId = document.getElementById("d1").value;
-                    if(!/^\d+$/.test(drugId) || drugId === ""){
-                        document.getElementById("nd1").innerHTML = "Please enter a valid Drug ID.";
-                        valid = false;
-                    } else {
-                        document.getElementById("nd1").innerHTML = "";
+                    // Define a function to handle form submission
+                    function validateForm(event) {
+                        // Define a variable to track overall validity
+                        let valid = true;
+
+                        // Drug ID validation
+                        let drugId = document.getElementById("d1").value;
+                        if (!/^\d+$/.test(drugId.trim())) {
+                            document.getElementById("nd1").innerHTML = "Drug ID must contain only numbers.";
+                            valid = false;
+                        } else {
+                            document.getElementById("nd1").innerHTML = "";
+                        }
+
+                        // Company ID validation
+                        let companyId = document.getElementById("c1").value;
+                        if (!/^\d+$/.test(companyId.trim())) {
+                            document.getElementById("nc1").innerHTML = "Company ID must contain only numbers.";
+                            valid = false;
+                        } else {
+                            document.getElementById("nc1").innerHTML = "";
+                        }
+
+                        // Drug Name validation (letters, spaces, and hyphens allowed)
+                        let drugName = document.getElementById("dr1").value;
+                        if (!/^[A-Za-z\s\-]+$/.test(drugName.trim())) {
+                            document.getElementById("ndr1").innerHTML = "Drug Name can only include letters, spaces, and hyphens.";
+                            valid = false;
+                        } else {
+                            document.getElementById("ndr1").innerHTML = "";
+                        }
+
+                        // Ingredient validation (letters, spaces, and punctuation allowed)
+                        let ingredient = document.getElementById("i1").value;
+                        if (!/^[A-Za-z\s,\.\-]+$/.test(ingredient.trim())) {
+                            document.getElementById("ni1").innerHTML = "Ingredient can include letters, spaces, commas, periods, and hyphens.";
+                            valid = false;
+                        } else {
+                            document.getElementById("ni1").innerHTML = "";
+                        }
+
+                        // Tablet per Box validation (numbers only)
+                        let tablets = document.getElementById("t1").value;
+                        if (!/^\d+$/.test(tablets.trim())) {
+                            document.getElementById("nt1").innerHTML = "Tablets per Box must be a number.";
+                            valid = false;
+                        } else {
+                            document.getElementById("nt1").innerHTML = "";
+                        }
+
+                        // Initial Price validation (numbers with up to 2 decimal places)
+                        let initialPrice = document.getElementById("p1").value;
+                        if (!/^\d+(\.\d{1,2})?$/.test(initialPrice.trim())) {
+                            document.getElementById("np1").innerHTML = "Initial Price must be a valid number (up to 2 decimal places).";
+                            valid = false;
+                        } else {
+                            document.getElementById("np1").innerHTML = "";
+                        }
+
+                        // Sale Price validation (numbers with up to 2 decimal places)
+                        let salePrice = document.getElementById("p2").value;
+                        if (!/^\d+(\.\d{1,2})?$/.test(salePrice.trim())) {
+                            document.getElementById("np2").innerHTML = "Sale Price must be a valid number (up to 2 decimal places).";
+                            valid = false;
+                        } else {
+                            document.getElementById("np2").innerHTML = "";
+                        }
+
+                        // Expiration date validation (should not be empty)
+                        let expiration = document.getElementById("e1").value;
+                        if (expiration.trim() === "") {
+                            document.getElementById("ne1").innerHTML = "Expiration Date cannot be empty.";
+                            valid = false;
+                        } else {
+                            document.getElementById("ne1").innerHTML = "";
+                        }
+
+                        // Type ID validation (numbers only)
+                        let typeId = document.getElementById("ty1").value;
+                        if (!/^\d+$/.test(typeId.trim())) {
+                            document.getElementById("nty1").innerHTML = "Type ID must contain only numbers.";
+                            valid = false;
+                        } else {
+                            document.getElementById("nty1").innerHTML = "";
+                        }
+
+                        // Demography ID validation (numbers only)
+                        let demoId = document.getElementById("de1").value;
+                        if (!/^\d+$/.test(demoId.trim())) {
+                            document.getElementById("nde1").innerHTML = "Demography ID must contain only numbers.";
+                            valid = false;
+                        } else {
+                            document.getElementById("nde1").innerHTML = "";
+                        }
+
+                        // Final success or error message
+                        let message = document.getElementById("noty");
+                        if (valid) {
+                            message.style.color = "green";
+                            message.innerHTML = "Your record has been saved.";
+                        } else {
+                            message.style.color = "red";
+                            message.innerHTML = "Please correct the errors above.";
+                            event.preventDefault(); // Prevent form submission if validation fails
+                        }
                     }
-        
-                    // Company ID validation
-                    let companyId = document.getElementById("c1");
-                    if(!/^\d+$/.test(companyId) || companyId === ""){
-                        document.getElementById("nc1").innerHTML = "Please enter a valid Company ID.";
-                        valid = false;
-                    } else {
-                        document.getElementById("nc1").innerHTML = "";
-                    }
-        
-                    // Drug Name validation (only letters allowed)
-                    let drugName = document.getElementById("dr1").value;
-                    if(!/^[A-Za-z\s]+$/.test(drugName) || drugName === ""){
-                        document.getElementById("ndr1").innerHTML = "Please enter a valid Drug Name (letters only).";
-                        valid = false;
-                    } else {
-                        document.getElementById("ndr1").innerHTML = "";
-                    }
-        
-                    // Ingredient validation (only letters allowed)
-                    let ingredient = document.getElementById("i1").value;
-                    if(!/^[A-Za-z\s]+$/.test(ingredient) || ingredient === ""){
-                        document.getElementById("ni1").innerHTML = "Please enter a valid Ingredient (letters only).";
-                        valid = false;
-                    } else {
-                        document.getElementById("ni1").innerHTML = "";
-                    }
-        
-                    // Tablet per Box validation (numbers only)
-                    let tablets = document.getElementById("t1").value;
-                    if(!/^\d+$/.test(tablets) || tablets === ""){
-                        document.getElementById("nt1").innerHTML = "Please enter a valid number for Tablets per Box.";
-                        valid = false;
-                    } else {
-                        document.getElementById("nt1").innerHTML = "";
-                    }
-        
-                    // Initial Price validation (numbers only)
-                    let initialPrice = document.getElementById("p1").value;
-                    if(!/^\d+(\.\d{1,2})?$/.test(initialPrice) || initialPrice === ""){
-                        document.getElementById("np1").innerHTML = "Please enter a valid Initial Price (numbers with up to 2 decimal places).";
-                        valid = false;
-                    } else {
-                        document.getElementById("np1").innerHTML = "";
-                    }
-        
-                    // Sale Price validation (numbers only)
-                    let salePrice = document.getElementById("p2").value;
-                    if(!/^\d+(\.\d{1,2})?$/.test(salePrice) || salePrice === ""){
-                        document.getElementById("np2").innerHTML = "Please enter a valid Sale Price (numbers with up to 2 decimal places).";
-                        valid = false;
-                    } else {
-                        document.getElementById("np2").innerHTML = "";
-                    }
-        
-                    // Expiration date validation (should be a valid date)
-                    let expiration = document.getElementById("e1").value;
-                    if(!expiration){
-                        document.getElementById("ne1").innerHTML = "Please enter a valid Expiration Date.";
-                        valid = false;
-                    } else {
-                        document.getElementById("ne1").innerHTML = "";
-                    }
-        
-                    // Type ID validation
-                    let typeId = document.getElementById("ty1").value;
-                    if(!/^\d+$/.test(typeId) || typeId === ""){
-                        document.getElementById("nty1").innerHTML = "Please enter a valid Type ID.";
-                        valid = false;
-                    } else {
-                        document.getElementById("nty1").innerHTML = "";
-                    }
-        
-                    // Demography ID validation
-                    let demoId = document.getElementById("de1").value;
-                    if(!/^\d+$/.test(demoId) || demoId === ""){
-                        document.getElementById("nde1").innerHTML = "Please enter a valid Demography ID.";
-                        valid = false;
-                    } else {
-                        document.getElementById("nde1").innerHTML = "";
-                    }
-        
-                    // If all fields are valid
-                    if(valid) {
-                        var message = document.getElementById("noty");
-                        message.style.color = "green";
-                        message.innerHTML = "Your record has been saved.";
-                    }
+
+                    // Attach the validateForm function to the form's submit event
+                    document.getElementById("drugForm").addEventListener("submit", validateForm);
+
+
+
+
                 }
-        
                 function remove(){
                     var message = document.getElementById("noty");
                     message.style.color = "red";

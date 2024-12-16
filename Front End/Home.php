@@ -89,7 +89,6 @@
                             <?php
                         }
                     ?>
-                    
                 </div>
             </div>
             <div class="far_right">
