@@ -179,9 +179,9 @@ main .right .description{
     margin-top: 10px;
 }
 main .right .expiration{
-    font-size: 20px;
+    font-size: 18px;
     margin-top: 10px;
-    color: brown;
+    color: black;
 }
 main .right .price{
     font-size: 24px;
@@ -284,4 +284,13 @@ button a{
 #buttons {
     margin: auto;
     width: 150px;
+}
+
+
+
+.popup{
+    position: fixed;
+    top: 0;
+    height: 400px;
+    width: 500px;
 }

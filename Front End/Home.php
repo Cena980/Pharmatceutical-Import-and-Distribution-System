@@ -19,11 +19,12 @@
                 <li><a href="Inventory/inventory.php">Inventory</a></li>
                 <li><a href="contact.php">Contact Us</a></li>
             </ul>
-            <div class="barr">
+            <div class="barr" method="GET" action="php/search.php">
                 <form>
-                    <input type="text" id="search" name="Search" style="width: 85%;" id="search">
-                    <input type="submit" value="Search" style="width: 10%; text-align: center; height: 20px;" onclick="validation()">
+                    <input type="text" id="search" name="query" style="width: 85%;" id="search" required>
+                    <input type="submit" value="Search" style="width: 10%; text-align: center; height: 20px;">
                 </form>
+
                 <script>
                     a = document.getElementById("search");
                     function validation() {
@@ -77,12 +78,13 @@
                             </div>
                             <div class="product_right" >
                                 <p class="title">
-                                    <a href="Drug.php?Drug=<?php echo $Drug['Drug_Name']?>"><?php echo $Drug['Drug_Name'] ?></a>
+                                    <a href="Drug.php?Drug=<?php echo $Drug['drug_name']?>"><?php echo $Drug['drug_name'] ?></a>
                                 </p>
                                 <p class="description">
                                     <?php echo $Drug['Ingredient'] ?>
                                 </p>
-                                <P class="expiration"><?php echo $Drug['Expiration']?></P>
+                                <P class="expiration">Exp Date: <?php echo $Drug['Expiration']?></P>
+                                <P class="expiration"><?php echo $Drug['Stock']?> Items Available</P>
                                 <p class="price">00.00 ؋</p>
                             </div>
 

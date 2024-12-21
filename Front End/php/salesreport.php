@@ -8,14 +8,14 @@
     if($num_rows>0){
         echo "<table border='1' border-collapse=collapse id='tblreport'>";
         echo "<tr>
-                    <th>Sale ID</th><th>Drug ID</th><th>Date</th><th>Quantity</th>
+                    <th>Sale ID</th><th>Inventory ID</th><th>Date</th><th>Quantity</th>
                     <th>Discount</th><th>Price</th><th>Cut ID</th><th>Customer ID</th>
                     <th>Total Price</th>
                 </tr>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
             echo "<td>" . $r['Sales_ID'] . "</td>";
-            echo "<td>" . $r['Drug_ID'] . "</td>";
+            echo "<td>" . $r['Inventory_ID'] . "</td>";
             echo "<td>" . $r['Sale_Date'] . "</td>";
             echo "<td>" . $r['Quantity'] . "</td>";
             echo "<td>" . $r['Discount'] . "</td>";
