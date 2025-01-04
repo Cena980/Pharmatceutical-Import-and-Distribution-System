@@ -17,7 +17,7 @@
     }
     function getDrugs($int) {
         $mysqli = dbConnect();
-        $result = $mysqli->query("Select * from drugs order by rand() limit $int");
+        $result = $mysqli->query("Select * from main order by rand() limit $int");
         while($row = $result->fetch_assoc()){
             $Drugs[] =$row; 
         }
