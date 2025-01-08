@@ -1,21 +1,62 @@
 <?php
     include 'connection.php';
 
-    $Sale_ID = $_POST['Sale_ID'];
-    $Drug_ID = $_POST['Drug_ID'];
-    $Date = $_POST['Date'];
-    $Quantity = $_POST['Quantity'];
-    $Discount = $_POST['Discount'];
-    $Price = $_POST['Price'];
-    $Employee_Cut = $_POST['Cut_ID'];
-    $Location_ID = $_POST['Location_ID'];
-    $Total = $_POST['Total'];
+    $qnt = isset($_POST['qnt']) ? intval($_POST['qnt']) : 0;
+    echo "Number of rows submitted: " . $qnt;
+
+    for ($i = 1; $i <= $qnt; $i++) {
+        $Sale_ID = $_POST["Sale_ID_$i"] ?? null;
+        $Drug_ID = $_POST["Drug_ID_$i"] ?? null;
+        $Date = $_POST["Date_$i"] ?? null;
+        $Quantity = $_POST["Quantity_$i"] ?? null;
+        $Discount = $_POST["Discount_$i"] ?? null;
+        $Price = $_POST["Price_$i"] ?? null;
+        $Employee_Cut = $_POST["Cut_ID_$i"] ?? null;
+        $Location_ID = $_POST["Location_ID_$i"] ?? null;
+        $Total = $_POST["Total_$i"] ?? null;
+
+        $sql = "insert into sales (Inventory_ID, Sale_Date, Quantity, Discount, Price, Cut_ID, Customer_ID, Total_Price) values ('$Drug_ID', '$Date',
+            '$Quantity', '$Discount', '$Price', '$Employee_Cut','$Location_ID', '$Total')";
+        if(mysqli_query($connect, $sql)){
+            echo "Record has been inserted";
+        }else{echo "Failed";}
+        // Process or save these variables in your database
+        // Example:
+        // INSERT INTO sales (Sale_ID, Drug_ID, Date, Quantity, Discount, Price, Cut_ID, Location_ID, Total)
+        // VALUES ('$sale_id', '$drug_id', '$date', '$quantity', '$discount', '$price', '$cut_id', '$location_id', '$total');
+    }
     
 
-    $sql = "insert into sales values ('$Sale_ID', '$Drug_ID', '$Date',
-            '$Quantity', '$Discount', '$Price', '$Employee_Cut','$Location_ID', '$Total')";
-    if(mysqli_query($connect, $sql)){
-        echo "Record has been inserted";
-    }else{echo "Failed";}
+    
 
+
+
+?>
+
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get the value of qnt
+    $qnt = isset($_POST['qnt']) ? intval($_POST['qnt']) : 0;
+
+    // Use $qnt as needed
+    echo "Number of rows submitted: " . $qnt;
+
+    // Example: Loop through submitted rows
+    for ($i = 1; $i <= $qnt; $i++) {
+        $sale_id = $_POST["Sale_ID_$i"] ?? null;
+        $drug_id = $_POST["Drug_ID_$i"] ?? null;
+        $date = $_POST["Date_$i"] ?? null;
+        $quantity = $_POST["Quantity_$i"] ?? null;
+        $discount = $_POST["Discount_$i"] ?? null;
+        $price = $_POST["Price_$i"] ?? null;
+        $cut_id = $_POST["Cut_ID_$i"] ?? null;
+        $location_id = $_POST["Location_ID_$i"] ?? null;
+        $total = $_POST["Total_$i"] ?? null;
+
+        // Process or save these variables in your database
+        // Example:
+        // INSERT INTO sales (Sale_ID, Drug_ID, Date, Quantity, Discount, Price, Cut_ID, Location_ID, Total)
+        // VALUES ('$sale_id', '$drug_id', '$date', '$quantity', '$discount', '$price', '$cut_id', '$location_id', '$total');
+    }
+}
 ?>

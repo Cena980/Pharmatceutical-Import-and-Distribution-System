@@ -40,12 +40,12 @@
                 </select>
             </div>
         </div>  
-        <div id="over"><h1>Add Sales</h1></div>
-        <form name="sale" action="../php/insertsales.php" method="post">
+        <div id="over"><h1>New Sale</h1></div>
+        <form name="sale" method="post">
+            <input type="hidden" name="qnt" id="qnt" value="1">
             <table class="table table-success">
              <thead>
              <tr>
-                 <th>Sale ID</th>
                  <th>Inventory ID</th>
                  <th>Date</th>
                  <th>Quantity</th>
@@ -59,20 +59,18 @@
              </thead>
              <tbody>
                  <tr>
-                     <td><input type="number" name="Sale_ID" id="sid" autocomplete="off"></td>
-                     <td><input type="number" name="Drug_ID" id="did" autocomplete="off"></td>
-                     <td><input type="date" name="Date" id="de" autocomplete="off"></td>
-                     <td><input type="number" name="Quantity" id="qy" autocomplete="off"></td>
-                     <td><input type="number" name="Discount" id="dt" autocomplete="off"></td>
-                     <td><input type="number" name="Price" id="pr" autocomplete="off"></td>
-                     <td><input type="number" name="Cut_ID" id="ci" autocomplete="off"></td>
-                     <td><input type="number" name="Location_ID" id="lid" autocomplete="off"></td>
-                     <td><input type="number" name="Total" id="tl" autocomplete="off"></td>
+                     <td><input type="number" name="Drug_ID_1" id="did" autocomplete="off"></td>
+                     <td><input type="date" name="Date_1" id="de" autocomplete="off"></td>
+                     <td><input type="number" name="Quantity_1" id="qy" autocomplete="off"></td>
+                     <td><input type="number" name="Discount_1" id="dt" autocomplete="off"></td>
+                     <td><input type="number" name="Price_1" id="pr" autocomplete="off"></td>
+                     <td><input type="number" name="Cut_ID_1" id="ci" autocomplete="off"></td>
+                     <td><input type="number" name="Location_ID_1" id="lid" autocomplete="off"></td>
+                     <td><input type="number" name="Total_1" id="tl" autocomplete="off"></td>
                      
                  </tr>
          
                  <tr>
-                     <td id="nsid"></td>
                      <td id="ndid"></td>
                      <td id="nde"></td>
                      <td id="nqy"></td>
@@ -107,34 +105,90 @@
 
 
         </div>
+        </form>
+        <button class="btn btn-success" onclick="create_sale(); return false;">--+--</button>
+        <button class="btn btn-danger" onclick="delete_last_row(); return false;">__-__</button>
+
+
         <script>
-            function validate(){
-                var message = document.getElementById("noty");
-                message.style.color = "green";
-                message.innerHTML = "Your record has been saved.";
-        
-                let valid = true;
-                let sale = document.getElementById("sid").value;
-        
-                if(!/^\d+$/.test(sale) || sale === ""){
-                        document.getElementById("nsid").innerHTML = "Please enter a valid Drug ID.";
+
+            let qnt = 1;
+
+                function create_sale() {
+                    qnt += 1;
+
+                    const tbody = document.querySelector("table tbody");
+                    const newRow = document.createElement("tr");
+                    newRow.innerHTML = `
+                        <td><input type="number" name="Drug_ID_${qnt}" autocomplete="off"></td>
+                        <td><input type="date" name="Date_${qnt}" autocomplete="off"></td>
+                        <td><input type="number" name="Quantity_${qnt}" autocomplete="off"></td>
+                        <td><input type="number" name="Discount_${qnt}" autocomplete="off"></td>
+                        <td><input type="number" name="Price_${qnt}" autocomplete="off"></td>
+                        <td><input type="number" name="Cut_ID_${qnt}" autocomplete="off"></td>
+                        <td><input type="number" name="Location_ID_${qnt}" autocomplete="off"></td>
+                        <td><input type="number" name="Total_${qnt}" autocomplete="off"></td>
+                    `;
+                    tbody.appendChild(newRow);
+
+                    // Update the hidden input field
+                    document.getElementById("qnt").value = qnt;
+                }
+
+                function delete_last_row() {
+                    const tbody = document.querySelector("table tbody");
+                    if (tbody.rows.length > 1 && qnt > 1) {
+                        tbody.removeChild(tbody.lastElementChild);
+                        qnt -= 1;
+                        document.getElementById("qnt").value = qnt; // Update the hidden input field
+                    } else {
+                        alert("Cannot delete the last row!");
+                    }
+                }
+
+
+
+                function validate() {
+                    // Reference the notification message element
+                    var message = document.getElementById("noty");
+                    message.style.color = "green";
+                    message.innerHTML = "Your record has been saved.";
+
+                    let valid = true;
+
+                    /*// Sale ID validation
+                    let sale = document.getElementById("sid").value;
+                    if (!/^\d+$/.test(sale) || sale === "") {
+                        document.getElementById("nsid").innerHTML = "Please enter a valid Sale ID.";
                         valid = false;
                     } else {
-        
                         document.getElementById("nsid").innerHTML = "";
-        
-                    }
-        
-                let drug = document.getElementById("did");
-        
-                if(!/^\d+$/.test(drug) || drug === ""){
+                    }*/
+
+                    // Drug ID validation
+                    let drug = document.getElementById("did").value;
+                    if (!/^\d+$/.test(drug) || drug === "") {
                         document.getElementById("ndid").innerHTML = "Please enter a valid Drug ID.";
                         valid = false;
                     } else {
                         document.getElementById("ndid").innerHTML = "";
                     }
-        
-            }
+
+                    // Dynamically update form action if valid
+                    const form = document.forms["sale"]; // Get the form by name
+                    if (valid) {
+                        form.action = "../php/insertsales.php"; // Set action to the desired PHP script
+                        form.method = "post"; // Ensure the method is correct
+                    } else {
+                        // Reset action to prevent unintended submission
+                        form.action = "";
+                        message.style.color = "red";
+                        message.innerHTML = "Validation failed. Please correct the errors.";
+                    }
+
+                    return valid; // Prevent form submission if invalid
+                }
+
             </script>
     </body>
 </html>
