@@ -47,26 +47,28 @@
              <thead>
              <tr>
                  <th>Inventory ID</th>
-                 <th>Date</th>
+                 
                  <th>Quantity</th>
                  <th>Discount</th>
                  <th>Price</th>
+                 <th>Total</th>
+                 <th>Date</th>
                  <th>Employee Cut ID</th>
                  <th>Customer ID</th>
-                 <th>Total</th>
+                 
                  
              </tr>
              </thead>
              <tbody>
                  <tr>
                      <td><input type="number" name="Drug_ID_1" id="did" autocomplete="off"></td>
-                     <td><input type="date" name="Date_1" id="de" autocomplete="off"></td>
                      <td><input type="number" name="Quantity_1" id="qy" autocomplete="off"></td>
                      <td><input type="number" name="Discount_1" id="dt" autocomplete="off"></td>
                      <td><input type="number" name="Price_1" id="pr" autocomplete="off"></td>
+                     <td><input type="number" name="Total_1" id="tl" autocomplete="off"></td>
+                     <td><input type="date" name="Date_1" id="de" autocomplete="off"></td>
                      <td><input type="number" name="Cut_ID_1" id="ci" autocomplete="off"></td>
                      <td><input type="number" name="Location_ID_1" id="lid" autocomplete="off"></td>
-                     <td><input type="number" name="Total_1" id="tl" autocomplete="off"></td>
                      
                  </tr>
          
@@ -121,12 +123,9 @@
                     const newRow = document.createElement("tr");
                     newRow.innerHTML = `
                         <td><input type="number" name="Drug_ID_${qnt}" autocomplete="off"></td>
-                        <td><input type="date" name="Date_${qnt}" autocomplete="off"></td>
                         <td><input type="number" name="Quantity_${qnt}" autocomplete="off"></td>
                         <td><input type="number" name="Discount_${qnt}" autocomplete="off"></td>
                         <td><input type="number" name="Price_${qnt}" autocomplete="off"></td>
-                        <td><input type="number" name="Cut_ID_${qnt}" autocomplete="off"></td>
-                        <td><input type="number" name="Location_ID_${qnt}" autocomplete="off"></td>
                         <td><input type="number" name="Total_${qnt}" autocomplete="off"></td>
                     `;
                     tbody.appendChild(newRow);
