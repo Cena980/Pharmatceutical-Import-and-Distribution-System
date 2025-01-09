@@ -3,12 +3,13 @@
 
     $qnt = isset($_POST['qnt']) ? intval($_POST['qnt']) : 0;
     echo "Number of rows submitted: " . $qnt;
+    $date = $_POST["purchase_date_1"] ?? null;
 
     for ($i = 1; $i <= $qnt; $i++) {
         $vendor_id = $_POST["vendor_id_$i"] ?? null;
         $drug_id = $_POST["drug_id_$i"] ?? null;
         $quantity = $_POST["quantity_$i"] ?? null;
-        $purchase_date = $_POST["purchase_date_$i"] ?? null;
+        $purchase_date = $date;
         $total_amount = $_POST["total_amount_$i"] ?? null;
 
         $sql = "insert into purchases (vendor_id, drug_id, quantity, purchase_date, total_amount) values ('$vendor_id', '$drug_id',
