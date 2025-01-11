@@ -5,6 +5,25 @@
             Update Page
         </title>
         <link rel="stylesheet" href="../css/home.css">
+        <script>
+            // Wait for the DOM to load
+            window.onload = function () {
+                const urlParams = new URLSearchParams(window.location.search);
+        
+                // Populate input fields with values from URL parameters
+                document.getElementById('purchase_id').value = urlParams.get('purchase_id') || '';
+                document.getElementById('vendor_id').value = urlParams.get('vendor_id') || '';
+                document.getElementById('drug_id').value = urlParams.get('drug_id') || '';
+                document.getElementById('price').value = urlParams.get('price') || '';
+                document.getElementById('quantity').value = urlParams.get('quantity') || '';
+                document.getElementById('Discount').value = urlParams.get('Discount') || '';
+                document.getElementById('purchase_date').value = urlParams.get('purchase_date') || '';
+                document.getElementById('total_amount').value = urlParams.get('total_amount') || '';
+                document.getElementById('amount_paid').value = urlParams.get('amount_paid') || '';
+            };
+        </script>
+        
+        
     </head>
     <body>
         <div id="bar">
@@ -41,54 +60,57 @@
             </div>
         </div>  
         <div id="over"><h1>Update</h1></div>
-        <form name="sale" action="../php/updatesales.php" method="post">
-            <table class="table table-success">
-             <thead>
-             <tr>
-                 <th>Sale ID</th>
-                 <th>Inventory ID</th>
-                 <th>Date</th>
-                 <th>Quantity</th>
-                 <th>Discount</th>
-                 <th>Price</th>
-                 <th>Employee Cut ID</th>
-                 <th>Customer ID</th>
-                 <th>Total</th>
-                 
-             </tr>
-             </thead>
-             <tbody>
-                 <tr>
-                     <td><input type="number" name="Sale_ID" id="sid" autocomplete="off"></td>
-                     <td><input type="number" name="Drug_ID" id="did" autocomplete="off"></td>
-                     <td><input type="date" name="Date" id="de" autocomplete="off"></td>
-                     <td><input type="number" name="Quantity" id="qy" autocomplete="off"></td>
-                     <td><input type="number" name="Discount" id="dt" autocomplete="off"></td>
-                     <td><input type="number" name="Price" id="pr" autocomplete="off"></td>
-                     <td><input type="number" name="Cut_ID" id="ci" autocomplete="off"></td>
-                     <td><input type="number" name="Location_ID" id="lid" autocomplete="off"></td>
-                     <td><input type="number" name="Total" id="tl" autocomplete="off"></td>
-                     
-                 </tr>
-         
-                 <tr>
-                     <td id="nsid"></td>
-                     <td id="ndid"></td>
-                     <td id="nde"></td>
-                     <td id="nqy"></td>
-                     <td id="ndt"></td>
-                     <td id="npr"></td>
-                     <td id="nec"></td>
-                     <td id="nlid"></td>
-                     <td id="ntl"></td>
-                     
-                 </tr>
-             <tr>
-                 <td id="noty" class="table"></td>
-             </tr>
-             </tbody>
-            </table>
-            <button type="submit" class="btn btn-success" onclick="validate()" >Save</button>
+        <form name="updatepurchases">
+                <table class="table table-success">
+                <thead>
+                <tr>
+                    <th>purchase ID</th>
+                    <th>Vendor ID</th>
+                    <th>Drug ID</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Discount</th>
+                    <th>Purchase Date</th>
+                    <th>Total Amount</th>
+                    <th>Amount Paid</th>
+
+                    
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="number" name="purchase_id" id="purchase_id" autocomplete="off"></td>
+                        <td><input type="number" name="vendor_id" id="vendor_id" autocomplete="off"></td>
+                        <td><input type="number" name="drug_id" id="drug_id" autocomplete="off"></td>
+                        <td><input type="number" name="price" id="price" autocomplete="off"></td>
+                        <td><input type="number" name="quantity" id="quantity" autocomplete="off"></td>
+                        <td><input type="number" step="0.01" name="Discount" id="Discount" autocomplete="off"></td>
+                        <td><input type="date" name="purchase_date" id="purchase_date" autocomplete="off"></td>
+                        <td><input type="number" name="total_amount" id="total_amount" autocomplete="off"></td>
+                        <td><input type="number" name="amount_paid" id="amount_paid" autocomplete="off"></td>
+                        
+                    </tr>
+            
+                    <tr>
+                        <td id="pid"></td>
+                        <td id="vid"></td>
+                        <td id="did"></td>
+                        <td id="p"></td>
+                        <td id="q"></td>
+                        <td id="d"></td>
+                        <td id="pd"></td>
+                        <td id="ta"></td>
+                        <td id="ap"></td>
+                        
+                    </tr>
+                <tr>
+                    <td id="noty" class="table"></td>
+                </tr>
+                </tbody>
+                </table>
+                <button type="submit" class="btn btn-success" onclick="Update()" >Update</button>
+                <button type="submit" class="btn btn-danger" onclick="Delete()">Delete</button>
+            </form>
             <div id="bottom">
                 <div class="bott">
                     <h3>Abdul Bashir Arsine</h3>
@@ -108,33 +130,83 @@
 
         </div>
         <script>
-            function validate(){
+            function Update(){
                 var message = document.getElementById("noty");
                 message.style.color = "green";
                 message.innerHTML = "Your record has been saved.";
         
                 let valid = true;
-                let sale = document.getElementById("sid").value;
+                let sale = document.getElementById("purchase_id").value;
         
                 if(!/^\d+$/.test(sale) || sale === ""){
-                        document.getElementById("nsid").innerHTML = "Please enter a valid Drug ID.";
+                        document.getElementById("pid").innerHTML = "Please enter a valid Drug ID.";
                         valid = false;
                     } else {
         
-                        document.getElementById("nsid").innerHTML = "";
+                        document.getElementById("pid").innerHTML = "";
         
                     }
         
-                let drug = document.getElementById("did");
+                let drug = document.getElementById("drug_id");
         
-                if(!/^\d+$/.test(drug) || drug === ""){
-                        document.getElementById("ndid").innerHTML = "Please enter a valid Drug ID.";
+                /*if(!/^\d+$/.test(drug)){
+                        document.getElementById("did").innerHTML = "Please enter a valid Drug ID.";
                         valid = false;
                     } else {
-                        document.getElementById("ndid").innerHTML = "";
-                    }
-        
+                        document.getElementById("did").innerHTML = "";
+                    }*/
+                const form = document.forms["updatepurchases"]; // Get the form by name
+                if (valid) {
+                    form.action = "../php/updatepurchases.php"; // Set action to the desired PHP script
+                    form.method = "post"; // Ensure the method is correct
+                } else {
+                    // Reset action to prevent unintended submission
+                    form.action = "";
+                    message.style.color = "red";
+                    message.innerHTML = "Validation failed. Please correct the errors.";
+                }
+
+                return valid;
             }
+            function Delete(){
+                var message = document.getElementById("noty");
+                message.style.color = "green";
+                message.innerHTML = "Your record has been saved.";
+        
+                let valid = true;
+                let sale = document.getElementById("purchase_id").value;
+        
+                if(!/^\d+$/.test(sale) || sale === ""){
+                        document.getElementById("pid").innerHTML = "Please enter a valid Drug ID.";
+                        valid = false;
+                    } else {
+        
+                        document.getElementById("pid").innerHTML = "";
+        
+                    }
+        
+                let drug = document.getElementById("drug_id");
+        
+                /*if(!/^\d+$/.test(drug)){
+                        document.getElementById("did").innerHTML = "Please enter a valid Drug ID.";
+                        valid = false;
+                    } else {
+                        document.getElementById("did").innerHTML = "";
+                    }*/
+                const form = document.forms["updatepurchases"]; // Get the form by name
+                if (valid) {
+                    form.action = "../php/deletepurchases.php"; // Set action to the desired PHP script
+                    form.method = "post"; // Ensure the method is correct
+                } else {
+                    // Reset action to prevent unintended submission
+                    form.action = "";
+                    message.style.color = "red";
+                    message.innerHTML = "Validation failed. Please correct the errors.";
+                }
+
+                return valid;
+            }
+
             </script>
     </body>
 </html>

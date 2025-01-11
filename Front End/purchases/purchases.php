@@ -44,8 +44,6 @@
         <div id="over"><h1>Purchases</h1></div>
         <div id="report">
             <div id="buttons">
-                <button><a href="deletepurchases.html">Delete</a> </button>
-                <button><a href="updatepurchases.html">Update</a> </button>
                 <button><a href="addpurchases.html">Add</a> </button>
             </div>
             <?php include '../php/purchasesreport.php';?>
