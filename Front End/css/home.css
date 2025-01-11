@@ -25,7 +25,7 @@
 .barr form{
 }
 .barr form input{
-
+    margin-right: 2px;
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
     margin-top: 10px;

@@ -9,15 +9,18 @@
     </head>
     <body>
         <script>
-            function search(){
-                a = document.getElementById("search");
-                    if (a.value.length<1){
-                        alert("Cannot search for empty string")
-                    }else{
-                        const form = document.forms["search"];
-                        form.action = "../php/search.php";
-                        form.method = "get";
-                    }
+            function validate() {
+                a =document.getElementById('search');
+                if (a.value.length<1){
+                    alert("Cannot search for empty string")
+                }else{
+                    const form = document.forms["search"];
+                    form.action = "php/search.php";
+                    form.method = "post";
+                    const popup = window.open("", "SearchResults", "width=600,height=400");
+                    form.target = "SearchResults"; // Send the form to the popup window
+                    form.submit();
+                }
             }
         </script>
         <div id="barover">
@@ -27,10 +30,10 @@
                     <p>B&S Database</p>
                 </div>
                 <div class="barr">
-                    <form method="GET" action="php/search.php">
-                        <input type="text" id="search" name="query" style="width: 85%;" id="search" required>
+                    <form name="search" method="post" action="php/search.php">
+                        <input type="text" placeholder="Search for Drugs" id="search" name="query" id="search" required>
                     </form>
-                    <button type="submit" value="Search" onclick="search()">Search</button>
+                    <button type="submit" onclick="validate()" >Search</button>
                 </div>
                 <div class="barr">
                     <div id="switch" >
