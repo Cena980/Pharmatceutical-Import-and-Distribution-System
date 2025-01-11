@@ -2,12 +2,13 @@
 <html lang="en">
     <head>
         <title>
-            Customer Page
+            Sales Page
         </title>
         <link rel="stylesheet" href="../css/home.css">
+        
     </head>
     <body>
-    <script>
+        <script>
             function search(){
                 a = document.getElementById("search");
                     if (a.value.length<1){
@@ -42,7 +43,7 @@
         <div id="bar2over">
             <div id="bar2">
                 <ul class="barr2">
-                    <li>
+                <li>
                         <a href="../home.php">Home</a>
                     </li>
                     <li><a href="../sales/sales.php">Sales</a></li>
@@ -54,19 +55,17 @@
                 </ul>
             </div>
         </div> 
-        <div id="over"><h1>Customer records</h1></div>
+        <div id="over"><h1>Purchases</h1></div>
         <div id="report">
-            <?php include '../php/customerreport.php';?>
+            <div id="buttons">
+                <button><a href="addpurchases.html">Add</a> </button>
+            </div>
+            <?php include '../php/purchasesreport.php';?>
         </div>
-        <div id="buttons">
-            <button><a href="Deletecustomer.html">Delete</a> </button>
-            <button><a href="updatecustomer.html">Update</a> </button>
-            <button><a href="Insertcustomer.html">Add</a> </button>
-        </div>
-        <div id="bottom">
+
+            <div id="bottom">
                 <div class="bott">
                     <h3>Abdul Bashir Arsine</h3>
-
                 </div>
                 <div class="bott">
                     <h3>Ali Sina Nazari</h3>
@@ -74,12 +73,10 @@
                 </div>
                 <div class="bott">
                     <h3>...</h3>
+
+
                 </div>
             </div>
-
-
-
-        </div>
 
 
 

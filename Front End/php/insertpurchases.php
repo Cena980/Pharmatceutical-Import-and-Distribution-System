@@ -2,31 +2,25 @@
     include 'connection.php';
 
     $qnt = isset($_POST['qnt']) ? intval($_POST['qnt']) : 0;
-    echo "Number of rows submitted: " . $qnt; echo '/n';
-
-    $Date0 = $_POST["Date_1"];
-    $Employee_Cut0 = $_POST["Cut_ID_1"];
-    $Location_ID0 = $_POST["Location_ID_1"];
+    echo "Number of rows submitted: " . $qnt;
+    $date = $_POST["purchase_date_1"] ?? null;
 
     for ($i = 1; $i <= $qnt; $i++) {
-        $Sale_ID = $_POST["Sale_ID_$i"] ?? null;
-        $Inventory_ID = $_POST["Inventory_ID_$i"] ?? null;
-        $Date = $Date0;
-        $Quantity = $_POST["Quantity_$i"] ?? null;
-        $Discount = $_POST["Discount_$i"] ?? null;
-        $Price = $_POST["Price_$i"] ?? null;
-        $Employee_Cut = $Employee_Cut0;
-        $Customer_ID = $Location_ID0;
-        $Total = $_POST["Total_$i"] ?? null;
-        $Amount_Recieved = $_POST["Amount_Recieved_$i"] ?? null;
-        $Note = $_POST["Note_$i"] ?? null;
+        $vendor_id = $_POST["vendor_id_$i"] ?? null;
+        $drug_id = $_POST["drug_id_$i"] ?? null;
+        $price = $_POST["price_$i"] ?? null;
+        $quantity = $_POST["quantity_$i"] ?? null;
+        $discount = $_POST["discount_$i"] ?? null;
+        $purchase_date = $date;
+        $total_amount = $_POST["total_amount_$i"] ?? null;
+        $amount_paid = $_POST["amount_paid_$i"] ?? null;
 
-        $sql = "insert into sales (Inventory_ID, Sale_Date, Quantity, Discount, Price, Cut_ID, Customer_ID, Total_Price,
-             Amount_Received, Note) values ('$Inventory_ID', '$Date',
-            '$Quantity', '$Discount', '$Price', '$Employee_Cut','$Customer_ID', '$Total', '$Amount_Recieved', '$Note')";
+        $sql = "insert into purchases (vendor_id, drug_id, price, quantity, Discount, purchase_date, total_amount, amount_paid) values ('$vendor_id', '$drug_id', '$price',
+            '$quantity', '$discount', '$purchase_date', '$total_amount', '$amount_paid')";
         if(mysqli_query($connect, $sql)){
-            echo "Record has been inserted";echo '/n';
-        }else{echo "Failed";echo '/n';}
+            echo "Record has been inserted";
+        }else{echo "Failed";}
+
     }
     
 

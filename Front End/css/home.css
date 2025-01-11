@@ -1,73 +1,83 @@
-#bar {
-    margin-left: -7.5px;
+#barover{
     margin-top: -7.5px;
-    padding-right: 20px;
     display: flex;
-    position: sticky;
-    background-color: rgb(40, 90, 90);
+    background-color: rgb(50, 38, 93);
+    color: rgb(45, 105, 137);
+    font-weight: bold;
+}
+#bar {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
     height: 50px;
 }
 .barr {
-    width: 50%;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    width: auto;
     display: inline-flex;
+}
+.barr form{
+}
+.barr form input{
+
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    margin-top: 10px;
+    height: 30px;
+    padding: 0;
+    padding-left: 10px;
+}
+.barr button{
+    font-weight: bold;
+    color: rgb(45, 105, 137);
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    margin-left: auto;
+    height: 32px;
+    margin-top: 10px;
+}
+.barr select{
+    height: 30px;
+    margin-top: 10px;
+}
+#bar2over{
+    display: flex;
+    background-color: rgb(45, 105, 137);
+}
+#bar2{
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
 }
 ul {
     list-style: none;
     font-family: 'Times New Roman', Times, serif;
     font-size: 12pt;
     font-weight: bold;
-    display: grid;  
-    grid-template-columns: auto auto auto auto auto;
+    display: flex;  
     margin: auto;
 }
 li {
     margin-left: 10px;
-    width: auto;
+    width: 100px;
     text-align: center;
     padding-top: 15px;
-    padding-bottom: 20px;
-
-    
-}
-li a {
-    margin: auto;
+    padding-bottom: 20px;  
 }
 li:hover {
-    background-color: rgb(60, 120, 130);
-}
-li a:hover {
-    color: rgb(149, 148, 148);
+    border-radius: 15px;
+    background-color: rgb(25, 61, 80);
     
 }
-form {
-    margin-top: 15px;
-    width: 90%;
-}
-select {
-    margin-top: 15px;
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: bold;
-    width: 12.5%;
-    height: 25px;
-    background-color: rgb(60, 110, 120);
-    color: white;
 
-}
-input {
-    background-color: rgb(60, 110, 120);
-    color: white;
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: bold;
-    height: 20px;
-    border: solid white 1pt;
-    border-radius: 5px;
-}
-input:hover {
-    color: rgb(149, 148, 148);
-}
-select:hover {
-    color: rgb(149, 148, 148);
-}
 a {
     text-decoration: none;
     color: white;
@@ -76,6 +86,16 @@ a {
 #over {
     margin: auto;
     width: 50px;
+}
+#switch button{
+    border-radius: 50px;
+}
+body{
+    background-image: linear-gradient(to right, rgb(87, 65, 113, 0.5), rgb(50,38,93, 0.5));
+}
+body form{
+    border-top: solid 2px linear-gradient(black, brown);
+    border-bottom: ;
 }
 
 #main {
@@ -120,7 +140,7 @@ main {
     grid-template-columns: auto 1fr 1fr;
     grid-column-gap: 30px;
     margin-top: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 main .section_title{
     font-size: 22px;
@@ -132,20 +152,22 @@ main .left {
     padding-right: 20px;
 }
 main .left .tables{
-    background: linear-gradient(to top, rgba(150, 212, 212, 1), rgb(255, 255, 255));
+    background: rgba(50, 38, 93, 0.8);
+    margin-bottom: 10px;
+    text-align: center;
+    padding: 5px 0;
+    height: 30px;
+    border-radius: 20px;
 }
 main .left .tables:hover{
     background-color: darkgrey;
 }
 main .left a {
-    display: block;
-    height: 20px;
-    padding-top: 5px;
     text-decoration: none;
-    color: black;
+    color: rgb(45, 105, 137);
     font-size: 18px;
+    font-weight: bold;
     margin-bottom: 10px;
-    padding-left: 5px;
 }
 main .left a:hover{
 
@@ -193,9 +215,12 @@ main .far_right {
     padding-left: 10px;
 }
 #report{
-    margin-top: 10px;
     width: 100%;
-    height: 75%;
+    height: auto;
+    margin: auto;
+    margin-bottom: 100px;
+}
+#report #buttons{
     margin-bottom: 10px;
 }
 #bottom {
@@ -230,8 +255,6 @@ th, td{
 }
 #buttons {
     display: flex;
-}
-button {
     width: auto;
     margin-left: 10px;
     border-radius: 10%;

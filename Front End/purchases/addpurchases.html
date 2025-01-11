@@ -5,6 +5,8 @@
             Insertion Page
         </title>
         <link rel="stylesheet" href="../css/home.css">
+        <link rel="stylesheet" type="text/css" href="file:///C:/Program%20Files%20(x86)/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+        <script type="text/javascript" src="file:///C:/Program%20Files%20(x86)/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
     </head>
     <body>
         <script>
@@ -53,100 +55,82 @@
                     <li><a href="../contact.php">Contact Us</a></li>
                 </ul>
             </div>
-        </div>
-        <div id="over"><h1>New Sale</h1></div>
-        <form name="sale" method="post">
-            <input type="hidden" name="qnt" id="qnt" value="1">
-            <table class="table table-success">
-             <thead>
-             <tr>
-                 <th>Inventory ID</th>
-                 
-                 <th>Quantity</th>
-                 <th>Discount</th>
-                 <th>Price</th>
-                 <th>Total</th>
-                 <th>Amount_Received</th>
-                 <th>Note</th>
-                 <th>Date</th>
-                 <th>Employee Cut ID</th>
-                 <th>Customer ID</th>
-                 
-                 
-             </tr>
-             </thead>
-             <tbody>
-                 <tr>
-                     <td><input type="number" name="Inventory_ID_1" id="did" autocomplete="off"></td>
-                     <td><input type="number" name="Quantity_1" id="qy" autocomplete="off"></td>
-                     <td><input type="number" name="Discount_1" id="dt" autocomplete="off"></td>
-                     <td><input type="number" name="Price_1" id="pr" autocomplete="off"></td>
-                     <td><input type="number" name="Total_1" id="tl" autocomplete="off"></td>
-                     <td><input type="number" name="Amount_Received" id="AR" autocomplete="off"></td>
-                     <td><input type="text" name="Note" id="Note" autocomplete="off"></td>
-                     <td><input type="date" name="Date_1" id="de" autocomplete="off"></td>
-                     <td><input type="number" name="Cut_ID_1" id="ci" autocomplete="off"></td>
-                     <td><input type="number" name="Location_ID_1" id="lid" autocomplete="off"></td>
-                     
-                 </tr>
-         
-                 <tr>
-                     <td id="ndid"></td>
-                     <td id="nde"></td>
-                     <td id="nqy"></td>
-                     <td id="ndt"></td>
-                     <td id="npr"></td>
-                     <td id="nec"></td>
-                     <td id="nlid"></td>
-                     <td id="ntl"></td>
-                     
-                 </tr>
-             <tr>
-                 <td id="noty" class="table"></td>
-             </tr>
-             </tbody>
+        </div>  
+        <div id="over"><h1>New purchase</h1></div>
+        <form name="purchase">
+            <table>
+                <input type="hidden" name="qnt" id="qnt" value="1">
+                <tr>
+                    <th>Vendor ID</th>
+                    <th>Drug ID</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Drug Discount</th>
+                    <th>Total Amount</th>
+                    <th>Amount Paid</th>
+                    <th>Purchase Date</th>
+                    
+                </tr>
+                <tr>
+                    <td><input type="number" name="vendor_id_1" id="vendor_id" autocomplete="off"></td>
+                    <td><input type="number" name="drug_id_1" id="did" autocomplete="off"></td>
+                    <td><input type="number" name="price_1" id="did" autocomplete="off"></td>
+                    <td><input type="number" name="quantity_1" id="qnt" autocomplete="off"></td>
+                    <td><input type="number" name="discount_1" id="did" autocomplete="off"></td>
+                    <td><input type="number" name="total_amount_1" id="total" autocomplete="off"></td>
+                    <td><input type="number" name="amount_paid_1" id="did" autocomplete="off"></td>
+                    <td><input type="date" name="purchase_date_1" id="date" autocomplete="off"></td>
+                </tr>
+                <tr>
+                    <td id="nvendor_id"></td>
+                    <td id="ndid"></td>
+                    <td id="nqnt"></td>
+                    <td id="ndate"></td>
+                    <td id="ntotal"></td>
+                    
+                </tr>
+                <tr>
+                    <td id="noty" class="table"></td>
+                </tr>
+            
             </table>
             <button type="submit" class="btn btn-success" onclick="validate()" >Save</button>
-            <div id="bottom">
-                <div class="bott">
-                    <h3>Abdul Bashir Arsine</h3>
-                </div>
-                <div class="bott">
-                    <h3>Ali Sina Nazari</h3>
-
-                </div>
-                <div class="bott">
-                    <h3>...</h3>
-
-
-                </div>
-            </div>
-
-
-
         </div>
         </form>
-        <button class="btn btn-success" onclick="create_sale(); return false;">--+--</button>
+        <button class="btn btn-success" onclick="create_purchase(); return false;">--+--</button>
         <button class="btn btn-danger" onclick="delete_last_row(); return false;">__-__</button>
 
+        <div id="bottom">
+            <div class="bott">
+                <h3>Abdul Bashir Arsine</h3>
+            </div>
+            <div class="bott">
+                <h3>Ali Sina Nazari</h3>
 
+            </div>
+            <div class="bott">
+                <h3>...</h3>
+
+
+            </div>
+        </div>
         <script>
 
             let qnt = 1;
 
-                function create_sale() {
+                function create_purchase() {
                     qnt += 1;
 
                     const tbody = document.querySelector("table tbody");
                     const newRow = document.createElement("tr");
                     newRow.innerHTML = `
-                        <td><input type="number" name="Inventory_ID_${qnt}" autocomplete="off"></td>
-                        <td><input type="number" name="Quantity_${qnt}" autocomplete="off"></td>
-                        <td><input type="number" name="Discount_${qnt}" autocomplete="off"></td>
-                        <td><input type="number" name="Price_${qnt}" autocomplete="off"></td>
-                        <td><input type="number" name="Total_${qnt}" autocomplete="off"></td>
-                        <td><input type="number" name="Amount_Received_${qnt}" id="AR" autocomplete="off"></td>
-                        <td><input type="text" name="Note_${qnt}" id="Note" autocomplete="off"></td>
+                        <td><input type="number" name="vendor_id_${qnt}" autocomplete="off"></td>
+                        <td><input type="number" name="drug_id_${qnt}" autocomplete="off"></td>
+                        <td><input type="number" name="price_${qnt}" autocomplete="off"></td>
+                        <td><input type="number" name="quantity_${qnt}" autocomplete="off"></td>
+                        <td><input type="number" name="discount_${qnt}" autocomplete="off"></td>
+                        <td><input type="number" name="total_amount_${qnt}" autocomplete="off"></td>
+                        <td><input type="number" name="amount_paid_${qnt}" autocomplete="off"></td>
                     `;
                     tbody.appendChild(newRow);
 
@@ -175,15 +159,6 @@
 
                     let valid = true;
 
-                    /*// Sale ID validation
-                    let sale = document.getElementById("sid").value;
-                    if (!/^\d+$/.test(sale) || sale === "") {
-                        document.getElementById("nsid").innerHTML = "Please enter a valid Sale ID.";
-                        valid = false;
-                    } else {
-                        document.getElementById("nsid").innerHTML = "";
-                    }*/
-
                     // Drug ID validation
                     let drug = document.getElementById("did").value;
                     if (!/^\d+$/.test(drug) || drug === "") {
@@ -194,9 +169,9 @@
                     }
 
                     // Dynamically update form action if valid
-                    const form = document.forms["sale"]; // Get the form by name
+                    const form = document.forms["purchase"]; // Get the form by name
                     if (valid) {
-                        form.action = "../php/insertsales.php"; // Set action to the desired PHP script
+                        form.action = "../php/insertpurchases.php"; // Set action to the desired PHP script
                         form.method = "post"; // Ensure the method is correct
                     } else {
                         // Reset action to prevent unintended submission

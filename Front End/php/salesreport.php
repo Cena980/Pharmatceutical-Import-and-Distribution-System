@@ -10,7 +10,7 @@
         echo "<tr>
                     <th>Sale ID</th><th>Inventory ID</th><th>Date</th><th>Quantity</th>
                     <th>Discount</th><th>Price</th><th>Cut ID</th><th>Customer ID</th>
-                    <th>Total Price</th>
+                    <th>Total Price</th><th>Amount Recieved</th><th>Note</th>
                 </tr>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
@@ -23,6 +23,8 @@
             echo "<td>" . $r['Cut_ID'] . "</td>";
             echo "<td>" . $r['Customer_ID'] . "</td>";
             echo "<td>" . $r['Total_Price'] . "</td>";
+            echo "<td>" . $r['Amount_Received'] . "</td>";
+            echo "<td>" . $r['Note'] . "</td>";
             echo "</tr>";
         }
         echo "</table>";
