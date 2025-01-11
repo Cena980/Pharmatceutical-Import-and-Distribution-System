@@ -90,6 +90,13 @@ a {
 #switch button{
     border-radius: 50px;
 }
+body{
+    background-image: linear-gradient(to right, rgb(87, 65, 113, 0.5), rgb(50,38,93, 0.5));
+}
+body form{
+    border-top: solid 2px linear-gradient(black, brown);
+    border-bottom: ;
+}
 
 #main {
     height: 100%;
@@ -145,20 +152,22 @@ main .left {
     padding-right: 20px;
 }
 main .left .tables{
-    background: linear-gradient(to top, rgba(150, 212, 212, 1), rgb(255, 255, 255));
+    background: rgba(50, 38, 93, 0.8);
+    margin-bottom: 10px;
+    text-align: center;
+    padding: 5px 0;
+    height: 30px;
+    border-radius: 20px;
 }
 main .left .tables:hover{
     background-color: darkgrey;
 }
 main .left a {
-    display: block;
-    height: 20px;
-    padding-top: 5px;
     text-decoration: none;
-    color: black;
+    color: rgb(45, 105, 137);
     font-size: 18px;
+    font-weight: bold;
     margin-bottom: 10px;
-    padding-left: 5px;
 }
 main .left a:hover{
 
