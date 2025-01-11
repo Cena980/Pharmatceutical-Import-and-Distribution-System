@@ -7,39 +7,53 @@
         <link rel="stylesheet" href="../css/home.css">
     </head>
     <body>
-        <div id="bar">
-            <ul class="barr">
-                <li>
-                    <a href="../home.php">Home</a>
-                </li>
-                <li><a href="../sales/sales.php">Sales</a></li>
-                <li><a href="../drugs/drugs.php">Drugs</a></li>
-                <li><a href="../employees/employees.php">Employee</a></li>
-                <li><a href="../Inventory/inventory.php">Inventory</a></li>
-            </ul>
-            <div class="barr">
-                <form>
-                    <input type="text" id="search" name="Search" style="width: 85%;" id="search">
-                    <input type="submit" value="Search" style="width: 10%; text-align: center; height: 20px;" onclick="validation()">
-                </form>
-                <script>
-                    a = document.getElementById("search");
-                    function validation() {
-                        if (a.value.length<1){
-                            alert("Cannot search for empty string")
-                        }
-                        
+        <script>
+            function search(){
+                a = document.getElementById("search");
+                    if (a.value.length<1){
+                        alert("Cannot search for empty string")
+                    }else{
+                        const form = document.forms["search"];
+                        form.action = "../php/search.php";
+                        form.method = "get";
                     }
-                    
-                    
-                </script>
-                <select >
-                    <option>Persian</option>
-                    <option>Pashto</option>
-                    <option>English</option>
-                </select>
+            }
+        </script>
+        <div id="barover">
+            <div id="bar">
+                <div class="barr">
+                    <img>
+                    <p>B&S Database</p>
+                </div>
+                <div class="barr">
+                    <form method="GET" action="php/search.php">
+                        <input type="text" id="search" name="query" style="width: 85%;" id="search" required>
+                    </form>
+                    <button type="submit" value="Search" onclick="search()">Search</button>
+                </div>
+                <div class="barr">
+                    <div id="switch" >
+                        <button id="switch">En</button>
+                        <button id="switch">Fa</button>
+                    </div>
+                </div>
+            </div>  
+        </div>
+        <div id="bar2over">
+            <div id="bar2">
+                <ul class="barr2">
+                <li>
+                        <a href="../home.php">Home</a>
+                    </li>
+                    <li><a href="../sales/sales.php">Sales</a></li>
+                    <li><a href="../drugs/drugs.php">Drug</a></li>
+                    <li><a href="../employees/employees.php">Employee</a></li>
+                    <li><a href="../Inventory/inventory.php">Inventory</a></li>
+                    <li><a href="../purchases/purchases.php">Purchases</a></li>
+                    <li><a href="../contact.php">Contact Us</a></li>
+                </ul>
             </div>
-        </div>  
+        </div>
         <div id="over"><h1>Insert into Shareholders</h1></div>
         <form name="sale" action="../php/insertshareholders.php" method="post">
             <table class="table table-success">
