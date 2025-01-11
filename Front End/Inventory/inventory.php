@@ -40,15 +40,16 @@
                 </select>
             </div>
         </div>  
-        <div id="over"><h1>Incentory</h1></div>
+        <div id="over"><h1>Inventory</h1></div>
         <div id="report">
+            <div id="buttons">
+                <button><a href="deleteinventory.html">Delete</a> </button>
+                <button><a href="updateinventory.html">Update</a> </button>
+                <button><a href="insertinventory.html">Add</a> </button>
+            </div>
             <?php include '../php/inventoryreport.php';?>
         </div>
-        <div id="buttons">
-            <button><a href="deleteinventory.html">Delete</a> </button>
-            <button><a href="updateinventory.html">Update</a> </button>
-            <button><a href="insertinventory.html">Add</a> </button>
-        </div>
+
         <div id="bottom">
                 <div class="bott">
                     <h3>Abdul Bashir Arsine</h3>

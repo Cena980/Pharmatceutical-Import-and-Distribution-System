@@ -49,16 +49,22 @@
                 <tr>
                     <th>Vendor ID</th>
                     <th>Drug ID</th>
+                    <th>Price</th>
                     <th>Quantity</th>
+                    <th>Drug Discount</th>
                     <th>Total Amount</th>
+                    <th>Amount Paid</th>
                     <th>Purchase Date</th>
                     
                 </tr>
                 <tr>
                     <td><input type="number" name="vendor_id_1" id="vendor_id" autocomplete="off"></td>
                     <td><input type="number" name="drug_id_1" id="did" autocomplete="off"></td>
+                    <td><input type="number" name="price_1" id="did" autocomplete="off"></td>
                     <td><input type="number" name="quantity_1" id="qnt" autocomplete="off"></td>
+                    <td><input type="number" name="discount_1" id="did" autocomplete="off"></td>
                     <td><input type="number" name="total_amount_1" id="total" autocomplete="off"></td>
+                    <td><input type="number" name="amount_paid_1" id="did" autocomplete="off"></td>
                     <td><input type="date" name="purchase_date_1" id="date" autocomplete="off"></td>
                 </tr>
                 <tr>
@@ -106,8 +112,11 @@
                     newRow.innerHTML = `
                         <td><input type="number" name="vendor_id_${qnt}" autocomplete="off"></td>
                         <td><input type="number" name="drug_id_${qnt}" autocomplete="off"></td>
+                        <td><input type="number" name="price_${qnt}" autocomplete="off"></td>
                         <td><input type="number" name="quantity_${qnt}" autocomplete="off"></td>
+                        <td><input type="number" name="discount_${qnt}" autocomplete="off"></td>
                         <td><input type="number" name="total_amount_${qnt}" autocomplete="off"></td>
+                        <td><input type="number" name="amount_paid_${qnt}" autocomplete="off"></td>
                     `;
                     tbody.appendChild(newRow);
 

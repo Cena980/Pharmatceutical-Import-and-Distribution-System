@@ -84,7 +84,7 @@
                                     <?php echo $Drug['Ingredient'] ?>
                                 </p>
                                 <P class="expiration">Exp Date: <?php echo $Drug['Expiration']?></P>
-                                <P class="expiration"><?php echo $Drug['Stock']?> Items Available</P>
+                                <P class="expiration"><?php echo $Drug['Initial_Amount']?> Items Available</P>
                                 <p class="price">00.00 ؋</p>
                             </div>
 

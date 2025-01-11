@@ -8,19 +8,19 @@
     for ($i = 1; $i <= $qnt; $i++) {
         $vendor_id = $_POST["vendor_id_$i"] ?? null;
         $drug_id = $_POST["drug_id_$i"] ?? null;
+        $price = $_POST["price_$i"] ?? null;
         $quantity = $_POST["quantity_$i"] ?? null;
+        $discount = $_POST["discount_$i"] ?? null;
         $purchase_date = $date;
         $total_amount = $_POST["total_amount_$i"] ?? null;
+        $amount_paid = $_POST["amount_paid_$i"] ?? null;
 
-        $sql = "insert into purchases (vendor_id, drug_id, quantity, purchase_date, total_amount) values ('$vendor_id', '$drug_id',
-            '$quantity', '$purchase_date', '$total_amount')";
+        $sql = "insert into purchases (vendor_id, drug_id, price, quantity, Discount, purchase_date, total_amount, amount_paid) values ('$vendor_id', '$drug_id', '$price',
+            '$quantity', '$discount', '$purchase_date', '$total_amount', '$amount_paid')";
         if(mysqli_query($connect, $sql)){
             echo "Record has been inserted";
         }else{echo "Failed";}
-        // Process or save these variables in your database
-        // Example:
-        // INSERT INTO sales (Sale_ID, Drug_ID, Date, Quantity, Discount, Price, Cut_ID, Location_ID, Total)
-        // VALUES ('$sale_id', '$drug_id', '$date', '$quantity', '$discount', '$price', '$cut_id', '$location_id', '$total');
+
     }
     
 
