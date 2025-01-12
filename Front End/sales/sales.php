@@ -57,8 +57,6 @@
         <div id="over"><h1>Sales</h1></div>
         <div id="report">
             <div id="buttons">
-                <button><a href="deletesales.html">Delete</a> </button>
-                <button><a href="updatesales.html">Update</a> </button>
                 <button><a href="addsales.php">Add</a> </button>
             </div>
             <?php include '../php/salesreport.php';?>

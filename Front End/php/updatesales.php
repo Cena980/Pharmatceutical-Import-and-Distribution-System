@@ -1,21 +1,24 @@
 <?php
     include 'connection.php';
 
-    $Sale_ID = $_POST['Sale_ID'];
-    $Drug_ID = $_POST['Drug_ID'];
-    $Date = $_POST['Date'];
+    $Sales_ID = $_POST['Sales_ID'];
+    $Inventory_ID = $_POST['Inventory_ID'];
+    $Sale_Date = $_POST['Sale_Date'];
     $Quantity = $_POST['Quantity'];
     $Discount = $_POST['Discount'];
     $Price = $_POST['Price'];
-    $Employee_Cut = $_POST['Cut_ID'];
-    $Location_ID = $_POST['Location_ID'];
-    $Total = $_POST['Total'];
+    $Cut_ID = $_POST['Cut_ID'];
+    $Customer_ID = $_POST['Customer_ID'];
+    $Total_Price = $_POST['Total_Price'];
+    $Amount_Received = $_POST['Amount_Received'];
+    $Note = $_POST['Note'];
     
 
-    $sql = "update sales set Drug_ID = '$Drug_ID', Sale_Date = '$Date', 
+    $sql = "update sales set Inventory_ID = '$Inventory_ID', Sale_Date = '$Sale_Date', 
         Quantity = '$Quantity', Discount = '$Discount', Price = '$Price', 
-        Cut_ID ='$Employee_Cut', Customer_ID = '$Location_ID', Total_Price = '$Total'
-        where Sales_ID = '$Sale_ID'";
+        Cut_ID ='$Cut_ID', Customer_ID = '$Customer_ID', Total_Price = '$Total_Price', 
+        Amount_Received = '$Amount_Received', Note = '$Note'
+        where Sales_ID = '$Sales_ID'";
     if(mysqli_query($connect, $sql)){
         echo "Record has been updated";
     }else{echo "Failed";}
