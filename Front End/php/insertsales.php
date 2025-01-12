@@ -88,7 +88,7 @@
         }else{echo "Failed";}
     }
 
-    $query = "select * from sales_bill where SaleDate = '$Date0' and CustomerName = (select customer_name from customer where customer_id = $Location_ID0)";
+    $query = "select * from sales_bill where SaleDate = '$Date0' and CustomerShop = (select customer_shop from customer where customer_id = $Location_ID0)";
     try{$res = mysqli_query($connect, $query);
     }catch(mysqli_sql_exception){
         echo 'Count not connect';
@@ -101,7 +101,7 @@
         echo "<tr>
                     <th>Drug Name</th><th>Expiration</th><th>Price</th><th>Quantity</th>
                     <th>Sale Date</th><th>Discount</th><th>Total Price</th><th>Amount Received</th>
-                    <th>Notes</th><th>Customer Name</th>
+                    <th>Notes</th><th>Shop Name</th>
                 </tr>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
@@ -114,7 +114,7 @@
             echo "<td>" . $r['TotalPrice'] . "</td>";
             echo "<td>" . $r['AmountReceived'] . "</td>";
             echo "<td>" . $r['Notes'] . "</td>";
-            echo "<td>" . $r['CustomerName'] . "</td>";
+            echo "<td>" . $r['CustomerShop'] . "</td>";
             echo "</tr>";
 
         }
