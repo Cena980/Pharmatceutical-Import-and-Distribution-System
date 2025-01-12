@@ -1,3 +1,4 @@
+<?php require '../php/functions.php' ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -7,18 +8,6 @@
         <link rel="stylesheet" href="../css/home.css">
     </head>
     <body>
-        <script>
-            function search(){
-                a = document.getElementById("search");
-                    if (a.value.length<1){
-                        alert("Cannot search for empty string")
-                    }else{
-                        const form = document.forms["search"];
-                        form.action = "../php/search.php";
-                        form.method = "get";
-                    }
-            }
-        </script>
         <div id="barover">
             <div id="bar">
                 <div class="barr">
@@ -66,9 +55,9 @@
                  <th>Discount</th>
                  <th>Price</th>
                  <th>Total</th>
-                 <th>Amount_Received</th>
                  <th>Note</th>
                  <th>Date</th>
+                 <th>Amount_Received</th>
                  <th>Employee Cut ID</th>
                  <th>Customer ID</th>
                  
@@ -82,9 +71,9 @@
                      <td><input type="number" name="Discount_1" id="dt" autocomplete="off"></td>
                      <td><input type="number" name="Price_1" id="pr" autocomplete="off"></td>
                      <td><input type="number" name="Total_1" id="tl" autocomplete="off"></td>
-                     <td><input type="number" name="Amount_Received" id="AR" autocomplete="off"></td>
                      <td><input type="text" name="Note" id="Note" autocomplete="off"></td>
                      <td><input type="date" name="Date_1" id="de" autocomplete="off"></td>
+                     <td><input type="number" name="Amount_Received_1" id="AR" autocomplete="off"></td>
                      <td><input type="number" name="Cut_ID_1" id="ci" autocomplete="off"></td>
                      <td><input type="number" name="Location_ID_1" id="lid" autocomplete="off"></td>
                      
@@ -131,6 +120,18 @@
 
 
         <script>
+            
+            function search(){
+                a = document.getElementById("search");
+                    if (a.value.length<1){
+                        alert("Cannot search for empty string")
+                    }else{
+                        const form = document.forms["search"];
+                        form.action = "../php/search.php";
+                        form.method = "get";
+                        form.submit();
+                    }
+            }
 
             let qnt = 1;
 
@@ -145,7 +146,6 @@
                         <td><input type="number" name="Discount_${qnt}" autocomplete="off"></td>
                         <td><input type="number" name="Price_${qnt}" autocomplete="off"></td>
                         <td><input type="number" name="Total_${qnt}" autocomplete="off"></td>
-                        <td><input type="number" name="Amount_Received_${qnt}" id="AR" autocomplete="off"></td>
                         <td><input type="text" name="Note_${qnt}" id="Note" autocomplete="off"></td>
                     `;
                     tbody.appendChild(newRow);

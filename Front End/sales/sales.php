@@ -59,7 +59,7 @@
             <div id="buttons">
                 <button><a href="deletesales.html">Delete</a> </button>
                 <button><a href="updatesales.html">Update</a> </button>
-                <button><a href="addsales.html">Add</a> </button>
+                <button><a href="addsales.php">Add</a> </button>
             </div>
             <?php include '../php/salesreport.php';?>
         </div>
