@@ -1,7 +1,7 @@
 <?php
 
     include 'connection.php';
-    $query = "select * from sales";
+    $query = "select * from sales limit 30";
     $res = mysqli_query($connect, $query);
 
     $num_rows = mysqli_num_rows($res);

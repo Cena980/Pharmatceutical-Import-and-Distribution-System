@@ -9,15 +9,18 @@
     </head>
     <body>
         <script>
-            function search(){
-                a = document.getElementById("search");
-                    if (a.value.length<1){
-                        alert("Cannot search for empty string")
-                    }else{
-                        const form = document.forms["search"];
-                        form.action = "../php/search.php";
-                        form.method = "get";
-                    }
+            function validate() {
+                a =document.getElementById('search');
+                if (a.value.length<1){
+                    alert("Cannot search for empty string")
+                }else{
+                    const form = document.forms["search"];
+                    form.action = "php/search.php";
+                    form.method = "post";
+                    const popup = window.open("", "SearchResults", "width=600,height=400");
+                    form.target = "SearchResults"; // Send the form to the popup window
+                    form.submit();
+                }
             }
         </script>
         <div id="barover">
@@ -27,10 +30,10 @@
                     <p>B&S Database</p>
                 </div>
                 <div class="barr">
-                    <form method="GET" action="php/search.php">
-                        <input type="text" id="search" name="query" style="width: 85%;" id="search" required>
+                    <form name="search" method="post" action="php/search.php">
+                        <input type="text" placeholder="Search for Drugs" id="search" name="query" id="search" required>
                     </form>
-                    <button type="submit" value="Search" onclick="search()">Search</button>
+                    <button type="submit" onclick="validate()" >Search</button>
                 </div>
                 <div class="barr">
                     <div id="switch" >
@@ -80,7 +83,7 @@
             </div>
             <div class="right">
                 <div class="section_title">Products</div>
-                <?php $Drugs = getDrugs(3) ?>
+                <?php $Drugs = getDrugs(4) ?>
                 <div class="product">
                     <?php
                         foreach($Drugs as $Drug){
@@ -107,17 +110,28 @@
             </div>
             <div class="far_right">
                 <div class="section_title">Sales Reports</div>
-                <?php include 'php/salesreport.php'?>
+                <?php include 'php/salesreportlimited.php'?>
             </div>
             
         </main>
         <div id="bottom">
             <div class="bott">
-                <h3>Abdul Bashir Arsine</h3>
+                <h3 class="section_title">Database Usage Guidelines</h3>
+                <div id="points">
+                    <div class="points">Authorized Access Only: Access to this database is restricted to authorized personnel only.</div>
+                    <div class="points">Data Integrity: Ensure the accuracy and completeness of all data entries.</div>
+                    <div class="points">Privacy Protection: Handle user data responsibly and comply with relevant privacy regulations.</div>
+                    <div class="points">Activity Monitoring: All activities may be logged and monitored for security purposes.</div>
+                    <div class="points">Reporting Issues: Report any technical issues or security concerns immediately to the system administrator.</div>
+                    <div class="points">Prohibited Actions: Unauthorized copying, redistribution, or alteration of the database or its components is strictly prohibited.</div>
+                </div>
 
             </div>
             <div class="bott">
-                <h3>Ali Sina Nazari</h3>
+                <h3 class="section_title">Technical Support</h3>
+                <div id="points">
+                    <div class="points">BSDatabases.tech@gmail.com</div>
+                </div>
 
             </div>
             <div class="bott">

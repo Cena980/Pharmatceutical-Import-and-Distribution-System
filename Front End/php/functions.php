@@ -32,3 +32,8 @@
         }
         return $Shareholders;
     }
+    function getPrice($int){
+        $mysqli = dbConnect();
+        $result = $mysqli->query("Select Price from inventory where inventory_id = $int");
+        return $result;
+    }
