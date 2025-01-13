@@ -31,7 +31,7 @@
                 </div>
                 <div class="barr">
                     <form name="search" method="post" action="php/search.php">
-                        <input type="text" placeholder="Search for Drugs" id="search" name="query" id="search" required>
+                        <input type="text" placeholder="Search for Drugs" name="query" id="search" required>
                     </form>
                     <button type="submit" onclick="validate()" >Search</button>
                 </div>

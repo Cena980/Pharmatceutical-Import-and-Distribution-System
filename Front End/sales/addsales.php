@@ -15,10 +15,27 @@
                     <p>B&S Database</p>
                 </div>
                 <div class="barr">
-                    <form name="search">
-                        <input type="text" placeholder="Search for Drugs" id="search" name="query" id="search" required>
+                    <Script>
+                        // Search function for the drugs
+                        function drugSearch() {
+                            a =document.getElementById('search');
+                            if (a.value.length<1){
+                                alert("Cannot search for empty string")
+                            }else{
+                                const form = document.forms["search"];
+                                form.action = "../php/search.php";
+                                form.method = "post";
+                                const popup = window.open("", "SearchResults", "width=600,height=400");
+                                form.target = "SearchResults"; // Send the form to the popup window
+                                form.submit();
+                            }
+                        }
+                    </Script>
+                    <form name="search" method="post" action="../php/search.php">
+                        <input type="text" placeholder="Search for Drugs" name="query" id="search" required>
                     </form>
-                    <button type="submit" onclick="search()" >Search</button>
+                    <button type="submit" onclick="drugSearch()" >Search</button>
+                    
                 </div>
                 <div class="barr">
                     <div id="switch" >
@@ -281,21 +298,6 @@
                     document.getElementById("qnt").value = qnt; // Update the hidden input field
                 } else {
                     alert("Cannot delete the last row!");
-                }
-            }
-
-            // Search function for the sale
-            function search() {
-                const a = document.getElementById('search');
-                if (a.value.length < 1) {
-                    alert("Cannot search for empty string");
-                } else {
-                    const search = document.forms["search"];
-                    search.action = "../php/search.php";
-                    search.method = "post";
-                    const popup = window.open("", "SearchResults", "width=600,height=400");
-                    search.target = "SearchResults"; // Send the form to the popup window
-                    search.submit();
                 }
             }
 
