@@ -95,9 +95,9 @@
              </tr>
              </tbody>
             </table>
-            <button class="btn btn-success" onclick="validate()" >Save</button>
-            <button class="btn btn-success" onclick="create_sale(); return false;">--+--</button>
-            <button class="btn btn-danger" onclick="delete_last_row(); return false;">__-__</button>
+            <button class="btn btn-save" onclick="validate()" >Save</button>
+            <button class="btn btn-add" onclick="create_sale(); return false;">+</button>
+            <button class="btn btn-remove" onclick="delete_last_row(); return false;">-</button>
         
         </div>
         </form>

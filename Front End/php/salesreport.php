@@ -38,7 +38,7 @@
                     <input type='hidden' name='Total_Price' value='" . $r['Total_Price'] . "'>
                     <input type='hidden' name='Amount_Received' value='" . $r['Amount_Received'] . "'>
                     <input type='hidden' name='Note' value='" . $r['Note'] . "'>
-                    <button type='submit'>Update</button>
+                    <button type='submit' class=' btn-link'>Update</button>
                 </form>
                 <form action='updatesales.html' method='GET'>
                     <input type='hidden' name='Sales_ID' value='" . $r['Sales_ID'] . "'>
@@ -52,7 +52,7 @@
                     <input type='hidden' name='Total_Price' value='" . $r['Total_Price'] . "'>
                     <input type='hidden' name='Amount_Received' value='" . $r['Amount_Received'] . "'>
                     <input type='hidden' name='Note' value='" . $r['Note'] . "'>
-                    <button type='submit'>Delete</button>
+                    <button type='submit' class=' btn-link'>Delete</button>
                 </form>
               </td>";
             echo "</tr>";

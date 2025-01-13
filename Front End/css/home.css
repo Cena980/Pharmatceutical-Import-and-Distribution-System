@@ -22,8 +22,7 @@
     width: auto;
     display: inline-flex;
 }
-.barr form{
-}
+
 .barr form input{
     margin-right: 2px;
     border-top-left-radius: 50px;
@@ -32,6 +31,10 @@
     height: 30px;
     padding: 0;
     padding-left: 10px;
+    transition: transform 0.3s ease;
+}
+.barr form input:hover {
+    transform: scale(1.2);
 }
 .barr button{
     font-weight: bold;
@@ -41,6 +44,10 @@
     margin-left: auto;
     height: 32px;
     margin-top: 10px;
+    transition: transform 0.3s ease;
+}
+.barr button:hover{
+    transform: scale(1.2);
 }
 .barr select{
     height: 30px;
@@ -71,11 +78,12 @@ li {
     text-align: center;
     padding-top: 15px;
     padding-bottom: 20px;  
+    transition: transform 0.3s ease;
 }
 li:hover {
     border-radius: 15px;
     background-color: rgb(25, 61, 80);
-    
+    transform: scale(1.2);
 }
 
 a {
@@ -85,10 +93,14 @@ a {
 }
 #over {
     margin: auto;
-    width: 50px;
+    text-align: center;
 }
 #switch button{
     border-radius: 50px;
+    transition: transform 0.3s ease;
+}
+#switch button:hover{
+    transform: scale(1.2);
 }
 body{
     background-image: linear-gradient(to right, rgb(87, 65, 113, 0.5), rgb(50,38,93, 0.5));
@@ -158,9 +170,11 @@ main .left .tables{
     padding: 5px 0;
     height: 30px;
     border-radius: 20px;
+    transition: transform 0.3s ease;
 }
 main .left .tables:hover{
-    background-color: darkgrey;
+    transform: scale(1.2);
+    background-color: white;
 }
 main .left a {
     text-decoration: none;
@@ -168,9 +182,11 @@ main .left a {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
+    
 }
-main .left a:hover{
 
+main .left a:hover{
+    
 }
 main .right{
 
@@ -192,10 +208,11 @@ main .right .title a{
     text-decoration: none;
     color: black;
     line-height: 26px;
+    transition: transform 0.3s ease;
 }
 main .right .title a:hover{
-    color: darkgrey;
-    text-decoration: underline;
+    transform: scale(1.2);
+
 }
 main .right .description{
     margin-top: 10px;
@@ -253,16 +270,57 @@ th, td{
     width: 100%;
 }
 #buttons {
-    display: flex;
-    width: auto;
-    margin-left: 10px;
-    border-radius: 10%;
-    margin-bottom: 10px;
-    box-shadow: 0 5px 5px black;
+    margin: auto;
+    width: 30px;
 }
+#buttons button{
+    margin-bottom: 30px;
+    font-weight: bold;
+    font-family: sans-serif;
+    padding: 5px;
+    border-radius: 50px;
+    transition: transform 0.3s ease;
+}
+#buttons button:hover{
+    transform: scale(1.2);
+}
+
 button a{
     color: black;
     text-decoration: none;
+}
+.btn {
+    margin-bottom: 30px;
+    font-weight: bold;
+    font-family: sans-serif;
+    padding: 5px;
+    border-radius: 50px;
+    transition: transform 0.3s ease;
+}
+.btn:hover{
+    transform: scale(1.2);
+}
+.btn-save {
+    background-color: green;
+    color: white;
+}
+.btn-add {
+    background-color: lightgreen;
+}
+.btn-remove {
+    background-color: lightcoral;
+}
+.btn-update{
+    background-color: rgb(66, 154, 126);
+}
+.btn-delete{
+    background-color: red;
+    color: white;
+}
+.btn-link{
+    background-color: none;
+    font-weight: bold;
+    text-decoration: underline;
 }
 #tblreport{
     border-collapse: collapse;
@@ -302,13 +360,6 @@ button a{
     align-content: center;
   }
 
-
-
-/*insert delete update buttons*/
-#buttons {
-    margin: auto;
-    width: 150px;
-}
 
 
 
