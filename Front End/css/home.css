@@ -373,11 +373,17 @@ button a{
 form table td{
     width: auto;
 }
+#suggestions {
+    border-radius: 15px;
+}
 #suggestions div {
     padding: 5px;
     border-bottom: 1px solid #ccc;
+    transition: transform 0.3s ease;
+    border-radius: 15px;
 }
 #suggestions div:hover {
     background-color: #f0f0f0;
+    transform: scale(1.2);
 }
 
