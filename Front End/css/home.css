@@ -212,6 +212,7 @@ main .right .title a{
 }
 main .right .title a:hover{
     transform: scale(1.2);
+    text-decoration: underline;
 
 }
 main .right .description{
@@ -372,3 +373,11 @@ button a{
 form table td{
     width: auto;
 }
+#suggestions div {
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+}
+#suggestions div:hover {
+    background-color: #f0f0f0;
+}
+

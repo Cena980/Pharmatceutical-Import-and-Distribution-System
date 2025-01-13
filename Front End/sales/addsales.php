@@ -49,7 +49,7 @@
             <table class="table table-success">
              <thead>
              <tr>
-                 <th>Inventory ID</th>
+                 <th>Drug Name</th>
                  
                  <th>Quantity</th>
                  <th>Discount</th>
@@ -66,16 +66,17 @@
              </thead>
              <tbody>
                  <tr>
-                     <td><input type="number" name="Inventory_ID_1" id="did" autocomplete="off"></td>
-                     <td><input type="number" name="Quantity_1" id="qy" autocomplete="off"></td>
-                     <td><input type="number" name="Discount_1" id="dt" autocomplete="off"></td>
-                     <td><input type="number" name="Price_1" id="pr" autocomplete="off"></td>
-                     <td><input type="number" name="Total_1" id="tl" autocomplete="off"></td>
-                     <td><input type="text" name="Note" id="Note" autocomplete="off"></td>
-                     <td><input type="date" name="Date_1" id="de" autocomplete="off"></td>
-                     <td><input type="number" name="Amount_Received_1" id="AR" autocomplete="off"></td>
-                     <td><input type="number" name="Cut_ID_1" id="ci" autocomplete="off"></td>
-                     <td><input type="number" name="Location_ID_1" id="lid" autocomplete="off"></td>
+                    <td><input type="text" name = "Drug_Name_1" id="drug_name_1" name="Drug_Name" autocomplete="off" placeholder="Enter Drug Name"></td>
+                    <div id="suggestions" style="border: 1px solid #ccc; display: none; position: absolute; background: white;"></div>
+                     <td><input type="number" name="Quantity_1" id="qy_1" autocomplete="off"></td>
+                     <td><input type="number" name="Discount_1" id="dt_1" autocomplete="off"></td>
+                     <td><input type="number" name="Price_1" id="pr_1" autocomplete="off"></td>
+                     <td><input type="number" name="Total_1" id="tl_1" autocomplete="off"></td>
+                     <td><input type="text" name="Note" id="Note_1" autocomplete="off"></td>
+                     <td><input type="date" name="Date_1" id="de_1" autocomplete="off"></td>
+                     <td><input type="number" name="Amount_Received_1" id="AR_1" autocomplete="off"></td>
+                     <td><input type="number" name="Cut_ID_1" id="ci_1" autocomplete="off"></td>
+                     <td><input type="number" name="Location_ID_1" id="lid_1" autocomplete="off"></td>
                      
                  </tr>
          
@@ -129,11 +130,166 @@
 
 
         <script>
+            let qnt = 1;
+
+            // Add event listeners for each drug name input field (triggered on input)
+            for (let i = 1; i <= qnt; i++) {
+                document.getElementById(`drug_name_${i}`).addEventListener("input", function () {
+                    const query = this.value;
+                    if (query.length > 1) {
+                        fetch(`../php/get_drug_suggestions.php?query=${encodeURIComponent(query)}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                const suggestionsDiv = document.getElementById("suggestions");
+                                suggestionsDiv.innerHTML = "";
+                                suggestionsDiv.style.display = "block";
+
+                                if (data.error) {
+                                    suggestionsDiv.style.display = "none";
+                                } else {
+                                    data.forEach(drug => {
+                                        const suggestion = document.createElement("div");
+                                        suggestion.textContent = drug;
+                                        suggestion.style.cursor = "pointer";
+                                        suggestion.onclick = () => {
+                                            document.getElementById(`drug_name_${i}`).value = drug;
+                                            suggestionsDiv.style.display = "none";
+                                            fetchPrice(i);  // Call fetchPrice for the current row
+                                        };
+                                        suggestionsDiv.appendChild(suggestion);
+                                    });
+                                }
+                            });
+                    } else {
+                        document.getElementById("suggestions").style.display = "none";
+                    }
+                });
+            }
+
+            // Function to fetch price for each drug row
+            function fetchPrice(rowNumber) {
+                const drugName = document.getElementById(`drug_name_${rowNumber}`).value;
+
+                if (drugName.trim() !== "") {
+                    fetch(`../php/get_price.php?Drug_Name=${encodeURIComponent(drugName)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.price) {
+                                document.getElementById(`pr_${rowNumber}`).value = data.price;
+                                calculateTotal();  // Recalculate totals for all rows after price is set
+                            } else {
+                                alert("Price not found for the selected drug.");
+                            }
+                        });
+                }
+            }
+            document.addEventListener("input", function (e) {
+                if (e.target.name.startsWith("Price_") || 
+                    e.target.name.startsWith("Quantity_") || 
+                    e.target.name.startsWith("Discount_")) {
+                    calculateTotal();
+                }
+            });
+
+
+            // Function to calculate total for each row
+            function calculateTotal() {
+                const rows = document.querySelectorAll("table tbody tr");
+                rows.forEach(row => {
+                    const priceInput = row.querySelector('input[name^="Price_"]');
+                    const quantityInput = row.querySelector('input[name^="Quantity_"]');
+                    const discountInput = row.querySelector('input[name^="Discount_"]');
+                    const totalInput = row.querySelector('input[name^="Total_"]');
+                    
+                    // Ensure valid values for price, quantity, and discount
+                    const price = parseFloat(priceInput?.value || 0);
+                    const quantity = parseFloat(quantityInput?.value || 0);
+                    const discount = parseFloat(discountInput?.value || 0);
+                    
+                    // Calculate the discount amount
+                    const discountAmount = (price * quantity * discount) / 100;
+                    
+                    // Calculate the total
+                    const total = (price * quantity) - discountAmount;
+                    
+                    // Update the total input field
+                    if (totalInput) {
+                        totalInput.value = total.toFixed(2); // Ensure the total has two decimal places
+                    }
+                });
+            }
+
+
+            // Function to create a new sale row
+            function create_sale() {
+                qnt += 1;  // Increment the quantity to update the row number
+
+                const tbody = document.querySelector("table tbody");
+                const newRow = document.createElement("tr");
+                newRow.innerHTML = `
+                    <td><input type="text" name="Drug_Name_${qnt}" id="drug_name_${qnt}" autocomplete="off" placeholder="Enter Drug Name"></td>
+                    <td><input type="number" name="Quantity_${qnt}" id="qi_${qnt}" autocomplete="off"></td>
+                    <td><input type="number" name="Discount_${qnt}" id="dt_${qnt}" autocomplete="off"></td>
+                    <td><input type="number" name="Price_${qnt}" id="pr_${qnt}" autocomplete="off"></td>
+                    <td><input type="number" name="Total_${qnt}" id="tl_${qnt}" autocomplete="off"></td>
+                    <td><input type="text" name="Note_${qnt}" id="Note_${qnt}" autocomplete="off"></td>
+                `;
+                tbody.appendChild(newRow);
+
+                // Add the event listener for this new row
+                document.getElementById(`drug_name_${qnt}`).addEventListener("input", function () {
+                    const query = this.value;
+                    if (query.length > 1) {
+                        fetch(`../php/get_drug_suggestions.php?query=${encodeURIComponent(query)}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                const suggestionsDiv = document.getElementById("suggestions");
+                                suggestionsDiv.innerHTML = "";
+                                suggestionsDiv.style.display = "block";
+
+                                if (data.error) {
+                                    suggestionsDiv.style.display = "none";
+                                } else {
+                                    data.forEach(drug => {
+                                        const suggestion = document.createElement("div");
+                                        suggestion.textContent = drug;
+                                        suggestion.style.cursor = "pointer";
+                                        suggestion.onclick = () => {
+                                            document.getElementById(`drug_name_${qnt}`).value = drug;
+                                            suggestionsDiv.style.display = "none";
+                                            fetchPrice(qnt);  // Call fetchPrice for the current row
+                                        };
+                                        suggestionsDiv.appendChild(suggestion);
+                                    });
+                                }
+                            });
+                    } else {
+                        document.getElementById("suggestions").style.display = "none";
+                    }
+                });
+
+                // Update the hidden input field for quantity
+                document.getElementById("qnt").value = qnt;
+            }
+
+            // Function to delete the last sale row
+            function delete_last_row() {
+                const tbody = document.querySelector("table tbody");
+                if (tbody.rows.length > 1 && qnt > 1) {
+                    tbody.removeChild(tbody.lastElementChild);
+                    qnt -= 1;
+                    document.getElementById("qnt").value = qnt; // Update the hidden input field
+                } else {
+                    alert("Cannot delete the last row!");
+                }
+            }
+
+            // Search function for the sale
             function search() {
-                a =document.getElementById('search');
-                if (a.value.length<1){
-                    alert("Cannot search for empty string")
-                }else{
+                const a = document.getElementById('search');
+                if (a.value.length < 1) {
+                    alert("Cannot search for empty string");
+                } else {
                     const search = document.forms["search"];
                     search.action = "../php/search.php";
                     search.method = "post";
@@ -143,82 +299,27 @@
                 }
             }
 
-            let qnt = 1;
+            // Validate function before form submission
+            function validate() {
+                const message = document.getElementById("noty");
+                message.style.color = "green";
+                message.innerHTML = "Your record has been saved.";
 
-                function create_sale() {
-                    qnt += 1;
-
-                    const tbody = document.querySelector("table tbody");
-                    const newRow = document.createElement("tr");
-                    newRow.innerHTML = `
-                        <td><input type="number" name="Inventory_ID_${qnt}" autocomplete="off"></td>
-                        <td><input type="number" name="Quantity_${qnt}" autocomplete="off"></td>
-                        <td><input type="number" name="Discount_${qnt}" autocomplete="off"></td>
-                        <td><input type="number" name="Price_${qnt}" autocomplete="off"></td>
-                        <td><input type="number" name="Total_${qnt}" autocomplete="off"></td>
-                        <td><input type="text" name="Note_${qnt}" id="Note" autocomplete="off"></td>
-                    `;
-                    tbody.appendChild(newRow);
-
-                    // Update the hidden input field
-                    document.getElementById("qnt").value = qnt;
+                let valid = true;
+                const form = document.forms["sale"];
+                if (valid) {
+                    form.action = "../php/insertsales.php"; // Set action to the desired PHP script
+                    form.method = "post";
+                    form.submit();
+                } else {
+                    form.action = "";
+                    message.style.color = "red";
+                    message.innerHTML = "Validation failed. Please correct the errors.";
                 }
 
-                function delete_last_row() {
-                    const tbody = document.querySelector("table tbody");
-                    if (tbody.rows.length > 1 && qnt > 1) {
-                        tbody.removeChild(tbody.lastElementChild);
-                        qnt -= 1;
-                        document.getElementById("qnt").value = qnt; // Update the hidden input field
-                    } else {
-                        alert("Cannot delete the last row!");
-                    }
-                }
+                return valid;
+            }
 
-
-
-                function validate() {
-                    // Reference the notification message element
-                    var message = document.getElementById("noty");
-                    message.style.color = "green";
-                    message.innerHTML = "Your record has been saved.";
-
-                    let valid = true;
-
-                    /*// Sale ID validation
-                    let sale = document.getElementById("sid").value;
-                    if (!/^\d+$/.test(sale) || sale === "") {
-                        document.getElementById("nsid").innerHTML = "Please enter a valid Sale ID.";
-                        valid = false;
-                    } else {
-                        document.getElementById("nsid").innerHTML = "";
-                    }*/
-
-                    // Drug ID validation
-                    let drug = document.getElementById("did").value;
-                    if (!/^\d+$/.test(drug) || drug === "") {
-                        document.getElementById("ndid").innerHTML = "Please enter a valid Drug ID.";
-                        valid = false;
-                    } else {
-                        document.getElementById("ndid").innerHTML = "";
-                    }
-
-                    // Dynamically update form action if valid
-                    const form = document.forms["sale"]; // Get the form by name
-                    if (valid) {
-                        form.action = "../php/insertsales.php"; // Set action to the desired PHP script
-                        form.method = "post"; // Ensure the method is correct
-                        form.submit();
-                    } else {
-                        // Reset action to prevent unintended submission
-                        form.action = "";
-                        message.style.color = "red";
-                        message.innerHTML = "Validation failed. Please correct the errors.";
-                    }
-
-                    return valid; // Prevent form submission if invalid
-                }
-
-            </script>
+        </script>
     </body>
 </html>
