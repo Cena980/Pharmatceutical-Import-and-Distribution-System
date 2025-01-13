@@ -2,7 +2,7 @@ SELECT * FROM drugwholesale.sales;
 use drugwholesale;
 UPDATE sales
 SET amount_received = total_price
-WHERE customer_id = 1 
+WHERE customer_id = 4 
   AND amount_received < total_price;
   
 
@@ -280,8 +280,37 @@ use drugwholesale;
 select * from sales;
 
 CALL AddSalesRecord(
-    '2025-01-06', 
+    '2025-01-07', 
     1,
-    400,
-    '[{"inventory_id": 53, "quantity": 20}]'
+    0,
+    '[{"inventory_id": 238, "quantity": 20},
+    {"inventory_id": 49, "quantity": 100},
+    {"inventory_id": 239, "quantity": 1},
+    {"inventory_id": 240, "quantity": 10},
+    {"inventory_id": 241, "quantity": 5},
+    {"inventory_id": 242, "quantity": 10},
+    {"inventory_id": 96, "quantity": 20},
+    {"inventory_id": 34, "quantity": 20},
+    {"inventory_id": 223, "quantity": 168},
+    {"inventory_id": 68, "quantity": 8},
+    {"inventory_id": 22, "quantity": 2},
+    {"inventory_id": 243, "quantity": 1},
+    {"inventory_id": 120, "quantity": 40},
+    {"inventory_id": 48, "quantity": 10},
+    {"inventory_id": 78, "quantity": 50},
+    {"inventory_id": 83, "quantity": 40},
+    {"inventory_id": 108, "quantity": 5},
+    {"inventory_id": 244, "quantity": 10},
+    {"inventory_id": 11, "quantity": 12},
+    {"inventory_id": 245, "quantity": 24},
+    {"inventory_id": 111, "quantity": 20},
+    {"inventory_id": 85, "quantity": 50},
+    {"inventory_id": 246, "quantity": 3},
+    {"inventory_id": 61, "quantity": 10},
+    {"inventory_id": 27, "quantity": 50},
+    {"inventory_id": 247, "quantity": 2},
+    {"inventory_id": 248, "quantity": 50},
+    {"inventory_id": 123, "quantity": 5},
+    {"inventory_id": 249, "quantity": 5},
+    {"inventory_id": 88, "quantity": 50}]'
     );
