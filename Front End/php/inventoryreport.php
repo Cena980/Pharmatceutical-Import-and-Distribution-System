@@ -9,7 +9,7 @@
         echo "<table border='1' id='tblreport'>";
         echo "<tr>
                     <th>Inventory ID</th><th>Drug ID</th><th>Drug Name</th><th>Expiration</th><th>Cost</th>
-                    <th>Price</th><th>Initial_Amount</th>
+                    <th>Price</th><th>Initial_Amount</th><th>Actions</th>
                 </tr>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
