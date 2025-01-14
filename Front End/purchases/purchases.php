@@ -8,18 +8,6 @@
         
     </head>
     <body>
-        <script>
-            function search(){
-                a = document.getElementById("search");
-                    if (a.value.length<1){
-                        alert("Cannot search for empty string")
-                    }else{
-                        const form = document.forms["search"];
-                        form.action = "../php/search.php";
-                        form.method = "get";
-                    }
-            }
-        </script>
         <div id="barover">
             <div id="bar">
                 <div class="barr">
@@ -27,10 +15,26 @@
                     <p>B&S Database</p>
                 </div>
                 <div class="barr">
-                    <form method="GET" action="php/search.php">
-                        <input type="text" id="search" name="query" style="width: 85%;" id="search" required>
+                <Script>
+                        // Search function for the drugs
+                        function drugSearch() {
+                            a =document.getElementById('search');
+                            if (a.value.length<1){
+                                alert("Cannot search for empty string")
+                            }else{
+                                const form = document.forms["search"];
+                                form.action = "../php/search.php";
+                                form.method = "post";
+                                const popup = window.open("", "SearchResults", "width=600,height=400");
+                                form.target = "SearchResults"; // Send the form to the popup window
+                                form.submit();
+                            }
+                        }
+                    </Script>
+                    <form name="search" method="post" action="../php/search.php">
+                        <input type="text" placeholder="Search for Drugs" name="query" id="search" required>
                     </form>
-                    <button type="submit" value="Search" onclick="search()">Search</button>
+                    <button type="submit" onclick="drugSearch()" >Search</button>
                 </div>
                 <div class="barr">
                     <div id="switch" >

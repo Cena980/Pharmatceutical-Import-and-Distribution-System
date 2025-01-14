@@ -60,6 +60,7 @@
                 </div>
                 <div id="over"><h1>Sales Bill</h1></div>';
 
+    
     $qnt = isset($_POST['qnt']) ? intval($_POST['qnt']) : 0;
     echo "Number of rows submitted: " . $qnt; 
     $Date0 = $_POST["Date_1"];
@@ -67,9 +68,22 @@
     $Location_ID0 = $_POST["Location_ID_1"];
     $TotalAmount = 0;
     $Amount_Recieved = $_POST["Amount_Received_1"];
+    
     for ($i = 1; $i <= $qnt; $i++) {
-        $Sale_ID = $_POST["Sale_ID_$i"] ?? null;
-        $Inventory_ID = $_POST["Inventory_ID_$i"] ?? null;
+        $Drug_Name = $_POST["Drug_Name_$i"] ?? null;
+        
+        // Query to get the Inventory_ID for the given drug name
+        $name = "SELECT Inventory_ID FROM inventory WHERE Drug_ID = (SELECT Drug_ID FROM drugs WHERE Drug_Name = '$Drug_Name')";
+        $Inventory_ID_result = mysqli_query($connect, $name);
+    
+        if ($Inventory_ID_result) {
+            $Inventory_ID_row = mysqli_fetch_assoc($Inventory_ID_result);
+            $Inventory_ID = $Inventory_ID_row['Inventory_ID'];
+        } else {
+            echo 'Could not fetch inventory ID for ' . $Drug_Name;
+            continue;  // Skip this iteration if Inventory_ID is not found
+        }
+    
         $Date = $Date0;
         $Quantity = $_POST["Quantity_$i"] ?? null;
         $Discount = $_POST["Discount_$i"] ?? null;
@@ -79,21 +93,29 @@
         $Total = $_POST["Total_$i"] ?? null;
         $TotalAmount += $Total;
         $Note = $_POST["Note_$i"] ?? null;
-
-        $sql = "insert into sales (Inventory_ID, Sale_Date, Quantity, Discount, Price, Cut_ID, Customer_ID, Total_Price,
-             Amount_Received, Note) values ('$Inventory_ID', '$Date',
-            '$Quantity', '$Discount', '$Price', '$Employee_Cut','$Customer_ID', '$Total', '$Amount_Recieved', '$Note')";
-        if(mysqli_query($connect, $sql)){
-            echo "Record has been inserted";
-        }else{echo "Failed";}
+    
+        // Prepared statement to avoid SQL injection
+        $sql = "INSERT INTO sales (Inventory_ID, Sale_Date, Quantity, Discount, Price, Cut_ID, Customer_ID, Total_Price, Amount_Received, Note) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = mysqli_prepare($connect, $sql);
+        if ($stmt) {
+            mysqli_stmt_bind_param($stmt, "isiiididss", $Inventory_ID, $Date, $Quantity, $Discount, $Price, $Employee_Cut, $Customer_ID, $Total, $Amount_Recieved, $Note);
+            if (mysqli_stmt_execute($stmt)) {
+                echo "Record has been inserted";
+            } else {
+                echo "Failed to insert record: " . mysqli_error($connect);
+            }
+        } else {
+            echo "Failed to prepare SQL statement: " . mysqli_error($connect);
+        }
     }
+    
 
     $query = "select * from sales_bill where SaleDate = '$Date0' and CustomerShop = (select customer_shop from customer where customer_id = $Location_ID0)";
     try{$res = mysqli_query($connect, $query);
     }catch(mysqli_sql_exception){
         echo 'Count not connect';
     }
-    echo $Date0;
 
     $num_rows = mysqli_num_rows($res);
     if($num_rows>0){

@@ -56,8 +56,6 @@
         </div>
         <div id="over"><h1>Drug records</h1></div>
         <div id="buttons">
-            <button><a href="Deletedrug.html">Delete</a> </button>
-            <button><a href="updatedrug.html">Update</a> </button>
             <button><a href="Insertdrug.html">Add</a> </button>
         </div>
         <div id="report">

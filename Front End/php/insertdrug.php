@@ -1,20 +1,21 @@
 <?php
     include 'connection.php';
 
-    $Drug_ID = $_POST['Drug_ID'];
-    $Comp_ID = $_POST['Comp_ID'];
-    $Drug_Name = $_POST['Drug_Name'];
-    $Ingredients = $_POST['Ingredients'];
-    $Tablet_PB = $_POST['Tablet_PB'];
-    $Expiration = $_POST['Expiration'];
-    $Type_ID = $_POST['Type_ID'];
-    $Demo_ID = $_POST['Demo_ID'];
+    $qnt = isset($_POST['qnt']) ? intval($_POST['qnt']) : 0;
+    echo "Number of rows submitted: " . $qnt; 
+    for ($i = 1; $i <= $qnt; $i++) {
+        $Comp_ID = $_POST["Comp_ID_$i"];
+        $Drug_Name = $_POST["Drug_Name_$i"];
+        $Ingredients = $_POST["Ingredients_$i"];
+        $Tablet_PB = $_POST["Tablet_PB_$i"];
+        $Type_ID = $_POST["Type_ID_$i"];
+        $Demo_ID = $_POST["Demo_ID_$i"];
+        
     
-
-    $sql = "insert into drugs values ('$Drug_ID', '$Comp_ID', '$Drug_Name',
-            '$Ingredients', '$Tablet_PB', '$Expiration', '$Type_ID','$Demo_ID')";
-    if(mysqli_query($connect, $sql)){
-        echo "Record has been inserted";
-    }else{echo "Failed";}
-
+        $sql = "insert into drugs (Comp_ID, Drug_Name, Ingredient, Tablet_PB, Type_ID, Demo_ID)  values ('$Comp_ID', '$Drug_Name',
+                '$Ingredients', '$Tablet_PB', '$Type_ID','$Demo_ID')";
+        if(mysqli_query($connect, $sql)){
+            echo "Record has been inserted";
+        }else{echo "Failed";}
+    }
 ?>

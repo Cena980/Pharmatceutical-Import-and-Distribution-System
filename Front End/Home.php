@@ -6,6 +6,12 @@
             Home Page
         </title>
         <link rel="stylesheet" href="css/home.css">
+        <style>
+            body {
+                direction: ltr; /* Force left-to-right layout */
+                font-family: Arial, sans-serif; /* General font for both languages */
+            }
+        </style>
     </head>
     <body>
         <script>
@@ -27,37 +33,84 @@
             <div id="bar">
                 <div class="barr">
                     <img>
-                    <p>B&S Database</p>
+                    <p data-key="database-title">B&S Database</p>
                 </div>
                 <div class="barr">
                     <form name="search" method="post" action="php/search.php">
-                        <input type="text" placeholder="Search for Drugs" id="search" name="query" id="search" required>
+                        <input type="text" placeholder="Search for Drugs" name="query" id="search" required data-key="search-placeholder">
                     </form>
-                    <button type="submit" onclick="validate()" >Search</button>
+                    <button type="submit" onclick="validate()" data-key="search-button">Search</button>
                 </div>
                 <div class="barr">
-                    <div id="switch" >
-                        <button id="switch">En</button>
-                        <button id="switch">Fa</button>
+                    <div id="switch">
+                        <button onclick="setLanguage('en')">English</button>
+                        <button onclick="setLanguage('fa')">فارسی</button>
                     </div>
                 </div>
-            </div>  
+            </div>
         </div>
+
         <div id="bar2over">
             <div id="bar2">
                 <ul class="barr2">
-                    <li>
-                        <a href="home.php">Home</a>
-                    </li>
-                    <li><a href="sales/sales.php">Sales</a></li>
-                    <li><a href="drugs/drugs.php">Drug</a></li>
-                    <li><a href="employees/employees.php">Employee</a></li>
-                    <li><a href="Inventory/inventory.php">Inventory</a></li>
-                    <li><a href="purchases/purchases.php">Purchases</a></li>
-                    <li><a href="contact.php">Contact Us</a></li>
+                    <li><a href="home.php" data-key="nav-home">Home</a></li>
+                    <li><a href="sales/sales.php" data-key="nav-sales">Sales</a></li>
+                    <li><a href="drugs/drugs.php" data-key="nav-drugs">Drugs</a></li>
+                    <li><a href="employees/employees.php" data-key="nav-employees">Employees</a></li>
+                    <li><a href="Inventory/inventory.php" data-key="nav-inventory">Inventory</a></li>
+                    <li><a href="purchases/purchases.php" data-key="nav-purchases">Purchases</a></li>
+                    <li><a href="contact.php" data-key="nav-contact">Contact Us</a></li>
                 </ul>
             </div>
         </div>
+
+        <script>
+            // Define translations
+            const translations = {
+                en: {
+                    "title": "Home Page",
+                    "database-title": "B&S Database",
+                    "search-placeholder": "Search for Drugs",
+                    "search-button": "Search",
+                    "nav-home": "Home",
+                    "nav-sales": "Sales",
+                    "nav-drugs": "Drugs",
+                    "nav-employees": "Employees",
+                    "nav-inventory": "Inventory",
+                    "nav-purchases": "Purchases",
+                    "nav-contact": "Contact Us"
+                },
+                fa: {
+                    "title": "صفحه اصلی",
+                    "database-title": "پایگاه داده B&S",
+                    "search-placeholder": "جستجو داروها",
+                    "search-button": "جستجو",
+                    "nav-home": "خانه",
+                    "nav-sales": "فروشات",
+                    "nav-drugs": "داروها",
+                    "nav-employees": "کارمندان",
+                    "nav-inventory": "موجودی",
+                    "nav-purchases": "خریدها",
+                    "nav-contact": "تماس با ما"
+                }
+            };
+
+            // Function to switch language
+            function setLanguage(language) {
+
+                // Update text content for elements with translation keys
+                document.querySelectorAll("[data-key]").forEach(el => {
+                    const key = el.getAttribute("data-key");
+                    el.textContent = translations[language][key] || el.textContent;
+                    if (el.placeholder) {
+                        el.placeholder = translations[language][key] || el.placeholder;
+                    }
+                });
+            }
+
+            // Default to English on page load
+            setLanguage("en");
+        </script>
         <main>
             <div class="left">
                 <div class="section_title">Go To</div>
