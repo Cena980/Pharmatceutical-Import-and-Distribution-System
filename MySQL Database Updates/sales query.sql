@@ -1,11 +1,13 @@
 SELECT * FROM drugwholesale.sales;
 use drugwholesale;
 UPDATE sales
-SET amount_received = total_price
-WHERE customer_id = 4 
-  AND amount_received < total_price;
+SET amount_received = 0
+WHERE customer_id = 1 
+  AND amount_received is null;
   
+call UpdatePayment(1, 199530);
 
+drop procedure UpdatePayment;
 DELIMITER $$
 
 CREATE PROCEDURE UpdatePayment (
@@ -22,10 +24,10 @@ BEGIN
 
     -- Cursor to iterate over unpaid or partially paid sales
     DECLARE sales_cursor CURSOR FOR 
-        SELECT id, total_price, amount_received 
+        SELECT sales_id, total_price, amount_received 
         FROM sales 
         WHERE customer_id = p_customer_id AND amount_received < total_price 
-        ORDER BY id; -- Process oldest sales first (or modify the order as needed)
+        ORDER BY sale_date; -- Process oldest sales first (or modify the order as needed)
 
     -- Declare a handler for the end of the cursor
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET no_more_rows = TRUE;
@@ -51,7 +53,7 @@ BEGIN
         -- Update the sales record
         UPDATE sales
         SET amount_received = amount_received + current_payment
-        WHERE id = v_id;
+        WHERE sales_id = v_id;
 
         -- Deduct the payment from the remaining amount
         SET remaining_amount = remaining_amount - current_payment;
@@ -278,39 +280,37 @@ DELIMITER ;
 
 use drugwholesale;
 select * from sales;
+DROP TABLE IF EXISTS temp_sales_ids;
 
 CALL AddSalesRecord(
-    '2025-01-07', 
+    '2025-01-08', 
     1,
     0,
-    '[{"inventory_id": 238, "quantity": 20},
-    {"inventory_id": 49, "quantity": 100},
-    {"inventory_id": 239, "quantity": 1},
-    {"inventory_id": 240, "quantity": 10},
-    {"inventory_id": 241, "quantity": 5},
-    {"inventory_id": 242, "quantity": 10},
-    {"inventory_id": 96, "quantity": 20},
-    {"inventory_id": 34, "quantity": 20},
-    {"inventory_id": 223, "quantity": 168},
-    {"inventory_id": 68, "quantity": 8},
-    {"inventory_id": 22, "quantity": 2},
-    {"inventory_id": 243, "quantity": 1},
-    {"inventory_id": 120, "quantity": 40},
-    {"inventory_id": 48, "quantity": 10},
-    {"inventory_id": 78, "quantity": 50},
-    {"inventory_id": 83, "quantity": 40},
-    {"inventory_id": 108, "quantity": 5},
-    {"inventory_id": 244, "quantity": 10},
-    {"inventory_id": 11, "quantity": 12},
-    {"inventory_id": 245, "quantity": 24},
-    {"inventory_id": 111, "quantity": 20},
-    {"inventory_id": 85, "quantity": 50},
-    {"inventory_id": 246, "quantity": 3},
-    {"inventory_id": 61, "quantity": 10},
-    {"inventory_id": 27, "quantity": 50},
-    {"inventory_id": 247, "quantity": 2},
-    {"inventory_id": 248, "quantity": 50},
-    {"inventory_id": 123, "quantity": 5},
-    {"inventory_id": 249, "quantity": 5},
-    {"inventory_id": 88, "quantity": 50}]'
-    );
+'[{"inventory_id": 300, "quantity": 10},
+  {"inventory_id": 7, "quantity": 20},
+  {"inventory_id": 47, "quantity": 1},
+  {"inventory_id": 96, "quantity": 10},
+  {"inventory_id": 301, "quantity": 1},
+  {"inventory_id": 51, "quantity": 10},
+  {"inventory_id": 302, "quantity": 1},
+  {"inventory_id": 81, "quantity": 12},
+  {"inventory_id": 23, "quantity": 10},
+  {"inventory_id": 180, "quantity": 5},{"inventory_id": 116, "quantity": 1},
+  {"inventory_id": 188, "quantity": 20},
+  {"inventory_id": 303, "quantity": 50},
+  {"inventory_id": 232, "quantity": 1},
+  {"inventory_id": 189, "quantity": 5},
+  {"inventory_id": 91, "quantity": 50},
+  {"inventory_id": 86, "quantity": 50},
+  {"inventory_id": 304, "quantity": 5},
+  {"inventory_id": 246, "quantity": 5},
+  {"inventory_id": 15, "quantity": 10},{"inventory_id": 73, "quantity": 30},
+  {"inventory_id": 65, "quantity": 10},
+  {"inventory_id": 57, "quantity": 10},
+  {"inventory_id": 76, "quantity": 10},
+  {"inventory_id": 32, "quantity": 20},
+  {"inventory_id": 305, "quantity": 12},
+  {"inventory_id": 99, "quantity": 50},
+  {"inventory_id": 123, "quantity": 1},
+  {"inventory_id": 306, "quantity": 10}]'
+);
