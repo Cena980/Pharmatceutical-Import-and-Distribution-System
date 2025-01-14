@@ -53,15 +53,26 @@
                     <li><a href="../contact.php">Contact Us</a></li>
                 </ul>
             </div>
-        </div>  
-        <div id="over"><h1>Inventory</h1></div>
-        <div id="report">
-            <div id="buttons">
-                <button><a href="deleteinventory.html">Delete</a> </button>
-                <button><a href="updateinventory.html">Update</a> </button>
-                <button><a href="insertinventory.html">Add</a> </button>
+        </div>
+        
+        <div class="inventory">
+            <div class="inventory-left">
+                <div id="over"><h1>Inventory Records</h1></div>
+                <div id="report">
+                    <div id="buttons">
+                        <button><a href="insertinventory.html">Add</a> </button>
+                    </div>
+                    <?php include '../php/inventoryreport.php';?>
+                </div>
+
             </div>
-            <?php include '../php/inventoryreport.php';?>
+            <div class="inventory-right">
+                <div id="over"><h1>Refill List</h1></>
+                <div id="report">
+                    <?php include '../php/refillreport.php';?>
+                </div>
+            </div>
+        </div>
         </div>
 
         <div id="bottom">
@@ -87,10 +98,6 @@
             <div class="bott">
                 <h3>...</h3>
             </div>
-        </div>
-
-
-
         </div>
     </body>
 </html>

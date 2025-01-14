@@ -9,7 +9,6 @@
         <style>
             body {
                 direction: ltr; /* Force left-to-right layout */
-                font-family: Arial, sans-serif; /* General font for both languages */
             }
         </style>
     </head>
