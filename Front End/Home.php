@@ -145,7 +145,7 @@
                             </div>
                             <div class="product_right" >
                                 <p class="title">
-                                    <a href="Drug.php?Drug=<?php echo $Drug['drug_name']?>"><?php echo $Drug['drug_name'] ?></a>
+                                    <a href="https://www.google.com/search?q=what is <?php echo $Drug['drug_name']?>"><?php echo $Drug['drug_name'] ?></a>
                                 </p>
                                 <p class="description">
                                     <?php echo $Drug['Ingredient'] ?>
