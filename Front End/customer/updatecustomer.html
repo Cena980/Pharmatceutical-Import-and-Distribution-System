@@ -55,7 +55,7 @@
             </div>
         </div>
         <div id="over"><h1>Update Customer</h1></div>
-        <form name="sale" action="../php/updatecustomer.php" method="post">
+        <form name="customer">
             <table class="table table-success">
                 <thead>
                 <tr>
@@ -70,20 +70,24 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input type="number" name="customer_id" id="sid" autocomplete="off"></td>
-                        <td><input type="text" name="customer_shop" id="did" autocomplete="off"></td>
-                        <td><input type="text" name="customer_name" id="de" autocomplete="off"></td>
-                        <td><input type="text" name="address" id="qy" autocomplete="off"></td>
-                        <td><input type="text" name="phone" id="dt" autocomplete="off"></td>
-                        <td><input type="longtext" name="useful_info" id="dt" autocomplete="off"></td>
+                        <td><input type="number" name="customer_id" id="customer_id" autocomplete="off"></td>
+                        <td><input type="text" name="customer_shop" id="customer_shop" autocomplete="off"></td>
+                        <td><input type="text" name="customer_name" id="customer_name" autocomplete="off"></td>
+                        <td><input type="text" name="address" id="address" autocomplete="off"></td>
+                        <td><input type="text" name="phone" id="phone" autocomplete="off"></td>
+                        <td><input type="longtext" name="useful_info" id="useful_info" autocomplete="off"></td>
                     </tr>
             
-                <tr>
-                    
-                </tr>
+                    <tr>
+                        <div id="note"></div>
+                        <div id="noty"></div>
+                    </tr>
                 </tbody>
                </table>
-            <button type="submit" class="btn btn-success" onclick="validate()" >Save</button>
+            </form>
+        </div>
+            <button class="btn btn-update" onclick="validate()" >Update</button>
+            <button class="btn btn-delete" onclick="delete_customer()" >Delete</button>
             <div id="bottom">
                 <div class="bott">
                     <h3 class="section_title">Database Usage Guidelines</h3>
@@ -108,41 +112,81 @@
                     <h3>...</h3>
                 </div>
             </div>
-
-
-
-        </div>
-
-
-
-        </div>
         <script>
-            function validate(){
-                var message = document.getElementById("noty");
-                message.style.color = "green";
-                message.innerHTML = "Your record has been saved.";
+            window.onload = function () {
+                const urlParams = new URLSearchParams(window.location.search);
         
+                // Populate input fields with values from URL parameters
+                document.getElementById('customer_id').value = urlParams.get('customer_id') || '';
+                document.getElementById('customer_shop').value = urlParams.get('customer_shop') || '';
+                document.getElementById('customer_name').value = urlParams.get('customer_name') || '';
+                document.getElementById('address').value = urlParams.get('address') || '';
+                document.getElementById('phone').value = urlParams.get('phone') || '';
+                document.getElementById('useful_info').value = urlParams.get('useful_info') || '';
+            };
+            function validate(){
                 let valid = true;
-                let sale = document.getElementById("sid").value;
+                let sale = document.getElementById("customer_id").value;
         
                 if(!/^\d+$/.test(sale) || sale === ""){
-                        document.getElementById("nsid").innerHTML = "Please enter a valid Drug ID.";
+                        document.getElementById("note").innerHTML = "Please enter a valid Customer ID.";
                         valid = false;
                     } else {
         
-                        document.getElementById("nsid").innerHTML = "";
+                        document.getElementById("note").innerHTML = "";
         
                     }
         
-                let drug = document.getElementById("did");
+                let phone = document.getElementById("phone").value;
         
-                if(!/^\d+$/.test(drug) || drug === ""){
-                        document.getElementById("ndid").innerHTML = "Please enter a valid Drug ID.";
+                if (!/^0\d{9}$/.test(phone) || phone === "") {
+                    document.getElementById("note").innerHTML = "Please enter a valid Phone Number.";
+                    valid = false;
+                } else {
+                    document.getElementById("note").innerHTML = "";
+                }
+                const form = document.forms['customer'];
+                if(valid){
+                    var message = document.getElementById("noty");
+                    message.style.color = "green";
+                    message.innerHTML = "Your record has been updated.";
+                    form.action="../php/updatecustomer.php";
+                    form.method="post";
+                    form.submit();
+                }else {
+                    var message = document.getElementById("noty");
+                    message.style.color = "red";
+                    message.innerHTML = "Your record has not been updated.";
+                }
+
+        
+            }
+            function delete_customer(){
+                let valid = true;
+                let sale = document.getElementById("customer_id").value;
+        
+                if(!/^\d+$/.test(sale) || sale === ""){
+                        document.getElementById("note").innerHTML = "Please enter a valid Customer ID.";
                         valid = false;
                     } else {
-                        document.getElementById("ndid").innerHTML = "";
-                    }
         
+                        document.getElementById("note").innerHTML = "";
+        
+                    }
+
+                const form = document.forms['customer'];
+                if(valid){
+                    var message = document.getElementById("noty");
+                    message.style.color = "green";
+                    message.innerHTML = "Your record has been deleted.";
+                    form.action="../php/deletecustomer.php";
+                    form.method="post";
+                    form.submit();
+                }else {
+                    var message = document.getElementById("noty");
+                    message.style.color = "red";
+                    message.innerHTML = "Your record has not been deleted.";
+                }
             }
             </script>
     </body>

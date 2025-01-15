@@ -1,7 +1,7 @@
 <?php
 
     include 'connection.php';
-    $query = "select * from sales limit 25";
+    $query = "select * from sales order by Sale_Date desc limit 25";
     $res = mysqli_query($connect, $query);
 
     $num_rows = mysqli_num_rows($res);

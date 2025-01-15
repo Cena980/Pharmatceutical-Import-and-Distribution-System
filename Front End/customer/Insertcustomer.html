@@ -27,7 +27,7 @@
                 </div>
                 <div class="barr">
                     <form method="GET" action="php/search.php">
-                        <input type="text" id="search" name="query" style="width: 85%;" id="search" required>
+                        <input type="text" id="search" name="query" style="width: 85%;" required>
                     </form>
                     <button type="submit" value="Search" onclick="search()">Search</button>
                 </div>
@@ -55,11 +55,11 @@
             </div>
         </div>
         <div id="over"><h1>Insert into Customer</h1></div>
-        <form name="sale" action="../php/insertcustomer.php" method="post">
+        <form name="customer">
+            <input type="hidden" name="qnt" id="qnt" value="1">
             <table class="table table-success">
                 <thead>
                 <tr>
-                   <th>Customer ID</th>
                    <th>Customer Shop</th>
                    <th>Customer Name</th>
                    <th>Address</th>
@@ -70,20 +70,28 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input type="number" name="customer_id" id="sid" autocomplete="off"></td>
-                        <td><input type="text" name="customer_shop" id="did" autocomplete="off"></td>
-                        <td><input type="text" name="customer_name" id="de" autocomplete="off"></td>
-                        <td><input type="text" name="address" id="qy" autocomplete="off"></td>
-                        <td><input type="text" name="phone" id="dt" autocomplete="off"></td>
-                        <td><input type="longtext" name="useful_info" id="dt" autocomplete="off"></td>
+                        <td><input type="text" name="customer_shop_1" id="customer_shop" autocomplete="off"></td>
+                        <td><input type="text" name="customer_name_1" id="customer_name" autocomplete="off"></td>
+                        <td><input type="text" name="address_1" id="address" autocomplete="off"></td>
+                        <td><input type="text" name="phone_1" id="phone" autocomplete="off"></td>
+                        <td><input type="longtext" name="useful_info_1" id="useful_info" autocomplete="off"></td>
                     </tr>
             
-                <tr>
-                    
-                </tr>
+                    <tr>
+                        <div id="note"></div>
+                        <div id="noty"></div>
+                    </tr>
                 </tbody>
                </table>
-            <button type="submit" class="btn btn-success" onclick="validate()" >Save</button>
+               </form>
+            </div>
+
+
+
+        </div>
+            <button class="btn btn-save" onclick="validate()" >Save</button>
+            <button class="btn btn-add" onclick="create_customer()" >+</button>
+            <button class="btn btn-remove" onclick="delete_last_row()" >-</button>
             <div id="bottom">
                 <div class="bott">
                     <h3 class="section_title">Database Usage Guidelines</h3>
@@ -108,42 +116,64 @@
                     <h3>...</h3>
                 </div>
             </div>
-
-
-
-        </div>
-
-
-
-        </div>
         <script>
+            let qnt = 1;
+            function create_customer() {
+                qnt += 1;  // Increment the quantity to update the row number
+
+                const tbody = document.querySelector("table tbody");
+                const newRow = document.createElement("tr");
+                newRow.innerHTML = `
+                        <td><input type="text" name="customer_shop_${qnt}" id="customer_shop" autocomplete="off"></td>
+                        <td><input type="text" name="customer_name_${qnt}" id="customer_name" autocomplete="off"></td>
+                        <td><input type="text" name="address_${qnt}" id="address" autocomplete="off"></td>
+                        <td><input type="text" name="phone_${qnt}" id="phone" autocomplete="off"></td>
+                        <td><input type="longtext" name="useful_info_${qnt}" id="useful_info" autocomplete="off"></td>
+                `;
+                tbody.appendChild(newRow);
+
+                // Update the hidden input field for quantity
+                document.getElementById("qnt").value = qnt;
+            }
+
+            // Function to delete the last sale row
+            function delete_last_row() {
+                const tbody = document.querySelector("table tbody");
+                if (tbody.rows.length > 1 && qnt > 1) {
+                    tbody.removeChild(tbody.lastElementChild);
+                    qnt -= 1;
+                    document.getElementById("qnt").value = qnt; // Update the hidden input field
+                } else {
+                    alert("Cannot delete the last row!");
+                }
+            }
             function validate(){
-                var message = document.getElementById("noty");
-                message.style.color = "green";
-                message.innerHTML = "Your record has been saved.";
-        
                 let valid = true;
-                let sale = document.getElementById("sid").value;
         
-                if(!/^\d+$/.test(sale) || sale === ""){
-                        document.getElementById("nsid").innerHTML = "Please enter a valid Drug ID.";
-                        valid = false;
-                    } else {
+                let phone = document.getElementById("phone").value;
         
-                        document.getElementById("nsid").innerHTML = "";
-        
-                    }
-        
-                let drug = document.getElementById("did");
-        
-                if(!/^\d+$/.test(drug) || drug === ""){
-                        document.getElementById("ndid").innerHTML = "Please enter a valid Drug ID.";
-                        valid = false;
-                    } else {
-                        document.getElementById("ndid").innerHTML = "";
-                    }
+                if (!/^0\d{9}$/.test(phone) || phone === "") {
+                    document.getElementById("note").innerHTML = "Please enter a valid Phone Number.";
+                    valid = false;
+                } else {
+                    document.getElementById("note").innerHTML = "";
+                }
+                const form = document.forms['customer'];
+                if(valid){
+                    var message = document.getElementById("noty");
+                    message.style.color = "green";
+                    message.innerHTML = "Your record has been updated.";
+                    form.action="../php/insertcustomer.php";
+                    form.method="post";
+                    form.submit();
+                }else {
+                    var message = document.getElementById("noty");
+                    message.style.color = "red";
+                    message.innerHTML = "Your record has not been updated.";
+                }
+
         
             }
-            </script>
+        </script>
     </body>
 </html>
