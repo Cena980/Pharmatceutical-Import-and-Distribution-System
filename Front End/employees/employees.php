@@ -55,13 +55,11 @@
             </div>
         </div> 
         <div id="over"><h1>Employee records</h1></div>
+        <div id="buttons">
+            <button><a href="Insertemployee.html">Add</a> </button>
+        </div>
         <div id="report">
             <?php include '../php/employeereport.php';?>
-        </div>
-        <div id="buttons">
-            <button><a href="Deleteemployee.html">Delete</a> </button>
-            <button><a href="updateemployee.html">Update</a> </button>
-            <button><a href="Insertemployee.html">Add</a> </button>
         </div>
         <div id="bottom">
             <div class="bott">

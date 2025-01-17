@@ -149,7 +149,6 @@
         <script>
             let qnt = 1;
 
-            // Add event listeners for each drug name input field (triggered on input)
             for (let i = 1; i <= qnt; i++) {
                 document.getElementById(`drug_name_${i}`).addEventListener("input", function () {
                     const query = this.value;
@@ -164,24 +163,52 @@
                                 if (data.error) {
                                     suggestionsDiv.style.display = "none";
                                 } else {
+                                    // Create a table to display the suggestions in rows
+                                    const table = document.createElement("table");
+                                    table.style.borderCollapse = "collapse";
+                                    table.style.width = "100%";
+
+                                    // Add table header
+                                    const header = document.createElement("tr");
+                                    header.innerHTML = `
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Drug Name</th>
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Expiration Date</th>
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Amount</th>
+                                    `;
+                                    table.appendChild(header);
+
+                                    // Add rows for each suggestion
                                     data.forEach(drug => {
-                                        const suggestion = document.createElement("div");
-                                        suggestion.textContent = drug;
-                                        suggestion.style.cursor = "pointer";
-                                        suggestion.onclick = () => {
-                                            document.getElementById(`drug_name_${i}`).value = drug;
+                                        const row = document.createElement("tr");
+                                        row.innerHTML = `
+                                            <td style="border: 1px solid #ccc; padding: 8px;">${drug.Drug_Name}</td>
+                                            <td style="border: 1px solid #ccc; padding: 8px;">${drug.Expiration_Date}</td>
+                                            <td style="border: 1px solid #ccc; padding: 8px;">${drug.Amount}</td>
+                                        `;
+                                        row.style.cursor = "pointer";
+
+                                        // Handle click on a row
+                                        row.onclick = () => {
+                                            document.getElementById(`drug_name_${i}`).value = drug.Drug_Name;
                                             suggestionsDiv.style.display = "none";
-                                            fetchPrice(i);  // Call fetchPrice for the current row
+                                            fetchPrice(i); // Call fetchPrice for the current row
                                         };
-                                        suggestionsDiv.appendChild(suggestion);
+
+                                        table.appendChild(row);
                                     });
+
+                                    suggestionsDiv.appendChild(table);
                                 }
+                            })
+                            .catch(error => {
+                                console.error("Error fetching drug suggestions:", error);
                             });
                     } else {
                         document.getElementById("suggestions").style.display = "none";
                     }
                 });
             }
+
 
             // Function to fetch price for each drug row
             function fetchPrice(rowNumber) {
@@ -254,7 +281,7 @@
                 tbody.appendChild(newRow);
 
                 // Add the event listener for this new row
-                document.getElementById(`drug_name_${qnt}`).addEventListener("input", function () {
+                /*document.getElementById(`drug_name_${qnt}`).addEventListener("input", function () {
                     const query = this.value;
                     if (query.length > 1) {
                         fetch(`../php/get_drug_suggestions.php?query=${encodeURIComponent(query)}`)
@@ -283,7 +310,7 @@
                     } else {
                         document.getElementById("suggestions").style.display = "none";
                     }
-                });
+                });*/
 
                 // Update the hidden input field for quantity
                 document.getElementById("qnt").value = qnt;

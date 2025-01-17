@@ -170,9 +170,7 @@
                 document.getElementById('Note').value = urlParams.get('Note') || '';
             };
             function validate(){
-                var message = document.getElementById("noty");
-                message.style.color = "green";
-                message.innerHTML = "Your record has been saved.";
+
         
                 let valid = true;
                 let sale = document.getElementById("sid").value;
@@ -198,6 +196,9 @@
             }
             const form = document.forms['sale'];
             function updateSales(){
+                var message = document.getElementById("noty");
+                message.style.color = "green";
+                message.innerHTML = "Your record has been saved.";
                 form.action="../php/updatesales.php";
                 form.method="post";
                 form.submit();

@@ -232,6 +232,14 @@ main .far_right {
     border-left: 1px solid black;
     padding-left: 10px;
 }
+.inventory {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 30px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
 #report{
     width: 100%;
     height: auto;

@@ -7,7 +7,15 @@ if (!$connect) {
 
 if (isset($_GET['query'])) {
     $query = "%" . $_GET['query'] . "%";
-    $sql = "SELECT Drug_Name FROM drugs WHERE Drug_Name LIKE ? LIMIT 10";
+    
+    // SQL query to join drugs and inventory tables
+    $sql = "
+        SELECT d.Drug_Name, i.Expiration, i.Initial_Amount 
+        FROM inventory i
+        INNER JOIN drugs d ON i.Drug_ID = d.Drug_ID
+        WHERE d.Drug_Name LIKE ?
+    ";
+    
     $stmt = $connect->prepare($sql);
 
     if (!$stmt) {
@@ -21,7 +29,11 @@ if (isset($_GET['query'])) {
 
     $suggestions = [];
     while ($row = $result->fetch_assoc()) {
-        $suggestions[] = $row['Drug_Name'];
+        $suggestions[] = [
+            'Drug_Name' => $row['Drug_Name'],
+            'Expiration_Date' => $row['Expiration'],
+            'Amount' => $row['Initial_Amount']
+        ];
     }
 
     echo json_encode($suggestions);

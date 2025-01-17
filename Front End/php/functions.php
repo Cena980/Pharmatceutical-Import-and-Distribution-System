@@ -10,10 +10,20 @@
     }
 
     function getTables() {
-        $pdo = new PDO('mysql:host=localhost;dbname=drugwholesale', 'root', '');
-        $stmt = $pdo->query("SHOW TABLES");
-        $tables = $stmt->fetchAll(PDO::FETCH_NUM);
-        return array_map(fn($row) => ['table' => $row[0]], $tables); // Map to desired structure
+        try {
+            // Use constants from config.php for the connection
+            $pdo = new PDO('mysql:host=' . SERVER . ';dbname=' . DATABASE, USERNAME, PASSWORD);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+            $stmt = $pdo->query("SHOW TABLES");
+            $tables = $stmt->fetchAll(PDO::FETCH_NUM);
+    
+            // Map to desired structure
+            return array_map(fn($row) => ['table' => $row[0]], $tables);
+        } catch (PDOException $e) {
+            // Handle connection errors
+            return ['error' => $e->getMessage()];
+        }
     }
     function getDrugs($int) {
         $mysqli = dbConnect();
