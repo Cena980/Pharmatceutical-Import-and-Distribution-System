@@ -10,9 +10,9 @@ if (isset($_GET['query'])) {
     
     // SQL query to join drugs and inventory tables
     $sql = "
-        SELECT d.Drug_Name, i.Expiration_Date, i.Amount 
+        SELECT d.Drug_Name, i.Expiration, i.Initial_Amount 
         FROM inventory i
-        INNER JOIN drugs d ON i.drug_id = d.id
+        INNER JOIN drugs d ON i.Drug_ID = d.Drug_ID
         WHERE d.Drug_Name LIKE ?
     ";
     
@@ -31,8 +31,8 @@ if (isset($_GET['query'])) {
     while ($row = $result->fetch_assoc()) {
         $suggestions[] = [
             'Drug_Name' => $row['Drug_Name'],
-            'Expiration_Date' => $row['Expiration_Date'],
-            'Amount' => $row['Amount']
+            'Expiration_Date' => $row['Expiration'],
+            'Amount' => $row['Initial_Amount']
         ];
     }
 
