@@ -2,10 +2,17 @@ SELECT * FROM drugwholesale.sales;
 use drugwholesale;
 UPDATE sales
 SET amount_received = 0
-WHERE customer_id = 1 
+WHERE customer_id != 0 
   AND amount_received is null;
   
 call UpdatePayment(1, 199530);
+
+Select * from sales where customer_id = 4;
+select sum(total_price), sum(amount_received), sum(total_price) - sum(amount_received) 
+as total_debt from sales
+where customer_id = 1;
+select * from sales where customer_id = 1 and amount_received = 0 and sale_date = '2025-01-09' and sales_id >= 34760;
+
 
 drop procedure UpdatePayment;
 DELIMITER $$
@@ -286,31 +293,64 @@ CALL AddSalesRecord(
     '2025-01-08', 
     1,
     0,
-'[{"inventory_id": 300, "quantity": 10},
-  {"inventory_id": 7, "quantity": 20},
-  {"inventory_id": 47, "quantity": 1},
-  {"inventory_id": 96, "quantity": 10},
-  {"inventory_id": 301, "quantity": 1},
-  {"inventory_id": 51, "quantity": 10},
-  {"inventory_id": 302, "quantity": 1},
-  {"inventory_id": 81, "quantity": 12},
-  {"inventory_id": 23, "quantity": 10},
-  {"inventory_id": 180, "quantity": 5},{"inventory_id": 116, "quantity": 1},
-  {"inventory_id": 188, "quantity": 20},
-  {"inventory_id": 303, "quantity": 50},
-  {"inventory_id": 232, "quantity": 1},
-  {"inventory_id": 189, "quantity": 5},
-  {"inventory_id": 91, "quantity": 50},
-  {"inventory_id": 86, "quantity": 50},
-  {"inventory_id": 304, "quantity": 5},
-  {"inventory_id": 246, "quantity": 5},
-  {"inventory_id": 15, "quantity": 10},{"inventory_id": 73, "quantity": 30},
-  {"inventory_id": 65, "quantity": 10},
-  {"inventory_id": 57, "quantity": 10},
-  {"inventory_id": 76, "quantity": 10},
-  {"inventory_id": 32, "quantity": 20},
-  {"inventory_id": 305, "quantity": 12},
+'[{"inventory_id": 53, "quantity": 30},
+  {"inventory_id": 150, "quantity": 100},
+  {"inventory_id": 124, "quantity": 50},
+  {"inventory_id": 325, "quantity": 5},
+  {"inventory_id": 16, "quantity": 5},
+  {"inventory_id": 184, "quantity": 10},
+  {"inventory_id": 39, "quantity": 10},
+  {"inventory_id": 175, "quantity": 20},
+  {"inventory_id": 136, "quantity": 10},
+  {"inventory_id": 104, "quantity": 60},
+  {"inventory_id": 119, "quantity": 3},
+  {"inventory_id": 326, "quantity": 12},
+  {"inventory_id": 50, "quantity": 10},
+  {"inventory_id": 34, "quantity": 20},
+  {"inventory_id": 131, "quantity": 200},
+  {"inventory_id": 168, "quantity": 40},
+  {"inventory_id": 30, "quantity": 5},
+  {"inventory_id": 98, "quantity": 60},
+  {"inventory_id": 172, "quantity": 30},
+  {"inventory_id": 219, "quantity": 10},
+  {"inventory_id": 92, "quantity": 50},
+  {"inventory_id": 81, "quantity": 24},
+  {"inventory_id": 132, "quantity": 40},
+  {"inventory_id": 180, "quantity": 10},
+  {"inventory_id": 48, "quantity": 10},
+  {"inventory_id": 25, "quantity": 10},
+  {"inventory_id": 327, "quantity": 10},
+  {"inventory_id": 87, "quantity": 60},
+  {"inventory_id": 54, "quantity": 20},
+  {"inventory_id": 101, "quantity": 10},
+  {"inventory_id": 83, "quantity": 20},
+  {"inventory_id": 328, "quantity": 50},
+  {"inventory_id": 329, "quantity": 5},
+  {"inventory_id": 67, "quantity": 20},
+  {"inventory_id": 290, "quantity": 10},
+  {"inventory_id": 36, "quantity": 50},
+  {"inventory_id": 111, "quantity": 1},
+  {"inventory_id": 122, "quantity": 40},
+  {"inventory_id": 86, "quantity": 40},
+  {"inventory_id": 330, "quantity": 50},
+  {"inventory_id": 115, "quantity": 1},
+  {"inventory_id": 331, "quantity": 5},
+  {"inventory_id": 70, "quantity": 10},
+  {"inventory_id": 6, "quantity": 40},
+  {"inventory_id": 27, "quantity": 10},
+  {"inventory_id": 332, "quantity": 30},
   {"inventory_id": 99, "quantity": 50},
-  {"inventory_id": 123, "quantity": 1},
-  {"inventory_id": 306, "quantity": 10}]'
+  {"inventory_id": 203, "quantity": 50},
+  {"inventory_id": 200, "quantity": 50},
+  {"inventory_id": 333, "quantity": 5},
+  {"inventory_id": 4, "quantity": 5},
+  {"inventory_id": 14, "quantity": 20},
+  {"inventory_id": 52, "quantity": 30},
+  {"inventory_id": 74, "quantity": 30},
+  {"inventory_id": 13, "quantity": 20},
+  {"inventory_id": 130, "quantity": 10},
+  {"inventory_id": 202, "quantity": 1},
+  {"inventory_id": 321, "quantity": 20},
+  {"inventory_id": 89, "quantity": 50},
+  {"inventory_id": 80, "quantity": 66}]'
 );
