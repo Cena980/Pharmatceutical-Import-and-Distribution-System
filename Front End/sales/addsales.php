@@ -143,14 +143,12 @@
                 <h3>...</h3>
             </div>
         </div>
-
-
-
         <script>
             let qnt = 1;
 
-            for (let i = 1; i <= qnt; i++) {
-                document.getElementById(`drug_name_${i}`).addEventListener("input", function () {
+            // Function to attach event listeners to drug name inputs
+            function attachEventListeners(rowNumber) {
+                document.getElementById(`drug_name_${rowNumber}`).addEventListener("input", function () {
                     const query = this.value;
                     if (query.length > 1) {
                         fetch(`../php/get_drug_suggestions.php?query=${encodeURIComponent(query)}`)
@@ -163,7 +161,7 @@
                                 if (data.error) {
                                     suggestionsDiv.style.display = "none";
                                 } else {
-                                    // Create a table to display the suggestions in rows
+                                    // Create a table to display the suggestions
                                     const table = document.createElement("table");
                                     table.style.borderCollapse = "collapse";
                                     table.style.width = "100%";
@@ -189,9 +187,9 @@
 
                                         // Handle click on a row
                                         row.onclick = () => {
-                                            document.getElementById(`drug_name_${i}`).value = drug.Drug_Name;
+                                            document.getElementById(`drug_name_${rowNumber}`).value = drug.Drug_Name;
                                             suggestionsDiv.style.display = "none";
-                                            fetchPrice(i); // Call fetchPrice for the current row
+                                            fetchPrice(rowNumber); // Call fetchPrice for the current row
                                         };
 
                                         table.appendChild(row);
@@ -209,32 +207,16 @@
                 });
             }
 
-
-            // Function to fetch price for each drug row
-            function fetchPrice(rowNumber) {
-                const drugName = document.getElementById(`drug_name_${rowNumber}`).value;
-
-                if (drugName.trim() !== "") {
-                    fetch(`../php/get_price.php?Drug_Name=${encodeURIComponent(drugName)}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.price) {
-                                document.getElementById(`pr_${rowNumber}`).value = data.price;
-                                calculateTotal();  // Recalculate totals for all rows after price is set
-                            } else {
-                                alert("Price not found for the selected drug.");
-                            }
-                        });
-                }
-            }
+            // Attach event listener to calculate totals for dynamic inputs
             document.addEventListener("input", function (e) {
-                if (e.target.name.startsWith("Price_") || 
+                if (
+                    e.target.name.startsWith("Price_") || 
                     e.target.name.startsWith("Quantity_") || 
-                    e.target.name.startsWith("Discount_")) {
+                    e.target.name.startsWith("Discount_")
+                ) {
                     calculateTotal();
                 }
             });
-
 
             // Function to calculate total for each row
             function calculateTotal() {
@@ -263,10 +245,27 @@
                 });
             }
 
+            // Function to fetch price for each drug row
+            function fetchPrice(rowNumber) {
+                const drugName = document.getElementById(`drug_name_${rowNumber}`).value;
+
+                if (drugName.trim() !== "") {
+                    fetch(`../php/get_price.php?Drug_Name=${encodeURIComponent(drugName)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.price) {
+                                document.getElementById(`pr_${rowNumber}`).value = data.price;
+                                calculateTotal(); // Recalculate totals for all rows after price is set
+                            } else {
+                                alert("Price not found for the selected drug.");
+                            }
+                        });
+                }
+            }
 
             // Function to create a new sale row
             function create_sale() {
-                qnt += 1;  // Increment the quantity to update the row number
+                qnt += 1; // Increment the quantity to update the row number
 
                 const tbody = document.querySelector("table tbody");
                 const newRow = document.createElement("tr");
@@ -280,41 +279,16 @@
                 `;
                 tbody.appendChild(newRow);
 
-                // Add the event listener for this new row
-                /*document.getElementById(`drug_name_${qnt}`).addEventListener("input", function () {
-                    const query = this.value;
-                    if (query.length > 1) {
-                        fetch(`../php/get_drug_suggestions.php?query=${encodeURIComponent(query)}`)
-                            .then(response => response.json())
-                            .then(data => {
-                                const suggestionsDiv = document.getElementById("suggestions");
-                                suggestionsDiv.innerHTML = "";
-                                suggestionsDiv.style.display = "block";
-
-                                if (data.error) {
-                                    suggestionsDiv.style.display = "none";
-                                } else {
-                                    data.forEach(drug => {
-                                        const suggestion = document.createElement("div");
-                                        suggestion.textContent = drug;
-                                        suggestion.style.cursor = "pointer";
-                                        suggestion.onclick = () => {
-                                            document.getElementById(`drug_name_${qnt}`).value = drug;
-                                            suggestionsDiv.style.display = "none";
-                                            fetchPrice(qnt);  // Call fetchPrice for the current row
-                                        };
-                                        suggestionsDiv.appendChild(suggestion);
-                                    });
-                                }
-                            });
-                    } else {
-                        document.getElementById("suggestions").style.display = "none";
-                    }
-                });*/
+                // Attach event listener for the new row
+                attachEventListeners(qnt);
 
                 // Update the hidden input field for quantity
                 document.getElementById("qnt").value = qnt;
             }
+
+            // Attach the event listener to the first row initially
+            attachEventListeners(1);
+
 
             // Function to delete the last sale row
             function delete_last_row() {
