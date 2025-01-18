@@ -147,72 +147,71 @@
 
 
         <script>
-            let qnt = 1;
+           document.querySelector("table tbody").addEventListener("input", function (e) {
+    if (e.target.name.startsWith("Drug_Name_")) {
+        const rowNumber = e.target.name.split("_")[2]; // Extract the row number
+        const query = e.target.value;
+        if (query.length > 1) {
+            fetch(`../php/get_drug_suggestions.php?query=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    const suggestionsDiv = document.getElementById("suggestions");
+                    suggestionsDiv.innerHTML = "";
+                    suggestionsDiv.style.display = "block";
 
-            for (let i = 1; i <= qnt; i++) {
-                document.getElementById(`drug_name_${i}`).addEventListener("input", function () {
-                    const query = this.value;
-                    if (query.length > 1) {
-                        fetch(`../php/get_drug_suggestions.php?query=${encodeURIComponent(query)}`)
-                            .then(response => response.json())
-                            .then(data => {
-                                const suggestionsDiv = document.getElementById("suggestions");
-                                suggestionsDiv.innerHTML = "";
-                                suggestionsDiv.style.display = "block";
-
-                                if (data.error) {
-                                    suggestionsDiv.style.display = "none";
-                                } else {
-                                    // Create a table to display the suggestions in rows
-                                    const table = document.createElement("table");
-                                    table.style.borderCollapse = "collapse";
-                                    table.style.width = "100%";
-
-                                    // Add table header
-                                    const header = document.createElement("tr");
-                                    header.innerHTML = `
-                                        <th style="border: 1px solid #ccc; padding: 8px;">Drug Name</th>
-                                        <th style="border: 1px solid #ccc; padding: 8px;">Expiration Date</th>
-                                        <th style="border: 1px solid #ccc; padding: 8px;">Amount</th>
-                                    `;
-                                    table.appendChild(header);
-
-                                    // Add rows for each suggestion
-                                    data.forEach(drug => {
-                                        const row = document.createElement("tr");
-                                        row.innerHTML = `
-                                            <td style="border: 1px solid #ccc; padding: 8px;">${drug.Drug_Name}</td>
-                                            <td style="border: 1px solid #ccc; padding: 8px;">${drug.Expiration_Date}</td>
-                                            <td style="border: 1px solid #ccc; padding: 8px;">${drug.Amount}</td>
-                                        `;
-                                        row.style.cursor = "pointer";
-
-                                        // Handle click on a row
-                                        row.onclick = () => {
-                                            document.getElementById(`drug_name_${i}`).value = drug.Drug_Name;
-                                            suggestionsDiv.style.display = "none";
-                                            fetchPrice(i); // Call fetchPrice for the current row
-                                        };
-
-                                        table.appendChild(row);
-                                    });
-
-                                    suggestionsDiv.appendChild(table);
-                                }
-                            })
-                            .catch(error => {
-                                console.error("Error fetching drug suggestions:", error);
-                            });
+                    if (data.error) {
+                        suggestionsDiv.style.display = "none";
                     } else {
-                        document.getElementById("suggestions").style.display = "none";
+                        const table = document.createElement("table");
+                        table.style.borderCollapse = "collapse";
+                        table.style.width = "100%";
+                        const header = document.createElement("tr");
+                        header.innerHTML = `
+                            <th style="border: 1px solid #ccc; padding: 8px;">Drug Name</th>
+                            <th style="border: 1px solid #ccc; padding: 8px;">Expiration Date</th>
+                            <th style="border: 1px solid #ccc; padding: 8px;">Amount</th>
+                        `;
+                        table.appendChild(header);
+                        data.forEach(drug => {
+                            const row = document.createElement("tr");
+                            row.innerHTML = `
+                                <td style="border: 1px solid #ccc; padding: 8px;">${drug.Drug_Name}</td>
+                                <td style="border: 1px solid #ccc; padding: 8px;">${drug.Expiration_Date}</td>
+                                <td style="border: 1px solid #ccc; padding: 8px;">${drug.Amount}</td>
+                            `;
+                            row.style.cursor = "pointer";
+                            row.onclick = () => {
+                                document.getElementById(`drug_name_${rowNumber}`).value = drug.Drug_Name;
+                                suggestionsDiv.style.display = "none";
+                                fetchPrice(rowNumber);
+                            };
+                            table.appendChild(row);
+                        });
+                        suggestionsDiv.appendChild(table);
                     }
+                })
+                .catch(error => {
+                    console.error("Error fetching drug suggestions:", error);
                 });
-            }
+        } else {
+            document.getElementById("suggestions").style.display = "none";
+        }
+    }
+
+    if (
+        e.target.name.startsWith("Price_") ||
+        e.target.name.startsWith("Quantity_") ||
+        e.target.name.startsWith("Discount_")
+    ) {
+        calculateTotal();
+    }
+});
+
 
 
             // Function to fetch price for each drug row
             function fetchPrice(rowNumber) {
-                const drugName = document.getElementById(`drug_name_${rowNumber}`).value;
+                const drugName = document.getElementById(`drug_name_${rowNumber}`).value.trim();
 
                 if (drugName.trim() !== "") {
                     fetch(`../php/get_price.php?Drug_Name=${encodeURIComponent(drugName)}`)
@@ -280,53 +279,30 @@
                 `;
                 tbody.appendChild(newRow);
 
-                // Add the event listener for this new row
-                /*document.getElementById(`drug_name_${qnt}`).addEventListener("input", function () {
-                    const query = this.value;
-                    if (query.length > 1) {
-                        fetch(`../php/get_drug_suggestions.php?query=${encodeURIComponent(query)}`)
-                            .then(response => response.json())
-                            .then(data => {
-                                const suggestionsDiv = document.getElementById("suggestions");
-                                suggestionsDiv.innerHTML = "";
-                                suggestionsDiv.style.display = "block";
-
-                                if (data.error) {
-                                    suggestionsDiv.style.display = "none";
-                                } else {
-                                    data.forEach(drug => {
-                                        const suggestion = document.createElement("div");
-                                        suggestion.textContent = drug;
-                                        suggestion.style.cursor = "pointer";
-                                        suggestion.onclick = () => {
-                                            document.getElementById(`drug_name_${qnt}`).value = drug;
-                                            suggestionsDiv.style.display = "none";
-                                            fetchPrice(qnt);  // Call fetchPrice for the current row
-                                        };
-                                        suggestionsDiv.appendChild(suggestion);
-                                    });
-                                }
-                            });
-                    } else {
-                        document.getElementById("suggestions").style.display = "none";
-                    }
-                });*/
+               
 
                 // Update the hidden input field for quantity
                 document.getElementById("qnt").value = qnt;
             }
 
-            // Function to delete the last sale row
             function delete_last_row() {
-                const tbody = document.querySelector("table tbody");
-                if (tbody.rows.length > 1 && qnt > 1) {
-                    tbody.removeChild(tbody.lastElementChild);
-                    qnt -= 1;
-                    document.getElementById("qnt").value = qnt; // Update the hidden input field
-                } else {
-                    alert("Cannot delete the last row!");
-                }
+            const tbody = document.querySelector("table tbody");
+            const rows = tbody.rows.length; // Get the number of rows in the tbody
+            const qntField = document.getElementById("qnt");
+
+            // Ensure `qnt` is in sync with the actual number of rows
+            qnt = parseInt(qntField.value, 10) || rows;
+
+            if (rows > 1 && qnt > 1) {
+                tbody.removeChild(tbody.lastElementChild); // Remove the last row
+                qnt -= 1; // Decrement the row count
+                qntField.value = qnt; // Update the hidden input field
+            } else {
+                alert("Cannot delete the last row!");
             }
+}
+
+
 
             // Validate function before form submission
             function validate() {
