@@ -6,8 +6,28 @@
     $date = $_POST["purchase_date_1"] ?? null;
 
     for ($i = 1; $i <= $qnt; $i++) {
-        $vendor_id = $_POST["vendor_id_$i"] ?? null;
-        $drug_id = $_POST["drug_id_$i"] ?? null;
+        $Vendor_Name = $_POST["vendor_name_$i"] ?? null;
+        $Vendor_Name_sql = "SELECT vendor_id FROM vendors WHERE name = '$Vendor_Name'";
+        $Vendor_ID_Result = mysqli_query($connect, $Vendor_Name_sql);
+    
+        if ($Vendor_ID_Result) {
+            $Vendor_ID_Row = mysqli_fetch_assoc($Vendor_ID_Result);
+            $vendor_id = $Vendor_ID_Row['vendor_id'];
+        } else {
+            echo 'Could not fetch Vendor ID for ' . $Vendor_Name;
+            continue;  // Skip this iteration if Inventory_ID is not found
+        }
+        $Drug_Name = $_POST["drug_name_$i"] ?? null;
+        $drug_id_sql = "SELECT Drug_ID FROM drugs WHERE Drug_Name = '$Drug_Name'";
+        $Drug_ID_result = mysqli_query($connect, $drug_id_sql);
+    
+        if ($Drug_ID_result) {
+            $Drug_ID_row = mysqli_fetch_assoc($Drug_ID_result);
+            $drug_id = $Drug_ID_row['Drug_ID'];
+        } else {
+            echo 'Could not fetch Drug ID for ' . $Drug_Name;
+            continue;  // Skip this iteration if Inventory_ID is not found
+        }
         $price = $_POST["price_$i"] ?? null;
         $quantity = $_POST["quantity_$i"] ?? null;
         $discount = $_POST["discount_$i"] ?? null;
