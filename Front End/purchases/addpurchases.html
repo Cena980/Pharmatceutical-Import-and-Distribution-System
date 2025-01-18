@@ -101,7 +101,8 @@
             
         </div>
         </form>
-        <button type="submit" class="btn btn-save" onclick="validate()" >Save</button>
+    </div>
+        <button  class="btn btn-save" onclick="validate()" >Save</button>
         <button class="btn btn-add" onclick="create_purchase(); return false;">+</button>
         <button class="btn btn-remove" onclick="delete_last_row(); return false;">-</button>
 
@@ -138,8 +139,9 @@
                 const quantity = parseFloat(document.getElementById(`quantity_${rowNumber}`).value) || 0;
                 const discount = parseFloat(document.getElementById(`discount_${rowNumber}`).value) || 0;
 
-                // Total amount calculation: (price * quantity) - discount
-                const totalAmount = (price * quantity * discount)/100;
+                // Total amount calculation: 
+                const DiscountAmount = (price * quantity * discount)/100;
+                const totalAmount = (price * quantity) - DiscountAmount;
 
                 // Update the total amount field
                 document.getElementById(`total_amount_${rowNumber}`).value = totalAmount.toFixed(2);
@@ -296,18 +298,18 @@
 
 
                 function validate() {
-                    // Reference the notification message element
-                    var message = document.getElementById("noty");
-                    message.style.color = "green";
-                    message.innerHTML = "Your record has been saved.";
 
                     let valid = true;
 
                     // Dynamically update form action if valid
                     const form = document.forms["purchase"]; // Get the form by name
                     if (valid) {
+                        var message = document.getElementById("noty");
+                        message.style.color = "green";
+                        message.innerHTML = "Your record has been saved.";
                         form.action = "../php/insertpurchases.php"; // Set action to the desired PHP script
-                        form.method = "post"; // Ensure the method is correct
+                        form.method = "post"; // Ensure the method is correct'
+                        form.submit();
                     } else {
                         // Reset action to prevent unintended submission
                         form.action = "";
