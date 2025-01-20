@@ -60,7 +60,9 @@ echo '<!DOCTYPE html>
         </div>
         <div id="over"><h1>Sales Bill</h1></div>';
 
+
     $rowCount = intval($_POST['qnt']); // Number of rows to process
+    $qnt = $rowCount;
     $salesData = []; // Array to store sales data
 
     // Shared fields
@@ -124,7 +126,7 @@ echo '<!DOCTYPE html>
     }
 
     // Distribute the received amount proportionally
-    foreach ($salesData as $index => &$sale) {
+    foreach ($salesData as $index => $sale) {
         $sale['Amount_Received'] = round(($rowTotals[$index] / $totalSales) * $Amount_Received, 2);
     }
 
@@ -142,7 +144,7 @@ echo '<!DOCTYPE html>
     print_r($qnt);
     print_r($salesData);
     echo "</pre>";
-    exit;
+
 
     $sql .= implode(", ", $values);
 
