@@ -204,6 +204,18 @@ echo '<!DOCTYPE html>
 
     }
 
+
+    $sql1 = "SELECT balance FROM customer WHERE customer_id = '$customerID'";
+    $balance_result = mysqli_query($connect, $sql1);
+
+    if ($balance_result) {
+        $balance_result_row = mysqli_fetch_assoc($balance_result);
+        $Balance = $balance_result_row['balance'];
+    } else {
+        echo 'Could not fetch balance for ' . $customer_shop;
+    }
+
+
     $query = "select * from sales_bill where invoice_no = '$invoice_ID'";
     $res = mysqli_query($connect, $query);
 
@@ -212,7 +224,7 @@ echo '<!DOCTYPE html>
         echo "<table border='1' border-collapse=collapse id='tblreport'>";
         echo "<tr>
                     <th>Drug Type</th><th>Drug Name</th><th>Quantity</th><th>price</th><th>Discount</th><th>Total_Price</th>
-                    <th>Amount_Received</th><th>Invoice_No</th><th>Date</th><th>Customer</th><th>Balance</th>
+                    <th>Amount_Received</th>
                 </tr>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
@@ -223,12 +235,22 @@ echo '<!DOCTYPE html>
             echo "<td>" . $r['Discount'] . "</td>";
             echo "<td>" . $r['Total_Price'] . "</td>";
             echo "<td>" . $r['Amount_Received'] . "</td>";
-            echo "<td>" . $r['Invoice_No'] . "</td>";
-            echo "<td>" . $r['Date'] . "</td>";
-            echo "<td>" . $r['Customer_Shop'] . "</td>";
-            echo "<td>" . $r['Balance'] . "</td>";
             echo "</tr>";
         }
+        echo "<tr>";
+        echo "<th>" . 'Invoice No:' ."</th>";
+        echo "<th>" . 'Customer:' ."</th>";
+        echo "<th>" . 'Date:' ."</th>";
+        echo "<th>" . 'Amount Recieved:' ."</th>";
+        echo "<th>" . 'Balance:' ."</th>";
+        echo "</tr>";
+        echo "<td>" . $invoice_ID . "</td>";
+        echo "<td>" . $customer_shop . "</td>";
+        echo "<td>" . $date . "</td>";
+        echo "<td>" . $totalSales . "</td>";
+        echo "<td>" . $Balance . "</td>";
+        echo "</tr>";
+
         echo "</table>";
     } else {
         echo "No records found.";  

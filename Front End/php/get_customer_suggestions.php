@@ -12,7 +12,7 @@ if (isset($_GET['query'])) {
     $sql = "
         SELECT customer_shop 
         FROM customer
-        WHERE customer_name LIKE ?
+        WHERE customer_shop LIKE ?
     ";
     
     $stmt = $connect->prepare($sql);
