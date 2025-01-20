@@ -82,10 +82,49 @@ echo '<!DOCTYPE html>
     $employeeID = !empty($_POST['Cut_ID_1']) ? $_POST['Cut_ID_1'] : null;
     $Amount_Received = !empty($_POST["Amount_Received_1"]) && is_numeric($_POST["Amount_Received_1"])
     ? floatval($_POST["Amount_Received_1"]): 0.00;
+    $Sales_Officer = $_POST['Sales_Officer'];
 
 
     $totalSales = 0;
     $rowTotals = []; // Store individual row totals
+
+    // Check if the invoice already exists
+    $invoice_check = "SELECT * FROM invoices WHERE date = '$date' AND customer_id = '$customerID'";
+    $invoice_check_results = mysqli_query($connect, $invoice_check);
+
+    if ($invoice_check_results === false) {
+        // Query failed (likely an issue with the database)
+        echo "Error checking for existing invoice: " . mysqli_error($connect);
+    } else {
+        // Check if the invoice already exists
+        if (mysqli_num_rows($invoice_check_results) > 0) {
+            // Invoice exists
+            $invoice_check_row = mysqli_fetch_assoc($invoice_check_results);
+            $invoice_ID = $invoice_check_row['invoice_id'];
+            echo "Invoice already exists with ID: $invoice_ID";
+        } else {
+            // No invoice found, create a new one
+            $sql = "INSERT INTO invoices (customer_id, date, sales_officer) VALUES ('$customerID', '$date', '$Sales_Officer')";
+            
+            if (mysqli_query($connect, $sql)) {
+                echo "Invoice has been created.";
+                
+                // Fetch the newly created invoice
+                $invoice_check = "SELECT * FROM invoices WHERE date = '$date' AND customer_id = '$customerID'";
+                $invoice_check_results = mysqli_query($connect, $invoice_check);
+                
+                if ($invoice_check_results) {
+                    $invoice_check_row = mysqli_fetch_assoc($invoice_check_results);
+                    $invoice_ID = $invoice_check_row['invoice_id'];
+                    echo "Invoice ID: $invoice_ID";
+                } else {
+                    echo "Error fetching invoice after creation: " . mysqli_error($connect);
+                }
+            } else {
+                echo "Invoice creation failed: " . mysqli_error($connect);
+            }
+        }
+    }
 
     // Gather all the rows of data dynamically
     for ($i = 1; $i <= $rowCount; $i++) {
@@ -130,10 +169,12 @@ echo '<!DOCTYPE html>
             'Customer_ID' => $customerID,
             'Total_Price' => $total,
             'Amount_Received' => null, // This will be updated later
-            'Note' => $note
+            'Note' => $note,
+            'invoice_no' => $invoice_ID
             
         ];
     }
+
 
     // Distribute the received amount proportionally
     foreach ($salesData as $index => $sale) {
@@ -141,20 +182,14 @@ echo '<!DOCTYPE html>
     }
 
     // Build bulk INSERT query
-     $sql = "INSERT INTO sales (Inventory_ID, Sale_Date, Quantity, Discount, Price, Cut_ID, Customer_ID, Total_Price, Amount_Received, Note) VALUES ";
+     $sql = "INSERT INTO sales (Inventory_ID, Sale_Date, Quantity, Discount, Price, Cut_ID, Customer_ID, Total_Price, Amount_Received, Note, invoice_no) VALUES ";
     $values = [];
     $params = [];
 
     foreach ($salesData as $sale) {
-        $values[] = "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $values[] = "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $params = array_merge($params, array_values($sale));
     }
-
-    echo "<pre>";
-    print_r($qnt);
-    print_r($salesData);
-    echo "</pre>";
-
 
     $sql .= implode(", ", $values);
 
@@ -168,36 +203,36 @@ echo '<!DOCTYPE html>
 
 
     }
-/*
-    $query = "select * from sales_bill where sale_date = '$date' and customer_shop = '$customer_shop'";
+
+    $query = "select * from sales_bill where invoice_no = '$invoice_ID'";
     $res = mysqli_query($connect, $query);
 
     $num_rows = mysqli_num_rows($res);
     if($num_rows>0){
         echo "<table border='1' border-collapse=collapse id='tblreport'>";
         echo "<tr>
-                    <th>Purchase ID</th><th>Vendor ID</th><th>Drug ID</th><th>price</th><th>Quantity</th><th>Discount</th>
-                    <th>Purchase Date</th><th>Total Amount</th><th>Amount Paid</th><th>Actions</th>
+                    <th>Drug Type</th><th>Drug Name</th><th>Quantity</th><th>price</th><th>Discount</th><th>Total_Price</th>
+                    <th>Amount_Received</th><th>Invoice_No</th><th>Date</th><th>Customer</th><th>Balance</th>
                 </tr>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
-            echo "<td>" . $r['purchase_id'] . "</td>";
-            echo "<td>" . $r['vendor_id'] . "</td>";
-            echo "<td>" . $r['drug_id'] . "</td>";
-            echo "<td>" . $r['price'] . "</td>";
-            echo "<td>" . $r['quantity'] . "</td>";
+            echo "<td>" . $r['Type'] . "</td>";
+            echo "<td>" . $r['Name'] . "</td>";
+            echo "<td>" . $r['Quantity'] . "</td>";
+            echo "<td>" . $r['Price'] . "</td>";
             echo "<td>" . $r['Discount'] . "</td>";
-            echo "<td>" . $r['purchase_date'] . "</td>";
-            echo "<td>" . $r['total_amount'] . "</td>";
-            echo "<td>" . $r['amount_paid'] . "</td>";
+            echo "<td>" . $r['Total_Price'] . "</td>";
+            echo "<td>" . $r['Amount_Received'] . "</td>";
+            echo "<td>" . $r['Invoice_No'] . "</td>";
+            echo "<td>" . $r['Date'] . "</td>";
+            echo "<td>" . $r['Customer_Shop'] . "</td>";
+            echo "<td>" . $r['Balance'] . "</td>";
             echo "</tr>";
         }
         echo "</table>";
     } else {
         echo "No records found.";  
     }
-
-*/
 
 
 

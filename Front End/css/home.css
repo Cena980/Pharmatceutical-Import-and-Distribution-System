@@ -378,9 +378,6 @@ button a{
     height: 400px;
     width: 500px;
 }
-form table td{
-    width: auto;
-}
 #suggestions {
     border-radius: 15px;
 }

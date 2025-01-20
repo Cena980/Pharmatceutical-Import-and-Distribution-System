@@ -77,9 +77,11 @@
                  <th>Amount Received</th>
                  <th>Employee Cut ID</th>
                  <th>Customer</th>
+                 <th>Sales Officer</th>
              </tr>
              </thead>
              <tbody>
+
                  <tr>
                     <td><input type="text" name="Drug_Name_1" id="drug_name_1" autocomplete="off" placeholder="Enter Drug Name"></td>
                     <div id="suggestions" style="border: 1px solid #ccc; display: none; position: absolute; background: white;"></div>
@@ -92,6 +94,8 @@
                      <td><input type="number" name="Amount_Received_1" id="AR_1" autocomplete="off"></td>
                      <td><input type="number" name="Cut_ID_1" id="ci_1" autocomplete="off"></td>
                      <td><input type="text" name="Customer_Shop_1" id="customer_shop_1" autocomplete="off"></td>
+                     <td><input name="Sales_Officer" id="Sales_Officer"></td>
+                     
                      
                  </tr>
                  <tr>
