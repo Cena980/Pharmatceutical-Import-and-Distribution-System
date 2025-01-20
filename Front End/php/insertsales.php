@@ -68,7 +68,17 @@ echo '<!DOCTYPE html>
     // Shared fields
     $date = $_POST['Date_1'] ?? null;
     // Handle foreign keys explicitly
-    $customerID = !empty($_POST['Customer_ID_1']) ? $_POST['Customer_ID_1'] : null;
+    $customer_shop = !empty($_POST['Customer_Shop_1']) ? $_POST['Customer_Shop_1'] : null;
+
+    $shop = "SELECT customer_id FROM customer WHERE customer_shop = '$customer_shop'";
+    $customer_shop_results = mysqli_query($connect, $shop);
+    if ($customer_shop_results) {
+        $customer_shop_row = mysqli_fetch_assoc($customer_shop_results);
+        $customerID = $customer_shop_row['customer_id'];
+    } else {
+        echo 'Could not fetch customer ID for ' . $customer_shop;
+    }
+
     $employeeID = !empty($_POST['Cut_ID_1']) ? $_POST['Cut_ID_1'] : null;
     $Amount_Received = !empty($_POST["Amount_Received_1"]) && is_numeric($_POST["Amount_Received_1"])
     ? floatval($_POST["Amount_Received_1"]): 0.00;
@@ -158,4 +168,64 @@ echo '<!DOCTYPE html>
 
 
     }
+/*
+    $query = "select * from sales_bill where sale_date = '$date' and customer_shop = '$customer_shop'";
+    $res = mysqli_query($connect, $query);
+
+    $num_rows = mysqli_num_rows($res);
+    if($num_rows>0){
+        echo "<table border='1' border-collapse=collapse id='tblreport'>";
+        echo "<tr>
+                    <th>Purchase ID</th><th>Vendor ID</th><th>Drug ID</th><th>price</th><th>Quantity</th><th>Discount</th>
+                    <th>Purchase Date</th><th>Total Amount</th><th>Amount Paid</th><th>Actions</th>
+                </tr>";
+        while ($r = mysqli_fetch_assoc($res)) {
+            echo "<tr>";
+            echo "<td>" . $r['purchase_id'] . "</td>";
+            echo "<td>" . $r['vendor_id'] . "</td>";
+            echo "<td>" . $r['drug_id'] . "</td>";
+            echo "<td>" . $r['price'] . "</td>";
+            echo "<td>" . $r['quantity'] . "</td>";
+            echo "<td>" . $r['Discount'] . "</td>";
+            echo "<td>" . $r['purchase_date'] . "</td>";
+            echo "<td>" . $r['total_amount'] . "</td>";
+            echo "<td>" . $r['amount_paid'] . "</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "No records found.";  
+    }
+
+*/
+
+
+
+    echo '
+        <div id="bottom">
+            <div class="bott">
+                <h3 class="section_title">Database Usage Guidelines</h3>
+                <div id="points">
+                    <div class="points">Authorized Access Only: Access to this database is restricted to authorized personnel only.</div>
+                    <div class="points">Data Integrity: Ensure the accuracy and completeness of all data entries.</div>
+                    <div class="points">Privacy Protection: Handle user data responsibly and comply with relevant privacy regulations.</div>
+                    <div class="points">Activity Monitoring: All activities may be logged and monitored for security purposes.</div>
+                    <div class="points">Reporting Issues: Report any technical issues or security concerns immediately to the system administrator.</div>
+                    <div class="points">Prohibited Actions: Unauthorized copying, redistribution, or alteration of the database or its components is strictly prohibited.</div>
+                </div>
+
+            </div>
+            <div class="bott">
+                <h3 class="section_title">Technical Support</h3>
+                <div id="points">
+                    <div class="points">BSDatabases.tech@gmail.com</div>
+                </div>
+
+            </div>
+            <div class="bott">
+                <h3>...</h3>
+            </div>
+        </div>
+    </body>
+</html>';
 ?>

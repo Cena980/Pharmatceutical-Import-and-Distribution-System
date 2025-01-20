@@ -74,9 +74,9 @@
                  <th>Total</th>
                  <th>Note</th>
                  <th>Date</th>
-                 <th>Amount_Received</th>
+                 <th>Amount Received</th>
                  <th>Employee Cut ID</th>
-                 <th>Customer ID</th>
+                 <th>Customer</th>
              </tr>
              </thead>
              <tbody>
@@ -91,7 +91,8 @@
                      <td><input type="date" name="Date_1" id="de_1" autocomplete="off"></td>
                      <td><input type="number" name="Amount_Received_1" id="AR_1" autocomplete="off"></td>
                      <td><input type="number" name="Cut_ID_1" id="ci_1" autocomplete="off"></td>
-                     <td><input type="number" name="Customer_ID_1" id="lid_1" autocomplete="off"></td>
+                     <td><input type="text" name="Customer_Shop_1" id="customer_shop_1" autocomplete="off"></td>
+                     
                  </tr>
                  <tr>
                      <td id="ndid"></td>
@@ -102,6 +103,8 @@
                      <td id="nec"></td>
                      <td id="nlid"></td>
                      <td id="ntl"></td>
+                     <td></td>
+                     <td><div id="suggestion_customer" style="border: 1px solid #ccc; display: none; position: absolute; background: white;"></div></td>
                  </tr>
                  <tr>
                      <td id="noty" class="table"></td>
@@ -196,9 +199,60 @@
                     calculateTotal();
                 }
             });
+            function addCustomerShopEventListener(rowNumber) {
+            document.getElementById(`customer_shop_${rowNumber}`).addEventListener("input", function () {
+                const query = this.value;
+                const suggestionsDiv = document.getElementById("suggestion_customer"); // Updated to match your HTML
+
+                if (query.length > 1) {
+                    fetch(`../php/get_customer_suggestions.php?query=${encodeURIComponent(query)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            suggestionsDiv.innerHTML = ""; // Clear previous suggestions
+                            suggestionsDiv.style.display = "block"; // Show suggestions
+
+                            if (data.error) {
+                                suggestionsDiv.style.display = "none"; // Hide if there is an error
+                            } else {
+                                const table = document.createElement("table");
+                                table.style.borderCollapse = "collapse";
+                                table.style.width = "100%";
+
+                                const header = document.createElement("tr");
+                                header.innerHTML = `<th style="border: 1px solid #ccc; padding: 8px;">Vendor Name</th>`;
+                                table.appendChild(header);
+
+                                data.forEach(customer => {
+                                    const row = document.createElement("tr");
+                                    row.innerHTML = `<td style="border: 1px solid #ccc; padding: 8px;">${customer.customer_shop}</td>`;
+                                    row.style.cursor = "pointer";
+
+                                    row.onclick = () => {
+                                        document.getElementById(`customer_shop_${rowNumber}`).value = customer.customer_shop;
+                                        suggestionsDiv.style.display = "none"; // Hide suggestions when an item is clicked
+                                    };
+
+                                    table.appendChild(row);
+                                });
+
+                                suggestionsDiv.appendChild(table);
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error fetching customer suggestions:", error);
+                        });
+                } else {
+                    suggestionsDiv.style.display = "none"; // Hide suggestions if query length is <= 1
+                }
+            });
+        }
+
+        // Call the function for row 1
+        addCustomerShopEventListener(qnt);
+
 
                     // Function to fetch price for each drug row
-                    function fetchPrice(rowNumber) {
+            function fetchPrice(rowNumber) {
             const drugName = document.getElementById(`drug_name_${rowNumber}`).value.trim();
 
             if (drugName.trim() !== "") {
