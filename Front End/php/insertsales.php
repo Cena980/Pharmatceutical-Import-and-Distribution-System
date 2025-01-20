@@ -64,8 +64,12 @@
     $qnt = isset($_POST['qnt']) ? intval($_POST['qnt']) : 0;
     echo "Number of rows submitted: " . $qnt; 
     $Date0 = $_POST["Date_1"];
-    $Employee_Cut0 = $_POST["Cut_ID_1"];
-    $Location_ID0 = $_POST["Location_ID_1"];
+    $Employee_Cut0 = !empty($_POST["Cut_ID_1"]) && is_numeric($_POST["Cut_ID_1"]) 
+    ? intval($_POST["Cut_ID_1"]) 
+    : null; // Set to NULL if empty
+    $Location_ID0 = !empty($_POST["Location_ID_1"]) && is_numeric($_POST["Location_ID_1"]) 
+    ? intval($_POST["Location_ID_1"]) 
+    : null; // Default to null if not provided or invalid
     $TotalAmount = 0;
     $Amount_Recieved = $_POST["Amount_Received_1"];
     
@@ -88,18 +92,26 @@
         $Quantity = $_POST["Quantity_$i"] ?? null;
         $Discount = $_POST["Discount_$i"] ?? null;
         $Price = $_POST["Price_$i"] ?? null;
-        $Employee_Cut = $Employee_Cut0;
-        $Customer_ID = $Location_ID0;
+        $Employee_Cut = !empty($_POST["Cut_ID_$i"]) && is_numeric($_POST["Cut_ID_$i"]) 
+        ? intval($_POST["Cut_ID_$i"]) 
+        : $Employee_Cut0;
+        $Customer_ID = !empty($_POST["Customer_ID_$i"]) && is_numeric($_POST["Customer_ID_$i"]) 
+        ? intval($_POST["Customer_ID_$i"]) 
+        : $Location_ID0;
         $Total = $_POST["Total_$i"] ?? null;
         $TotalAmount += $Total;
         $Note = $_POST["Note_$i"] ?? null;
+        $Amount_Recieved = !empty($_POST["Amount_Received_$i"]) && is_numeric($_POST["Amount_Received_$i"])
+    ? floatval($_POST["Amount_Received_$i"])
+    : 0.00; // Default to 0.00 if not provided
+
     
         // Prepared statement to avoid SQL injection
         $sql = "INSERT INTO sales (Inventory_ID, Sale_Date, Quantity, Discount, Price, Cut_ID, Customer_ID, Total_Price, Amount_Received, Note) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = mysqli_prepare($connect, $sql);
         if ($stmt) {
-            mysqli_stmt_bind_param($stmt, "isiiididss", $Inventory_ID, $Date, $Quantity, $Discount, $Price, $Employee_Cut, $Customer_ID, $Total, $Amount_Recieved, $Note);
+            mysqli_stmt_bind_param($stmt, "isididdiis", $Inventory_ID, $Date, $Quantity, $Discount, $Price, $Employee_Cut, $Customer_ID, $Total, $Amount_Recieved, $Note);
             if (mysqli_stmt_execute($stmt)) {
                 echo "Record has been inserted";
             } else {
@@ -111,7 +123,7 @@
     }
     
 
-    $query = "select * from sales_bill where SaleDate = '$Date0' and CustomerShop = (select customer_shop from customer where customer_id = $Location_ID0)";
+   /* $query = "select * from sales_bill where SaleDate = '$Date0' and CustomerShop = (select customer_shop from customer where customer_id = $Location_ID0)";
     try{$res = mysqli_query($connect, $query);
     }catch(mysqli_sql_exception){
         echo 'Count not connect';
@@ -143,6 +155,7 @@
     } else {
         echo "No records found.";  
     }
+
     echo "<tr>";
     echo "<td>" . 'Total Amount' . "</td>";
     echo "<td>" . $TotalAmount . "</td>";
@@ -157,7 +170,7 @@
     echo "</tr>";
     echo "</table>";
 
-
+*/
 
                 echo '            <div id="bottom">
                             <div class="bott">
