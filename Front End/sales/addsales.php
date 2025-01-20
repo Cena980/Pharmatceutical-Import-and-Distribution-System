@@ -15,13 +15,13 @@
                     <p>B&S Database</p>
                 </div>
                 <div class="barr">
-                    <Script>
+                    <script>
                         // Search function for the drugs
                         function drugSearch() {
-                            a =document.getElementById('search');
-                            if (a.value.length<1){
+                            a = document.getElementById('search');
+                            if (a.value.length < 1) {
                                 alert("Cannot search for empty string")
-                            }else{
+                            } else {
                                 const form = document.forms["search"];
                                 form.action = "../php/search.php";
                                 form.method = "post";
@@ -30,15 +30,15 @@
                                 form.submit();
                             }
                         }
-                    </Script>
+                    </script>
                     <form name="search" method="post" action="../php/search.php">
                         <input type="text" placeholder="Search for Drugs" name="query" id="search" required>
                     </form>
-                    <button type="submit" onclick="drugSearch()" >Search</button>
+                    <button type="submit" onclick="drugSearch()">Search</button>
                     
                 </div>
                 <div class="barr">
-                    <div id="switch" >
+                    <div id="switch">
                         <button id="switch">En</button>
                         <button id="switch">Fa</button>
                     </div>
@@ -77,13 +77,11 @@
                  <th>Amount_Received</th>
                  <th>Employee Cut ID</th>
                  <th>Customer ID</th>
-                 
-                 
              </tr>
              </thead>
              <tbody>
                  <tr>
-                    <td><input type="text" name = "Drug_Name_1" id="drug_name_1" name="Drug_Name" autocomplete="off" placeholder="Enter Drug Name"></td>
+                    <td><input type="text" name="Drug_Name_1" id="drug_name_1" autocomplete="off" placeholder="Enter Drug Name"></td>
                     <div id="suggestions" style="border: 1px solid #ccc; display: none; position: absolute; background: white;"></div>
                      <td><input type="number" name="Quantity_1" id="qy_1" autocomplete="off"></td>
                      <td><input type="number" name="Discount_1" id="dt_1" autocomplete="off"></td>
@@ -93,10 +91,8 @@
                      <td><input type="date" name="Date_1" id="de_1" autocomplete="off"></td>
                      <td><input type="number" name="Amount_Received_1" id="AR_1" autocomplete="off"></td>
                      <td><input type="number" name="Cut_ID_1" id="ci_1" autocomplete="off"></td>
-                     <td><input type="number" name="Location_ID_1" id="lid_1" autocomplete="off"></td>
-                     
+                     <td><input type="number" name="Customer_ID_1" id="lid_1" autocomplete="off"></td>
                  </tr>
-         
                  <tr>
                      <td id="ndid"></td>
                      <td id="nde"></td>
@@ -106,18 +102,15 @@
                      <td id="nec"></td>
                      <td id="nlid"></td>
                      <td id="ntl"></td>
-                     
                  </tr>
-             <tr>
-                 <td id="noty" class="table"></td>
-             </tr>
+                 <tr>
+                     <td id="noty" class="table"></td>
+                 </tr>
              </tbody>
             </table>
-            <button class="btn btn-save" onclick="validate()" >Save</button>
+            <button class="btn btn-save" onclick="validate()">Save</button>
             <button class="btn btn-add" onclick="create_sale(); return false;">+</button>
             <button class="btn btn-remove" onclick="delete_last_row(); return false;">-</button>
-        
-        </div>
         </form>
         <div id="bottom">
             <div class="bott">
@@ -130,142 +123,132 @@
                     <div class="points">Reporting Issues: Report any technical issues or security concerns immediately to the system administrator.</div>
                     <div class="points">Prohibited Actions: Unauthorized copying, redistribution, or alteration of the database or its components is strictly prohibited.</div>
                 </div>
-
             </div>
             <div class="bott">
                 <h3 class="section_title">Technical Support</h3>
                 <div id="points">
                     <div class="points">BSDatabases.tech@gmail.com</div>
                 </div>
-
             </div>
             <div class="bott">
                 <h3>...</h3>
             </div>
         </div>
 
-
-
         <script>
-           document.querySelector("table tbody").addEventListener("input", function (e) {
-    if (e.target.name.startsWith("Drug_Name_")) {
-        const rowNumber = e.target.name.split("_")[2]; // Extract the row number
-        const query = e.target.value;
-        if (query.length > 1) {
-            fetch(`../php/get_drug_suggestions.php?query=${encodeURIComponent(query)}`)
-                .then(response => response.json())
-                .then(data => {
-                    const suggestionsDiv = document.getElementById("suggestions");
-                    suggestionsDiv.innerHTML = "";
-                    suggestionsDiv.style.display = "block";
+            let qnt = 1;
+            document.querySelector("table tbody").addEventListener("input", function (e) {
+                if (e.target.name.startsWith("Drug_Name_")) {
+                    const rowNumber = e.target.name.split("_")[2]; // Extract the row number
+                    const query = e.target.value;
+                    if (query.length > 1) {
+                        fetch(`../php/get_drug_suggestions.php?query=${encodeURIComponent(query)}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                const suggestionsDiv = document.getElementById("suggestions");
+                                suggestionsDiv.innerHTML = "";
+                                suggestionsDiv.style.display = "block";
 
-                    if (data.error) {
-                        suggestionsDiv.style.display = "none";
+                                if (data.error) {
+                                    suggestionsDiv.style.display = "none";
+                                } else {
+                                    const table = document.createElement("table");
+                                    table.style.borderCollapse = "collapse";
+                                    table.style.width = "100%";
+                                    const header = document.createElement("tr");
+                                    header.innerHTML = `
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Drug Name</th>
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Expiration Date</th>
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Amount</th>
+                                    `;
+                                    table.appendChild(header);
+                                    data.forEach(drug => {
+                                        const row = document.createElement("tr");
+                                        row.innerHTML = `
+                                            <td style="border: 1px solid #ccc; padding: 8px;">${drug.Drug_Name}</td>
+                                            <td style="border: 1px solid #ccc; padding: 8px;">${drug.Expiration_Date}</td>
+                                            <td style="border: 1px solid #ccc; padding: 8px;">${drug.Amount}</td>
+                                        `;
+                                        row.style.cursor = "pointer";
+                                        row.onclick = () => {
+                                            document.getElementById(`drug_name_${rowNumber}`).value = drug.Drug_Name;
+                                            suggestionsDiv.style.display = "none";
+                                            fetchPrice(rowNumber);
+                                        };
+                                        table.appendChild(row);
+                                    });
+                                    suggestionsDiv.appendChild(table);
+                                }
+                            })
+                            .catch(error => {
+                                console.error("Error fetching drug suggestions:", error);
+                            });
                     } else {
-                        const table = document.createElement("table");
-                        table.style.borderCollapse = "collapse";
-                        table.style.width = "100%";
-                        const header = document.createElement("tr");
-                        header.innerHTML = `
-                            <th style="border: 1px solid #ccc; padding: 8px;">Drug Name</th>
-                            <th style="border: 1px solid #ccc; padding: 8px;">Expiration Date</th>
-                            <th style="border: 1px solid #ccc; padding: 8px;">Amount</th>
-                        `;
-                        table.appendChild(header);
-                        data.forEach(drug => {
-                            const row = document.createElement("tr");
-                            row.innerHTML = `
-                                <td style="border: 1px solid #ccc; padding: 8px;">${drug.Drug_Name}</td>
-                                <td style="border: 1px solid #ccc; padding: 8px;">${drug.Expiration_Date}</td>
-                                <td style="border: 1px solid #ccc; padding: 8px;">${drug.Amount}</td>
-                            `;
-                            row.style.cursor = "pointer";
-                            row.onclick = () => {
-                                document.getElementById(`drug_name_${rowNumber}`).value = drug.Drug_Name;
-                                suggestionsDiv.style.display = "none";
-                                fetchPrice(rowNumber);
-                            };
-                            table.appendChild(row);
-                        });
-                        suggestionsDiv.appendChild(table);
+                        document.getElementById("suggestions").style.display = "none";
                     }
-                })
-                .catch(error => {
-                    console.error("Error fetching drug suggestions:", error);
-                });
-        } else {
-            document.getElementById("suggestions").style.display = "none";
-        }
-    }
-
-    if (
-        e.target.name.startsWith("Price_") ||
-        e.target.name.startsWith("Quantity_") ||
-        e.target.name.startsWith("Discount_")
-    ) {
-        calculateTotal();
-    }
-});
-
-
-
-            // Function to fetch price for each drug row
-            function fetchPrice(rowNumber) {
-                const drugName = document.getElementById(`drug_name_${rowNumber}`).value.trim();
-
-                if (drugName.trim() !== "") {
-                    fetch(`../php/get_price.php?Drug_Name=${encodeURIComponent(drugName)}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.price) {
-                                document.getElementById(`pr_${rowNumber}`).value = data.price;
-                                calculateTotal();  // Recalculate totals for all rows after price is set
-                            } else {
-                                alert("Price not found for the selected drug.");
-                            }
-                        });
                 }
-            }
-            document.addEventListener("input", function (e) {
-                if (e.target.name.startsWith("Price_") || 
-                    e.target.name.startsWith("Quantity_") || 
-                    e.target.name.startsWith("Discount_")) {
+
+                if (
+                    e.target.name.startsWith("Price_") ||
+                    e.target.name.startsWith("Quantity_") ||
+                    e.target.name.startsWith("Discount_")
+                ) {
                     calculateTotal();
                 }
             });
 
+                    // Function to fetch price for each drug row
+                    function fetchPrice(rowNumber) {
+            const drugName = document.getElementById(`drug_name_${rowNumber}`).value.trim();
 
-            // Function to calculate total for each row
-            function calculateTotal() {
+            if (drugName.trim() !== "") {
+                fetch(`../php/get_price.php?Drug_Name=${encodeURIComponent(drugName)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.price) {
+                            document.getElementById(`pr_${rowNumber}`).value = data.price;
+                            calculateTotal();  // Recalculate totals for all rows after price is set
+                        } else {
+                            alert("Price not found for the selected drug.");
+                        }
+                    });
+            }
+        }
+                    // Function to calculate total for each row
+                function calculateTotal() {
                 const rows = document.querySelectorAll("table tbody tr");
                 rows.forEach(row => {
-                    const priceInput = row.querySelector('input[name^="Price_"]');
-                    const quantityInput = row.querySelector('input[name^="Quantity_"]');
-                    const discountInput = row.querySelector('input[name^="Discount_"]');
-                    const totalInput = row.querySelector('input[name^="Total_"]');
-                    
-                    // Ensure valid values for price, quantity, and discount
-                    const price = parseFloat(priceInput?.value || 0);
-                    const quantity = parseFloat(quantityInput?.value || 0);
-                    const discount = parseFloat(discountInput?.value || 0);
-                    
-                    // Calculate the discount amount
-                    const discountAmount = (price * quantity * discount) / 100;
-                    
-                    // Calculate the total
-                    const total = (price * quantity) - discountAmount;
-                    
-                    // Update the total input field
-                    if (totalInput) {
-                        totalInput.value = total.toFixed(2); // Ensure the total has two decimal places
-                    }
-                });
-            }
+                const priceInput = row.querySelector('input[name^="Price_"]');
+                const quantityInput = row.querySelector('input[name^="Quantity_"]');
+                const discountInput = row.querySelector('input[name^="Discount_"]');
+                const totalInput = row.querySelector('input[name^="Total_"]');
+                
+                // Ensure valid values for price, quantity, and discount
+                const price = parseFloat(priceInput?.value || 0);
+                const quantity = parseFloat(quantityInput?.value || 0);
+                const discount = parseFloat(discountInput?.value || 0);
+                
+                // Calculate the discount amount
+                const discountAmount = (price * quantity * discount) / 100;
+                
+                // Calculate the total
+                const total = (price * quantity) - discountAmount;
+                
+                // Update the total input field
+                if (totalInput) {
+                    totalInput.value = total.toFixed(2); // Ensure the total has two decimal places
+                }
+            });
+        }
+            function updateQnt() {
+                document.getElementById("qnt").value = qnt;  // Update the hidden input field
+}
 
 
+            // Create a new row
             // Function to create a new sale row
             function create_sale() {
-                qnt += 1;  // Increment the quantity to update the row number
+                qnt +=1;  // Increment the quantity to update the row number
 
                 const tbody = document.querySelector("table tbody");
                 const newRow = document.createElement("tr");
@@ -278,34 +261,24 @@
                     <td><input type="text" name="Note_${qnt}" id="Note_${qnt}" autocomplete="off"></td>
                 `;
                 tbody.appendChild(newRow);
-
-               
-
                 // Update the hidden input field for quantity
                 document.getElementById("qnt").value = qnt;
             }
 
+
+            // Delete the last row
             function delete_last_row() {
-            const tbody = document.querySelector("table tbody");
-            const rows = tbody.rows.length; // Get the number of rows in the tbody
-            const qntField = document.getElementById("qnt");
-
-            // Ensure `qnt` is in sync with the actual number of rows
-            qnt = parseInt(qntField.value, 10) || rows;
-
-            if (rows > 1 && qnt > 1) {
-                tbody.removeChild(tbody.lastElementChild); // Remove the last row
-                qnt -= 1; // Decrement the row count
-                qntField.value = qnt; // Update the hidden input field
-            } else {
+                if (qnt > 1) {
+                    document.querySelector("table tbody").lastElementChild.remove();
+                    qnt--;
+                } else {
                 alert("Cannot delete the last row!");
             }
-}
-
-
+            }
 
             // Validate function before form submission
             function validate() {
+
                 const message = document.getElementById("noty");
                 message.style.color = "green";
                 message.innerHTML = "Your record has been saved.";
@@ -324,7 +297,7 @@
 
                 return valid;
             }
-
         </script>
     </body>
 </html>
+
