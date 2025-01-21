@@ -63,6 +63,19 @@
         <div id="over"><h1>New Sale</h1></div>
         <form name="sale" method="post">
             <input type="hidden" name="qnt" id="qnt" value="1">
+            <div>
+                <label>Date</label>
+                <input type="date" name="Date_1" id="de_1" autocomplete="off">
+                <label>Amount Received</label>
+                <input type="number" name="Amount_Received_1" id="AR_1" autocomplete="off">
+                <label>Employee Cut ID</label>
+                <input type="number" name="Cut_ID_1" id="ci_1" autocomplete="off">
+                <label>Customer</label>
+                <input type="text" name="Customer_Shop_1" id="customer_shop_1" autocomplete="off">
+                <div id="suggestion_customer" style="border: 1px solid #ccc; display: none; position: fixed; background: white;"></div>
+                <label>Sales Officer</label>
+                <input name="Sales_Officer" id="Sales_Officer">
+            </div>
             <table class="table table-success">
              <thead>
              <tr>
@@ -73,42 +86,29 @@
                  <th>Price</th>
                  <th>Total</th>
                  <th>Note</th>
-                 <th>Date</th>
-                 <th>Amount Received</th>
-                 <th>Employee Cut ID</th>
-                 <th>Customer</th>
-                 <th>Sales Officer</th>
              </tr>
              </thead>
              <tbody>
 
                  <tr>
                     <td><input type="text" name="Drug_Name_1" id="drug_name_1" autocomplete="off" placeholder="Enter Drug Name"></td>
-                    <div id="suggestions" style="border: 1px solid #ccc; display: none; position: absolute; background: white;"></div>
                      <td><input type="number" name="Quantity_1" id="qy_1" autocomplete="off"></td>
                      <td><input type="number" name="Discount_1" id="dt_1" autocomplete="off"></td>
                      <td><input type="number" name="Price_1" id="pr_1" autocomplete="off"></td>
                      <td><input type="number" name="Total_1" id="tl_1" autocomplete="off"></td>
                      <td><input type="text" name="Note" id="Note_1" autocomplete="off"></td>
-                     <td><input type="date" name="Date_1" id="de_1" autocomplete="off"></td>
-                     <td><input type="number" name="Amount_Received_1" id="AR_1" autocomplete="off"></td>
-                     <td><input type="number" name="Cut_ID_1" id="ci_1" autocomplete="off"></td>
-                     <td><input type="text" name="Customer_Shop_1" id="customer_shop_1" autocomplete="off"></td>
-                     <td><input name="Sales_Officer" id="Sales_Officer"></td>
+
                      
                      
                  </tr>
                  <tr>
                      <td id="ndid"></td>
+                     <div id="suggestions" style="border: 1px solid #ccc; display: none; position: absolute; background: white;"></div>
                      <td id="nde"></td>
                      <td id="nqy"></td>
                      <td id="ndt"></td>
                      <td id="npr"></td>
                      <td id="nec"></td>
-                     <td id="nlid"></td>
-                     <td id="ntl"></td>
-                     <td></td>
-                     <td><div id="suggestion_customer" style="border: 1px solid #ccc; display: none; position: absolute; background: white;"></div></td>
                  </tr>
                  <tr>
                      <td id="noty" class="table"></td>

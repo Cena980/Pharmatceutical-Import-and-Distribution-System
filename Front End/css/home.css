@@ -391,4 +391,9 @@ button a{
     background-color: #f0f0f0;
     transform: scale(1.2);
 }
+label{
+    font-weight: bold;
+    text-align: center;
+    border-left: solid 2px white;
+}
 
