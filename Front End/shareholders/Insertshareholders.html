@@ -59,7 +59,7 @@
             </div>
         </div>
         <div id="over"><h1>Insert into Shareholders</h1></div>
-        <form name="sale" action="../php/insertshareholders.php" method="post">
+        <form name="Shareholder">
             <table class="table table-success">
                 <thead>
                    <tr>
@@ -71,17 +71,22 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input type="number" name="Share_ID" id="sid" autocomplete="off"></td>
-                        <td><input type="text" name="Holder_Name" id="did" autocomplete="off"></td>
-                        <td><input type="text" name="Phone" id="did" autocomplete="off"></td>
+                        <td><input type="number" name="Share_ID" id="sid" autocomplete="on"></td>
+                        <td><input type="text" name="Holder_Name" id="did" autocomplete="on"></td>
+                        <td><input type="number" name="Phone" id="pid" autocomplete="on"></td>
                     </tr>
             
                 <tr>
-                    
+                    <td id="nsid"></td>
+                    <td id="noty"></td>
                 </tr>
                 </tbody>
                </table>
-            <button type="submit" class="btn btn-success" onclick="validate()" >Insert</button>
+            </form>
+        </div>
+        <div class="button-group">
+            <button class="btn btn-save" onclick="validate()" >Insert</button>
+        </div>
             <div id="bottom">
                 <div class="bott">
                     <h3 class="section_title">Database Usage Guidelines</h3>
@@ -116,30 +121,30 @@
         </div>
         <script>
             function validate(){
-                var message = document.getElementById("noty");
-                message.style.color = "green";
-                message.innerHTML = "Your record has been saved.";
         
                 let valid = true;
-                let sale = document.getElementById("sid").value;
+                let share = document.getElementById("sid").value;
         
-                if(!/^\d+$/.test(sale) || sale === ""){
-                        document.getElementById("nsid").innerHTML = "Please enter a valid Drug ID.";
+                if(!/^\d+$/.test(share) || share === ""){
+                        document.getElementById("nsid").innerHTML = "Please enter a valid ShareHolder ID.";
                         valid = false;
                     } else {
         
                         document.getElementById("nsid").innerHTML = "";
         
                     }
-        
-                let drug = document.getElementById("did");
-        
-                if(!/^\d+$/.test(drug) || drug === ""){
-                        document.getElementById("ndid").innerHTML = "Please enter a valid Drug ID.";
-                        valid = false;
-                    } else {
-                        document.getElementById("ndid").innerHTML = "";
-                    }
+                if(valid){
+                    var message = document.getElementById("noty");
+                    message.style.color = "green";
+                    message.innerHTML = "Your record has been saved.";
+                    const form = document.forms["Shareholder"];
+                    form.action="../php/insertshareholders.php"; 
+                    form.method="post"
+                    form.submit();
+
+                }else{
+                    message.innerHTML="Error";
+                }
         
             }
             </script>
