@@ -67,38 +67,47 @@ echo '<!DOCTYPE html>
 
     // Shared fields
     $date = $_POST['Date_1'] ?? null;
+
     // Handle foreign keys explicitly
     $customer_shop = !empty($_POST['Customer_Shop_1']) ? $_POST['Customer_Shop_1'] : null;
-
-    $shop = "SELECT customer_id FROM customer WHERE customer_shop = '$customer_shop'";
-    $customer_shop_results = mysqli_query($connect, $shop);
-    if ($customer_shop_results) {
-        $customer_shop_row = mysqli_fetch_assoc($customer_shop_results);
-        $customerID = $customer_shop_row['customer_id'];
+    if (!empty($customer_shop)) { // Check if input is not empty
+        $shop = "SELECT customer_id FROM customer WHERE customer_shop = '$customer_shop'";
+        $customer_shop_results = mysqli_query($connect, $shop);
+    
+        if ($customer_shop_results && mysqli_num_rows($customer_shop_results) > 0) {
+            $customer_shop_row = mysqli_fetch_assoc($customer_shop_results);
+            $customerID = $customer_shop_row['customer_id'];
+        } else {
+            $customerID = null; // Set a default value if the query fails
+        }
     } else {
-        echo 'Could not fetch customer ID for ' . $customer_shop;
+        $customerID = null; // Set a default value if input is empty
     }
+    
+    // Continue with other code logic    
 
     $employeeID = !empty($_POST['Cut_ID_1']) ? $_POST['Cut_ID_1'] : null;
     $Amount_Received = !empty($_POST["Amount_Received_1"]) && is_numeric($_POST["Amount_Received_1"])
     ? floatval($_POST["Amount_Received_1"]): 0.00;
-    $Sales_Officer = $_POST['Sales_Officer'];
+    $Sales_Officer = $_POST['Sales_Officer'] ?? null;
 
 
     $totalSales = 0;
     $rowTotals = []; // Store individual row totals
 
+// Ensure customer_id is not null/empty and amount_received is 0 before proceeding
+if (!empty($customerID) && $amount_received == 0) {
     // Check if the invoice already exists
     $invoice_check = "SELECT * FROM invoices WHERE date = '$date' AND customer_id = '$customerID'";
     $invoice_check_results = mysqli_query($connect, $invoice_check);
 
     if ($invoice_check_results === false) {
-        // Query failed (likely an issue with the database)
+        // Query failed (alert for database issue)
         echo "Error checking for existing invoice: " . mysqli_error($connect);
     } else {
         // Check if the invoice already exists
         if (mysqli_num_rows($invoice_check_results) > 0) {
-            // Invoice exists
+            // Invoice exists (alert with invoice details)
             $invoice_check_row = mysqli_fetch_assoc($invoice_check_results);
             $invoice_ID = $invoice_check_row['invoice_id'];
             echo "Invoice already exists with ID: $invoice_ID";
@@ -125,6 +134,10 @@ echo '<!DOCTYPE html>
             }
         }
     }
+} else {
+    $invoice_ID = null;
+    // Skip invoice creation silently if customer_id is empty or amount_received is not zero
+}
 
     // Gather all the rows of data dynamically
     for ($i = 1; $i <= $rowCount; $i++) {
@@ -204,7 +217,7 @@ echo '<!DOCTYPE html>
 
     }
 
-
+if (!empty($invoice_ID)){
     $sql1 = "SELECT balance FROM customer WHERE customer_id = '$customerID'";
     $balance_result = mysqli_query($connect, $sql1);
 
@@ -255,7 +268,9 @@ echo '<!DOCTYPE html>
     } else {
         echo "No records found.";  
     }
-
+} else {
+    # code...
+}
 
 
     echo '
