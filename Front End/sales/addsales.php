@@ -63,7 +63,7 @@
         <div id="over"><h1>New Sale</h1></div>
         <form name="sale" method="post">
             <input type="hidden" name="qnt" id="qnt" value="1">
-            <div>
+            <div class="fixed-input">
                 <label>Date</label>
                 <input type="date" name="Date_1" id="de_1" autocomplete="off">
                 <label>Amount Received</label>
@@ -92,11 +92,11 @@
 
                  <tr>
                     <td><input type="text" name="Drug_Name_1" id="drug_name_1" autocomplete="off" placeholder="Enter Drug Name"></td>
-                     <td><input type="number" name="Quantity_1" id="qy_1" autocomplete="off"></td>
-                     <td><input type="number" name="Discount_1" id="dt_1" autocomplete="off"></td>
-                     <td><input type="number" name="Price_1" id="pr_1" autocomplete="off"></td>
-                     <td><input type="number" name="Total_1" id="tl_1" autocomplete="off"></td>
-                     <td><input type="text" name="Note" id="Note_1" autocomplete="off"></td>
+                    <td><input type="number" name="Quantity_1" id="qy_1" autocomplete="off"></td>
+                    <td><input type="number" name="Discount_1" id="dt_1" autocomplete="off"></td>
+                    <td><input type="number" name="Price_1" id="pr_1" autocomplete="off"></td>
+                    <td><input type="number" name="Total_1" id="tl_1" autocomplete="off"></td>
+                    <td><input type="text" name="Note" id="Note_1" autocomplete="off"></td>
 
                      
                      
@@ -111,13 +111,15 @@
                      <td id="nec"></td>
                  </tr>
                  <tr>
-                     <td id="noty" class="table"></td>
+                     <td id="noty"></td>
                  </tr>
              </tbody>
             </table>
-            <button class="btn btn-save" onclick="validate()">Save</button>
-            <button class="btn btn-add" onclick="create_sale(); return false;">+</button>
-            <button class="btn btn-remove" onclick="delete_last_row(); return false;">-</button>
+            <div class="button-group">
+                <button class="btn btn-save" onclick="validate()">Save</button>
+                <button class="btn btn-add" onclick="create_sale(); return false;">+</button>
+                <button class="btn btn-remove" onclick="delete_last_row(); return false;">-</button>
+            </div>
         </form>
         <div id="bottom">
             <div class="bott">
@@ -337,13 +339,12 @@
             // Validate function before form submission
             function validate() {
 
-                const message = document.getElementById("noty");
-                message.style.color = "green";
-                message.innerHTML = "Your record has been saved.";
-
                 let valid = true;
                 const form = document.forms["sale"];
                 if (valid) {
+                    const message = document.getElementById("noty");
+                    message.style.color = "green";
+                    message.innerHTML = "Your record has been saved.";
                     form.action = "../php/insertsales.php"; // Set action to the desired PHP script
                     form.method = "post";
                     form.submit();

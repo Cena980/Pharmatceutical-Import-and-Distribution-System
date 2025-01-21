@@ -99,9 +99,11 @@
                 </table>
                
             </form>
-            <button class="btn btn-danger" onclick="validate()">Insert</button>
-            <button class="btn btn-add" onclick="create_drugs(); return false;">+</button>
-            <button class="btn btn-remove" onclick="delete_last_row(); return false;">-</button>
+            <div class="button-group" >
+                <button class="btn btn-danger" onclick="validate()">Save</button>
+                <button class="btn btn-add" onclick="create_drugs(); return false;">+</button>
+                <button class="btn btn-remove" onclick="delete_last_row(); return false;">-</button>
+            </div>
         
             <script>
                 function validate() {

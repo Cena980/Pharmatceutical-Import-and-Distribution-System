@@ -271,8 +271,23 @@ main .far_right {
 .info {
 
 }
-th, td{
-    width: 50px;
+
+.button-group{
+    margin: auto;
+    margin-top: 30px;
+    width: 95px;
+}
+.fixed-input {
+    margin: auto;
+    margin-top: 30px;
+    max-width: 1300px;
+
+}
+.table {
+    margin: auto;
+    margin-top: 30px;
+    width: auto;
+
 }
 #table {
     margin: auto;
@@ -394,6 +409,7 @@ button a{
 label{
     font-weight: bold;
     text-align: center;
+    margin-left: 5px;
     border-left: solid 2px white;
 }
 

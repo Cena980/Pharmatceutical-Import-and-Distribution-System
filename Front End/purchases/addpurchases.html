@@ -60,7 +60,7 @@
         </div>  
         <div id="over"><h1>New purchase</h1></div>
         <form name="purchase">
-            <table>
+            <table class="table">
                 <input type="hidden" name="qnt" id="qnt" value="1">
                 <tr>
                     <th>Vendor Name</th>
@@ -75,9 +75,7 @@
                 </tr>
                 <tr>
                     <td><input type="text" name="vendor_name_1" id="vendor_name_1" autocomplete="off"></td>
-                    <div id="suggestions_vendors" style="border: 1px solid #ccc; display: none; position: absolute; background: white;"></div>
                     <td><input type="text" name="drug_name_1" id="drug_name_1" autocomplete="off"></td>
-                    <div id="suggestions" style="border: 1px solid #ccc; display: none; position: absolute; background: white;"></div>
                     <td><input type="number" name="price_1" id="price_1" autocomplete="off"></td>
                     <td><input type="number" name="quantity_1" id="quantity_1" autocomplete="off"></td>
                     <td><input type="number" name="discount_1" id="discount_1" autocomplete="off"></td>
@@ -87,7 +85,9 @@
                 </tr>
                 <tr>
                     <td id="nvendor_id"></td>
+                    <div id="suggestions_vendors" style="border: 1px solid #ccc; display: none; position: absolute; background: white;"></div>
                     <td id="ndid"></td>
+                    <div id="suggestions" style="border: 1px solid #ccc; display: none; position: absolute; background: white;"></div>
                     <td id="nqnt"></td>
                     <td id="ndate"></td>
                     <td id="ntotal"></td>
@@ -102,9 +102,11 @@
         </div>
         </form>
     </div>
-        <button  class="btn btn-save" onclick="validate()" >Save</button>
-        <button class="btn btn-add" onclick="create_purchase(); return false;">+</button>
-        <button class="btn btn-remove" onclick="delete_last_row(); return false;">-</button>
+            <div class="button-group">
+                <button  class="btn btn-save" onclick="validate()" >Save</button>
+                <button class="btn btn-add" onclick="create_purchase(); return false;">+</button>
+                <button class="btn btn-remove" onclick="delete_last_row(); return false;">-</button>
+            </div>
 
         <div id="bottom">
             <div class="bott">
