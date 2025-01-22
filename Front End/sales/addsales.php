@@ -116,6 +116,14 @@
                  </tr>
              </tbody>
             </table>
+            <div class="grand_total">
+                <label>Sub Total</label>
+                <input type="number" name="grand_total" id="grand_total" autocomplete="off">
+            </div>
+            <div class="grand_total">
+                <label>Due Date</label>
+                <input type="date" name="dueDate" id="dueDate" autocomplete="off">
+            </div>
             <div class="button-group">
                 <button class="btn btn-save" onclick="validate()">Save</button>
                 <button class="btn btn-add" onclick="create_sale(); return false;">+</button>
@@ -155,6 +163,20 @@
 
                 // Set the value of the input
                 dateInput.value = formattedDate;
+
+                //Setting due date auto 7-days from now
+                const dueDateInput = document.getElementById("dueDate");
+                if (dueDateInput) {
+                    const today = new Date();
+                    const dueDate = new Date(today);
+                    dueDate.setDate(today.getDate() + 7); // Add 7 days to the current date
+
+                    // Format the date as YYYY-MM-DD (to match most input[type="date"] requirements)
+                    const year = dueDate.getFullYear();
+                    const month = String(dueDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+                    const day = String(dueDate.getDate()).padStart(2, '0');
+                    dueDateInput.value = `${year}-${month}-${day}`;
+                }
             };
             document.getElementById("customer_shop_1").addEventListener("input", function () {
                 const inputField = this;
@@ -260,7 +282,7 @@
                                 table.style.width = "100%";
 
                                 const header = document.createElement("tr");
-                                header.innerHTML = `<th style="border: 1px solid #ccc; padding: 8px;">Vendor Name</th>`;
+                                header.innerHTML = `<th style="border: 1px solid #ccc; padding: 8px;">Customer Name</th>`;
                                 table.appendChild(header);
 
                                 data.forEach(customer => {
@@ -309,32 +331,44 @@
                     });
             }
         }
-                    // Function to calculate total for each row
-                function calculateTotal() {
-                const rows = document.querySelectorAll("table tbody tr");
-                rows.forEach(row => {
+        // Function to calculate total for each row
+        function calculateTotal() {
+            const rows = document.querySelectorAll("table tbody tr");
+            let grandTotal = 0; // Initialize grand total
+
+            rows.forEach(row => {
                 const priceInput = row.querySelector('input[name^="Price_"]');
                 const quantityInput = row.querySelector('input[name^="Quantity_"]');
                 const discountInput = row.querySelector('input[name^="Discount_"]');
                 const totalInput = row.querySelector('input[name^="Total_"]');
-                
+
                 // Ensure valid values for price, quantity, and discount
                 const price = parseFloat(priceInput?.value || 0);
                 const quantity = parseFloat(quantityInput?.value || 0);
                 const discount = parseFloat(discountInput?.value || 0);
-                
+
                 // Calculate the discount amount
                 const discountAmount = (price * quantity * discount) / 100;
-                
+
                 // Calculate the total
                 const total = (price * quantity) - discountAmount;
-                
+
                 // Update the total input field
                 if (totalInput) {
                     totalInput.value = total.toFixed(2); // Ensure the total has two decimal places
                 }
+
+                // Add the current row's total to the grand total
+                grandTotal += total;
             });
+
+            // Update the grand total input field
+            const grandTotalInput = document.getElementById("grand_total");
+            if (grandTotalInput) {
+                grandTotalInput.value = grandTotal.toFixed(2); // Ensure the grand total has two decimal places
+            }
         }
+
             function updateQnt() {
                 document.getElementById("qnt").value = qnt;  // Update the hidden input field
 }
