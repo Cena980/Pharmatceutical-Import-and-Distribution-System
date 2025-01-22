@@ -91,6 +91,7 @@
              <tbody>
 
                  <tr>
+                    <input type="hidden" name="Amount_1" id="Amount_1">
                     <td><input type="text" name="Drug_Name_1" id="drug_name_1" autocomplete="off" placeholder="Enter Drug Name"></td>
                     <td><input type="number" name="Quantity_1" id="qy_1" autocomplete="off"></td>
                     <td><input type="number" name="Discount_1" id="dt_1" autocomplete="off"></td>
@@ -214,6 +215,7 @@
                                         row.style.cursor = "pointer";
                                         row.onclick = () => {
                                             document.getElementById(`drug_name_${rowNumber}`).value = drug.Drug_Name;
+                                            document.getElementById(`Amount_${rowNumber}`).value = drug.Amount;
                                             suggestionsDiv.style.display = "none";
                                             fetchPrice(rowNumber);
                                         };
@@ -346,6 +348,7 @@
                 const tbody = document.querySelector("table tbody");
                 const newRow = document.createElement("tr");
                 newRow.innerHTML = `
+                    <input type="hidden" name="Amount_${qnt}" id="Amount_${qnt}">
                     <td><input type="text" name="Drug_Name_${qnt}" id="drug_name_${qnt}" autocomplete="off" placeholder="Enter Drug Name"></td>
                     <td><input type="number" name="Quantity_${qnt}" id="qi_${qnt}" autocomplete="off"></td>
                     <td><input type="number" name="Discount_${qnt}" id="dt_${qnt}" autocomplete="off"></td>

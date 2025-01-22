@@ -144,8 +144,9 @@ if (!empty($customerID)) {
     for ($i = 1; $i <= $rowCount; $i++) {
 
         $drugName = $_POST["Drug_Name_$i"] ?? null;
+        $drugAmount = $_POST["Amount_$i"] ?? null;
         // Query to get the Inventory_ID for the given drug name
-        $name = "SELECT Inventory_ID FROM inventory WHERE Drug_ID = (SELECT Drug_ID FROM drugs WHERE Drug_Name = '$drugName')";
+        $name = "SELECT Inventory_ID FROM inventory WHERE Drug_ID = (SELECT Drug_ID FROM drugs WHERE Drug_Name = '$drugName') AND Initial_Amount = '$$drugAmount'";
         $Inventory_ID_result = mysqli_query($connect, $name);
     
         if ($Inventory_ID_result) {
