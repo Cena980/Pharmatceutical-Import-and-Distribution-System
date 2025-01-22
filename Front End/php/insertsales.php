@@ -245,7 +245,7 @@ if (!empty($customerID)) {
         }
     }
     #upadating balance
-    $Current_Balance = $Amount_Received -$Balance - $totalSales;
+    $Current_Balance = $Amount_Received + $Balance - $totalSales;
     #upadintg balance in database
     $sql = "UPDATE customer SET balance = ? WHERE customer_id = ?";
 
@@ -264,6 +264,48 @@ if (!empty($customerID)) {
             echo json_encode(['status' => 'success', 'message' => 'Balance updated successfully']);
         } else {
             echo json_encode(['status' => 'warning', 'message' => 'No changes made (customer not found or same balance)']);
+        }
+
+        // Close the statement
+        mysqli_stmt_close($stmt);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Failed to prepare the query']);
+    }
+    $received_invoice = 0;
+    #Fetching old Recieved from invoice
+    if (!empty($invoice_ID)) {
+        $sql31 = "SELECT received FROM invoices WHERE invoice_id = '$invoice_ID'";
+        $received_result = mysqli_query($connect, $sql31);
+    
+        if ($received_result && mysqli_num_rows($received_result) > 0) {
+            $received_result_row = mysqli_fetch_assoc($received_result);
+            $recieved_invoice = $received_result_row['received'];
+        } else {
+            // Set balance to 0 if no balance was retrieved
+            $received_invoice = 0;
+            echo 'recieved not found for invoice, defaulting to 0.';
+        }
+    }
+    #upadating balance
+    $current_received = $Amount_Received + $recieved_invoice;
+    #upadintg balance in database
+    $sql = "UPDATE invoices SET received = ? WHERE invoice_id = ?";
+
+    // Use prepared statements to prevent SQL injection
+    $stmt = mysqli_prepare($connect, $sql);
+
+    if ($stmt) {
+        // Bind parameters
+        mysqli_stmt_bind_param($stmt, "di", $current_received, $invoice_ID);
+
+        // Execute the query
+        mysqli_stmt_execute($stmt);
+
+        // Check if any row was updated
+        if (mysqli_stmt_affected_rows($stmt) > 0) {
+            echo json_encode(['status' => 'success', 'message' => 'recieved updated successfully']);
+        } else {
+            echo json_encode(['status' => 'warning', 'message' => 'No changes made (invoice not found or same received)']);
         }
 
         // Close the statement
@@ -316,6 +358,38 @@ if (!empty($customerID)) {
         echo json_encode(['status' => 'error', 'message' => 'Failed to prepare the query']);
     }
 
+    $owed = 0;
+    if (($Amount_Received + $Balance - $totalSales)<0){
+        $owed = $Amount_Received + $Balance - $totalSales;
+    }else {
+        $owed = 0;
+    }
+
+    #inserting owed into database
+    $sql44 = "UPDATE invoices SET owed = ? WHERE invoice_id = ?";
+
+    // Use prepared statements to prevent SQL injection
+    $stmt = mysqli_prepare($connect, $sql44);
+
+    if ($stmt) {
+        // Bind parameters
+        mysqli_stmt_bind_param($stmt, "di", $owed, $invoice_ID);
+
+        // Execute the query
+        mysqli_stmt_execute($stmt);
+
+        // Check if any row was updated
+        if (mysqli_stmt_affected_rows($stmt) > 0) {
+            echo json_encode(['status' => 'success', 'message' => 'owed inserted successfully']);
+        } else {
+            echo json_encode(['status' => 'warning', 'message' => 'No changes made (invoice not found or same owed)']);
+        }
+
+        // Close the statement
+        mysqli_stmt_close($stmt);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Failed to prepare the query']);
+    }
 
     if (!empty($invoice_ID)) {
         $query = "select * from sales_bill where invoice_no = '$invoice_ID'";
