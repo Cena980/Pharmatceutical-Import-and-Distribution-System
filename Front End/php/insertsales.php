@@ -96,7 +96,7 @@ echo '<!DOCTYPE html>
     $rowTotals = []; // Store individual row totals
 
 // Ensure customer_id is not null/empty and amount_received is 0 before proceeding
-if (!empty($customerID) && $amount_received == 0) {
+if (!empty($customerID) && $Amount_Received == 0) {
     // Check if the invoice already exists
     $invoice_check = "SELECT * FROM invoices WHERE date = '$date' AND customer_id = '$customerID'";
     $invoice_check_results = mysqli_query($connect, $invoice_check);
