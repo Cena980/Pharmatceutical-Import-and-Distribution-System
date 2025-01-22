@@ -181,7 +181,7 @@ if (!empty($customerID) && $Amount_Received == 0) {
             'Cut_ID' => $employeeID,
             'Customer_ID' => $customerID,
             'Total_Price' => $total,
-            'Amount_Received' => null, // This will be updated later
+            'Amount_Received' => 0, // This will be updated later
             'Note' => $note,
             'invoice_no' => $invoice_ID
             
