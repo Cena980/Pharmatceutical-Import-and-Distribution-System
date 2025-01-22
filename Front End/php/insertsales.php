@@ -93,10 +93,11 @@ echo '<!DOCTYPE html>
 
 
     $totalSales = 0;
+    $count = 0;
     $rowTotals = []; // Store individual row totals
 
 // Ensure customer_id is not null/empty and amount_received is 0 before proceeding
-if (!empty($customerID) && $Amount_Received == 0) {
+if (!empty($customerID)) {
     // Check if the invoice already exists
     $invoice_check = "SELECT * FROM invoices WHERE date = '$date' AND customer_id = '$customerID'";
     $invoice_check_results = mysqli_query($connect, $invoice_check);
@@ -168,6 +169,8 @@ if (!empty($customerID) && $Amount_Received == 0) {
 
         $rowTotals[] = $total;
         $totalSales += $total;
+        $count += $quantity;
+
 
         
 
@@ -190,14 +193,23 @@ if (!empty($customerID) && $Amount_Received == 0) {
 
 
     // Distribute the received amount proportionally
-    foreach ($salesData as $index => $sale) {
-        $sale['Amount_Received'] = round(($rowTotals[$index] / $totalSales) * $Amount_Received, 2);
+    /*foreach ($salesData as $index => &$data) {
+        $data['Amount_Received'] = round(($rowTotals[$index] / $totalSales) * $Amount_Received, 2);
+    }*/
+
+    foreach ($salesData as $data) {
+        $i =0;
+        $data['Amount_Received'] = round(($rowTotals[$i] / $totalSales) * $Amount_Received, 2);
+        $i += 1;
     }
 
     // Build bulk INSERT query
      $sql = "INSERT INTO sales (Inventory_ID, Sale_Date, Quantity, Discount, Price, Cut_ID, Customer_ID, Total_Price, Amount_Received, Note, invoice_no) VALUES ";
     $values = [];
     $params = [];
+
+
+
 
     foreach ($salesData as $sale) {
         $values[] = "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -217,60 +229,213 @@ if (!empty($customerID) && $Amount_Received == 0) {
 
     }
 
-if (!empty($invoice_ID)){
-    $sql1 = "SELECT balance FROM customer WHERE customer_id = '$customerID'";
-    $balance_result = mysqli_query($connect, $sql1);
-
-    if ($balance_result) {
-        $balance_result_row = mysqli_fetch_assoc($balance_result);
-        $Balance = $balance_result_row['balance'];
-    } else {
-        echo 'Could not fetch balance for ' . $customer_shop;
-    }
-
-
-    $query = "select * from sales_bill where invoice_no = '$invoice_ID'";
-    $res = mysqli_query($connect, $query);
-
-    $num_rows = mysqli_num_rows($res);
-    if($num_rows>0){
-        echo "<table border='1' border-collapse=collapse id='tblreport'>";
-        echo "<tr>
-                    <th>Drug Type</th><th>Drug Name</th><th>Quantity</th><th>price</th><th>Discount</th><th>Total_Price</th>
-                    <th>Amount_Received</th>
-                </tr>";
-        while ($r = mysqli_fetch_assoc($res)) {
-            echo "<tr>";
-            echo "<td>" . $r['Type'] . "</td>";
-            echo "<td>" . $r['Name'] . "</td>";
-            echo "<td>" . $r['Quantity'] . "</td>";
-            echo "<td>" . $r['Price'] . "</td>";
-            echo "<td>" . $r['Discount'] . "</td>";
-            echo "<td>" . $r['Total_Price'] . "</td>";
-            echo "<td>" . $r['Amount_Received'] . "</td>";
-            echo "</tr>";
+    $Balance = 0;
+    #Fetching old Balance
+    if (!empty($invoice_ID)) {
+        $sql1 = "SELECT balance FROM customer WHERE customer_id = '$customerID'";
+        $balance_result = mysqli_query($connect, $sql1);
+    
+        if ($balance_result && mysqli_num_rows($balance_result) > 0) {
+            $balance_result_row = mysqli_fetch_assoc($balance_result);
+            $Balance = $balance_result_row['balance'];
+        } else {
+            // Set balance to 0 if no balance was retrieved
+            $Balance = 0;
+            echo 'Balance not found for customer, defaulting to 0.';
         }
-        echo "<tr>";
-        echo "<th>" . 'Invoice No:' ."</th>";
-        echo "<th>" . 'Customer:' ."</th>";
-        echo "<th>" . 'Date:' ."</th>";
-        echo "<th>" . 'Amount Recieved:' ."</th>";
-        echo "<th>" . 'Balance:' ."</th>";
-        echo "</tr>";
-        echo "<td>" . $invoice_ID . "</td>";
-        echo "<td>" . $customer_shop . "</td>";
-        echo "<td>" . $date . "</td>";
-        echo "<td>" . $totalSales . "</td>";
-        echo "<td>" . $Balance . "</td>";
-        echo "</tr>";
-
-        echo "</table>";
-    } else {
-        echo "No records found.";  
     }
-} else {
-    # code...
-}
+    #upadating balance
+    $Current_Balance = $Amount_Received -$Balance - $totalSales;
+    #upadintg balance in database
+    $sql = "UPDATE customer SET balance = ? WHERE customer_id = ?";
+
+    // Use prepared statements to prevent SQL injection
+    $stmt = mysqli_prepare($connect, $sql);
+
+    if ($stmt) {
+        // Bind parameters
+        mysqli_stmt_bind_param($stmt, "di", $Current_Balance, $customerID);
+
+        // Execute the query
+        mysqli_stmt_execute($stmt);
+
+        // Check if any row was updated
+        if (mysqli_stmt_affected_rows($stmt) > 0) {
+            echo json_encode(['status' => 'success', 'message' => 'Balance updated successfully']);
+        } else {
+            echo json_encode(['status' => 'warning', 'message' => 'No changes made (customer not found or same balance)']);
+        }
+
+        // Close the statement
+        mysqli_stmt_close($stmt);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Failed to prepare the query']);
+    }
+
+    #Fetching total sales from invoice
+    $invoice_total_sales =0;
+    if (!empty($invoice_ID)){
+        $sql23 = "SELECT total_sales FROM invoices WHERE invoice_id = '$invoice_ID'";
+        $invoice_result = mysqli_query($connect, $sql23);
+
+        if ($invoice_result) {
+            $invoice_result_row = mysqli_fetch_assoc($invoice_result);
+            $invoice_total_sales = $invoice_result_row['total_sales'];
+        } else {
+            $invoice_total_sales =0;
+            echo 'Could not fetch total sales for ' . $customer_shop . 'invoice' . $invoice_ID;
+        }
+    }
+    #new total sales
+    $new_total_sales = $totalSales + $invoice_total_sales;
+
+    #inserting new total sales to invoice table
+
+    $sql24 = "UPDATE invoices SET total_sales = ? WHERE invoice_id = ?";
+
+    // Use prepared statements to prevent SQL injection
+    $stmt = mysqli_prepare($connect, $sql24);
+
+    if ($stmt) {
+        // Bind parameters
+        mysqli_stmt_bind_param($stmt, "di", $new_total_sales, $invoice_ID);
+
+        // Execute the query
+        mysqli_stmt_execute($stmt);
+
+        // Check if any row was updated
+        if (mysqli_stmt_affected_rows($stmt) > 0) {
+            echo json_encode(['status' => 'success', 'message' => 'total sales inserted successfully']);
+        } else {
+            echo json_encode(['status' => 'warning', 'message' => 'No changes made (invoice not found or same total_sales)']);
+        }
+
+        // Close the statement
+        mysqli_stmt_close($stmt);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Failed to prepare the query']);
+    }
+
+
+    if (!empty($invoice_ID)) {
+        $query = "select * from sales_bill where invoice_no = '$invoice_ID'";
+        $res = mysqli_query($connect, $query);
+    
+        $num_rows = mysqli_num_rows($res);
+        if($num_rows>0){
+            echo "<div id='over'><h1>X WholeSaler (Kabul)<h1></div>";
+            echo "<div id='under'><h3>Hotel Parwan<h3></div>";
+            echo "<div id='under'><h3>Phone: 079 xxx xxxx<h3></div>";
+            echo "<div id='under'><h1>INVOICE<h1></div>";
+            echo "<div class='invoice-1'>";
+    
+                echo "<div class='invoice-2'>";
+                    echo "<table class='invoice-table'>";
+                                echo "<tr>
+                                <td>Customer: </td>
+                                <td>$customer_shop</td>
+                                </tr>";
+                                echo "<tr>
+                                <td>Address: </td>
+                                <td></td>
+                                </tr>";
+                                echo "<tr>
+                                <td>Phone: </td>
+                                <td></td>
+                                </tr>";
+                                echo "<tr>
+                                <td>Area: </td>
+                                <td></td>
+                                </tr>";
+                                echo "<tr>
+                                <td>License: </td>
+                                <td></td>
+                                </tr>";
+                                echo "<tr>
+                                <td>CNIC:</td>
+                                <td></td>
+                                </tr>";
+                                echo "<tr>
+                                <td>STN:</td>
+                                <td></td>
+                                </tr>";
+                                echo "<tr>
+                                <td>STRN:</td>
+                                <td></td>
+                                </tr>";
+                    echo "</table>";
+                echo "</div>";
+                echo "<div class='invoice-2'>";
+                    echo "<table class='invoice-table'>";
+                                echo "<tr>
+                                <td>Invoice No:</td>
+                                <td>$invoice_ID</td>
+                                </tr>";
+                                echo "<tr>
+                                <td>Invoice Date: </td>
+                                <td>$date</td>
+                                </tr>";
+                                echo "<tr>
+                                <td>Due Date:</td>
+                                <td></td>
+                                </tr>";
+                                echo "<tr>
+                                <td>Order No:</td>
+                                <td></td>
+                                </tr>";
+                                echo "<tr>
+                                <td>E Order No:</td>
+                                <td></td>
+                                </tr>";
+                                echo "<tr>
+                                <td>Delievered By:</td>
+                                <td></td>
+                                </tr>";
+                                echo "<tr>
+                                <td>Booked By: </td>
+                                <td>$Sales_Officer</td>
+                                </tr>";
+                                echo "<tr>
+                                <td>Currency:</td>
+                                <td>AFN ؋</td>
+                                </tr>";
+                    echo "</table>";
+                echo "</div>";
+    
+            echo "</div>";
+            echo "<table border='1' border-collapse=collapse id='tblreport-invoice'>";
+            echo "<tr>
+                        <th>Drug Type</th><th>Drug Name</th><th>Quantity</th><th>price</th><th>Discount</th><th>Total_Price</th>
+                        <th>Amount_Received</th>
+                    </tr>";
+            while ($r = mysqli_fetch_assoc($res)) {
+                echo "<tr>";
+                echo "<td>" . $r['Type'] . "</td>";
+                echo "<td>" . $r['Name'] . "</td>";
+                echo "<td>" . $r['Quantity'] . "</td>";
+                echo "<td>" . $r['Price'] . "</td>";
+                echo "<td>" . $r['Discount'] . "</td>";
+                echo "<td>" . $r['Total_Price'] . "</td>";
+                echo "<td>" . $r['Amount_Received'] . "</td>";
+                echo "</tr>";
+            }
+            echo "<tr>";
+            echo "<th>" . 'Current Total:' ."</th>";
+            echo "<th>" . 'Received:' ."</th>";
+            echo "<th>" . 'Old Balance:' ."</th>";
+            echo "<th>" . 'Balance:' ."</th>";
+            echo "</tr>";
+            echo "<td>" . $totalSales . "</td>";
+            echo "<td>" . $Amount_Received . "</td>";
+            echo "<td>" . $Balance . "</td>";
+            echo "<td>" . $Current_Balance . "</td>";
+            echo "</tr>";
+    
+            echo "</table>";
+        } else {
+            echo "No records found.";  
+        }
+    }
 
 
     echo '
