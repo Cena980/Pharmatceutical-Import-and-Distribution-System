@@ -65,14 +65,14 @@
             <input type="hidden" name="qnt" id="qnt" value="1">
             <div class="fixed-input">
                 <label>Date</label>
-                <input type="date" name="Date_1" id="de_1" autocomplete="off">
+                <input type="date" name="Date_1" id="Date_1" autocomplete="off">
                 <label>Amount Received</label>
                 <input type="number" name="Amount_Received_1" id="AR_1" autocomplete="off">
                 <label>Employee Cut ID</label>
                 <input type="number" name="Cut_ID_1" id="ci_1" autocomplete="off">
-                <label>Customer</label>
+                <label >Customer</label>
                 <input type="text" name="Customer_Shop_1" id="customer_shop_1" autocomplete="off">
-                <div id="suggestion_customer" style="border: 1px solid #ccc; display: none; position: fixed; background: white;"></div>
+                <div class="suggestion" id="suggestion_customer" style="border: 1px solid #ccc; display: none; position: fixed; background: white;"></div>
                 <label>Sales Officer</label>
                 <input name="Sales_Officer" id="Sales_Officer">
             </div>
@@ -102,8 +102,8 @@
                      
                  </tr>
                  <tr>
+                    <td><div id="suggestions" style="display: none; position: absolute; background: white;"></div></td>
                      <td id="ndid"></td>
-                     <div id="suggestions" style="border: 1px solid #ccc; display: none; position: absolute; background: white;"></div>
                      <td id="nde"></td>
                      <td id="nqy"></td>
                      <td id="ndt"></td>
@@ -145,6 +145,39 @@
         </div>
 
         <script>
+            window.onload = function() {
+                const dateInput = document.getElementById("Date_1");
+                const today = new Date();
+
+                // Format the date as YYYY-MM-DD
+                const formattedDate = today.toISOString().split("T")[0];
+
+                // Set the value of the input
+                dateInput.value = formattedDate;
+            };
+            document.getElementById("customer_shop_1").addEventListener("input", function () {
+                const inputField = this;
+                const suggestionBox = document.getElementById("suggestion_customer");
+
+                // Get the position and size of the input field
+                const rect = inputField.getBoundingClientRect();
+
+                // Position the suggestion box below the input field
+                suggestionBox.style.top = rect.bottom + window.scrollY + "px"; // Add window.scrollY for scrolling
+                suggestionBox.style.left = rect.left + window.scrollX + "px"; // Add window.scrollX for horizontal scrolling
+                suggestionBox.style.width = rect.width + "px";
+
+                // Show the suggestion box
+                suggestionBox.style.display = "block";
+            });
+
+            // Hide the suggestion box when clicking outside
+            document.addEventListener("click", function (e) {
+                const suggestionBox = document.getElementById("suggestion_customer");
+                if (!e.target.closest("#customer_shop_1") && !e.target.closest("#suggestion_customer")) {
+                    suggestionBox.style.display = "none";
+                }
+            });
             let qnt = 1;
             document.querySelector("table tbody").addEventListener("input", function (e) {
                 if (e.target.name.startsWith("Drug_Name_")) {
