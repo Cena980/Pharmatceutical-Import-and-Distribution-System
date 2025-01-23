@@ -10,7 +10,7 @@
         echo "<tr>
                     <th>Sale ID</th><th>Inventory ID</th><th>Date</th><th>Quantity</th>
                     <th>Discount</th><th>Price</th><th>Cut ID</th><th>Customer ID</th>
-                    <th>Total Price</th><th>Amount Recieved</th><th>Note</th><th>Actions</th>
+                    <th>Total Price</th><th>Note</th><th>Actions</th>
                 </tr>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
@@ -23,7 +23,6 @@
             echo "<td>" . $r['Cut_ID'] . "</td>";
             echo "<td>" . $r['Customer_ID'] . "</td>";
             echo "<td>" . $r['Total_Price'] . "</td>";
-            echo "<td>" . $r['Amount_Received'] . "</td>";
             echo "<td>" . $r['Note'] . "</td>";
             echo "<td>
                 <form action='updatesales.html' method='GET'>
@@ -36,7 +35,7 @@
                     <input type='hidden' name='Cut_ID' value='" . $r['Cut_ID'] . "'>
                     <input type='hidden' name='Customer_ID' value='" . $r['Customer_ID'] . "'>
                     <input type='hidden' name='Total_Price' value='" . $r['Total_Price'] . "'>
-                    <input type='hidden' name='Amount_Received' value='" . $r['Amount_Received'] . "'>
+                    
                     <input type='hidden' name='Note' value='" . $r['Note'] . "'>
                     <button type='submit' class=' btn-link'>Update</button>
                 </form>
@@ -50,7 +49,7 @@
                     <input type='hidden' name='Cut_ID' value='" . $r['Cut_ID'] . "'>
                     <input type='hidden' name='Customer_ID' value='" . $r['Customer_ID'] . "'>
                     <input type='hidden' name='Total_Price' value='" . $r['Total_Price'] . "'>
-                    <input type='hidden' name='Amount_Received' value='" . $r['Amount_Received'] . "'>
+                    
                     <input type='hidden' name='Note' value='" . $r['Note'] . "'>
                     <button type='submit' class=' btn-link'>Delete</button>
                 </form>

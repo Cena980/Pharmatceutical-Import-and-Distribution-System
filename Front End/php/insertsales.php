@@ -204,7 +204,7 @@ if (!empty($customerID)) {
             'Cut_ID' => $employeeID,
             'Customer_ID' => $customerID,
             'Total_Price' => $total,
-            'Amount_Received' => 0, // This will be updated later
+            //'Amount_Received' => 0, // This will be updated later
             'Note' => $note,
             'invoice_no' => $invoice_ID
             
@@ -217,14 +217,9 @@ if (!empty($customerID)) {
         $data['Amount_Received'] = round(($rowTotals[$index] / $totalSales) * $Amount_Received, 2);
     }*/
 
-    foreach ($salesData as $data) {
-        $i =0;
-        $data['Amount_Received'] = round(($rowTotals[$i] / $totalSales) * $Amount_Received, 2);
-        $i += 1;
-    }
 
     // Build bulk INSERT query
-     $sql = "INSERT INTO sales (Inventory_ID, Sale_Date, Quantity, Discount, Price, Cut_ID, Customer_ID, Total_Price, Amount_Received, Note, invoice_no) VALUES ";
+     $sql = "INSERT INTO sales (Inventory_ID, Sale_Date, Quantity, Discount, Price, Cut_ID, Customer_ID, Total_Price, Note, invoice_no) VALUES ";
     $values = [];
     $params = [];
 
@@ -232,7 +227,7 @@ if (!empty($customerID)) {
 
 
     foreach ($salesData as $sale) {
-        $values[] = "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $values[] = "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $params = array_merge($params, array_values($sale));
     }
 
@@ -419,14 +414,25 @@ if (!empty($customerID)) {
         if($num_rows>0){
         
             echo "<div id='printableSection'>";
+                echo "<div id='invoicelogo'>";
                     echo "<div id='underHead'>
-                        <table border='1'>
-                        <tr>
-                        <td><h1>INVOICE<h1>
-                        </td>
-                        </tr>
-                        </table>
-                    </div>";
+                            <div class='topimage'>
+                                <img src='../images/logoSmall.jpg'>
+                            </div> 
+                        </div>";
+                        echo "<div id='underHead'>";
+                            echo "<table class='invoice-table'>";
+                                echo "<tr>
+                                <td>Address: </td>
+                                <td>Mazar Hotel</td>
+                                </tr>";
+                                echo "<tr>
+                                <td>Office Number: </td>
+                                <td>207</td>
+                                </tr>";
+                            echo "</table>";
+                            echo "</div>";
+                echo "</div>";
             echo "<div class='invoice-1'>";
                 echo "<div class='invoice-2'>";
                     echo "<table class='invoice-table'>";
@@ -445,9 +451,12 @@ if (!empty($customerID)) {
                     echo "</table>";
                 echo "</div>";
                 echo "<div class='invoice-2'>";
-                    echo "<div class='topimage'>";
-                        echo "<img src='../images/phoenix.jpg'>";
-                    echo "</div>";
+                    echo "<table>
+                    <tr>
+                    <td><h1>INVOICE<h1>
+                    </td>
+                    </tr>
+                    </table>";
                 echo "</div>";
                 echo "<div class='invoice-2'>";
                     echo "<table class='invoice-table'>";
@@ -477,7 +486,7 @@ if (!empty($customerID)) {
                 echo "</div>";
     
             echo "</div>";
-            echo "<table border='1' border-collapse=collapse id='tblreport-invoice'>";
+            echo "<table id='tblinvoice'>";
             echo "<tr>
                         <th>Drug Type</th><th>Drug Name</th><th>Quantity</th><th>price</th><th>Discount</th><th>Total_Price</th>
                     </tr>";
@@ -494,7 +503,7 @@ if (!empty($customerID)) {
     
             echo "</table>";
 
-            echo "<table id= 'tblreport-invoice'>";
+            echo "<table id= 'tblinvoice'>";
                 echo "<tr>";
                 echo "<th>" . 'Sub Total:' ."</th>";
                 echo "<th>" . 'Received:' ."</th>";

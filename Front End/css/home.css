@@ -129,9 +129,7 @@ a {
 #switch button:hover{
     transform: scale(1.2);
 }
-body{
-    background-image: linear-gradient(to right, rgb(87, 65, 113, 0.5), rgb(50,38,93, 0.5));
-}
+
 body form{
     border-top: solid 2px linear-gradient(black, brown);
 }
@@ -141,8 +139,6 @@ body form{
     width: 100%;
     font-family: 'Times New Roman', Times, serif;
     font-size: 12pt;
-    /*margin-left: -7.5px;*/
-
 }
 
 #top {
@@ -176,12 +172,14 @@ body form{
     padding: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
+    max-width: 1000px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: 0;
+    grid-column-gap: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
     margin: auto;
+    border-bottom: 3px solid black
 }
 .invoice-2 {
     margin: auto;
@@ -193,11 +191,20 @@ body form{
     text-align: center;
     align-content: center;
 }
+#invoicelogo{
+    padding: 10px;
+    padding-top: 10px;
+    bottom: 0;
+    max-width: 1000px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 10px;
+    margin-top: 10px;
+    margin: auto;
+    border-bottom: 3px solid black;
+}
 #underHead{
     margin: auto;
-    max-width: 150px;
-    text-align: center;
-    align-content: center;
 }
 main {
     padding: 20px;
@@ -437,28 +444,29 @@ button a{
     margin: auto;
     margin-bottom: 80px;
 }
-#tblreport-invoice{
+#tblinvoice{
     border-collapse: collapse;
+    border: none;
     width: 800px;
     margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 .topimage{
+    margin: auto;
     margin-top: 30px;
     display: flex;
+    width: 50%;
     justify-content: center;
 }
 .topimage img{
     max-width: 100%;
 }
-#tblreport-invoice td{
+#tblinvoice th, td{
+    border-bottom: 1px solid #ddd;
     text-align: center;
 }
-#tblreport th{
-    margin: auto;
-    width: auto;
-}
+
 #tblreport td{
     width: auto;
 }
@@ -514,6 +522,9 @@ label{
     text-align: center;
     margin-left: 5px;
     border-left: solid 2px white;
+}
+#printableSection{
+    margin-top: 30px;
 }
 @media print {
     body * {
