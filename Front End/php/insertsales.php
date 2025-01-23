@@ -145,7 +145,7 @@ if (!empty($customerID)) {
                 if ($invoice_check_results) {
                     $invoice_check_row = mysqli_fetch_assoc($invoice_check_results);
                     $invoice_ID = $invoice_check_row['invoice_id'];
-                    echo "Invoice ID: $invoice_ID";
+                    echo "<div class='alerts'>Invoice ID: $invoice_ID"; echo "</div>";
                 } else {
                     echo "<div class='alerts'>Error fetching invoice after creation: " . mysqli_error($connect); echo "</div>";
                 }
@@ -419,11 +419,15 @@ if (!empty($customerID)) {
         if($num_rows>0){
         
             echo "<div id='printableSection'>";
-            echo "<div class='topimage'>";
-                echo "<img src='../images/phoenix.jpg'>";
-            echo "</div>";
+                    echo "<div id='underHead'>
+                        <table border='1'>
+                        <tr>
+                        <td><h1>INVOICE<h1>
+                        </td>
+                        </tr>
+                        </table>
+                    </div>";
             echo "<div class='invoice-1'>";
-    
                 echo "<div class='invoice-2'>";
                     echo "<table class='invoice-table'>";
                                 echo "<tr>
@@ -441,16 +445,9 @@ if (!empty($customerID)) {
                     echo "</table>";
                 echo "</div>";
                 echo "<div class='invoice-2'>";
-                    echo "<div id='under'><h3>Mazar Hotel<h3></div>";
-                    echo "<div id='under'><h3>Phone: 079 xxx xxxx<h3></div>";
-                    echo "<div id='under'>
-                        <table border='1'>
-                        <tr>
-                        <td><h1>INVOICE<h1>
-                        </td>
-                        </tr>
-                        </table>
-                        </div>";
+                    echo "<div class='topimage'>";
+                        echo "<img src='../images/phoenix.jpg'>";
+                    echo "</div>";
                 echo "</div>";
                 echo "<div class='invoice-2'>";
                     echo "<table class='invoice-table'>";
@@ -557,7 +554,7 @@ if (!empty($customerID)) {
                     date.getMonth() + 1,
                     date.getDate()
                 );
-                return `${jy}-${String(jm).padStart(2, "0")}-${String(jd).padStart(2, "0")}`;
+                return `${String(jd).padStart(2, "0")}/${String(jm).padStart(2, "0")}/${jy}`;
             }
         </script>
     ';

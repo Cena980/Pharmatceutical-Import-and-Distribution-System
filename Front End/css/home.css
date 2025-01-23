@@ -173,18 +173,31 @@ body form{
     margin-top: -200px;
 }
 .invoice-1 {
-    padding: 80px;
+    padding: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: 10px;
+    grid-column-gap: 0;
     margin-top: 10px;
     margin-bottom: 10px;
     margin: auto;
 }
 .invoice-2 {
     margin: auto;
+    padding: 0;
+}
+#invoiceHead{
+    margin: auto;
+    max-width: 200px;
+    text-align: center;
+    align-content: center;
+}
+#underHead{
+    margin: auto;
+    max-width: 150px;
+    text-align: center;
+    align-content: center;
 }
 main {
     padding: 20px;
@@ -437,7 +450,7 @@ button a{
     justify-content: center;
 }
 .topimage img{
-    max-width: 50%;
+    max-width: 100%;
 }
 #tblreport-invoice td{
     text-align: center;
