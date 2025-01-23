@@ -62,32 +62,35 @@
         <form name="purchase">
             <table class="table">
                 <input type="hidden" name="qnt" id="qnt" value="1">
+                <div id="suggestions" style="display: none; position: absolute; background-color: white;"></div>
+                <div id="suggestions_vendors" style="display: none; position: absolute; background-color: white"></div>
+                <div class="fixed-input" style="max-width: 450px;">
+                    <label>Vendor</label>
+                    <input type="text" name="vendor_name_1" id="vendor_name_1" autocomplete="off">
+                    <label>Date</label>
+                    <input type="date" name="purchase_date_1" id="purchase_date_1" autocomplete="off">
+                </div>
                 <tr>
-                    <th>Vendor Name</th>
                     <th>Drug Name</th>
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Drug Discount</th>
                     <th>Total Amount</th>
                     <th>Amount Paid</th>
-                    <th>Purchase Date</th>
                     
                 </tr>
                 <tr>
-                    <td><input type="text" name="vendor_name_1" id="vendor_name_1" autocomplete="off"></td>
                     <td><input type="text" name="drug_name_1" id="drug_name_1" autocomplete="off"></td>
                     <td><input type="number" name="price_1" id="price_1" autocomplete="off"></td>
                     <td><input type="number" name="quantity_1" id="quantity_1" autocomplete="off"></td>
                     <td><input type="number" name="discount_1" id="discount_1" autocomplete="off"></td>
                     <td><input type="number" name="total_amount_1" id="total_amount_1" autocomplete="off"></td>
                     <td><input type="number" name="amount_paid_1" id="did" autocomplete="off"></td>
-                    <td><input type="date" name="purchase_date_1" id="date" autocomplete="off"></td>
                 </tr>
                 <tr>
                     <td id="nvendor_id"></td>
-                    <div id="suggestions_vendors" style="border: 1px solid #ccc; display: none; position: absolute; background: white;"></div>
                     <td id="ndid"></td>
-                    <div id="suggestions" style="border: 1px solid #ccc; display: none; position: absolute; background: white;"></div>
+                    
                     <td id="nqnt"></td>
                     <td id="ndate"></td>
                     <td id="ntotal"></td>
@@ -101,6 +104,10 @@
             
         </div>
         </form>
+    </div>
+    <div class="grand_total">
+        <label>Sub Total</label>
+        <input type="number" name="grand_total" id="grand_total" autocomplete="off">
     </div>
             <div class="button-group">
                 <button  class="btn btn-save" onclick="validate()" >Save</button>
@@ -133,8 +140,18 @@
             </div>
         </div>
         <script>
-            let qnt = 1;
+            window.onload = function() {
+                const dateInput = document.getElementById("purchase_date_1");
+                const today = new Date();
 
+                // Format the date as YYYY-MM-DD
+                const formattedDate = today.toISOString().split("T")[0];
+
+                // Set the value of the input
+                dateInput.value = formattedDate;
+            };
+            let qnt = 1;
+            let grandTotal = 0;
             // Function to calculate total amount for a specific row
             function calculateTotalAmount(rowNumber) {
                 const price = parseFloat(document.getElementById(`price_${rowNumber}`).value) || 0;
@@ -142,12 +159,37 @@
                 const discount = parseFloat(document.getElementById(`discount_${rowNumber}`).value) || 0;
 
                 // Total amount calculation: 
-                const DiscountAmount = (price * quantity * discount)/100;
+                const DiscountAmount = (price * quantity * discount) / 100;
                 const totalAmount = (price * quantity) - DiscountAmount;
 
                 // Update the total amount field
                 document.getElementById(`total_amount_${rowNumber}`).value = totalAmount.toFixed(2);
+
+                // Recalculate grand total
+                recalculateGrandTotal();
             }
+
+            // Function to recalculate the grand total
+            function recalculateGrandTotal() {
+                grandTotal = 0; // Reset the grand total to 0
+
+                // Loop through all rows to sum the total amounts
+                for (let i = 1; i <= qnt; i++) {
+                    const totalAmount = parseFloat(document.getElementById(`total_amount_${i}`).value) || 0;
+                    grandTotal += totalAmount;
+                }
+
+                grandTotalInput();
+            }
+
+            function grandTotalInput() {
+                const grandTotalInput = document.getElementById("grand_total");
+                if (grandTotalInput) {
+                    grandTotalInput.value = grandTotal.toFixed(2); // Ensure the grand total has two decimal places
+                }
+            }
+
+
 
             // Function to add event listeners for total amount calculation
             function addTotalAmountEventListeners(rowNumber) {
@@ -252,10 +294,77 @@
                     }
                 });
             }
+            for (let i = 1; i <= qnt; i++) {
+                const inputField = document.getElementById(`drug_name_${i}`);
+
+                inputField.addEventListener("input", function () {
+                    const suggestionBox = document.getElementById("suggestions");
+
+                    // Hide the suggestion box when the user starts typing in a new field
+                    suggestionBox.style.display = "none";
+
+                    // Get the position and size of the current input field
+                    const rect = inputField.getBoundingClientRect();
+
+                    // Set the suggestion box's position relative to the current input field
+                    suggestionBox.style.top = rect.bottom + window.scrollY + "px"; // Account for vertical scroll
+                    suggestionBox.style.left = rect.left + window.scrollX + "px";  // Account for horizontal scroll
+                    suggestionBox.style.width = rect.width + "px"; // Match the input width
+
+                    // Show the suggestion box at the new position
+                    suggestionBox.style.display = "block";
+                });
+            }
+
+            // Hide the suggestion box when clicking outside any of the input fields or the suggestion box
+            document.addEventListener("click", function (e) {
+                const suggestionBox = document.getElementById("suggestions");
+                let clickedInside = false;
+
+                // Check if the click is inside any of the input fields
+                for (let i = 1; i <= qnt; i++) {
+                    const inputField = document.getElementById(`drug_name_${i}`);
+                    if (e.target === inputField || e.target.closest(`#drug_name_${i}`)) {
+                        clickedInside = true;
+                        break;
+                    }
+                }
+
+                // Hide the suggestion box if the click is outside all input fields and the suggestion box
+                if (!clickedInside && !e.target.closest("#suggestions")) {
+                    suggestionBox.style.display = "none";
+                }
+            });
+
+
+
+            document.getElementById(`vendor_name_1`).addEventListener("input", function () {
+                    const inputField = this;
+                    const suggestionBox = document.getElementById("suggestions_vendors");
+
+                    // Get the position and size of the input field
+                    const rect = inputField.getBoundingClientRect();
+
+                    // Position the suggestion box below the input field
+                    suggestionBox.style.top = rect.bottom + window.scrollY + "px"; // Add window.scrollY for scrolling
+                    suggestionBox.style.left = rect.left + window.scrollX + "px"; // Add window.scrollX for horizontal scrolling
+                    suggestionBox.style.width = rect.width + "px";
+
+                    // Show the suggestion box
+                    suggestionBox.style.display = "block";
+                });
+
+                // Hide the suggestion box when clicking outside
+                document.addEventListener("click", function (e) {
+                    const suggestionBox = document.getElementById("suggestions_vendors");
+                    if (!e.target.closest(`#vendor_name_1`) && !e.target.closest(`#suggestions_vendors`)) {
+                        suggestionBox.style.display = "none";
+                    }
+                }); 
 
             // Add initial event listeners for the first row
             addDrugNameEventListener(qnt);
-            addVendorNameEventListener(qnt);
+            addVendorNameEventListener(1);
             addTotalAmountEventListeners(qnt);
 
             // Function to create a new purchase row
@@ -265,7 +374,6 @@
                 const tbody = document.querySelector("table tbody");
                 const newRow = document.createElement("tr");
                 newRow.innerHTML = `
-                    <td><input type="text" name="vendor_id_${qnt}" id="vendor_name_${qnt}" autocomplete="off"></td>
                     <td><input type="text" name="drug_name_${qnt}" id="drug_name_${qnt}" autocomplete="off"></td>
                     <td><input type="number" name="price_${qnt}" id="price_${qnt}" autocomplete="off"></td>
                     <td><input type="number" name="quantity_${qnt}" id="quantity_${qnt}" autocomplete="off"></td>
@@ -277,7 +385,6 @@
 
                 // Add event listeners for the new row
                 addDrugNameEventListener(qnt);
-                addVendorNameEventListener(qnt);
                 addTotalAmountEventListeners(qnt);
 
                 // Update the hidden input field

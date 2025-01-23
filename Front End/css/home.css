@@ -224,7 +224,7 @@ main .left {
     padding-right: 20px;
 }
 main .left .tables{
-    background: rgba(50, 38, 93, 0.8);
+    background: rgba(85, 74, 125, 0.8);
     margin-bottom: 10px;
     text-align: center;
     padding: 5px 0;
@@ -234,11 +234,10 @@ main .left .tables{
 }
 main .left .tables:hover{
     transform: scale(1.2);
-    background-color: white;
+    background-color: rgb(141, 134, 134);
 }
 main .left a {
     text-decoration: none;
-    color: rgb(45, 105, 137);
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
@@ -411,6 +410,7 @@ button a{
     font-family: sans-serif;
     padding: 5px;
     border-radius: 50px;
+    cursor: grab;
     transition: transform 0.3s ease;
 }
 .btn:hover{
@@ -507,13 +507,26 @@ button a{
 #suggestions {
     border-radius: 15px;
 }
-#suggestions div {
+#suggestions table tr {
     padding: 5px;
     border-bottom: 1px solid #ccc;
     transition: transform 0.3s ease;
     border-radius: 15px;
 }
-#suggestions div:hover {
+#suggestions table tr:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.2);
+}
+#suggestions_vendors {
+    border-radius: 15px;
+}
+#suggestions_vendors table tr {
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+    transition: transform 0.3s ease;
+    border-radius: 15px;
+}
+#suggestions_vendors table tr:hover {
     background-color: #f0f0f0;
     transform: scale(1.2);
 }

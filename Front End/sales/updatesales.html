@@ -84,7 +84,7 @@
                  <th>Employee Cut ID</th>
                  <th>Customer ID</th>
                  <th>Total</th>
-                 <th>Amount_Received</th>
+                 
                  <th>Note</th>
                  
              </tr>
@@ -100,7 +100,7 @@
                      <td><input type="number" name="Cut_ID" id="Cut_ID" autocomplete="off"></td>
                      <td><input type="number" name="Customer_ID" id="Customer_ID" autocomplete="off"></td>
                      <td><input type="number" name="Total_Price" id="Total_Price" autocomplete="off"></td>
-                     <td><input type="number" name="Amount_Received" id="Amount_Received" autocomplete="off"></td>
+                     
                      <td><input type="number" name="Note" id="Note" autocomplete="off"></td>
                      
                  </tr>
@@ -122,8 +122,10 @@
              </tr>
              </tbody>
             </table>
-            <button class="btn btn-update" onclick="updateSales()" >Update</button>
-            <button class="btn btn-delete" onclick="deleteSales()" >Delete</button>
+            <div class="button-group">
+                <button class="btn btn-update" onclick="updateSales()" >Update</button>
+                <button class="btn btn-delete" onclick="deleteSales()" >Delete</button> 
+            </div>
             <div id="bottom">
                 <div class="bott">
                     <h3 class="section_title">Database Usage Guidelines</h3>
