@@ -39,18 +39,49 @@ echo '<script>
         <div id="bar2over">
             <div id="bar2">
                 <ul class="barr2">
-                    <li><a href="home.php" data-key="nav-home">Home</a></li>
-                    <li><a href="sales/sales.php" data-key="nav-sales">Sales</a></li>
-                    <li><a href="drugs/drugs.php" data-key="nav-drugs">Drugs</a></li>
-                    <li><a href="employees/employees.php" data-key="nav-employees">Employees</a></li>
-                    <li><a href="Inventory/inventory.php" data-key="nav-inventory">Inventory</a></li>
-                    <li><a href="purchases/purchases.php" data-key="nav-purchases">Purchases</a></li>
-                    <li><a href="contact.php" data-key="nav-contact">Contact Us</a></li>
+                    <li class="button">
+                        <img class="logo" src="images/home.png" alt="Home Icon">
+                        <a href="home.php" data-key="nav-home">Home</a>
+                    </li>
+                    <li class="button">
+                        <img class="logo" src="images/sales.png" alt="Sales Icon">
+                        <a href="sales/sales.php" data-key="nav-sales">Sales</a>
+                    </li>
+                    <li class="button">
+                        <img class="logo" src="images/drug.png" alt="Drug Icon">
+                        <a href="drugs/drugs.php" data-key="nav-drugs">Drugs</a>
+                    </li>
+                    <li class="button">
+                        <img class="logo" src="images/employees.png" alt="Employees Icon">
+                        <a href="employees/employees.php" data-key="nav-employees">Employees</a>
+                    </li>
+                    <li class="button">
+                        <img class="logo" src="images/inventory.png" alt="Inventory Icon">
+                        <a href="inventory/inventory.php" data-key="nav-inventory">Inventory</a>
+                    </li>
+                    <li class="button">
+                        <img class="logo" src="images/purchases.png" alt="Purchases Icon">
+                        <a href="purchases/purchases.php" data-key="nav-purchases">Purchases</a>
+                    </li>
+                    <li class="button">
+                        <img class="logo" src="images/contact.png" alt="Contact Icon">
+                        <a href="contact.php" data-key="nav-contact">Contact Us</a>
+                    </li>
+
                 </ul>
             </div>
         </div>
 
         <script>
+            document.querySelectorAll(\'.button\').forEach(li => {
+                li.addEventListener(\'click\', () => {
+                    const url = li.getAttribute(\'data-url\');
+                    if (url) {
+                        window.location.href = url;
+                    }
+                });
+            });
+
             // Define translations
             const translations = {
                 en: {
@@ -64,7 +95,25 @@ echo '<script>
                     "nav-employees": "Employees",
                     "nav-inventory": "Inventory",
                     "nav-purchases": "Purchases",
-                    "nav-contact": "Contact Us"
+                    "nav-contact": "Contact Us",
+                    "insert-button": "Add",
+                    "drug-title": "Drugs",
+                    "drug-records": "Drug records",
+                    "drug-insert": "Insertion Page",
+                    "drug-update": "Update Drug",
+                    "insert-over": "Insert",
+                    "َupdate-over": "Update",
+                    "company-id": "Company ID",
+                    "drug-name": "Drug Name",
+                    "drug-id": "Drug ID",
+                    "ingredients": "Ingredients",
+                    "quantity-pb": "Quantity Per Box",
+                    "type-id": "Tyle ID",
+                    "demo-id": "Demography ID",
+                    "save-button": "Save",
+                    "delete-button": "Delete",
+                    "update-button": "Update"
+
                 },
                 fa: {
                     "title": "صفحه اصلی",
@@ -77,7 +126,24 @@ echo '<script>
                     "nav-employees": "کارمندان",
                     "nav-inventory": "موجودی",
                     "nav-purchases": "خریدها",
-                    "nav-contact": "تماس با ما"
+                    "nav-contact": "تماس با ما",
+                    "insert-button": "اضافه کردن",
+                    "drug-title": "دوا ها",
+                    "drug-records": "دوا های ثبت شده",
+                    "drug-insert": "صفحه اضافه کردن دوا",
+                    "drug-update": "صفحه ویرایش دوا",
+                    "insert-over": "اضافه کردن",
+                    "update-over": "ویرایش کردن",
+                    "company-id": "نمبر شرکت",
+                    "drug-name": "نام دوا",
+                    "drug-id": "نمبر دوا",
+                    "ingredients": "ترکیبات",
+                    "quantity-pb": "تعداد در جعبه",
+                    "type-id": "نمبر نوعیت",
+                    "demo-id": "نمبر دیموگرافی",
+                    "save-button": "ذخیره",
+                    "delete-button": "حذف",
+                    "update-button": "ویرایش"
                 }
             };
 

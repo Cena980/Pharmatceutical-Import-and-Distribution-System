@@ -73,12 +73,14 @@
                 <label>Due Date</label>
                 <input type="date" name="dueDate" id="dueDate" autocomplete="off">
             </div>
-            <div class="button-group">
-                <button class="btn btn-save" onclick="validate()">Save</button>
+        </form>
+        <div class="insertButtons">
+            <div class="addRemove">
                 <button class="btn btn-add" onclick="create_sale(); return false;">+</button>
                 <button class="btn btn-remove" onclick="delete_last_row(); return false;">-</button>
             </div>
-        </form>
+            <button class="btn btn-save" onclick="validate()">Save</button>
+        </div>
         <!-- fetching footer from server-->
         <?php include '../php/footer.php' ?>
 

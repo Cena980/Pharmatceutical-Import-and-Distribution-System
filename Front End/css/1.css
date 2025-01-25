@@ -165,17 +165,6 @@ li:hover {
     transform: scale(1.2);
 }
 
-#over{
-  max-width: 75%;
-  margin: auto;  
-  margin-top: 30px;
-  margin-bottom: 30px;
-} 
-#over h1{
-    width: auto;
-    margin: auto;
-}
-
 /* Footer */
 #bottom {
     display: flex;
@@ -272,25 +261,10 @@ input {
     margin-top: 30px;
     width: auto;
 }
-.inventory {
-    padding: 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 30px;
-    margin-top: 30px;
-    margin-bottom: 40px;
-}
-.inventory .inventory-left{
-    display: grid;
-    grid-row-gap: 30px;
-}
-.inventory .inventory-left #button-group{
-    width: 50%;
-}
 
 #tblreport, #tblinvoice {
     border-collapse: collapse;
-    width: 80%;
+    width: 100%;
     margin: auto;
     margin-bottom: 80px;
 }
@@ -346,75 +320,30 @@ input {
     }
 }
 
-
 /* Buttons */
 button {
-    margin: auto;
     font-weight: bold;
     font-family: sans-serif;
+    padding: 5px;
+    border-radius: 50px;
     cursor: pointer;
     transition: transform 0.3s ease;
-}
-.btn {
-    border-radius: 50px;
-    scale: 1.5;
-}
-.button-group{
-    margin: auto;
-    width: 75%;
-    align-items: center;
-    align-content: center;
-    margin-bottom: 30px;
-}
-.multi-button{
-    margin: auto;
-    margin-top: 30px;
-    width: 90%;
-    display: flex;
-    justify-content: left;
-    align-items: left;
-    grid-template-columns: auto auto;
-    grid-column-gap: 30px;
-    margin-bottom: 30px;
-}
-.button-print{
-    margin: auto;
-    margin-top: 30px;
-    width: 30px;
 }
 
 button:hover {
     transform: scale(1.2);
 }
-.insertButtons{
-    margin-top: 30px;
-    margin-left: 150px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-bottom: 30px;
-}
-.addRemove{
-    height: auto;
-    width: 50px;
-    display: flex;
-}
 
 .btn-save {
-    width: 50px;
-    margin: auto;
     background-color: green;
     color: white;
-    text-decoration: none;
 }
 
 .btn-add {
-    margin-left: 30px;
     background-color: lightgreen;
 }
 
 .btn-remove {
-    margin-left:20px;
     background-color: lightcoral;
 }
 
@@ -430,7 +359,7 @@ button:hover {
 .btn-link {
     background-color: none;
     font-weight: bold;
-    text-decoration: none;
+    text-decoration: underline;
 }
 
 #buttons button {

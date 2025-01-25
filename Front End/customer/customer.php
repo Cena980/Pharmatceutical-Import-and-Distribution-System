@@ -9,8 +9,8 @@
     <body>
         <?php include '../php/header2.php' ?>
         <div id="over"><h1>Customer records</h1></div>
-        <div id="buttons">
-            <button><a href="Insertcustomer.html">Add</a> </button>
+        <div class="button-group">
+            <button class="btn btn-save"><a href="Insertcustomer.php">Add</a> </button>
         </div>
         <div id="report">
             <?php include '../php/customerreport.php';?>

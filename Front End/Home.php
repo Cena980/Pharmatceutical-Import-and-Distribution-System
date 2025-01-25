@@ -5,7 +5,7 @@
         <title>
             Home Page
         </title>
-        <link rel="stylesheet" href="css/home.css">
+        <link rel="stylesheet" href="css/1.css">
         <style>
             body {
                 direction: ltr; /* Force left-to-right layout */

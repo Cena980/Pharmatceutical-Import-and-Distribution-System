@@ -23,7 +23,7 @@
             echo "<td>" . $r['total_amount'] . "</td>";
             echo "<td>" . $r['amount_paid'] . "</td>";
             echo "<td>
-                <form action='updatepurchases.html' method='GET'>
+                <form action='updatepurchases.php' method='GET'>
                     <input type='hidden' name='purchase_id' value='" . $r['purchase_id'] . "'>
                     <input type='hidden' name='vendor_id' value='" . $r['vendor_id'] . "'>
                     <input type='hidden' name='drug_id' value='" . $r['drug_id'] . "'>
@@ -35,7 +35,7 @@
                     <input type='hidden' name='amount_paid' value='" . $r['amount_paid'] . "'>
                     <button type='submit' class='btn-link'>Update</button>
                 </form>
-                <form action='updatepurchases.html' method='GET'>
+                <form action='updatepurchases.php' method='GET'>
                     <input type='hidden' name='purchase_id' value='" . $r['purchase_id'] . "'>
                     <input type='hidden' name='vendor_id' value='" . $r['vendor_id'] . "'>
                     <input type='hidden' name='drug_id' value='" . $r['drug_id'] . "'>

@@ -20,7 +20,7 @@
             echo "<td>" . $r['phone'] . "</td>";
             echo "<td>" . $r['useful_info'] . "</td>";
             echo "<td>
-                <form action='updatecustomer.html' method='GET'>
+                <form action='updatecustomer.php' method='GET'>
                     <input type='hidden' name='customer_id' value='" . $r['customer_id'] . "'>
                     <input type='hidden' name='customer_shop' value='" . $r['customer_shop'] . "'>
                     <input type='hidden' name='customer_name' value='" . $r['customer_name'] . "'>
@@ -29,7 +29,7 @@
                     <input type='hidden' name='useful_info' value='" . $r['useful_info'] . "'>
                     <button type='submit'>Update</button>
                 </form>
-                <form action='updatecustomer.html' method='GET'>
+                <form action='updatecustomer.php' method='GET'>
                     <input type='hidden' name='customer_id' value='" . $r['customer_id'] . "'>
                     <input type='hidden' name='customer_shop' value='" . $r['customer_shop'] . "'>
                     <input type='hidden' name='customer_name' value='" . $r['customer_name'] . "'>

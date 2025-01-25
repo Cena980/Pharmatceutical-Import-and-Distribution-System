@@ -1,7 +1,7 @@
 <?php
 
     include 'connection.php';
-    $query = "select * from sales order by Sale_Date desc limit 25";
+    $query = "select * from sales order by Sale_Date desc limit 16";
     $res = mysqli_query($connect, $query);
 
     $num_rows = mysqli_num_rows($res);
@@ -25,7 +25,7 @@
             echo "<td>" . $r['Total_Price'] . "</td>";
             echo "<td>" . $r['Note'] . "</td>";
             echo "<td>
-                <form action='sales/updatesales.html' method='GET'>
+                <form action='sales/updatesales.php' method='GET'>
                     <input type='hidden' name='Sales_ID' value='" . $r['Sales_ID'] . "'>
                     <input type='hidden' name='Inventory_ID' value='" . $r['Inventory_ID'] . "'>
                     <input type='hidden' name='Sale_Date' value='" . $r['Sale_Date'] . "'>
@@ -39,7 +39,7 @@
                     <input type='hidden' name='Note' value='" . $r['Note'] . "'>
                     <button type='submit'>Update</button>
                 </form>
-                <form action='sales/updatesales.html' method='GET'>
+                <form action='sales/updatesales.php' method='GET'>
                     <input type='hidden' name='Sales_ID' value='" . $r['Sales_ID'] . "'>
                     <input type='hidden' name='Inventory_ID' value='" . $r['Inventory_ID'] . "'>
                     <input type='hidden' name='Sale_Date' value='" . $r['Sale_Date'] . "'>

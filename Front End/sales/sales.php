@@ -9,10 +9,10 @@
     <body>
         <?php include '../php/header2.php' ?>
         <div id="over"><h1>Sales</h1></div>
+        <div class="button-group">
+            <button class="btn btn-save"><a href="addsales.php">Add</a> </button>
+        </div>
         <div id="report">
-            <div id="buttons">
-                <button><a href="addsales.php">Add</a> </button>
-            </div>
             <?php include '../php/salesreport.php';?>
         </div>
         </div>

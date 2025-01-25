@@ -12,10 +12,10 @@
         <div class="inventory">
             <div class="inventory-left">
                 <div id="over"><h1>Inventory Records</h1></div>
-                <div id="report">
-                    <div id="buttons">
-                        <button><a href="insertinventory.html">Add</a> </button>
+                <div id="button-group">
+                        <button class="btn btn-save"><a href="insertinventory.php">Add</a> </button>
                     </div>
+                <div id="report">
                     <?php include '../php/inventoryreport.php';?>
                 </div>
 

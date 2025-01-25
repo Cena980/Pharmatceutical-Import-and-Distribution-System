@@ -8,8 +8,10 @@
     if($num_rows>0){
         echo "<table border='1' id='tblreport'>";
         echo "<tr>
-                    <th>Drug ID</th><th>Company ID</th><th>Name</th><th>Ingredients</th>
-                    <th>PB</th><th>Type ID</th><th>Demo ID</th>
+                    <th data-key='drug-id'>Drug ID</th><th  data-key='company-id'>Company ID</th>
+                    <th data-key='drug-name'>Name</th><th data-key='ingredients'>Ingredients</th>
+                    <th  data-key='quantity-pb'>PB</th><th data-key='type-id'>Type ID</th>
+                    <th data-key='demo-id'>Demo ID</th>
                 </tr>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
@@ -21,7 +23,7 @@
             echo "<td>" . $r['Type_ID'] . "</td>";
             echo "<td>" . $r['Demo_ID'] . "</td>";
             echo "<td>
-            <form action='updatedrugs.html' method='GET'>
+            <form action='updatedrugs.php' method='GET'>
                 <input type='hidden' name='Drug_ID' value='" . $r['Drug_ID'] . "'>
                 <input type='hidden' name='Comp_ID' value='" . $r['Comp_ID'] . "'>
                 <input type='hidden' name='Drug_Name' value='" . $r['Drug_Name'] . "'>
@@ -30,9 +32,9 @@
                 <input type='hidden' name='Type_ID' value='" . $r['Type_ID'] . "'>
                 <input type='hidden' name='Demo_ID' value='" . $r['Demo_ID'] . "'>
 
-                <button type='submit' class=' btn-link'>Update</button>
+                <button data-key='update-button' type='submit' class=' btn-link'>Update</button>
             </form>
-            <form action='updatedrugs.html' method='GET'>
+            <form action='updatedrugs.php' method='GET'>
                 <input type='hidden' name='Drug_ID' value='" . $r['Drug_ID'] . "'>
                 <input type='hidden' name='Comp_ID' value='" . $r['Comp_ID'] . "'>
                 <input type='hidden' name='Drug_Name' value='" . $r['Drug_Name'] . "'>
@@ -40,7 +42,7 @@
                 <input type='hidden' name='Tablet_PB' value='" . $r['Tablet_PB'] . "'>
                 <input type='hidden' name='Type_ID' value='" . $r['Type_ID'] . "'>
                 <input type='hidden' name='Demo_ID' value='" . $r['Demo_ID'] . "'>
-                <button type='submit' class=' btn-link'>Delete</button>
+                <button data-key='delete-button' type='submit' class=' btn-link'>Delete</button>
             </form>
           </td>";
             echo "</tr>";

@@ -16,13 +16,13 @@
             echo "<td>" . $r['Holder_Name'] . "</td>";
             echo "<td>" . $r['Phone'] . "</td>";
             echo "<td>
-                    <form action='updateshareholders.html' method='GET'>
+                    <form action='updateshareholders.php' method='GET'>
                         <input type='hidden' name='Share_ID' value='" . $r['Share_ID'] . "'>
                         <input type='hidden' name='Holder_Name' value='" . $r['Holder_Name'] . "'>
                         <input type='hidden' name='Phone' value='" . $r['Phone'] . "'>
                         <button type='submit' class=' btn-link'>Update</button>
                     </form>
-                    <form action='updateshareholders.html' method='GET'>
+                    <form action='updateshareholders.php' method='GET'>
                         <input type='hidden' name='Share_ID' value='" . $r['Share_ID'] . "'>
                         <input type='hidden' name='Holder_Name' value='" . $r['Holder_Name'] . "'>
                         <input type='hidden' name='Phone' value='" . $r['Phone'] . "'>
