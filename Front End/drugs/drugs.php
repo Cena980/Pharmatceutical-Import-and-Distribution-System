@@ -10,7 +10,7 @@
         <?php include '../php/header2.php' ?>
         <div id="over"><h1 data-key="drug-records">Drug records</h1></div>
         <div class="button-group">
-            <button class="btn btn-save"><a href="Insertdrug.php" data-key="insert-button">Add</a> </button>
+            <button class="btn btn-save" onclick="location.href='Insertdrug.php'" data-key="insert-button">Add</button>
         </div>
         <div id="report">
             <?php include '../php/drugreport.php';?>

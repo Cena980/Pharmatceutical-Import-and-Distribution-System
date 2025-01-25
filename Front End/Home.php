@@ -5,7 +5,7 @@
         <title>
             Home Page
         </title>
-        <link rel="stylesheet" href="css/1.css">
+        <link rel="stylesheet" href="css/home.css">
         <style>
             body {
                 direction: ltr; /* Force left-to-right layout */
@@ -16,28 +16,33 @@
         <!-- fetching header from server  -->
         <?php include 'php/header1.php' ?>
         <main>
-            <div class="left">
-                <div class="section_title">Go To</div>
-                <?php $tables = getTables() ?>
-                <?php
-                foreach ($tables as $table) {
-                    $tableName = $table['table'] ?? null;
-                    if ($tableName) {
+        <div class="left">
+            <div class="section_title">Go To</div>
+            <?php $tables = getTables(); ?>
+            <?php
+            foreach ($tables as $table) {
+                $tableName = $table['table'] ?? null;
+                if ($tableName) {
+                    $filePath = strtolower($tableName) . '/' . strtolower($tableName) . '.php';
+                    if (file_exists($filePath)) {
                         ?>
                         <div class="tables">
-                            <a href="<?php echo strtolower($tableName)?>/<?php echo strtolower($tableName)?>.php">
-                                
-                                <?php echo htmlspecialchars(ucfirst($tableName))?>
+                            <a href="<?php echo $filePath; ?>">
+                                <?php echo htmlspecialchars(ucfirst($tableName)); ?>
                             </a>
                         </div>
                         <?php
                     } else {
-                        echo "Invalid table data.";
+                        // Optionally, log or display a message if the file doesn't exist
+                        // echo "File does not exist: $filePath";
                     }
+                } else {
+                    echo "Invalid table data.";
                 }
-                ?>
-                    
-            </div>
+            }
+            ?>
+        </div>
+
             <div class="right">
                 <div class="section_title">Products</div>
                 <?php $Drugs = getDrugs(4) ?>

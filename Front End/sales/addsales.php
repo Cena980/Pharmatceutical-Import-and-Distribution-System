@@ -2,39 +2,50 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>
+        <title data-key="sales-insert">
             Insertion Page
         </title>
         <link rel="stylesheet" href="../css/home.css">
     </head>
     <body>
         <?php include '../php/header2.php' ?>
-        <div id="over"><h1>New Sale</h1></div>
+        <div id="over"><h1 data-key="sales-add">New Sale</h1></div>
         <form name="sale" method="post">
             <input type="hidden" name="qnt" id="qnt" value="1">
             <div class="fixed-input">
-                <label>Date</label>
-                <input type="date" name="Date_1" id="Date_1" autocomplete="off">
-                <label>Amount Received</label>
-                <input type="number" name="Amount_Received_1" id="AR_1" autocomplete="off">
-                <label>Employee Cut ID</label>
-                <input type="number" name="Cut_ID_1" id="ci_1" autocomplete="off">
-                <label >Customer</label>
-                <input type="text" name="Customer_Shop_1" id="customer_shop_1" autocomplete="off">
-                <div class="suggestion" id="suggestion_customer" style="border: 1px solid #ccc; display: none; position: fixed; background: white;"></div>
-                <label>Sales Officer</label>
-                <input name="Sales_Officer" id="Sales_Officer">
+                <div class="form-group">
+                    <label data-key="date" for="Date_1">Date</label>
+                    <input type="date" name="Date_1" id="Date_1" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label data-key="amount-received" for="AR_1">Amount Received</label>
+                    <input type="number" name="Amount_Received_1" id="AR_1" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label data-key="cut-id" for="ci_1">Employee Cut ID</label>
+                    <input type="number" name="Cut_ID_1" id="ci_1" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label data-key="customer" for="customer_shop_1">Customer</label>
+                    <input type="text" name="Customer_Shop_1" id="customer_shop_1" autocomplete="off">
+                    <div class="suggestion" id="suggestion_customer" style="border: 1px solid #ccc; display: none; position: fixed; background: white;"></div>
+                </div>
+                <div class="form-group">
+                    <label data-key="sales-officer" for="Sales_Officer">Sales Officer</label>
+                    <input name="Sales_Officer" id="Sales_Officer">
+                </div>
             </div>
+
             <table class="table table-success">
              <thead>
              <tr>
-                 <th>Drug Name</th>
+                 <th data-key="drug-name">Drug Name</th>
                  
-                 <th>Quantity</th>
-                 <th>Discount</th>
-                 <th>Price</th>
-                 <th>Total</th>
-                 <th>Note</th>
+                 <th data-key="quantity">Quantity</th>
+                 <th data-key="discount">Discount</th>
+                 <th data-key="price">Price</th>
+                 <th data-key="total">Total</th>
+                 <th data-key="note">Note</th>
              </tr>
              </thead>
              <tbody>
@@ -66,20 +77,24 @@
              </tbody>
             </table>
             <div class="grand_total">
-                <label>Sub Total</label>
-                <input type="number" name="grand_total" id="grand_total" autocomplete="off">
+                <div class="form-group">
+                    <label for="grand_total">Sub Total</label>
+                    <input type="number" name="grand_total" id="grand_total" autocomplete="off">
+                </div>
             </div>
             <div class="grand_total">
-                <label>Due Date</label>
-                <input type="date" name="dueDate" id="dueDate" autocomplete="off">
+                <div class="form-group">
+                    <label for="dueDate">Due Date</label>
+                    <input type="date" name="dueDate" id="dueDate" autocomplete="off">
+                </div>
             </div>
         </form>
         <div class="insertButtons">
             <div class="addRemove">
-                <button class="btn btn-add" onclick="create_sale(); return false;">+</button>
-                <button class="btn btn-remove" onclick="delete_last_row(); return false;">-</button>
+                <button data-key="add-button" class="btn btn-add" onclick="create_sale(); return false;">+</button>
+                <button data-key="remove-button" class="btn btn-remove" onclick="delete_last_row(); return false;">-</button>
             </div>
-            <button class="btn btn-save" onclick="validate()">Save</button>
+            <button data-key="save-button" class="btn btn-save" onclick="validate()">Save</button>
         </div>
         <!-- fetching footer from server-->
         <?php include '../php/footer.php' ?>

@@ -1,13 +1,13 @@
 <?php
 
 echo '<script>
-            function validate() {
+            function validate1() {
                 a =document.getElementById(\'search\');
                 if (a.value.length<1){
                     alert("Cannot search for empty string")
                 }else{
                     const form = document.forms["search"];
-                    form.action = "php/search.php";
+                    form.action = "../php/search.php";
                     form.method = "post";
                     const popup = window.open("", "SearchResults", "width=600,height=400");
                     form.target = "SearchResults"; // Send the form to the popup window
@@ -25,7 +25,7 @@ echo '<script>
                     <form name="search" method="post" action="php/search.php">
                         <input type="text" placeholder="Search for Drugs" name="query" id="search" required data-key="search-placeholder">
                     </form>
-                    <button type="submit" onclick="validate()" data-key="search-button">Search</button>
+                    <button type="submit" onclick="validate1()" data-key="search-button">Search</button>
                 </div>
                 <div class="barr">
                     <div id="switch">
@@ -67,10 +67,52 @@ echo '<script>
                         <img class="logo" src="../images/contact.png" alt="Contact Icon">
                         <a href="../contact.php" data-key="nav-contact">Contact Us</a>
                     </li>
-
                 </ul>
             </div>
         </div>
+
+        <script>
+            // Get all `li` elements with the class `button`
+            const buttons = document.querySelectorAll(\'.button\');
+
+            // Add a click event listener to each button
+            buttons.forEach(button => {
+                button.addEventListener(\'click\', () => {
+                    // Remove the `active` class from all buttons
+                    buttons.forEach(btn => btn.classList.remove(\'active\'));
+
+                    // Add the `active` class to the clicked button
+                    button.classList.add(\'active\');
+                });
+            });
+            window.onload = function () {
+        // Get the last part of the current path (everything after the last slash)
+        const currentPath = window.location.pathname.substring(window.location.pathname.lastIndexOf(\'/\') + 1);
+
+        const buttons = document.querySelectorAll(\'.button\');
+
+        buttons.forEach(button => {
+            const link = button.querySelector(\'a\');
+
+            if (link) {
+                // Get the last part of the href path
+                const linkPath = new URL(link.getAttribute(\'href\'), window.location.origin).pathname;
+                const linkLastPart = linkPath.substring(linkPath.lastIndexOf(\'/\') + 1);
+
+                // Compare the last parts of the paths
+                if (linkLastPart === currentPath) {
+                    button.classList.add(\'active\');
+                } else {
+                    button.classList.remove(\'active\');
+                }
+            }
+        });
+    };
+
+
+
+        </script>
+
 
         <script>
             document.querySelectorAll(\'.button\').forEach(li => {
@@ -100,6 +142,7 @@ echo '<script>
                     "drug-title": "Drugs",
                     "drug-records": "Drug records",
                     "drug-insert": "Insertion Page",
+                    "sales-insert": "Sales insertion Page",
                     "drug-update": "Update Drug",
                     "insert-over": "Insert",
                     "َupdate-over": "Update",
@@ -110,6 +153,12 @@ echo '<script>
                     "quantity-pb": "Quantity Per Box",
                     "type-id": "Tyle ID",
                     "demo-id": "Demography ID",
+                    "sales-add": "Insert",
+                    "date": "Date",
+                    "amount-received": "Amount Received",
+                    "cut-id": "Emp Cut ID",
+                    "customer": "Customer",
+                    "sales-officer": "Sales Officer",
                     "save-button": "Save",
                     "delete-button": "Delete",
                     "update-button": "Update"
@@ -131,6 +180,7 @@ echo '<script>
                     "drug-title": "دوا ها",
                     "drug-records": "دوا های ثبت شده",
                     "drug-insert": "صفحه اضافه کردن دوا",
+                    "sales-insert": "صفحه افزودن به فروشات",
                     "drug-update": "صفحه ویرایش دوا",
                     "insert-over": "اضافه کردن",
                     "update-over": "ویرایش کردن",
@@ -141,6 +191,12 @@ echo '<script>
                     "quantity-pb": "تعداد در جعبه",
                     "type-id": "نمبر نوعیت",
                     "demo-id": "نمبر دیموگرافی",
+                    "sales-add": "افزودن",
+                    "date": "تاریخ",
+                    "amount-received": "پول اخذ شده",
+                    "cut-id": "نمبر سهم کارمند",
+                    "customer": "مشتری",
+                    "sales-officer": "مسُول",
                     "save-button": "ذخیره",
                     "delete-button": "حذف",
                     "update-button": "ویرایش"

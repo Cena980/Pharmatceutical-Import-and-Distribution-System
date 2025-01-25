@@ -12,7 +12,7 @@
         <div id="over"><h1>Purchases</h1></div>
         <div id="report">
             <div class="button-group">
-                <button class="btn btn-save"><a href="addpurchases.php">Add</a> </button>
+                <button class="btn btn-save" onclick="location.href='addpurchases.php'">Add</button>
             </div>
             <?php include '../php/purchasesreport.php';?>
         </div>

@@ -87,7 +87,7 @@
 
                     // Ingredient validation (letters, spaces, and punctuation allowed)
                     let ingredient = document.getElementById("i1").value;
-                    if (!/^[A-Za-z\s,\.\-]*$/.test(ingredient.trim())) {
+                    if (!/^[A-Za-z0-9\s,\.\-]*$/.test(ingredient.trim())) {
                         document.getElementById("ni1").innerHTML = "Ingredient can include letters, spaces, commas, periods, and hyphens.";
                         valid = false;
                     } else {

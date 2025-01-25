@@ -1,12 +1,12 @@
 <?php
 
     include 'connection.php';
-    $query = "select * from sales order by Sale_Date desc limit 16";
+    $query = "select * from sales order by Sale_Date desc limit 20";
     $res = mysqli_query($connect, $query);
 
     $num_rows = mysqli_num_rows($res);
     if($num_rows>0){
-        echo "<table border='1' border-collapse=collapse id='tblreport'>";
+        echo "<table border='1' border-collapse=collapse id='tblreportlimited'>";
         echo "<tr>
                     <th>Sale ID</th><th>Inventory ID</th><th>Date</th><th>Quantity</th>
                     <th>Discount</th><th>Price</th><th>Cut ID</th><th>Customer ID</th>

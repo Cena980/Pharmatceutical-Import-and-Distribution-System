@@ -13,7 +13,7 @@
             <div class="inventory-left">
                 <div id="over"><h1>Inventory Records</h1></div>
                 <div id="button-group">
-                        <button class="btn btn-save"><a href="insertinventory.php">Add</a> </button>
+                        <button class="btn btn-save" onclick="location.href='insertinventory.php'">Add</button>
                     </div>
                 <div id="report">
                     <?php include '../php/inventoryreport.php';?>
