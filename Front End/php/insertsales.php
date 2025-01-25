@@ -11,54 +11,170 @@ echo '<!DOCTYPE html>
         <link rel="stylesheet" href="../css/home.css">
         <script src="../converter/jalaali.min.js"></script>
     </head>
-    <body>
-    <script>
-            function search(){
-                a = document.getElementById("search");
-                    if (a.value.length<1){
-                        alert("Cannot search for empty string")
-                    }else{
-                        const form = document.forms["search"];
-                        form.action = "../php/search.php";
-                        form.method = "get";
-                    }
+    <body>';
+    echo '<script>
+            function validate() {
+                a =document.getElementById(\'search\');
+                if (a.value.length<1){
+                    alert("Cannot search for empty string")
+                }else{
+                    const form = document.forms["search"];
+                    form.action = "php/search.php";
+                    form.method = "post";
+                    const popup = window.open("", "SearchResults", "width=600,height=400");
+                    form.target = "SearchResults"; // Send the form to the popup window
+                    form.submit();
+                }
             }
         </script>
         <div id="barover">
             <div id="bar">
                 <div class="barr">
-                    <img>
-                    <p>B&S Database</p>
+                    <img src="../images/logoSmall.png" style="scale: 0.8;" alt="logo">
+                    <p data-key="database-title">Phoenix Pharma</p>
                 </div>
                 <div class="barr">
-                    <form method="GET" action="php/search.php">
-                        <input type="text" id="search" name="query" style="width: 85%;" id="search" required>
+                    <form name="search" method="post" action="php/search.php">
+                        <input type="text" placeholder="Search for Drugs" name="query" id="search" required data-key="search-placeholder">
                     </form>
-                    <button type="submit" value="Search" onclick="search()">Search</button>
+                    <button type="submit" onclick="validate()" data-key="search-button">Search</button>
                 </div>
                 <div class="barr">
-                    <div id="switch" >
-                        <button id="switch">En</button>
-                        <button id="switch">Fa</button>
+                    <div id="switch">
+                        <button onclick="setLanguage(\'en\')">English</button>
+                        <button onclick="setLanguage(\'fa\')">فارسی</button>
                     </div>
                 </div>
-            </div>  
+            </div>
         </div>
+
         <div id="bar2over">
             <div id="bar2">
                 <ul class="barr2">
-                <li>
-                        <a href="../home.php">Home</a>
+                    <li class="button">
+                        <img class="logo" src="../images/home.png" alt="Home Icon">
+                        <a href="../home.php" data-key="nav-home">Home</a>
                     </li>
-                    <li><a href="../sales/sales.php">Sales</a></li>
-                    <li><a href="../drugs/drugs.php">Drug</a></li>
-                    <li><a href="../employees/employees.php">Employee</a></li>
-                    <li><a href="../Inventory/inventory.php">Inventory</a></li>
-                    <li><a href="../purchases/purchases.php">Purchases</a></li>
-                    <li><a href="../contact.php">Contact Us</a></li>
+                    <li class="button">
+                        <img class="logo" src="../images/sales.png" alt="Sales Icon">
+                        <a href="../sales/sales.php" data-key="nav-sales">Sales</a>
+                    </li>
+                    <li class="button">
+                        <img class="logo" src="../images/drug.png" alt="Drug Icon">
+                        <a href="../drugs/drugs.php" data-key="nav-drugs">Drugs</a>
+                    </li>
+                    <li class="button">
+                        <img class="logo" src="../images/employees.png" alt="Employees Icon">
+                        <a href="../employees/employees.php" data-key="nav-employees">Employees</a>
+                    </li>
+                    <li class="button">
+                        <img class="logo" src="../images/inventory.png" alt="Inventory Icon">
+                        <a href="../inventory/inventory.php" data-key="nav-inventory">Inventory</a>
+                    </li>
+                    <li class="button">
+                        <img class="logo" src="../images/purchases.png" alt="Purchases Icon">
+                        <a href="../purchases/purchases.php" data-key="nav-purchases">Purchases</a>
+                    </li>
+                    <li class="button">
+                        <img class="logo" src="../images/contact.png" alt="Contact Icon">
+                        <a href="../contact.php" data-key="nav-contact">Contact Us</a>
+                    </li>
+
                 </ul>
             </div>
-        </div>';
+        </div>
+
+        <script>
+            document.querySelectorAll(\'.button\').forEach(li => {
+                li.addEventListener(\'click\', () => {
+                    const url = li.getAttribute(\'data-url\');
+                    if (url) {
+                        window.location.href = url;
+                    }
+                });
+            });
+
+            // Define translations
+            const translations = {
+                en: {
+                    "title": "Home Page",
+                    "database-title": "Phoenix Pharma",
+                    "search-placeholder": "Search for Drugs",
+                    "search-button": "Search",
+                    "nav-home": "Home",
+                    "nav-sales": "Sales",
+                    "nav-drugs": "Drugs",
+                    "nav-employees": "Employees",
+                    "nav-inventory": "Inventory",
+                    "nav-purchases": "Purchases",
+                    "nav-contact": "Contact Us",
+                    "insert-button": "Add",
+                    "drug-title": "Drugs",
+                    "drug-records": "Drug records",
+                    "drug-insert": "Insertion Page",
+                    "drug-update": "Update Drug",
+                    "insert-over": "Insert",
+                    "َupdate-over": "Update",
+                    "company-id": "Company ID",
+                    "drug-name": "Drug Name",
+                    "drug-id": "Drug ID",
+                    "ingredients": "Ingredients",
+                    "quantity-pb": "Quantity Per Box",
+                    "type-id": "Tyle ID",
+                    "demo-id": "Demography ID",
+                    "save-button": "Save",
+                    "delete-button": "Delete",
+                    "update-button": "Update"
+
+                },
+                fa: {
+                    "title": "صفحه اصلی",
+                    "database-title": "Phoenix Pharma",
+                    "search-placeholder": "جستجو داروها",
+                    "search-button": "جستجو",
+                    "nav-home": "خانه",
+                    "nav-sales": "فروشات",
+                    "nav-drugs": "داروها",
+                    "nav-employees": "کارمندان",
+                    "nav-inventory": "موجودی",
+                    "nav-purchases": "خریدها",
+                    "nav-contact": "تماس با ما",
+                    "insert-button": "اضافه کردن",
+                    "drug-title": "دوا ها",
+                    "drug-records": "دوا های ثبت شده",
+                    "drug-insert": "صفحه اضافه کردن دوا",
+                    "drug-update": "صفحه ویرایش دوا",
+                    "insert-over": "اضافه کردن",
+                    "update-over": "ویرایش کردن",
+                    "company-id": "نمبر شرکت",
+                    "drug-name": "نام دوا",
+                    "drug-id": "نمبر دوا",
+                    "ingredients": "ترکیبات",
+                    "quantity-pb": "تعداد در جعبه",
+                    "type-id": "نمبر نوعیت",
+                    "demo-id": "نمبر دیموگرافی",
+                    "save-button": "ذخیره",
+                    "delete-button": "حذف",
+                    "update-button": "ویرایش"
+                }
+            };
+
+            // Function to switch language
+            function setLanguage(language) {
+
+                // Update text content for elements with translation keys
+                document.querySelectorAll("[data-key]").forEach(el => {
+                    const key = el.getAttribute("data-key");
+                    el.textContent = translations[language][key] || el.textContent;
+                    if (el.placeholder) {
+                        el.placeholder = translations[language][key] || el.placeholder;
+                    }
+                });
+            }
+
+            // Default to English on page load
+            setLanguage("en");
+        </script>';
 
 
     $rowCount = intval($_POST['qnt']); // Number of rows to process
@@ -414,30 +530,46 @@ if (!empty($customerID)) {
         if($num_rows>0){
         
             echo "<div id='printableSection'>";
-                echo "<div id='invoicelogo'>";
-                    echo "<div id='underHead'>
-                            <div class='topimage'>
-                                <img src='../images/logoSmall.jpg'>
-                            </div> 
-                        </div>";
-                        echo "<div id='underHead'>";
-                            echo "<table class='invoice-table'>";
-                                echo "<tr>
-                                <td>Address: </td>
-                                <td>Mazar Hotel</td>
-                                </tr>";
-                                echo "<tr>
-                                <td>Office Number: </td>
-                                <td>207</td>
-                                </tr>";
-                            echo "</table>";
-                            echo "</div>";
-                echo "</div>";
-            echo "<div class='invoice-1'>";
-                echo "<div class='invoice-2'>";
+
+            echo "<div class='row'>";
+                echo "<div class='column'>";
+                    echo "<h1>INVOICE</h1>";
                     echo "<table class='invoice-table'>";
                                 echo "<tr>
-                                <td>Customer: </td>
+                                <td>Invoice No: </td>
+                                <td>$invoice_ID</td>
+                                </tr>";
+                                echo "<tr>
+                                <td>Date: </td>
+                                <td>$date</td>
+                                <td id='date'></td>
+                                </tr>";
+                                echo "<tr>
+                                <td>Due Date:</td>
+                                <td>$dueDate</td>
+                                <td id='dueDate'></td>
+                                </tr>";
+                                echo "<tr>
+                                <td>Booked By: </td>
+                                <td>$Sales_Officer</td>
+                                </tr>";
+                    echo "</table>";
+                echo "</div>";
+
+                echo "<div class='column'>";
+                    echo "<div id='underHead'>
+                        <div class='topimage'>
+                            <img src='../images/logoSmall.jpg'>
+                        </div>
+                    </div>";
+            echo "</div>";
+            echo "</div>";
+            echo "<div class='row'>";
+                echo "<div class='column'>";
+                echo "<div><h1>Customer INFO</h1> </div>";
+                    echo "<table class='invoice-table'>";
+                                echo "<tr>
+                                <td>Bill To: </td>
                                 <td>$customer_shop</td>
                                 </tr>";
                                 echo "<tr>
@@ -450,72 +582,55 @@ if (!empty($customerID)) {
                                 </tr>";
                     echo "</table>";
                 echo "</div>";
-                echo "<div class='invoice-2'>";
-                    echo "<table>
-                    <tr>
-                    <td><h1>INVOICE<h1>
-                    </td>
-                    </tr>
-                    </table>";
-                echo "</div>";
-                echo "<div class='invoice-2'>";
+                echo "<div class='column'>";
+                    echo "<div><h1>Our INFO</h1>";
                     echo "<table class='invoice-table'>";
                                 echo "<tr>
-                                <td>Invoice No:</td>
-                                <td>$invoice_ID</td>
+                                <td>Address:</td>
+                                <td>Mazar Hotel</td>
                                 </tr>";
                                 echo "<tr>
-                                <td>Invoice Date: </td>
-                                <td>$date</td>
-                                <td id='date'></td>
-                                </tr>";
-                                echo "<tr>
-                                <td>Due Date: </td>
-                                <td>$dueDate</td>
-                                <td id ='dueDate'></td>
+                                <td>Shop No:</td>
+                                <td>207</td>
                                 </tr>";
                                 echo "<tr>
                                 <td>Currency:</td>
                                 <td>AFN ؋</td>
                                 </tr>";
-                                echo "<tr>
-                                <td>Booked By: </td>
-                                <td>$Sales_Officer</td>
-                                </tr>";
                     echo "</table>";
                 echo "</div>";
     
             echo "</div>";
-            echo "<table id='tblinvoice'>";
-            echo "<tr>
-                        <th>Drug Type</th><th>Drug Name</th><th>Quantity</th><th>price</th><th>Discount</th><th>Total_Price</th>
-                    </tr>";
-            while ($r = mysqli_fetch_assoc($res)) {
-                echo "<tr>";
-                echo "<td>" . $r['Type'] . "</td>";
-                echo "<td>" . $r['Name'] . "</td>";
-                echo "<td>" . $r['Quantity'] . "</td>";
-                echo "<td>" . $r['Price'] . "</td>";
-                echo "<td>" . $r['Discount'] . "</td>";
-                echo "<td>" . $r['Total_Price'] . "</td>";
-                echo "</tr>";
-            }
-    
-            echo "</table>";
-
-            echo "<table id= 'tblinvoice'>";
-                echo "<tr>";
-                echo "<th>" . 'Sub Total:' ."</th>";
-                echo "<th>" . 'Received:' ."</th>";
-                echo "<th>" . 'Old Balance:' ."</th>";
-                echo "<th>" . 'Grand Total:' ."</th>";
-                echo "</tr>";
-                echo "<td>" . $totalSales . "</td>";
-                echo "<td>" . $Amount_Received . "</td>";
-                echo "<td>" . -1 * $Balance . "</td>";
-                echo "<td>" . -1 * $Current_Balance . "</td>";
-                echo "</tr>";
-            echo "</table>";
+            echo "</div>";
+                echo "<table id='tblinvoice'>";
+                echo "<tr>
+                            <th>Drug Type</th><th>Drug Name</th><th>Quantity</th><th>price</th><th>Discount</th><th>Total_Price</th>
+                        </tr>";
+                while ($r = mysqli_fetch_assoc($res)) {
+                    echo "<tr>";
+                    echo "<td>" . $r['Type'] . "</td>";
+                    echo "<td>" . $r['Name'] . "</td>";
+                    echo "<td>" . $r['Quantity'] . "</td>";
+                    echo "<td>" . $r['Price'] . "</td>";
+                    echo "<td>" . $r['Discount'] . "</td>";
+                    echo "<td>" . $r['Total_Price'] . "</td>";
+                    echo "</tr>";
+                }
+        
+                echo "</table>";
+                echo "<table id= 'tblinvoice'>";
+                    echo "<tr>";
+                    echo "<th>" . 'Sub Total:' ."</th>";
+                    echo "<th>" . 'Received:' ."</th>";
+                    echo "<th>" . 'Old Balance:' ."</th>";
+                    echo "<th>" . 'Grand Total:' ."</th>";
+                    echo "</tr>";
+                    echo "<td>" . $totalSales . "</td>";
+                    echo "<td>" . $Amount_Received . "</td>";
+                    echo "<td>" . -1 * $Balance . "</td>";
+                    echo "<td>" . -1 * $Current_Balance . "</td>";
+                    echo "</tr>";
+                echo "</table>";
             echo "</div>";
         } else {
             echo "No records found.";  

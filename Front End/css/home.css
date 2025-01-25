@@ -284,20 +284,12 @@ input {
     display: grid;
     grid-row-gap: 30px;
 }
-.inventory .inventory-left #button-group{
-    width: 50%;
-}
 
 #tblreport, #tblinvoice {
     border-collapse: collapse;
     width: 80%;
     margin: auto;
     margin-bottom: 80px;
-}
-
-#tblinvoice th, td {
-    border-bottom: 1px solid #ddd;
-    text-align: center;
 }
 
 #tblreport tr:nth-child(even) {
@@ -327,6 +319,7 @@ input {
     background-color: #f0f0f0;
     transform: scale(1.2);
 }
+
 
 /* Print Styles */
 @media print {
@@ -377,11 +370,7 @@ button {
     grid-column-gap: 30px;
     margin-bottom: 30px;
 }
-.button-print{
-    margin: auto;
-    margin-top: 30px;
-    width: 30px;
-}
+
 
 button:hover {
     transform: scale(1.2);
@@ -456,7 +445,39 @@ button:hover {
     height: 20px;
     margin-bottom: 8px;
 }
+.alerts {
+    max-width: 500px;
+    margin: auto;
+}
 
+
+
+
+
+
+/* INVOICE */
+
+#printableSection{
+    max-width: 1000px;
+    margin: auto;
+}
+
+.row {
+    margin: auto;
+    padding-bottom: 10px;
+    max-width: 1000px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+.column {
+    padding: 10px;
+    margin: auto;
+    max-width: 400px;
+}
 .topimage {
     margin: auto;
     margin-top: 30px;
@@ -467,4 +488,31 @@ button:hover {
 
 .topimage img {
     max-width: 100%;
+}
+.invoice-table {
+    text-align: left;
+}
+.invoice-table th, td{
+    text-align: left;
+}
+#tblinvoice td {
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+#tblinvoice th {
+    background-color: black; /* Background color */
+    color: #ffffff; /* Text color */
+    font-weight: bold; /* Bold text */
+    text-align: center; /* Center align text */
+    padding: 10px; /* Add padding for spacing */
+    border: 1px solid #ddd; /* Optional border */
+}
+.button-print{
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 50px;
+}
+.invoice-table{
+    width: auto;
 }
