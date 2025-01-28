@@ -39,31 +39,31 @@ echo '<script>
         <div id="bar2over">
             <div id="bar2">
                 <ul class="barr2">
-                    <li class="button">
+                    <li class="button" onclick = "location.href=\'home.php\'">
                         <img class="logo" src="images/home.png" alt="Home Icon">
                         <a href="home.php" data-key="nav-home">Home</a>
                     </li>
-                    <li class="button">
+                    <li class="button" onclick = "location.href=\'sales/sales.php\'">
                         <img class="logo" src="images/sales.png" alt="Sales Icon">
                         <a href="sales/sales.php" data-key="nav-sales">Sales</a>
                     </li>
-                    <li class="button">
+                    <li class="button" onclick = "location.href=\'drugs/drugs.php\'">
                         <img class="logo" src="images/drug.png" alt="Drug Icon">
                         <a href="drugs/drugs.php" data-key="nav-drugs">Drugs</a>
                     </li>
-                    <li class="button">
+                    <li class="button" onclick = "location.href=\'employee/employees.php\'">
                         <img class="logo" src="images/employees.png" alt="Employees Icon">
                         <a href="employees/employees.php" data-key="nav-employees">Employees</a>
                     </li>
-                    <li class="button">
+                    <li class="button" onclick = "location.href=\'inventory/inventory.php\'">
                         <img class="logo" src="images/inventory.png" alt="Inventory Icon">
                         <a href="inventory/inventory.php" data-key="nav-inventory">Inventory</a>
                     </li>
-                    <li class="button">
+                    <li class="button" onclick = "location.href=\'purchases/purchases.php\'">
                         <img class="logo" src="images/purchases.png" alt="Purchases Icon">
                         <a href="purchases/purchases.php" data-key="nav-purchases">Purchases</a>
                     </li>
-                    <li class="button">
+                    <li class="button" onclick = "location.href=\'contact.php\'">
                         <img class="logo" src="images/contact.png" alt="Contact Icon">
                         <a href="contact.php" data-key="nav-contact">Contact Us</a>
                     </li>
@@ -86,28 +86,28 @@ echo '<script>
                 });
             });
             window.onload = function () {
-        // Get the last part of the current path (everything after the last slash)
-        const currentPath = window.location.pathname.substring(window.location.pathname.lastIndexOf(\'/\') + 1);
+            // Get the last part of the current path (everything after the last slash)
+            const currentPath = window.location.pathname.substring(window.location.pathname.lastIndexOf(\'/\') + 1);
 
-        const buttons = document.querySelectorAll(\'.button\');
+            const buttons = document.querySelectorAll(\'.button\');
 
-        buttons.forEach(button => {
-            const link = button.querySelector(\'a\');
+            buttons.forEach(button => {
+                const link = button.querySelector(\'a\');
 
-            if (link) {
-                // Get the last part of the href path
-                const linkPath = new URL(link.getAttribute(\'href\'), window.location.origin).pathname;
-                const linkLastPart = linkPath.substring(linkPath.lastIndexOf(\'/\') + 1);
+                if (link) {
+                    // Get the last part of the href path
+                    const linkPath = new URL(link.getAttribute(\'href\'), window.location.origin).pathname;
+                    const linkLastPart = linkPath.substring(linkPath.lastIndexOf(\'/\') + 1);
 
-                // Compare the last parts of the paths
-                if (linkLastPart === currentPath) {
-                    button.classList.add(\'active\');
-                } else {
-                    button.classList.remove(\'active\');
+                    // Compare the last parts of the paths
+                    if (linkLastPart === currentPath) {
+                        button.classList.add(\'active\');
+                    } else {
+                        button.classList.remove(\'active\');
+                    }
                 }
-            }
-        });
-    };
+            });
+        };
 
 
 
@@ -141,6 +141,8 @@ echo '<script>
                     "drug-title": "Drugs",
                     "drug-records": "Drug records",
                     "drug-insert": "Insertion Page",
+                    "no": "No",
+                    "sales-insert": "Sales insertion Page",
                     "drug-update": "Update Drug",
                     "insert-over": "Insert",
                     "َupdate-over": "Update",
@@ -151,9 +153,36 @@ echo '<script>
                     "quantity-pb": "Quantity Per Box",
                     "type-id": "Tyle ID",
                     "demo-id": "Demography ID",
+                    "sales-add": "Insert",
+                    "date": "Date",
+                    "amount-received": "Amount Received",
+                    "cut-id": "Emp Cut ID",
+                    "customer": "Customer",
+                    "sales-officer": "Sales Officer",
+                    "quantity": "Quantity",
+                    "discount": "Discount",
+                    "price": "Price",
+                    "total": "Total",
+                    "note": "Note",
+                    "sub-total": "Sub Total",
+                    "due-date": "Due Date",
                     "save-button": "Save",
                     "delete-button": "Delete",
-                    "update-button": "Update"
+                    "update-button": "Update",
+                    sale_id: "Sale ID",
+                    inventory_id: "Inventory ID",
+                    date: "Date",
+                    quantity: "Quantity",
+                    discount: "Discount",
+                    price: "Price",
+                    cut_id: "Cut ID",
+                    customer_id: "Customer ID",
+                    total_price: "Total Price",
+                    note: "Note",
+                    actions: "Actions",
+                    products: "Products",
+                    salesreport: "Sales Report",
+                    goto: "Go To"
 
                 },
                 fa: {
@@ -172,6 +201,8 @@ echo '<script>
                     "drug-title": "دوا ها",
                     "drug-records": "دوا های ثبت شده",
                     "drug-insert": "صفحه اضافه کردن دوا",
+                    "no": "شماره",
+                    "sales-insert": "صفحه افزودن به فروشات",
                     "drug-update": "صفحه ویرایش دوا",
                     "insert-over": "اضافه کردن",
                     "update-over": "ویرایش کردن",
@@ -182,9 +213,36 @@ echo '<script>
                     "quantity-pb": "تعداد در جعبه",
                     "type-id": "نمبر نوعیت",
                     "demo-id": "نمبر دیموگرافی",
+                    "sales-add": " افزودن به فروشات",
+                    "date": "تاریخ",
+                    "amount-received": "پول اخذ شده",
+                    "cut-id": "نمبر سهم کارمند",
+                    "customer": "مشتری",
+                    "sales-officer": "مسُول",
+                    "quantity": "تعداد",
+                    "discount": "تخفیف",
+                    "price": "قیمت",
+                    "total": "قیمت کل",
+                    "note": "یادداشت",
+                    "sub-total": "مجموع",
+                    "due-date": "تاریخ انقضا",
                     "save-button": "ذخیره",
                     "delete-button": "حذف",
-                    "update-button": "ویرایش"
+                    "update-button": "ویرایش",
+                    sale_id: "شناسه فروش",
+                    inventory_id: "شناسه موجودی",
+                    date: "تاریخ",
+                    quantity: "تعداد",
+                    discount: "تخفیف",
+                    price: "قیمت",
+                    cut_id: "شناسه برش",
+                    customer_id: "شناسه مشتری",
+                    total_price: "قیمت کل",
+                    note: "یادداشت",
+                    actions: "اقدامات",
+                    products: "محصولات",
+                    salesreport: "گزارش فروشات",
+                    goto: "برو به"
                 }
             };
 

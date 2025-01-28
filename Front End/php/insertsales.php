@@ -246,13 +246,13 @@ if (!empty($customerID)) {
             // Invoice exists (alert with invoice details)
             $invoice_check_row = mysqli_fetch_assoc($invoice_check_results);
             $invoice_ID = $invoice_check_row['invoice_id'];
-            echo "<div class='alerts'>Invoice already exists with ID: $invoice_ID </div>";
+            echo "<div class='alerts'>Invoice already exists with ID: $invoice_ID and Date: $date</div>";
         } else {
             // No invoice found, create a new one
             $sql = "INSERT INTO invoices (customer_id, date, sales_officer) VALUES ('$customerID', '$date', '$Sales_Officer')";
             
             if (mysqli_query($connect, $sql)) {
-                echo "<div class='alerts'>Invoice has been created.</div>";
+                //echo "<div class='alerts'>Invoice has been created.</div>";
                 
                 // Fetch the newly created invoice
                 $invoice_check = "SELECT * FROM invoices WHERE date = '$date' AND customer_id = '$customerID'";
@@ -261,7 +261,7 @@ if (!empty($customerID)) {
                 if ($invoice_check_results) {
                     $invoice_check_row = mysqli_fetch_assoc($invoice_check_results);
                     $invoice_ID = $invoice_check_row['invoice_id'];
-                    echo "<div class='alerts'>Invoice ID: $invoice_ID"; echo "</div>";
+                    //echo "<div class='alerts'>Invoice ID: $invoice_ID"; echo "</div>";
                 } else {
                     echo "<div class='alerts'>Error fetching invoice after creation: " . mysqli_error($connect); echo "</div>";
                 }
@@ -281,15 +281,20 @@ if (!empty($customerID)) {
         $drugName = $_POST["Drug_Name_$i"] ?? null;
         $drugAmount = $_POST["Amount_$i"] ?? null;
         // Query to get the Inventory_ID for the given drug name
-        $name = "SELECT Inventory_ID FROM inventory WHERE Drug_ID = (SELECT Drug_ID FROM drugs WHERE Drug_Name = '$drugName') AND Initial_Amount = '$drugAmount'";
-        $Inventory_ID_result = mysqli_query($connect, $name);
-    
-        if ($Inventory_ID_result) {
-            $Inventory_ID_row = mysqli_fetch_assoc($Inventory_ID_result);
-            $Inventory_ID = $Inventory_ID_row['Inventory_ID'];
-        } else {
-            echo "<div class='alerts'> Could not fetch inventory ID for " . $drugName; echo "</div>";
-            continue;  // Skip this iteration if Inventory_ID is not found
+        if(!empty($drugName)){
+            $name = "SELECT Inventory_ID FROM inventory WHERE Drug_ID = (SELECT Drug_ID FROM drugs WHERE Drug_Name = '$drugName') AND Initial_Amount = '$drugAmount'";
+            $Inventory_ID_result = mysqli_query($connect, $name);
+        
+            if ($Inventory_ID_result) {
+                $Inventory_ID_row = mysqli_fetch_assoc($Inventory_ID_result);
+                $Inventory_ID = $Inventory_ID_row['Inventory_ID'];
+            } else {
+                echo "<div class='alerts'> Could not fetch inventory ID for " . $drugName; echo "</div>";
+                echo "<div class='alerts'> نمبر موجودی یافت نشد " . $drugName. "برای"; echo "</div>";
+                continue;  // Skip this iteration if Inventory_ID is not found
+            }
+        }else{
+            echo "<div class='alerts'> لطفا نام دوا را وارد کنید "; echo "خط" . $i; echo "</div>";
         }
         $quantity = $_POST["Quantity_$i"] ?? null;
         $discount = isset($_POST["Discount_$i"]) && $_POST["Discount_$i"] !== '' ? $_POST["Discount_$i"] : 0.00;
@@ -300,6 +305,7 @@ if (!empty($customerID)) {
         // Validate required fields
         if (!$drugName || !$quantity || !$price || !$total) {
             echo "<div class='alerts'>Missing required fields for row $i."; echo "</div>";
+            echo "<div class='alerts'>ورودی ناقص در خط  $i."; echo "</div>";
             exit;
         }
 
@@ -353,7 +359,8 @@ if (!empty($customerID)) {
 
     // Bind and execute
     if ($stmt->execute($params)) {
-        echo "<div class='alerts'>Sales records added successfully!" ; echo "</div>";
+        echo "<div class='alerts'>Records added successfully!" ; echo "</div>";
+        echo "<div class='alerts'>فروشات موفقانه ثبت گردید" ; echo "</div>";
     } else {
         echo "<div class='alerts'>Error: " . $stmt->error;echo "</div>";
 
@@ -372,7 +379,7 @@ if (!empty($customerID)) {
         } else {
             // Set balance to 0 if no balance was retrieved
             $Balance = 0;
-            echo "<div class='alerts'>Balance not found for customer, defaulting to 0."; echo "</div>";
+            //echo "<div class='alerts'>Balance not found for customer, defaulting to 0."; echo "</div>";
         }
     }
     #upadating balance
@@ -392,7 +399,7 @@ if (!empty($customerID)) {
 
         // Check if any row was updated
         if (mysqli_stmt_affected_rows($stmt) > 0) {
-            echo "<div class= 'alerts'>" . json_encode(['status' => 'success', 'message' => 'Balance updated successfully']); echo "</div>";
+            //echo "<div class= 'alerts'>" . json_encode(['status' => 'success', 'message' => 'Balance updated successfully']); echo "</div>";
         } else {
             echo "<div class= 'alerts'>" . json_encode(['status' => 'warning', 'message' => 'No changes made (customer not found or same balance)']); echo "</div>";
         }
@@ -414,7 +421,7 @@ if (!empty($customerID)) {
         } else {
             // Set balance to 0 if no balance was retrieved
             $received_invoice = 0;
-            echo "<div class='alerts'>recieved not found for invoice, defaulting to 0."; echo "</div>";
+            //echo "<div class='alerts'>recieved not found for invoice, defaulting to 0."; echo "</div>";
         }
     }
     #upadating balance
@@ -434,7 +441,7 @@ if (!empty($customerID)) {
 
         // Check if any row was updated
         if (mysqli_stmt_affected_rows($stmt) > 0) {
-            echo "<div class= 'alerts'>" . json_encode(['status' => 'success', 'message' => 'recieved updated successfully']); echo "</div>";
+            //echo "<div class= 'alerts'>" . json_encode(['status' => 'success', 'message' => 'recieved updated successfully']); echo "</div>";
         } else {
             echo "<div class= 'alerts'>" . json_encode(['status' => 'warning', 'message' => 'No changes made (invoice not found or same received)']); echo "</div>";
         }
@@ -478,7 +485,7 @@ if (!empty($customerID)) {
 
         // Check if any row was updated
         if (mysqli_stmt_affected_rows($stmt) > 0) {
-            echo "<div class= 'alerts'>" . json_encode(['status' => 'success', 'message' => 'total sales inserted successfully']); echo "</div>";
+            //echo "<div class= 'alerts'>" . json_encode(['status' => 'success', 'message' => 'total sales inserted successfully']); echo "</div>";
         } else {
             echo "<div class= 'alerts'>" . json_encode(['status' => 'warning', 'message' => 'No changes made (invoice not found or same total_sales)']); echo "</div>";
         }
@@ -511,7 +518,7 @@ if (!empty($customerID)) {
 
         // Check if any row was updated
         if (mysqli_stmt_affected_rows($stmt) > 0) {
-            echo "<div class= 'alerts'>" . json_encode(['status' => 'success', 'message' => 'owed inserted successfully']); echo "</div>";
+            //echo "<div class= 'alerts'>" . json_encode(['status' => 'success', 'message' => 'owed inserted successfully']); echo "</div>";
         } else {
             echo "<div class= 'alerts'>" . json_encode(['status' => 'warning', 'message' => 'No changes made (invoice not found or same owed)']); echo "</div>";
         }
@@ -641,10 +648,17 @@ if (!empty($customerID)) {
     echo '
         <button class="btn btn-save" onclick="printSection(\'printableSection\')">Print</button>';
     echo "</div>";
+    echo "<div class='button-print'>";
+
+    echo '
+        <button class="btn btn-back" onclick="GoBack()">Go Back</button>';
+    echo "</div>";
 
     echo '
         <script src="https://cdn.jsdelivr.net/npm/jalaali-js/dist/jalaali.min.js"></script>
         <script>
+            function GoBack(){
+                history.back();}
             window.onload = function() {
                 // Ensure the PHP variables are safely converted to JavaScript strings
                 const gregorianDate = "' . $date . '";
@@ -664,7 +678,6 @@ if (!empty($customerID)) {
                     document.body.innerHTML = section.outerHTML;
                     window.print();
                     document.body.innerHTML = originalContent;
-                    window.location.reload(); // Optional: reload the page after printing
                 } else {
                     console.error("Section not found: " + sectionId);
                 }

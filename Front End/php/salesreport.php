@@ -1,16 +1,24 @@
 <?php
 
     include 'connection.php';
-    $query = "select * from sales";
+    $query = "select * from sales order by Sale_Date desc limit 20";
     $res = mysqli_query($connect, $query);
 
     $num_rows = mysqli_num_rows($res);
     if($num_rows>0){
         echo "<table border='1' border-collapse=collapse id='tblreport'>";
         echo "<tr>
-                    <th>Sale ID</th><th>Inventory ID</th><th>Date</th><th>Quantity</th>
-                    <th>Discount</th><th>Price</th><th>Cut ID</th><th>Customer ID</th>
-                    <th>Total Price</th><th>Note</th><th>Actions</th>
+            <th data-key='sale_id'>Sale ID</th>
+            <th data-key='inventory_id'>Inventory ID</th>
+            <th data-key='date'>Date</th>
+            <th data-key='quantity'>Quantity</th>
+            <th data-key='discount'>Discount</th>
+            <th data-key='price'>Price</th>
+            <th data-key='cut_id'>Cut ID</th>
+            <th data-key='customer_id'>Customer ID</th>
+            <th data-key='total_price'>Total Price</th>
+            <th data-key='note'>Note</th>
+            <th data-key='actions'>Actions</th>
                 </tr>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";

@@ -39,6 +39,7 @@
             <table class="table table-success">
              <thead>
              <tr>
+                <th data-key="no">No</th>
                  <th data-key="drug-name">Drug Name</th>
                  
                  <th data-key="quantity">Quantity</th>
@@ -52,6 +53,7 @@
 
                  <tr>
                     <input type="hidden" name="Amount_1" id="Amount_1">
+                    <td><p id="row_1">1</p></td>
                     <td><input type="text" name="Drug_Name_1" id="drug_name_1" autocomplete="off" placeholder="Enter Drug Name"></td>
                     <td><input type="number" name="Quantity_1" id="qy_1" autocomplete="off"></td>
                     <td><input type="number" name="Discount_1" id="dt_1" autocomplete="off"></td>
@@ -78,13 +80,13 @@
             </table>
             <div class="grand_total">
                 <div class="form-group">
-                    <label for="grand_total">Sub Total</label>
+                    <label data-key="sub-total" for="grand_total">Sub Total</label>
                     <input type="number" name="grand_total" id="grand_total" autocomplete="off">
                 </div>
             </div>
             <div class="grand_total">
                 <div class="form-group">
-                    <label for="dueDate">Due Date</label>
+                    <label data-key="due-date" for="dueDate">Due Date</label>
                     <input type="date" name="dueDate" id="dueDate" autocomplete="off">
                 </div>
             </div>
@@ -328,6 +330,7 @@
                 const tbody = document.querySelector("table tbody");
                 const newRow = document.createElement("tr");
                 newRow.innerHTML = `
+                    <td><p id="row_${qnt}">1</p></td>
                     <input type="hidden" name="Amount_${qnt}" id="Amount_${qnt}">
                     <td><input type="text" name="Drug_Name_${qnt}" id="drug_name_${qnt}" autocomplete="off" placeholder="Enter Drug Name"></td>
                     <td><input type="number" name="Quantity_${qnt}" id="qi_${qnt}" autocomplete="off"></td>
@@ -339,6 +342,8 @@
                 tbody.appendChild(newRow);
                 // Update the hidden input field for quantity
                 document.getElementById("qnt").value = qnt;
+                document.getElementById("row_" + qnt).innerHTML = qnt;
+                
             }
 
 
@@ -359,8 +364,6 @@
                 const form = document.forms["sale"];
                 if (valid) {
                     const message = document.getElementById("noty");
-                    message.style.color = "green";
-                    message.innerHTML = "Your record has been saved.";
                     form.action = "../php/insertsales.php"; // Set action to the desired PHP script
                     form.method = "post";
                     form.submit();
