@@ -1,12 +1,18 @@
 <?php
-    $dbhost ="127.0.0.1";
-    $dbuser = "root";
-    $dbpass = "cena_980";
-    $dbname = "drugwholesale";
+    // Include the config file
+    require_once 'config.php';
+
+    // Create connection
+    try {
+        $connect = new mysqli(SERVER, USERNAME, PASSWORD, DATABASE);
+
+        // Check connection
+        if ($connect->connect_error) {
+            throw new Exception("Connection failed: " . $connect->connect_error);
+        }
 
 
-    try{ $connect = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
-    }catch(mysqli_sql_exception){
-        echo "Could not Connect";
+    } catch (Exception $e) {
+        echo "Could not connect: " . $e->getMessage();
     }
 ?>

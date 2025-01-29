@@ -664,7 +664,6 @@ if (!empty($customerID)) {
                     document.body.innerHTML = section.outerHTML;
                     window.print();
                     document.body.innerHTML = originalContent;
-                    window.location.reload(); // Optional: reload the page after printing
                 } else {
                     console.error("Section not found: " + sectionId);
                 }
