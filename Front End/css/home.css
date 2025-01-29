@@ -185,10 +185,13 @@ li:hover {
   margin: auto;  
   margin-top: 30px;
   margin-bottom: 30px;
+  text-align: center;
+  height: 50px;
 } 
 #over h1{
     width: auto;
     margin: auto;
+    text-align: center;
 }
 
 /* Footer */
@@ -301,6 +304,9 @@ input {
     display: grid;
     grid-row-gap: 30px;
 }
+#report {
+    margin-top: 20px;
+}
 
 #tblreport, #tblinvoice {
     border-collapse: collapse;
@@ -408,12 +414,35 @@ input {
 .btn-save:active {
     transform: scale(1.1);
 }
+.btn-back {
+    background-color: #af8b4c; /* Green */
+    color: white;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
 
+.btn-back:hover {
+    background-color: #92753e; /* Darker Green */
+    transform: scale(1.05);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-back:active {
+    transform: scale(1.1);
+}
 /* Optional: If you want to style the button group */
 .button-group {
     margin: auto;
     display: flex;
-    max-width: 75%;
+    max-width: 100px;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+#button-group {
+    margin: auto;
+    display: flex;
+    max-width: 100px;
     justify-content: flex-start;
     gap: 10px;
     margin-bottom: 20px;
@@ -517,13 +546,11 @@ input {
     font-weight: bold;
     text-decoration: none;
 }
+#btn-circle{
+    border-radius: 50%;
+    background-color: transparent;
+}
 
-/* Additional Layout Styles 
-.fixed-input {
-    margin: auto;
-    margin-top: 30px;
-    max-width: 1300px;
-}*/
 .fixed-input {
     display: grid;
     margin: auto;
@@ -542,6 +569,7 @@ label {
     font-size: 14px;
     font-weight: bold;
     color: #333;
+    text-align: center;
 }
 
 input {
@@ -564,6 +592,7 @@ input:focus {
     width: 80%;
     display: flex;
     justify-content: flex-end;
+    margin-top: 10px;
 }
 .grand_total input{
     width: 150px;
@@ -576,11 +605,16 @@ input:focus {
     margin-bottom: 8px;
 }
 .alerts {
-    max-width: 500px;
+    max-width: 200px;
     margin: auto;
+    text-align: center;
 }
 
-
+/*search on main pages */
+.search-over {
+    max-width: 300px;
+    margin: auto;
+}
 
 
 

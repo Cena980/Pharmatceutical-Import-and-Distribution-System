@@ -17,7 +17,7 @@
         <?php include 'php/header1.php' ?>
         <main>
         <div class="left">
-            <div class="section_title">Go To</div>
+            <div data-key="goto" class="section_title">Go To</div>
             <?php $tables = getTables(); ?>
             <?php
             foreach ($tables as $table) {
@@ -44,7 +44,7 @@
         </div>
 
             <div class="right">
-                <div class="section_title">Products</div>
+                <div data-key="products" class="section_title">Products</div>
                 <?php $Drugs = getDrugs(4) ?>
                 <div class="product">
                     <?php
@@ -71,7 +71,7 @@
                 </div>
             </div>
             <div class="far_right">
-                <div class="section_title">Sales Reports</div>
+                <div data-key="salesreport" class="section_title">Sales Reports</div>
                 <?php include 'php/salesreportlimited.php'?>
             </div>
             
