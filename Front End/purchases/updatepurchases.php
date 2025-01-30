@@ -7,25 +7,40 @@
         <link rel="stylesheet" href="../css/home.css">
         <script>
             // Wait for the DOM to load
-            window.onload = function () {
+            document.addEventListener("DOMContentLoaded", function () {
                 const urlParams = new URLSearchParams(window.location.search);
-        
-                // Populate input fields with values from URL parameters
-                document.getElementById('purchase_id').value = urlParams.get('purchase_id') || '';
-                document.getElementById('vendor_id').value = urlParams.get('vendor_id') || '';
-                document.getElementById('drug_id').value = urlParams.get('drug_id') || '';
-                document.getElementById('price').value = urlParams.get('price') || '';
-                document.getElementById('quantity').value = urlParams.get('quantity') || '';
-                document.getElementById('Discount').value = urlParams.get('Discount') || '';
-                document.getElementById('purchase_date').value = urlParams.get('purchase_date') || '';
-                document.getElementById('total_amount').value = urlParams.get('total_amount') || '';
-                document.getElementById('amount_paid').value = urlParams.get('amount_paid') || '';
-            };
+
+                function setValue(id, param) {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        let value = urlParams.get(param);
+                        if (value !== null) {
+                            element.value = value;
+                        }
+                    }
+                }
+
+                setValue('purchase_id', 'purchase_id');
+                setValue('vendor_id', 'vendor_id');
+                setValue('drug_id', 'drug_id');
+                setValue('price', 'price');
+                setValue('quantity', 'quantity');
+                setValue('Discount', 'Discount');  // Fix case sensitivity here
+                setValue('purchase_date', 'purchase_date');
+                setValue('expiration_date', 'expiration_date');
+                setValue('total_amount', 'total_amount');
+                setValue('amount_paid', 'amount_paid');
+
+                console.log("Extracted Parameters:");
+                urlParams.forEach((value, key) => {
+                    console.log(`${key}: ${value}`);
+                });
+            });
+
+
         </script>
-        
-        
     </head>
-    <>
+    <body>
         <?php include '../php/header2.php' ?>
         <div id="over"><h1>Update</h1></div>
         <form name="updatepurchases">
@@ -39,6 +54,7 @@
                     <th>Quantity</th>
                     <th>Discount</th>
                     <th>Purchase Date</th>
+                    <th>Expiration Date</th>
                     <th>Total Amount</th>
                     <th>Amount Paid</th>
 
@@ -54,6 +70,7 @@
                         <td><input type="number" name="quantity" id="quantity" autocomplete="off"></td>
                         <td><input type="number" step="0.01" name="Discount" id="Discount" autocomplete="off"></td>
                         <td><input type="date" name="purchase_date" id="purchase_date" autocomplete="off"></td>
+                        <td><input type="date" name="expiration_date" id="expiration_date" autocomplete="off"></td>
                         <td><input type="number" name="total_amount" id="total_amount" autocomplete="off"></td>
                         <td><input type="number" name="amount_paid" id="amount_paid" autocomplete="off"></td>
                         

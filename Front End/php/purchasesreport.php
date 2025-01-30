@@ -9,7 +9,7 @@
         echo "<table border='1' border-collapse=collapse id='tblreport'>";
         echo "<tr>
                     <th>Purchase ID</th><th>Vendor ID</th><th>Drug ID</th><th>price</th><th>Quantity</th><th>Discount</th>
-                    <th>Purchase Date</th><th>Total Amount</th><th>Amount Paid</th><th>Actions</th>
+                    <th>Purchase Date</th><th>Expiration</th><th>Total Amount</th><th>Amount Paid</th><th>Actions</th>
                 </tr>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
@@ -20,6 +20,7 @@
             echo "<td>" . $r['quantity'] . "</td>";
             echo "<td>" . $r['Discount'] . "</td>";
             echo "<td>" . $r['purchase_date'] . "</td>";
+            echo "<td>" . $r['Expiration'] . "</td>";
             echo "<td>" . $r['total_amount'] . "</td>";
             echo "<td>" . $r['amount_paid'] . "</td>";
             echo "<td>
@@ -31,6 +32,7 @@
                     <input type='hidden' name='quantity' value='" . $r['quantity'] . "'>
                     <input type='hidden' name='Discount' value='" . $r['Discount'] . "'>
                     <input type='hidden' name='purchase_date' value='" . $r['purchase_date'] . "'>
+                    <input type='hidden' name='expiration_date' value='" . $r['Expiration'] . "'>
                     <input type='hidden' name='total_amount' value='" . $r['total_amount'] . "'>
                     <input type='hidden' name='amount_paid' value='" . $r['amount_paid'] . "'>
                     <button type='submit' class='btn-link'>Update</button>
@@ -43,6 +45,7 @@
                     <input type='hidden' name='quantity' value='" . $r['quantity'] . "'>
                     <input type='hidden' name='Discount' value='" . $r['Discount'] . "'>
                     <input type='hidden' name='purchase_date' value='" . $r['purchase_date'] . "'>
+                    <input type='hidden' name='expiration_date' value='" . $r['Expiration'] . "'>
                     <input type='hidden' name='total_amount' value='" . $r['total_amount'] . "'>
                     <input type='hidden' name='amount_paid' value='" . $r['amount_paid'] . "'>
                     <button type='submit' class='btn-link'>Delete</button>
