@@ -339,18 +339,18 @@ input {
     width: calc(100% - 2px);
 }
 
-#suggestions table tr,
-#suggestions_vendors table tr {
+.suggestion-box table tr,
+.suggestions_vendors table tr {
     padding: 5px;
     border-bottom: 1px solid #ccc;
     border-radius: 15px;
     transition: transform 0.3s ease;
 }
 
-#suggestions table tr:hover,
-#suggestions_vendors table tr:hover {
+.suggestion-box table tr:hover,
+.suggestions_vendors table tr:hover {
     background-color: #f0f0f0;
-    transform: scale(1.2);
+    transform: scale(1.05);
 }
 #suggestion_customer table tr {
     padding: 5px;
@@ -360,7 +360,7 @@ input {
 }
 #suggestion_customer table tr:hover {
     background-color: #f0f0f0;
-    transform: scale(1.2);
+    transform: scale(1.05);
 }
 
 

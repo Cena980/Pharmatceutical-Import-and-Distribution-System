@@ -45,7 +45,7 @@ echo '<script>
                     </li>
                     <li class="button" onclick = "location.href=\'../sales/sales.php\'">
                         <img class="logo" src="../images/sales.png" alt="Sales Icon">
-                        <a href="sales/sales.php" data-key="nav-sales">Sales</a>
+                        <a href="../sales/sales.php" data-key="nav-sales">Sales</a>
                     </li>
                     <li class="button" onclick = "location.href=\'../drugs/drugs.php\'">
                         <img class="logo" src="../images/drug.png" alt="Drug Icon">
@@ -139,6 +139,7 @@ echo '<script>
                     "nav-employees": "Employees",
                     "nav-inventory": "Inventory",
                     "nav-purchases": "Purchases",
+                    "vendor": "Vendor",
                     "nav-contact": "Contact Us",
                     "insert-button": "Add",
                     "drug-title": "Drugs",
@@ -159,6 +160,7 @@ echo '<script>
                     "sales-add": "Insert",
                     "date": "Date",
                     "amount-received": "Amount Received",
+                    "amount-paid": "Amount Paid",
                     "cut-id": "Emp Cut ID",
                     "customer": "Customer",
                     "sales-officer": "Sales Officer",
@@ -169,6 +171,7 @@ echo '<script>
                     "note": "Note",
                     "sub-total": "Sub Total",
                     "due-date": "Due Date",
+                    "exp-date": "Expiration",
                     "save-button": "Save",
                     "delete-button": "Delete",
                     "update-button": "Update",
@@ -190,15 +193,16 @@ echo '<script>
                 fa: {
                     "title": "صفحه اصلی",
                     "database-title": "Phoenix Pharma",
-                    "search-placeholder": "جستجو داروها",
+                    "search-placeholder": "جستجو دواها",
                     "search-button": "جستجو",
                     "nav-home": "خانه",
                     "nav-sales": "فروشات",
-                    "nav-drugs": "داروها",
+                    "nav-drugs": "دواها",
                     "nav-employees": "کارمندان",
                     "nav-inventory": "موجودی",
                     "nav-purchases": "خریدها",
                     "nav-contact": "تماس با ما",
+                    "vendor": "فروشنده",
                     "insert-button": "اضافه کردن",
                     "drug-title": "دوا ها",
                     "drug-records": "دوا های ثبت شده",
@@ -218,6 +222,7 @@ echo '<script>
                     "sales-add": " افزودن به فروشات",
                     "date": "تاریخ",
                     "amount-received": "پول اخذ شده",
+                    "amount-paid": "پول پرداخت شده",
                     "cut-id": "نمبر سهم کارمند",
                     "customer": "مشتری",
                     "sales-officer": "مسُول",
@@ -228,6 +233,7 @@ echo '<script>
                     "note": "یادداشت",
                     "sub-total": "مجموع",
                     "due-date": "تاریخ انقضا",
+                    "exp-date": "تاریخ انقضا",
                     "save-button": "ذخیره",
                     "delete-button": "حذف",
                     "update-button": "ویرایش",

@@ -1,7 +1,7 @@
 <?php
 
     include 'connection.php';
-    $query = "select * from purchases";
+    $query = "select * from purchases order by purchase_id desc";
     $res = mysqli_query($connect, $query);
 
     $num_rows = mysqli_num_rows($res);
