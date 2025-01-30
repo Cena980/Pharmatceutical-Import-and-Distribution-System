@@ -15,10 +15,15 @@
                 <div id="suggestions" style="display: none; position: absolute; background-color: white;"></div>
                 <div id="suggestions_vendors" style="display: none; position: absolute; background-color: white"></div>
                 <div class="fixed-input" style="max-width: 450px;">
-                    <label>Vendor</label>
+                <div class="form-group">
+                    <label data-key="vendor" for="vendor_name_1">Vendor</label>
                     <input type="text" name="vendor_name_1" id="vendor_name_1" autocomplete="off">
-                    <label>Date</label>
+                </div>  
+                <div class="form-group">
+                    <label data-key="date" for="purchase_date_1">Date</label>
                     <input type="date" name="purchase_date_1" id="purchase_date_1" autocomplete="off">
+                </div>
+                    
                 </div>
                 <tr>
                     <th>Drug Name</th>
@@ -56,8 +61,10 @@
         </form>
     </div>
     <div class="grand_total">
-        <label>Sub Total</label>
-        <input type="number" name="grand_total" id="grand_total" autocomplete="off">
+        <div class="form-group">
+            <label data-key="sub-total" for="grand_total">Sub Total</label>
+            <input type="number" name="grand_total" id="grand_total" autocomplete="off">
+        </div>
     </div>
             <div class="insertButtons">
                 <div class="addRemove">
