@@ -546,10 +546,33 @@ input {
     font-weight: bold;
     text-decoration: none;
 }
-#btn-circle{
-    border-radius: 50%;
+#btn-circle {
+    border: none;
     background-color: transparent;
+    transition: transform 0.3s ease-in-out; /* Apply transition to the button */
 }
+
+#btn-circle:hover {
+    transform: scale(1.05); /* Scale the button on hover */
+}
+
+#btn-circle img {
+    transition: transform 0.3s ease-in-out; /* Apply transition to the image */
+}
+
+#btn-circle:hover img {
+    transform: rotate(90deg); /* Rotate the image on hover */
+}
+
+/* Pop effect on click */
+#btn-circle:active {
+    transform: scale(1.2); /* Make it "pop" */
+}
+
+#btn-circle:active img {
+    transform: rotate(90deg) scale(1.2); /* Rotate and pop */
+}
+
 
 .fixed-input {
     display: grid;

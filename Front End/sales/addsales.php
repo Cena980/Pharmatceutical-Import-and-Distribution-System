@@ -50,20 +50,19 @@
              </tr>
              </thead>
              <tbody>
-
-                 <tr>
+                <tr>
                     <input type="hidden" name="Amount_1" id="Amount_1">
                     <td><p id="row_1">1</p></td>
-                    <td><input type="text" name="Drug_Name_1" id="drug_name_1" autocomplete="off" placeholder="Enter Drug Name"></td>
+                    <td>
+                        <input type="text" name="Drug_Name_1" id="drug_name_1" autocomplete="off" placeholder="Enter Drug Name">
+                        <div class="suggestion-box" id="suggestion_1" style="display: none; position: absolute; background: white;"></div>
+                    </td>
                     <td><input type="number" name="Quantity_1" id="qy_1" autocomplete="off"></td>
                     <td><input type="number" name="Discount_1" id="dt_1" autocomplete="off"></td>
                     <td><input type="number" name="Price_1" id="pr_1" autocomplete="off"></td>
                     <td><input type="number" name="Total_1" id="tl_1" autocomplete="off"></td>
-                    <td><input type="text" name="Note" id="Note_1" autocomplete="off"></td>
-
-                     
-                     
-                 </tr>
+                    <td><input type="text" name="Note_1" id="Note_1" autocomplete="off"></td>
+                </tr>
                  <tr>
                     <td><div id="suggestions" style="display: none; position: absolute; background: white;"></div></td>
                      <td id="ndid"></td>
@@ -154,16 +153,17 @@
                 if (e.target.name.startsWith("Drug_Name_")) {
                     const rowNumber = e.target.name.split("_")[2]; // Extract the row number
                     const query = e.target.value;
+                    const suggestionBox = document.getElementById(`suggestion_${rowNumber}`);
+
                     if (query.length > 1) {
                         fetch(`../php/get_drug_suggestions.php?query=${encodeURIComponent(query)}`)
                             .then(response => response.json())
                             .then(data => {
-                                const suggestionsDiv = document.getElementById("suggestions");
-                                suggestionsDiv.innerHTML = "";
-                                suggestionsDiv.style.display = "block";
+                                suggestionBox.innerHTML = "";
+                                suggestionBox.style.display = "block";
 
                                 if (data.error) {
-                                    suggestionsDiv.style.display = "none";
+                                    suggestionBox.style.display = "none";
                                 } else {
                                     const table = document.createElement("table");
                                     table.style.borderCollapse = "collapse";
@@ -186,19 +186,19 @@
                                         row.onclick = () => {
                                             document.getElementById(`drug_name_${rowNumber}`).value = drug.Drug_Name;
                                             document.getElementById(`Amount_${rowNumber}`).value = drug.Amount;
-                                            suggestionsDiv.style.display = "none";
+                                            suggestionBox.style.display = "none";
                                             fetchPrice(rowNumber);
                                         };
                                         table.appendChild(row);
                                     });
-                                    suggestionsDiv.appendChild(table);
+                                    suggestionBox.appendChild(table);
                                 }
                             })
                             .catch(error => {
                                 console.error("Error fetching drug suggestions:", error);
                             });
                     } else {
-                        document.getElementById("suggestions").style.display = "none";
+                        suggestionBox.style.display = "none";
                     }
                 }
 
@@ -210,6 +210,31 @@
                     calculateTotal();
                 }
             });
+
+            // Function to create a new sale row
+            function create_sale() {
+                qnt += 1;  // Increment the quantity to update the row number
+
+                const tbody = document.querySelector("table tbody");
+                const newRow = document.createElement("tr");
+                newRow.innerHTML = `
+                    <td><p id="row_${qnt}">${qnt}</p></td>
+                    <input type="hidden" name="Amount_${qnt}" id="Amount_${qnt}">
+                    <td>
+                        <input type="text" name="Drug_Name_${qnt}" id="drug_name_${qnt}" autocomplete="off" placeholder="Enter Drug Name">
+                        <div class="suggestion-box" id="suggestion_${qnt}" style="display: none; position: absolute; background: white;"></div>
+                    </td>
+                    <td><input type="number" name="Quantity_${qnt}" id="qi_${qnt}" autocomplete="off"></td>
+                    <td><input type="number" name="Discount_${qnt}" id="dt_${qnt}" autocomplete="off"></td>
+                    <td><input type="number" name="Price_${qnt}" id="pr_${qnt}" autocomplete="off"></td>
+                    <td><input type="number" name="Total_${qnt}" id="tl_${qnt}" autocomplete="off"></td>
+                    <td><input type="text" name="Note_${qnt}" id="Note_${qnt}" autocomplete="off"></td>
+                `;
+                tbody.appendChild(newRow);
+
+                // Update the hidden input field for quantity
+                document.getElementById("qnt").value = qnt;
+            }
             function addCustomerShopEventListener(rowNumber) {
             document.getElementById(`customer_shop_${rowNumber}`).addEventListener("input", function () {
                 const query = this.value;
@@ -319,31 +344,6 @@
 
             function updateQnt() {
                 document.getElementById("qnt").value = qnt;  // Update the hidden input field
-}
-
-
-            // Create a new row
-            // Function to create a new sale row
-            function create_sale() {
-                qnt +=1;  // Increment the quantity to update the row number
-
-                const tbody = document.querySelector("table tbody");
-                const newRow = document.createElement("tr");
-                newRow.innerHTML = `
-                    <td><p id="row_${qnt}">1</p></td>
-                    <input type="hidden" name="Amount_${qnt}" id="Amount_${qnt}">
-                    <td><input type="text" name="Drug_Name_${qnt}" id="drug_name_${qnt}" autocomplete="off" placeholder="Enter Drug Name"></td>
-                    <td><input type="number" name="Quantity_${qnt}" id="qi_${qnt}" autocomplete="off"></td>
-                    <td><input type="number" name="Discount_${qnt}" id="dt_${qnt}" autocomplete="off"></td>
-                    <td><input type="number" name="Price_${qnt}" id="pr_${qnt}" autocomplete="off"></td>
-                    <td><input type="number" name="Total_${qnt}" id="tl_${qnt}" autocomplete="off"></td>
-                    <td><input type="text" name="Note_${qnt}" id="Note_${qnt}" autocomplete="off"></td>
-                `;
-                tbody.appendChild(newRow);
-                // Update the hidden input field for quantity
-                document.getElementById("qnt").value = qnt;
-                document.getElementById("row_" + qnt).innerHTML = qnt;
-                
             }
 
 

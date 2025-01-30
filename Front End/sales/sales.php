@@ -11,7 +11,7 @@
         <div id="over"><h1 data-key="sales">Sales</h1></div>
         <div class="search-over">
             <div class="barr">
-            <button onclick="resetSearch()" id="btn-circle" >X</button>
+            <button onclick="resetSearch()" id="btn-circle" ><img src="../images/clear.png"></button>
                 <form name="searchsales" method="post">
                     <input type="text" placeholder="Search for Sales" name="query" id="searchsales" required data-key="search-placeholder">
                 </form>
