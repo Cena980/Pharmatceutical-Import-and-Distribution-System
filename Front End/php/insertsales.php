@@ -334,19 +334,11 @@ if (!empty($customerID)) {
     }
 
 
-    // Distribute the received amount proportionally
-    /*foreach ($salesData as $index => &$data) {
-        $data['Amount_Received'] = round(($rowTotals[$index] / $totalSales) * $Amount_Received, 2);
-    }*/
-
 
     // Build bulk INSERT query
      $sql = "INSERT INTO sales (Inventory_ID, Sale_Date, Quantity, Discount, Price, Cut_ID, Customer_ID, Total_Price, Note, invoice_no) VALUES ";
     $values = [];
     $params = [];
-
-
-
 
     foreach ($salesData as $sale) {
         $values[] = "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
