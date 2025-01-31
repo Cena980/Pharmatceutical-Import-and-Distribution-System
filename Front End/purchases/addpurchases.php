@@ -12,7 +12,7 @@
         <form name="purchase">
             <table class="table">
                 <input type="hidden" name="qnt" id="qnt" value="1">
-                <div class="fixed-input" style="max-width: 450px;">
+                <div class="fixed-input" style="max-width: 800px;">
                 <div class="form-group">
                     <label data-key="vendor" for="vendor_name_1">Vendor</label>
                     <input type="text" name="vendor_name_1" id="vendor_name_1" autocomplete="off">
@@ -25,6 +25,10 @@
                 <div class="form-group">
                     <label data-key="amount-paid" for="amount_paid_1">Amount Paid</label>
                     <input type="number" name="amount_paid_1" id="amount_paid_1" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label data-key="order_by" for="order_by">Order By</label>
+                    <input type="text" name="order_by" id="order_by" autocomplete="off">
                 </div>
                     
                 </div>
@@ -45,7 +49,7 @@
                     <td><input type="number" name="price_1" id="price_1" autocomplete="off"></td>
                     <td><input type="number" name="quantity_1" id="quantity_1" autocomplete="off"></td>
                     <td><input type="number" name="discount_1" id="discount_1" autocomplete="off"></td>
-                    <td><input type="date" name="expiration_1" id="expiration_1" autocomplete="off"></td>
+                    <td><input type="month" name="expiration_1" id="expiration_1" autocomplete="off"></td>
                     <td><input data-key="total" type="number" name="total_amount_1" id="total_amount_1" autocomplete="off"></td>
                 </tr>
                 <tr>
@@ -326,7 +330,7 @@
                     <td><input type="number" name="price_${qnt}" id="price_${qnt}" autocomplete="off"></td>
                     <td><input type="number" name="quantity_${qnt}" id="quantity_${qnt}" autocomplete="off"></td>
                     <td><input type="number" name="discount_${qnt}" id="discount_${qnt}" autocomplete="off"></td>
-                    <td><input type="date" name="expiration_${qnt}" id="expiration_${qnt}" autocomplete="off"></td>
+                    <td><input type="month" name="expiration_${qnt}" id="expiration_${qnt}" autocomplete="off"></td>
                     <td><input type="number" name="total_amount_${qnt}" id="total_amount_${qnt}" autocomplete="off" readonly></td>
                 `;
                 tbody.appendChild(newRow);

@@ -29,7 +29,7 @@
                 setValue('purchase_date', 'purchase_date');
                 setValue('expiration_date', 'expiration_date');
                 setValue('total_amount', 'total_amount');
-                setValue('amount_paid', 'amount_paid');
+                setValue('po_id', 'po_id');
 
                 console.log("Extracted Parameters:");
                 urlParams.forEach((value, key) => {
@@ -56,7 +56,7 @@
                     <th>Purchase Date</th>
                     <th>Expiration Date</th>
                     <th>Total Amount</th>
-                    <th>Amount Paid</th>
+                    <th>Purchase Order</th>
 
                     
                 </tr>
@@ -72,7 +72,7 @@
                         <td><input type="date" name="purchase_date" id="purchase_date" autocomplete="off"></td>
                         <td><input type="date" name="expiration_date" id="expiration_date" autocomplete="off"></td>
                         <td><input type="number" name="total_amount" id="total_amount" autocomplete="off"></td>
-                        <td><input type="number" name="amount_paid" id="amount_paid" autocomplete="off"></td>
+                        <td><input type="number" name="po_id" id="po_id" autocomplete="off"></td>
                         
                     </tr>
             
