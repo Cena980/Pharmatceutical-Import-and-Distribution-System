@@ -72,7 +72,7 @@
                         <td><input type="date" name="purchase_date" id="purchase_date" autocomplete="off"></td>
                         <td><input type="date" name="expiration_date" id="expiration_date" autocomplete="off"></td>
                         <td><input type="number" name="total_amount" id="total_amount" autocomplete="off"></td>
-                        <td><input type="number" name="po_id" id="po_id" autocomplete="off"></td>
+                        <td><input type="number" name="po_id" id="po_id" autocomplete="off" readonly></td>
                         
                     </tr>
             
