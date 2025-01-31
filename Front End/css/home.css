@@ -234,6 +234,9 @@ li:hover {
 .main .card img {
     border-radius: 5px 5px 0 0;
 }
+.card img {
+    border-radius: 10px;
+}
 
 /* Products (Drug List) */
 .product {
