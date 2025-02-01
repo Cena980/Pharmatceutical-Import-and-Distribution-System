@@ -51,7 +51,7 @@ echo '<script>
                         <img class="logo" src="images/drug.png" alt="Drug Icon">
                         <a href="drugs/drugs.php" data-key="nav-drugs">Drugs</a>
                     </li>
-                    <li class="button" onclick = "location.href=\'employee/employees.php\'">
+                    <li class="button" onclick = "location.href=\'employees/employees.php\'">
                         <img class="logo" src="images/employees.png" alt="Employees Icon">
                         <a href="employees/employees.php" data-key="nav-employees">Employees</a>
                     </li>
