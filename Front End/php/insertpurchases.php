@@ -24,8 +24,8 @@ echo '<!DOCTYPE html>
 
 
     $date = $_POST["purchase_date_1"] ?? null;
-    $amount_paid = $_POST["amount_paid_1"] ?? null;
-    $order_by = $_POST["order_by"] ?? null;
+    $amount_paid = $_POST["amount_paid_1"] ?? 0;
+    $order_by = $_POST["order_by"] ?? '';
 
     $ven_add = '';
     $ven_phone=0;
@@ -56,7 +56,7 @@ echo '<!DOCTYPE html>
                 // Invoice exists (alert with invoice details)
                 $order_check_row = mysqli_fetch_assoc($order_check_results);
                 $order_id = $order_check_row['po_id'];
-                echo "<div class='alerts'>Invoice already exists with ID: $order_id and Date: $date</div>";
+                echo "<div class='alerts'>PO already exists with ID: $order_id and Date: $date</div>";
             } else {
                 // No purcahse order found, create a new one
                 $sql = "INSERT INTO `purchase order` (vendor_id, po_date, ordered_by) VALUES ('$vendor_id', '$date', '$order_by')";
@@ -100,7 +100,15 @@ echo '<!DOCTYPE html>
         }
         $price = $_POST["price_$i"] ?? null;
         $quantity = $_POST["quantity_$i"] ?? null;
-        $discount = $_POST["discount_$i"] ?? null;
+        $discount = $_POST["discount_$i"] ?? 0;
+
+        // Ensure the discount is a valid number
+        if (!is_numeric($discount)) {
+            $discount = 0; // Default to 0 if the input is not numeric
+        }
+
+        // Cast to float for consistency
+        $discount = (float)$discount;
         $expiration = $_POST["expiration_$i"] ?? null;
         $total_amount = $_POST["total_amount_$i"] ?? null;
         if($i < $qnt){
@@ -269,38 +277,9 @@ echo '<!DOCTYPE html>
         if($num_rows>0){
         
             echo "<div id='printableSection'>";
-
             echo "<div class='row'>";
                 echo "<div class='column'>";
-                    echo "<h1>PURCHASE</h1>";
-                    echo "<table class='invoice-table'>";
-                                echo "<tr>
-                                <td>PO id: </td>
-                                <td>$order_id</td>
-                                </tr>";
-                                echo "<tr>
-                                <td>Date: </td>
-                                <td>$date</td>
-                                <td id='date'></td>
-                                </tr>";
-                                echo "<tr>
-                                <td>Ordered By: </td>
-                                <td>$order_by</td>
-                                </tr>";
-                    echo "</table>";
-                echo "</div>";
-
-                echo "<div class='column'>";
-                    echo "<div id='underHead'>
-                        <div class='topimage'>
-                            <img src='../images/logoSmall.jpg'>
-                        </div>
-                    </div>";
-            echo "</div>";
-            echo "</div>";
-            echo "<div class='row'>";
-                echo "<div class='column'>";
-                echo "<div><h1>Customer INFO</h1> </div>";
+                echo "<div><h1>Vendor INFO</h1> </div>";
                     echo "<table class='invoice-table'>";
                                 echo "<tr>
                                 <td>Purcahsed From: </td>
@@ -317,6 +296,26 @@ echo '<!DOCTYPE html>
                     echo "</table>";
                 echo "</div>";
                 echo "<div class='column'>";
+                        echo "<div id='underHead'>
+                            <div class='topimage'>
+                                <img src='../images/logoLarge.png'>
+                            </div>
+                        </div>";
+                        echo "<table class='invoice-table'>";
+                                    echo "<tr>
+                                    <td>PO id: </td>
+                                    <td>$order_id</td>
+                                    </tr>";
+                                    echo "<tr>
+                                    <td rowspan='2'>Date: </td>
+                                    <td>$date</td>
+                                    </tr>";
+                                    echo "<tr>
+                                        <td id='date'></td>
+                                        </tr>";
+                        echo "</table>";
+                echo "</div>";
+                echo "<div class='column'>";
                     echo "<div><h1>Our INFO</h1>";
                     echo "<table class='invoice-table'>";
                                 echo "<tr>
@@ -326,6 +325,10 @@ echo '<!DOCTYPE html>
                                 echo "<tr>
                                 <td>Shop No:</td>
                                 <td>207</td>
+                                </tr>";
+                                echo "<tr>
+                                <td>Ordered By: </td>
+                                <td>$order_by</td>
                                 </tr>";
                                 echo "<tr>
                                 <td>Currency:</td>

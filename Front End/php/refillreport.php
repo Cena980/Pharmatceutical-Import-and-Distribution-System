@@ -22,7 +22,7 @@ if (!$res) {
 }
 
 $num_rows = mysqli_num_rows($res);
-echo "Number of Refill: " . $num_rows . "<br>"; // Debugging line
+echo "<div class='alerts'>Number of Refill: " . $num_rows . "</div>"; // Debugging line
 
 if ($num_rows > 0) {
     echo "<table border='1' id='tblrefill'>";
