@@ -465,7 +465,7 @@ input {
     margin-top: 20px;
     display: flex;
     justify-content: space-around;
-    margin-bottom: 200px;
+    margin-bottom: 20px;
 }
 .addRemove{
     height: auto;
@@ -491,6 +491,89 @@ input {
     transform: scale(1.1);
 }
 
+/* Refill Table Design */
+/* Professional and Fine-Tuned Table Design */
+#tblrefill {
+    width: 50%; /* Adjust overall table width */
+    max-width: 80%; /* Ensure it doesn't overflow the screen */
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: 'Arial', sans-serif;
+    font-size: 13px; /* Adjust font size */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    table-layout: auto; /* Allow columns to adjust based on content */
+}
+
+#tblrefill th,
+#tblrefill td {
+    padding: 8px 10px; /* Adjust padding inside cells */
+    text-align: left;
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Add ellipsis for overflow text */
+}
+
+#tblrefill th {
+    background-color: #2c3e50; /* Dark blue-gray */
+    color: #ffffff;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 13px; /* Adjust font size for headers */
+}
+
+#tblrefill tr {
+    border-bottom: 1px solid #dddddd;
+    transition: background-color 0.3s ease;
+}
+
+#tblrefill tr:nth-child(even) {
+    background-color: #f9f9f9; /* Light gray for even rows */
+}
+
+#tblrefill tr:hover {
+    background-color: #f1f1f1; /* Light gray on hover */
+}
+
+#tblrefill tr:last-child {
+    border-bottom: 2px solid #2c3e50; /* Dark blue-gray */
+}
+
+/* Alert Row Styles */
+#tblrefill .alert-row {
+    background-color: #ffffcc !important; /* Yellow for alerts */
+}
+
+#tblrefill .warning-row {
+    background-color: #ffcccc !important; /* Red for warnings */
+}
+
+#tblrefill .low-stock-row {
+    background-color: #ffebcc !important; /* Orange for low stock */
+}
+
+/* Hover Effects for Alert Rows */
+#tblrefill .alert-row:hover {
+    background-color: #ffff99 !important; /* Darker yellow on hover */
+}
+
+#tblrefill .warning-row:hover {
+    background-color: #ff9999 !important; /* Darker red on hover */
+}
+
+#tblrefill .low-stock-row:hover {
+    background-color: #ffcc99 !important; /* Darker orange on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 700px) {
+    #tblrefill {
+        display: block;
+        overflow-x: auto;
+    }
+}
 .btn-remove {
     margin-left: 20px;
     background-color: lightcoral; /* Green */
@@ -634,7 +717,6 @@ input:focus {
     max-width: 200px;
     margin: auto;
     text-align: center;
-    margin-bottom: 20px;
 }
 
 /*search on main pages */
