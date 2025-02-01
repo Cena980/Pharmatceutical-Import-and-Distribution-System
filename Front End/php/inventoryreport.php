@@ -9,8 +9,8 @@
         echo "<div class='alerts'>". $num_rows. " Records</div>";
         echo "<table border='1' id='tblreport'>";
         echo "<tr>
-                    <th>Inventory ID</th><th>Drug ID</th><th>Drug Name</th><th>Expiration</th><th>Cost</th>
-                    <th>Price</th><th>Initial_Amount</th><th>Actions</th>
+                    <th>ID</th><th>Drug ID</th><th>Name</th><th>Expiration</th><th>Cost</th>
+                    <th>Price</th><th>Amount</th><th colspan='2'>Actions</th>
                 </tr>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
@@ -31,6 +31,8 @@
                 <input type='hidden' name='Initial_Amount' value='" . $r['Initial_Amount'] . "'>
                 <button type='submit' class=' btn-link'>Update</button>
             </form>
+            </td>";
+            echo "<td>
             <form action='updateinventory.php' method='GET'>
                 <input type='hidden' name='Inventory_ID' value='" . $r['Inventory_ID'] . "'>
                 <input type='hidden' name='Drug_ID' value='" . $r['Drug_ID'] . "'>

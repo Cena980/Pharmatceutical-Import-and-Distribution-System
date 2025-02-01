@@ -120,7 +120,7 @@ if (!empty($customerID)) {
         $drugAmount = $_POST["Amount_$i"] ?? null;
         // Query to get the Inventory_ID for the given drug name
         if(!empty($drugName)){
-            $name = "SELECT Inventory_ID FROM inventory WHERE Drug_ID = (SELECT Drug_ID FROM drugs WHERE Drug_Name = '$drugName') AND Initial_Amount = '$drugAmount'";
+            $name = "SELECT Inventory_ID FROM inventory WHERE Drug_ID = (SELECT Drug_ID FROM drugs WHERE Drug_Name = '$drugName') AND Amount_Left = '$drugAmount'";
             $Inventory_ID_result = mysqli_query($connect, $name);
         
             if ($Inventory_ID_result) {
@@ -367,40 +367,6 @@ if (!empty($customerID)) {
         if($num_rows>0){
         
             echo "<div id='printableSection'>";
-
-            echo "<div class='row'>";
-                echo "<div class='column'>";
-                    echo "<h1>INVOICE</h1>";
-                    echo "<table class='invoice-table'>";
-                                echo "<tr>
-                                <td>Invoice No: </td>
-                                <td>$invoice_ID</td>
-                                </tr>";
-                                echo "<tr>
-                                <td>Date: </td>
-                                <td>$date</td>
-                                <td id='date'></td>
-                                </tr>";
-                                echo "<tr>
-                                <td>Due Date:</td>
-                                <td>$dueDate</td>
-                                <td id='dueDate'></td>
-                                </tr>";
-                                echo "<tr>
-                                <td>Booked By: </td>
-                                <td>$Sales_Officer</td>
-                                </tr>";
-                    echo "</table>";
-                echo "</div>";
-
-                echo "<div class='column'>";
-                    echo "<div id='underHead'>
-                        <div class='topimage'>
-                            <img src='../images/logoSmall.jpg'>
-                        </div>
-                    </div>";
-            echo "</div>";
-            echo "</div>";
             echo "<div class='row'>";
                 echo "<div class='column'>";
                 echo "<div><h1>Customer INFO</h1> </div>";
@@ -417,7 +383,28 @@ if (!empty($customerID)) {
                                 <td>Address: </td>
                                 <td>$customerAddress</td>
                                 </tr>";
+                                echo "<tr class='date_r'>
+                                <td rowspan='2'>Date: </td>
+                                <td>$date</td>
+                                </tr>";
+                                echo "<tr>
+                                <td id='date'></td>
+                                </tr>";
                     echo "</table>";
+                echo "</div>";
+                echo "<div class='column'>";
+                    echo "<h1 class ='title'>INVOICE</h1>";
+                    echo "<div id='underHead'>
+                                <div class='topimage'>
+                                    <img src='../images/logoLarge.png'>
+                                </div>
+                        </div>";
+                        echo "<table class='invoice-table'>";
+                                    echo "<tr>
+                                    <td class='no'>INVOICE NO: </td>
+                                    <td class='no'>$invoice_ID</td>
+                                    </tr>";
+                        echo "</table>";
                 echo "</div>";
                 echo "<div class='column'>";
                     echo "<div><h1>Our INFO</h1>";
@@ -431,8 +418,19 @@ if (!empty($customerID)) {
                                 <td>207</td>
                                 </tr>";
                                 echo "<tr>
+                                <td>Booked By: </td>
+                                <td>$Sales_Officer</td>
+                                </tr>";
+                                echo "<tr>
                                 <td>Currency:</td>
                                 <td>AFN ؋</td>
+                                </tr>";
+                                echo "<tr class='date_r'>
+                                <td rowspan='2'>Due Date:</td>
+                                <td>$dueDate</td>
+                                </tr>";
+                                echo "<tr>
+                                <td id='dueDate'></td>
                                 </tr>";
                     echo "</table>";
                 echo "</div>";
