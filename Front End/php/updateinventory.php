@@ -7,10 +7,11 @@
     $Cost = $_POST['Cost'];
     $Price = $_POST['Price'];
     $Initial_Amount = $_POST['Initial_Amount'];
+    $Amount_Left = $_POST['Amount_Left'];
     
 
     $sql = "update inventory set Drug_ID = '$Drug_ID', Expiration = '$Expiration', 
-        Cost = '$Cost', Price = '$Price', Initial_Amount = '$Initial_Amount' where Inventory_ID = '$Inventory_ID'";
+        Cost = '$Cost', Price = '$Price', Initial_Amount = '$Initial_Amount', Amount_Left = '$Amount_Left' where Inventory_ID = '$Inventory_ID'";
     if(mysqli_query($connect, $sql)){
         echo "Record has been updated";
     }else{echo "Failed";}

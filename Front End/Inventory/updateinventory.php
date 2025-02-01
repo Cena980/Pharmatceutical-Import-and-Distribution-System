@@ -19,6 +19,7 @@
                 <th>Cost</th>
                 <th>Price</th>
                 <th>Initial Amount</th>
+                <th>Amount Left</th>
                  
              </tr>
              </thead>
@@ -27,10 +28,11 @@
                     <td><input type="number" name="Inventory_ID" id="iid" autocomplete="off"></td>
                     <td><input type="number" name="Drug_ID" id="did" autocomplete="off"></td>
                     <div id="ndid"></div>
-                    <td><input type="date" name="Expiration" id="eid" autocomplete="off"></td>
+                    <td><input type="month" name="Expiration" id="eid" autocomplete="off"></td>
                     <td><input type="number" name="Cost" id="cost" autocomplete="off"></td>
                     <td><input type="number" name="Price" id="price" autocomplete="off"></td>
                     <td><input type="number" name="Initial_Amount" id="IA" autocomplete="off"></td>
+                    <td><input type="number" name="Amount_Left" id="AL" autocomplete="off"></td>
                 </tr>
              <tr>
                  <td id="noty" class="table"></td>
@@ -55,6 +57,7 @@
                 document.getElementById('cost').value = urlParams.get('Cost') || '';
                 document.getElementById('price').value = urlParams.get('Price') || '';
                 document.getElementById('IA').value = urlParams.get('Initial_Amount') || '';
+                document.getElementById('AL').value = urlParams.get('Amount_Left') || '';
             };
             function validate(){
             
