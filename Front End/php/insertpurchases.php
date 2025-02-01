@@ -272,7 +272,7 @@ echo '<!DOCTYPE html>
 
             echo "<div class='row'>";
                 echo "<div class='column'>";
-                    echo "<h1>INVOICE</h1>";
+                    echo "<h1>PURCHASE</h1>";
                     echo "<table class='invoice-table'>";
                                 echo "<tr>
                                 <td>PO id: </td>
