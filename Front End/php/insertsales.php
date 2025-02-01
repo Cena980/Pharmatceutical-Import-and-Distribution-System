@@ -369,7 +369,6 @@ if (!empty($customerID)) {
             echo "<div id='printableSection'>";
             echo "<div class='row'>";
                 echo "<div class='column'>";
-                echo "<div><h1>Customer INFO</h1> </div>";
                     echo "<table class='invoice-table'>";
                                 echo "<tr>
                                 <td>Bill To: </td>
@@ -407,7 +406,6 @@ if (!empty($customerID)) {
                         echo "</table>";
                 echo "</div>";
                 echo "<div class='column'>";
-                    echo "<div><h1>Our INFO</h1>";
                     echo "<table class='invoice-table'>";
                                 echo "<tr>
                                 <td>Address:</td>
@@ -439,7 +437,7 @@ if (!empty($customerID)) {
             echo "</div>";
                 echo "<table id='tblinvoice'>";
                 echo "<tr>
-                            <th>Drug Type</th><th>Drug Name</th><th>Quantity</th><th>price</th><th>Discount</th><th>Total_Price</th>
+                            <th>Drug Type</th><th>Drug Name</th><th>Quantity</th><th>price</th><th>Discount</th><th>Total Price</th>
                         </tr>";
                 while ($r = mysqli_fetch_assoc($res)) {
                     echo "<tr>";

@@ -837,16 +837,17 @@ input:focus {
     margin-bottom: 20px;
 }
 #tblinvoice td {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid black;
     text-align: center;
 }
 #tblinvoice th {
-    background-color: black; /* Background color */
-    color: #ffffff; /* Text color */
     font-weight: bold; /* Bold text */
     text-align: center; /* Center align text */
     padding: 10px; /* Add padding for spacing */
-    border: 1px solid #ddd; /* Optional border */
+    border-bottom: 1px solid balck;
+}
+#tblinvoice tr {
+    border-bottom: 1px solid black;
 }
 .button-print{
     margin: auto;
@@ -856,10 +857,6 @@ input:focus {
 }
 .invoice-table{
     width: auto;
-}
-.date_r{
-    border-top: 1px solid black;
-    margin-top: 20px;
 }
 
 
