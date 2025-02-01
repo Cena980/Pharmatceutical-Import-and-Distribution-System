@@ -28,7 +28,7 @@
                 </div>
                 <div class="form-group">
                     <label data-key="order_by" for="order_by">Order By</label>
-                    <input type="text" name="order_by" id="order_by" autocomplete="off">
+                    <input type="text" name="order_by" id="order_by" autocomplete="on">
                 </div>
                     
                 </div>

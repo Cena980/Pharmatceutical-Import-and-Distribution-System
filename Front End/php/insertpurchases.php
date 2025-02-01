@@ -184,10 +184,27 @@ echo '<!DOCTYPE html>
             //echo "<div class='alerts'>recieved not found for invoice, defaulting to 0."; echo "</div>";
         }
     }
+    //fetching debt balance from vendors table
+    $vendor_debt = 0;
+    if (!empty($vendor_id)) {
+        $sql31 = "SELECT Debt FROM vendors WHERE vendor_id = '$vendor_id'";
+        $received_result = mysqli_query($connect, $sql31);
+    
+        if ($received_result && mysqli_num_rows($received_result) > 0) {
+            $received_result_row = mysqli_fetch_assoc($received_result);
+            $vendor_debt = $received_result_row['Debt'];
+        } else {
+            // Set balance to 0 if no balance was retrieved
+            $vendor_debt = 0;
+            //echo "<div class='alerts'>recieved not found for invoice, defaulting to 0."; echo "</div>";
+        }
+    }
+
     #upadating balance
     $Total_amount_F = $Total_amount_o + $total_purchase;
     $Amount_Paid_F = $amount_paid + $Amount_Paid_o;
     $Remaining_Debt_F = $Remaining_Debt_o + ($total_purchase-$amount_paid);
+    $vendor_debt_F = $vendor_debt + $Remaining_Debt_F;
     #upadintg balance in database
     $sql = "UPDATE `purchase order` SET Total_amount = ?, Amount_Paid = ?, Remaining_Debt = ? WHERE po_id = ?";
 
@@ -211,6 +228,31 @@ echo '<!DOCTYPE html>
             echo "<div class='alerts'>" . json_encode(['status' => 'success', 'message' => 'Record updated successfully']); echo "</div>";
         } else {
             echo "<div class='alerts'>" . json_encode(['status' => 'warning', 'message' => 'No changes made (invoice not found or same values)']); echo "</div>";
+        }
+
+        // Close the statement
+        mysqli_stmt_close($stmt);
+    } else {
+        echo "<div class='alerts'>" . json_encode(['status' => 'error', 'message' => 'Failed to prepare the query']); echo "</div>";
+    }
+    #upadintg balance in database
+    $sql = "UPDATE vendors SET Debt = ? WHERE vendor_id = ?";
+
+    // Use prepared statements to prevent SQL injection
+    $stmt = mysqli_prepare($connect, $sql);
+
+    if ($stmt) {
+        // Bind parameters
+        mysqli_stmt_bind_param($stmt, "di", $vendor_debt_F, $vendor_id);
+
+        // Execute the query
+        mysqli_stmt_execute($stmt);
+
+        // Check if any row was updated
+        if (mysqli_stmt_affected_rows($stmt) > 0) {
+            echo "<div class='alerts'>" . json_encode(['status' => 'success', 'message' => 'Record updated successfully']); echo "</div>";
+        } else {
+            echo "<div class='alerts'>" . json_encode(['status' => 'warning', 'message' => 'No changes made (vendor not found or same values)']); echo "</div>";
         }
 
         // Close the statement
