@@ -1,26 +1,46 @@
 <?php
 include 'connection.php';
-$query = $_POST['query'];
+if (isset($_GET['query'])) {
+    $query = mysqli_real_escape_string($connect, $_GET['query']); // Escape special characters for SQL
+} else {
+    echo "No search term provided.";
+    exit;
+}
 
-$sql = "SELECT drug_name, Price, Initial_Amount, Amount_Left FROM main WHERE drug_name LIKE '%$query%'";
+$sql = "SELECT * from drugs_view 
+    WHERE drug_name LIKE '%$query%' 
+    or company like '%$query%'
+    or ingredient like '%$query%'
+    or demo like '%$query%'
+    or type like '%$query%' 
+    order by drug_name asc ";
 $res = mysqli_query($connect, $sql);
 
 $num_rows = mysqli_num_rows($res);
 if($num_rows>0){
     echo "<table border='1' id='tblreport'>";
     echo "<tr>
-                <th>Drug Name</th><th>Price</th><th>Initial Amount</th><th>Amount Left</th>
+                <th data-key='drug-id'>Drug ID</th>
+                    <th data-key='drug-name'>Name</th>
+                    <th data-key='ingredients'>Ingredients</th>
+                    <th data-key='quantity-pb'>PB</th>
+                    <th data-key='company-name'>Company Name</th>
+                    <th data-key='type'>Type</th>
+                    <th data-key='demo'>Demography</th>
             </tr>";
     while ($r = mysqli_fetch_assoc($res)) {
         echo "<tr>";
-        echo "<td>" . $r['drug_name'] . "</td>";
-        echo "<td>" . $r['Price'] . "</td>";
-        echo "<td>" . $r['Initial_Amount'] . "</td>";
-        echo "<td>" . $r['Amount_Left'] . "</td>";
+            echo "<td>" . $r['drug_id'] . "</td>";
+            echo "<td>" . $r['drug_name'] . "</td>";
+            echo "<td>" . $r['ingredient'] . "</td>";
+            echo "<td>" . $r['PB'] . "</td>";
+            echo "<td>" . $r['company'] . "</td>";
+            echo "<td>" . $r['type'] . "</td>";
+            echo "<td>" . $r['demo'] . "</td>";
         echo "</tr>";
     }
     echo "</table>";
 } else {
-    echo "No records found.";  
+    echo "<div class='alerts' style = 'color:red;'>No records found.</div>";  
 }
 ?>

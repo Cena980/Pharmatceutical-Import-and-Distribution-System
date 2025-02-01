@@ -15,12 +15,12 @@
                     <thead>
                         <tr>
                             <th data-key="drug-id">Drug ID</th>
-                            <th data-key="company-id">Company ID</th>
+                            <th data-key="company">Company ID</th>
                             <th data-key="drug-name">Drug Name</th>
                             <th data-key="ingredients">Ingredients</th>
                             <th data-key="quantity-pb">Quantity per Box</th>
-                            <th data-key="type-id">Type ID</th>
-                            <th data-key="demo-id">Demography ID</th>
+                            <th data-key="type">Type ID</th>
+                            <th data-key="demo">Demography ID</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,7 +30,7 @@
                                 <div id="nd1" class="error"></div>
                             </td>
                             <td>
-                                <input type="number" name="Comp_ID" id="c1">
+                                <input type="text" name="Comp_Name" id="c1">
                                 <div id="nc1" class="error"></div>
                             </td>
                             <td>
@@ -46,11 +46,11 @@
                                 <div id="nt1" class="error"></div>
                             </td>
                             <td>
-                                <input type="number" name="Type_ID" id="ty1">
+                                <input type="text" name="Type" id="ty1">
                                 <div id="nty1" class="error"></div>
                             </td>
                             <td>
-                                <input type="number" name="Demo_ID" id="de1">
+                                <input type="text" name="Demo" id="de1">
                                 <div id="nde1" class="error"></div>
                             </td>
                         </tr>
@@ -68,12 +68,12 @@
         
                 // Populate input fields with values from URL parameters
                 document.getElementById('d1').value = urlParams.get('Drug_ID') || '';
-                document.getElementById('c1').value = urlParams.get('Comp_ID') || '';
+                document.getElementById('c1').value = urlParams.get('Comp') || '';
                 document.getElementById('dr1').value = urlParams.get('Drug_Name') || '';
-                document.getElementById('i1').value = urlParams.get('Ingredients') || '';
+                document.getElementById('i1').value = urlParams.get('Ingredient') || '';
                 document.getElementById('t1').value = urlParams.get('Tablet_PB') || '';
-                document.getElementById('ty1').value = urlParams.get('Type_ID') || '';
-                document.getElementById('de1').value = urlParams.get('Demo_ID') || '';
+                document.getElementById('ty1').value = urlParams.get('Type') || '';
+                document.getElementById('de1').value = urlParams.get('Demo') || '';
 
             };
             function validate() {
@@ -89,15 +89,6 @@
                     document.getElementById("nd1").innerHTML = "";
                 }
 
-                // Company ID validation
-                let companyId = document.getElementById("c1").value;
-                if (!/^\d+$/.test(companyId.trim())) {
-                    document.getElementById("nc1").innerHTML = "Company ID must contain only numbers.";
-                    valid = false;
-                } else {
-                    document.getElementById("nc1").innerHTML = "";
-                }
-
                 // Drug Name validation (letters, spaces, and hyphens allowed)
                 let drugName = document.getElementById("dr1").value;
                 if (!/^[A-Za-z0-9\s\-]+$/.test(drugName.trim())) {
@@ -107,10 +98,10 @@
                     document.getElementById("ndr1").innerHTML = "";
                 }
 
-                // Ingredient validation (letters, spaces, and punctuation allowed)
+                // Ingredient validation (letters, spaces,numers, and punctuation allowed)
                 let ingredient = document.getElementById("i1").value;
-                if (!/^[A-Za-z\s,\.\-]*$/.test(ingredient.trim())) {
-                    document.getElementById("ni1").innerHTML = "Ingredient can include letters, spaces, commas, periods, and hyphens.";
+                if (!/^[A-Za-z0-9\s,\.\-]*$/.test(ingredient.trim())) {
+                    document.getElementById("ni1").innerHTML = "Ingredient can include numbers, letters, spaces, commas, periods, and hyphens.";
                     valid = false;
                 } else {
                     document.getElementById("ni1").innerHTML = "";
@@ -123,24 +114,6 @@
                     valid = false;
                 } else {
                     document.getElementById("nt1").innerHTML = "";
-                }
-
-                // Type ID validation (numbers only)
-                let typeId = document.getElementById("ty1").value;
-                if (!/^\d+$/.test(typeId.trim())) {
-                    document.getElementById("nty1").innerHTML = "Type ID must contain only numbers.";
-                    valid = false;
-                } else {
-                    document.getElementById("nty1").innerHTML = "";
-                }
-
-                // Demography ID validation (numbers only)
-                let demoId = document.getElementById("de1").value;
-                if (!/^\d+$/.test(demoId.trim())) {
-                    document.getElementById("nde1").innerHTML = "Demography ID must contain only numbers.";
-                    valid = false;
-                } else {
-                    document.getElementById("nde1").innerHTML = "";
                 }
 
                 // Final success or error message

@@ -14,18 +14,19 @@
                 <table class="table table-warning">
                     <thead>
                         <tr>
-                            <th data-key="company-id">Company ID</th>
+                            <th data-key="company-id">Company</th>
                             <th data-key="drug-name">Drug Name</th>
                             <th data-key="ingredients">Ingredients</th>
                             <th data-key="quantity-pb">Quantity per Box</th>
-                            <th data-key="type-id">Type ID</th>
-                            <th data-key="demo-id">Demography ID</th>
+                            <th data-key="type-id">Type</th>
+                            <th data-key="demo-id">Demography</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>
-                                <input type="number" name="Comp_ID_1" id="c1">
+                                <input type="text" name="Comp_Name_1" id="Comp_Name_1">
+                                <div id="suggestion_1" class="suggestion-box" style="display: none; position: absolute; background-color: white;"></div>
                                 <div id="nc1" class="error"></div>
                             </td>
                             <td>
@@ -41,11 +42,13 @@
                                 <div id="nt1" class="error"></div>
                             </td>
                             <td>
-                                <input type="number" name="Type_ID_1" id="ty1">
+                                <input type="text" name="Type_1" id="Type_1">
+                                <div id="suggestionType_1" class="suggestion-box" style="display: none; position: absolute; background-color: white;"></div>
                                 <div id="nty1" class="error"></div>
                             </td>
                             <td>
-                                <input type="number" name="Demo_ID_1" id="de1">
+                                <input type="text" name="Demography_1" id="Demography_1">
+                                <div id="suggestionDemo_1" class="suggestion-box" style="display: none; position: absolute; background-color: white;"></div>
                                 <div id="nde1" class="error"></div>
                             </td>
                         </tr>
@@ -61,134 +64,240 @@
                 <button data-key="save-button" class="btn btn-save" onclick="validate()">Save</button>
 
             </div>
-        
-            <script>
-                function validate() {
-                    // Define a variable to track overall validity
-                    let valid = true;
+        </div>
+        <?php include '../php/footer.php' ?>
+        <script>
+            let qnt = 1;
 
-                    // Company ID validation
-                    let companyId = document.getElementById("c1").value;
-                    if (!/^\d+$/.test(companyId.trim())) {
-                        document.getElementById("nc1").innerHTML = "Company ID must contain only numbers.";
-                        valid = false;
-                    } else {
-                        document.getElementById("nc1").innerHTML = "";
+            // Function to handle input events for all input fields
+            document.querySelector("table tbody").addEventListener("input", function (e) {
+                const target = e.target;
+
+                // Handle Company Name input
+                if (target.name.startsWith("Comp_Name_")) {
+                    const parts = target.name.split("_");
+                    if (parts.length < 2) {
+                        console.error(`Invalid name attribute: ${target.name}. Expected format: Comp_Name_<rowNumber>`);
+                        return;
                     }
+                    const rowNumber = parts[2]; // Extract the row number
+                    const query = target.value;
+                    const suggestionBox = document.getElementById(`suggestion_${rowNumber}`);
 
-                    // Drug Name validation (letters, spaces, and hyphens allowed)
-                    let drugName = document.getElementById("dr1").value;
-                    if (!/^[A-Za-z0-9\s\-]+$/.test(drugName.trim())) {
-                        document.getElementById("ndr1").innerHTML = "Drug Name can only include letters, numbers, spaces, and hyphens.";
-                        valid = false;
-                    } else {
-                        document.getElementById("ndr1").innerHTML = "";
-                    }
+                    //console.log(`Looking for suggestion_${rowNumber}:`, suggestionBox); // Debugging log
 
-                    // Ingredient validation (letters, spaces, and punctuation allowed)
-                    let ingredient = document.getElementById("i1").value;
-                    if (!/^[A-Za-z0-9\s,\.\-]*$/.test(ingredient.trim())) {
-                        document.getElementById("ni1").innerHTML = "Ingredient can include letters, spaces, commas, periods, and hyphens.";
-                        valid = false;
-                    } else {
-                        document.getElementById("ni1").innerHTML = "";
-                    }
+                    if (suggestionBox) {
+                        if (query.length > 1) {
+                            fetch(`../php/get_company_suggestions.php?query=${encodeURIComponent(query)}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    suggestionBox.innerHTML = "";
+                                    suggestionBox.style.display = "block";
 
-                    // Tablet per Box validation (numbers only)
-                    let tablets = document.getElementById("t1").value;
-                    if (!/^\d+$/.test(tablets.trim())) {
-                        document.getElementById("nt1").innerHTML = "Tablets per Box must be a number.";
-                        valid = false;
+                                    if (!data.error) {
+                                        const table = document.createElement("table");
+                                        table.style.borderCollapse = "collapse";
+                                        table.style.width = "100%";
+                                        const header = document.createElement("tr");
+                                        header.innerHTML = `
+                                            <th style="border: 1px solid #ccc; padding: 8px;">Company Name</th>
+                                        `;
+                                        table.appendChild(header);
+                                        data.forEach(comp => {
+                                            const row = document.createElement("tr");
+                                            row.innerHTML = `
+                                                <td style="border: 1px solid #ccc; padding: 8px;">${comp.Comp_Name}</td>
+                                            `;
+                                            row.style.cursor = "pointer";
+                                            row.onclick = () => {
+                                                document.getElementById(`Comp_Name_${rowNumber}`).value = comp.Comp_Name;
+                                                suggestionBox.style.display = "none";
+                                            };
+                                            table.appendChild(row);
+                                        });
+                                        suggestionBox.appendChild(table);
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error("Error fetching company suggestions:", error);
+                                });
+                        } else {
+                            suggestionBox.style.display = "none";
+                        }
                     } else {
-                        document.getElementById("nt1").innerHTML = "";
-                    }
-
-                    // Type ID validation (numbers only)
-                    let typeId = document.getElementById("ty1").value;
-                    if (!/^\d+$/.test(typeId.trim())) {
-                        document.getElementById("nty1").innerHTML = "Type ID must contain only numbers.";
-                        valid = false;
-                    } else {
-                        document.getElementById("nty1").innerHTML = "";
-                    }
-
-                    // Demography ID validation (numbers only)
-                    let demoId = document.getElementById("de1").value;
-                    if (!/^\d+$/.test(demoId.trim())) {
-                        document.getElementById("nde1").innerHTML = "Demography ID must contain only numbers.";
-                        valid = false;
-                    } else {
-                        document.getElementById("nde1").innerHTML = "";
-                    }
-
-                    // Final success or error message
-                    let message = document.getElementById("noty");
-                    if (valid) {
-                        const form = document.forms["insertdrug"];
-                        form.action = "../php/insertdrug.php";
-                        form.method = "post";
-                        form.submit();  // Submit the form after successful validation
-                        message.style.color = "green";
-                        message.innerHTML = "Your record has been saved.";
-                    } else {
-                        message.style.color = "red";
-                        message.innerHTML = "Please correct the errors above.";
-                        return false; // Prevent form submission if validation fails
+                        console.error(`Suggestion box with ID suggestion_${rowNumber} not found.`);
                     }
                 }
-                function search() {
-                a =document.getElementById('search');
-                if (a.value.length<1){
-                    alert("Cannot search for empty string")
-                }else{
-                    const search = document.forms["search"];
-                    search.action = "../php/search.php";
-                    search.method = "post";
-                    const popup = window.open("", "SearchResults", "width=600,height=400");
-                    search.target = "SearchResults"; // Send the form to the popup window
-                    search.submit();
+
+                // Handle Type input
+                if (target.name.startsWith("Type_")) {
+                    const parts = target.name.split("_");
+                    if (parts.length < 2) {
+                        console.error(`Invalid name attribute: ${target.name}. Expected format: Type_<rowNumber>`);
+                        return;
+                    }
+                    const rowNumber = parts[1]; // Extract the row number
+                    const query = target.value;
+                    const suggestionBox = document.getElementById(`suggestionType_${rowNumber}`);
+
+                    //console.log(`Looking for suggestionType_${rowNumber}:`, suggestionBox); // Debugging log
+
+                    if (suggestionBox) {
+                        if (query.length > 1) {
+                            fetch(`../php/get_type_suggestions.php?query=${encodeURIComponent(query)}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    suggestionBox.innerHTML = "";
+                                    suggestionBox.style.display = "block";
+
+                                    if (!data.error) {
+                                        const table = document.createElement("table");
+                                        table.style.borderCollapse = "collapse";
+                                        table.style.width = "100%";
+                                        const header = document.createElement("tr");
+                                        header.innerHTML = `
+                                            <th style="border: 1px solid #ccc; padding: 8px;">Type</th>
+                                        `;
+                                        table.appendChild(header);
+                                        data.forEach(type => {
+                                            const row = document.createElement("tr");
+                                            row.innerHTML = `
+                                                <td style="border: 1px solid #ccc; padding: 8px;">${type.Type_Name}</td>
+                                            `;
+                                            row.style.cursor = "pointer";
+                                            row.onclick = () => {
+                                                document.getElementById(`Type_${rowNumber}`).value = type.Type_Name;
+                                                suggestionBox.style.display = "none";
+                                            };
+                                            table.appendChild(row);
+                                        });
+                                        suggestionBox.appendChild(table);
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error("Error fetching type suggestions:", error);
+                                });
+                        } else {
+                            suggestionBox.style.display = "none";
+                        }
+                    } else {
+                        console.error(`Suggestion box with ID suggestionType_${rowNumber} not found.`);
+                    }
+                }
+
+                // Handle Demography input
+                if (target.name.startsWith("Demography_")) {
+                    const parts = target.name.split("_");
+                    if (parts.length < 2) {
+                        console.error(`Invalid name attribute: ${target.name}. Expected format: Demography_<rowNumber>`);
+                        return;
+                    }
+                    const rowNumber = parts[1]; // Extract the row number
+                    const query = target.value;
+                    const suggestionBox = document.getElementById(`suggestionDemo_${rowNumber}`);
+
+                    //console.log(`Looking for suggestionDemo_${rowNumber}:`, suggestionBox); // Debugging log
+
+                    if (suggestionBox) {
+                        if (query.length > 1) {
+                            fetch(`../php/get_demo_suggestions.php?query=${encodeURIComponent(query)}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    suggestionBox.innerHTML = "";
+                                    suggestionBox.style.display = "block";
+
+                                    if (!data.error) {
+                                        const table = document.createElement("table");
+                                        table.style.borderCollapse = "collapse";
+                                        table.style.width = "100%";
+                                        const header = document.createElement("tr");
+                                        header.innerHTML = `
+                                            <th style="border: 1px solid #ccc; padding: 8px;">Demography</th>
+                                        `;
+                                        table.appendChild(header);
+                                        data.forEach(demo => {
+                                            const row = document.createElement("tr");
+                                            row.innerHTML = `
+                                                <td style="border: 1px solid #ccc; padding: 8px;">${demo.demo_name}</td>
+                                            `;
+                                            row.style.cursor = "pointer";
+                                            row.onclick = () => {
+                                                document.getElementById(`Demography_${rowNumber}`).value = demo.demo_name;
+                                                suggestionBox.style.display = "none";
+                                            };
+                                            table.appendChild(row);
+                                        });
+                                        suggestionBox.appendChild(table);
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error("Error fetching demography suggestions:", error);
+                                });
+                        } else {
+                            suggestionBox.style.display = "none";
+                        }
+                    } else {
+                        console.error(`Suggestion box with ID suggestionDemo_${rowNumber} not found.`);
+                    }
+                }
+            });
+
+            // Function to create new drug rows
+            function create_drugs() {
+                qnt += 1;
+
+                const tbody = document.querySelector("table tbody");
+                const newRow = document.createElement("tr");
+                newRow.innerHTML = `
+                    <td>
+                        <input type="text" name="Comp_Name_${qnt}" id="Comp_Name_${qnt}">
+                        <div id="suggestion_${qnt}" class="suggestion-box" style="display: none; position: absolute; background-color: white;"></div>
+                    </td>
+                    <td><input type="text" name="Drug_Name_${qnt}" autocomplete="off"></td>
+                    <td><input type="text" name="Ingredients_${qnt}" autocomplete="off"></td>
+                    <td><input type="number" name="Tablet_PB_${qnt}" autocomplete="off"></td>
+                    <td>
+                        <input type="text" name="Type_${qnt}" id="Type_${qnt}">
+                        <div id="suggestionType_${qnt}" class="suggestion-box" style="display: none; position: absolute; background-color: white;"></div>
+                    </td>
+                    <td>
+                        <input type="text" name="Demography_${qnt}" id="Demography_${qnt}">
+                        <div id="suggestionDemo_${qnt}" class="suggestion-box" style="display: none; position: absolute; background-color: white;"></div>
+                    </td>
+                `;
+                tbody.appendChild(newRow);
+
+                // Update the hidden input field
+                document.getElementById("qnt").value = qnt;
+            }
+
+            // Function to delete the last row
+            function delete_last_row() {
+                const tbody = document.querySelector("table tbody");
+                if (tbody.rows.length > 1 && qnt > 1) {
+                    tbody.removeChild(tbody.lastElementChild);
+                    qnt -= 1;
+                    document.getElementById("qnt").value = qnt;
+                } else {
+                    alert("Cannot delete the last row!");
                 }
             }
 
-            let qnt = 1;
+            // Function to validate the form
+            function validate() {
+                let valid = true;
 
-                function create_drugs() {
-                    qnt += 1;
+                // Validation logic here...
 
-                    const tbody = document.querySelector("table tbody");
-                    const newRow = document.createElement("tr");
-                    newRow.innerHTML = `
-                        <td><input type="number" name="Comp_ID_${qnt}" autocomplete="off"></td>
-                        <td><input type="text" name="Drug_Name_${qnt}" autocomplete="off"></td>
-                        <td><input type="text" name="Ingredients_${qnt}" autocomplete="off"></td>
-                        <td><input type="number" name="Tablet_PB_${qnt}" autocomplete="off"></td>
-                        <td><input type="number" name="Type_ID_${qnt}" autocomplete="off"></td>
-                        <td><input type="number" name="Demo_ID_${qnt}" autocomplete="off"></td>
-                    `;
-                    tbody.appendChild(newRow);
-
-                    // Update the hidden input field
-                    document.getElementById("qnt").value = qnt;
+                if (valid) {
+                    const form = document.forms["insertdrug"];
+                    form.action = "../php/insertdrug.php";
+                    form.method = "post";
+                    form.submit();
+                } else {
+                    alert("Please correct the errors above.");
                 }
-
-                function delete_last_row() {
-                    const tbody = document.querySelector("table tbody");
-                    if (tbody.rows.length > 1 && qnt > 1) {
-                        tbody.removeChild(tbody.lastElementChild);
-                        qnt -= 1;
-                        document.getElementById("qnt").value = qnt; // Update the hidden input field
-                    } else {
-                        alert("Cannot delete the last row!");
-                    }
-                }
-                function remove(){
-                    var message = document.getElementById("noty");
-                    message.style.color = "red";
-                    message.innerHTML = "The selected record is deleted."
-                }
-            </script>
-        </div>
-        
-        <?php include '../php/footer.php' ?>
+            }
+        </script>
     </body>
 </html>
