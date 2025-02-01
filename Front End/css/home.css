@@ -205,6 +205,7 @@ li:hover {
     padding: 10px 20px;
     display: flex;
     box-sizing: border-box;
+    z-index: 1;
 }
 
 .bott {
@@ -318,12 +319,19 @@ input {
 
 
 /* Suggestion Popups */
+.suggestion-box, .suggestion {
+    z-index: 1000; /* Ensure this is higher than the footer's z-index */
+    position: absolute; /* Ensure the position is set to absolute or fixed */
+    background: white;
+    border: 1px solid #ccc;
+    display: none;
+}
 .suggestion {
     border: 1px solid #ccc;
     display: none;
     position: absolute;
     background: white;
-    z-index: 10;
+    z-index: 1000;
     width: calc(100% - 2px);
 }
 
