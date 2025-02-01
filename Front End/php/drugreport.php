@@ -6,6 +6,7 @@
 
     $num_rows = mysqli_num_rows($res);
     if($num_rows>0){
+        echo "<div class='alerts'>". $num_rows. " Records</div>";
         echo "<table border='1' id='tblreport'>";
         echo "<tr>
                     <th data-key='drug-id'>Drug ID</th>

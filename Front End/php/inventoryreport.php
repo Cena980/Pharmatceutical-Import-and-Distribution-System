@@ -1,11 +1,12 @@
 <?php
 
     include 'connection.php';
-    $query = "select * from main order by drug_name asc limit 50";
+    $query = "select * from main order by drug_name asc";
     $res = mysqli_query($connect, $query);
 
     $num_rows = mysqli_num_rows($res);
     if($num_rows>0){
+        echo "<div class='alerts'>". $num_rows. " Records</div>";
         echo "<table border='1' id='tblreport'>";
         echo "<tr>
                     <th>Inventory ID</th><th>Drug ID</th><th>Drug Name</th><th>Expiration</th><th>Cost</th>
