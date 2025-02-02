@@ -11,7 +11,7 @@ body {
 main {
     padding: 20px;
     display: grid;
-    grid-template-columns: auto 1fr 1fr;
+    grid-template-columns: 0.5fr 1fr 1fr;
     grid-column-gap: 30px;
     margin-top: 30px;
     margin-bottom: 40px;
@@ -483,11 +483,23 @@ input {
 .btn-add:active {
     transform: scale(1.1);
 }
+.delete-btn img{
+    display: inline-flex;
+    border: none;
+    transition: transform(0.3s);
+}
+
+.delete-btn img:hover {
+    transform: scale(1.05);
+}
+
+.delete-btn img:active {
+    transform: scale(1.2);
+}
 
 
 #tblreport {
-    width: 60%;
-    max-width: 80%; /* Adjust overall table width */
+    max-width: 100%; /* Adjust overall table width */
     border-collapse: collapse;
     margin: auto;
     font-family: 'Arial', sans-serif;
@@ -518,8 +530,8 @@ input {
     background-color: #cef2dc;
 }
 #tblreportlimited {
-    width: 60%;
-    max-width: 80%; /* Adjust overall table width */
+    width: 98%;
+    max-width: 100%; /* Adjust overall table width */
     border-collapse: collapse;
     margin: 20px 0;
     font-family: 'Arial', sans-serif;

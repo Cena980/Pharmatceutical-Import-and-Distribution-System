@@ -18,7 +18,7 @@
             <th data-key='customer_id'>Customer ID</th>
             <th data-key='total_price'>Total Price</th>
             <th data-key='note'>Note</th>
-            <th data-key='actions'>Actions</th>
+            <th data-key='actions' colspan='2'>Actions</th>
                 </tr>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
@@ -47,6 +47,8 @@
                     <input type='hidden' name='Note' value='" . $r['Note'] . "'>
                     <button type='submit'>Update</button>
                 </form>
+            </td>";
+            echo "<td>
                 <form action='sales/updatesales.php' method='GET'>
                     <input type='hidden' name='Sales_ID' value='" . $r['Sales_ID'] . "'>
                     <input type='hidden' name='Inventory_ID' value='" . $r['Inventory_ID'] . "'>

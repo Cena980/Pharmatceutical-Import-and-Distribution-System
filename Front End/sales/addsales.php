@@ -39,6 +39,7 @@
             <table class="table table-success">
              <thead>
              <tr>
+                <th data-key="Delete">Delete</th>
                 <th data-key="no">No</th>
                  <th data-key="drug-name">Drug Name</th>
                  
@@ -52,6 +53,7 @@
              <tbody>
                 <tr>
                     <input type="hidden" name="Amount_1" id="Amount_1">
+                    <td><div class="delete-btn" id="delete_1" onclick="deleteRow(1)"><img style="width:25px;" src="../images/delete.png" alt="Delete"></div></td>
                     <td><p id="row_1">1</p></td>
                     <td>
                         <input type="text" name="Drug_Name_1" id="drug_name_1" autocomplete="off" placeholder="Enter Drug Name">

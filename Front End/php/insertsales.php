@@ -434,7 +434,6 @@ if (!empty($customerID)) {
                 echo "</div>";
     
             echo "</div>";
-            echo "</div>";
                 echo "<table id='tblinvoice'>";
                 echo "<tr>
                             <th>Drug Type</th><th>Drug Name</th><th>Quantity</th><th>price</th><th>Discount</th><th>Total Price</th>
@@ -464,6 +463,7 @@ if (!empty($customerID)) {
                     echo "<td>" . -1 * $Current_Balance . "</td>";
                     echo "</tr>";
                 echo "</table>";
+            echo "</div>";
             echo "</div>";
         } else {
             echo "No records found.";  
