@@ -436,7 +436,7 @@ if (!empty($customerID)) {
             echo "</div>";
                 echo "<table id='tblinvoice'>";
                 echo "<tr>
-                            <th>Drug Type</th><th>Drug Name</th><th>Quantity</th><th>price</th><th>Discount</th><th>Total Price</th>
+                            <th>Drug Type</th><th>Drug Name</th><th>Quantity</th><th>Price</th><th>Discount</th><th>Total Price</th>
                         </tr>";
                 while ($r = mysqli_fetch_assoc($res)) {
                     echo "<tr>";
