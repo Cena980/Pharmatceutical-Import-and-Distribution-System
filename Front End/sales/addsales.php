@@ -50,10 +50,10 @@
              </tr>
              </thead>
              <tbody>
-                <tr>
+                <tr id="row_1">
                     <input type="hidden" name="Amount_1" id="Amount_1">
                     <td><div class="delete-btn" id="delete_1" onclick="deleteRow(1)"><img style="width:25px;" src="../images/delete.png" alt="Delete"></div></td>
-                    <td><p id="row_1">1</p></td>
+                    <td><p id="no_1">1</p></td>
                     <td>
                         <input type="text" name="Drug_Name_1" id="drug_name_1" autocomplete="off" placeholder="Enter Drug Name">
                         <div class="suggestion-box" id="suggestion_1" style="display: none; position: absolute; background: white;"></div>
@@ -102,6 +102,87 @@
         <?php include '../php/footer.php' ?>
 
         <script>
+            function deleteRow(rowNumber) {
+                const row = document.getElementById(`row_${rowNumber}`);
+                if (row) {
+                    row.remove();
+                    qnt--;
+                    renumberRows(rowNumber);
+                }
+            }
+            function renumberRows(number){
+                for (let i = 1; i <= qnt; i++) {
+                    let NewRowNumber = number + i; // This should be inside the loop
+                    let rowNum = NewRowNumber - 1; // One less than NewRowNumber
+
+                    const Row = document.getElementById(`row_${NewRowNumber}`);
+                    if (Row) Row.id = `row_${rowNum}`;
+
+                    const drugInput = document.getElementById(`drug_name_${NewRowNumber}`);
+                    if (drugInput) {
+                        drugInput.id = `drug_name_${rowNum}`;
+                        drugInput.name = `Drug_Name_${rowNum}`;
+                    }
+                    const rowNo = document.getElementById(`no_${NewRowNumber}`);
+                    if (rowNo) {
+                        rowNo.id = `no_${rowNum}`;
+                        rowNo.textContent = rowNum;
+
+                    }
+
+                    const drugSuggestion = document.getElementById(`suggestion_${NewRowNumber}`);
+                    if (drugSuggestion) {
+                        drugSuggestion.id = `suggestion_${rowNum}`;
+                        drugSuggestion.name = `suggestion_${rowNum}`;
+                    }
+
+                    const drugAmount = document.getElementById(`Amount_${NewRowNumber}`);
+                    if (drugAmount) {
+                        drugAmount.id = `Amount_${rowNum}`;
+                        drugAmount.name = `Amount_${rowNum}`;
+                    }
+
+                    const Delete = document.getElementById(`delete_${NewRowNumber}`);
+                    if (Delete) {
+                        Delete.id = `delete_${rowNum}`;
+                        Delete.onclick = function () {
+                            deleteRow(rowNum); // Call the function properly
+                        };
+                    }
+
+
+                    const quantity = document.getElementById(`qi_${NewRowNumber}`);
+                    if (quantity) {
+                        quantity.id = `qi_${rowNum}`;
+                        quantity.name = `Quantity_${rowNum}`;
+                    }
+
+                    const discount = document.getElementById(`dt_${NewRowNumber}`);
+                    if (discount) {
+                        discount.id = `dt_${rowNum}`;
+                        discount.name = `Discount_${rowNum}`;
+                    }
+
+                    const price = document.getElementById(`pr_${NewRowNumber}`);
+                    if (price) {
+                        price.id = `pr_${rowNum}`;
+                        price.name = `Price_${rowNum}`;
+                    }
+
+                    const total = document.getElementById(`tl_${NewRowNumber}`);
+                    if (total) {
+                        total.id = `tl_${rowNum}`;
+                        total.name = `Total_${rowNum}`;
+                    }
+
+                    const note = document.getElementById(`Note_${NewRowNumber}`);
+                    if (note) {
+                        note.id = `Note_${rowNum}`;
+                        note.name = `Note_${rowNum}`;
+                    }
+                }
+
+            }
             window.onload = function() {
                 const dateInput = document.getElementById("Date_1");
                 const today = new Date();
@@ -218,9 +299,10 @@
 
                 const tbody = document.querySelector("table tbody");
                 const newRow = document.createElement("tr");
+                newRow.id = `row_${qnt}`;
                 newRow.innerHTML = `
                     <td><div class="delete-btn" id="delete_${qnt}" onclick="deleteRow(${qnt})"><img style="width:25px;" src="../images/delete.png" alt="Delete"></div></td>
-                    <td><p id="row_${qnt}">${qnt}</p></td>
+                    <td><p id="no_${qnt}">${qnt}</p></td>
                     <input type="hidden" name="Amount_${qnt}" id="Amount_${qnt}">
                     <td>
                         <input type="text" name="Drug_Name_${qnt}" id="drug_name_${qnt}" autocomplete="off" placeholder="Enter Drug Name">
