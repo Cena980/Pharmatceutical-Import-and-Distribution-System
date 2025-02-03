@@ -64,6 +64,7 @@
                     <td><input type="number" name="Total_1" id="tl_1" autocomplete="off"></td>
                     <td><input type="text" name="Note_1" id="Note_1" autocomplete="off"></td>
                 </tr>
+
                  <tr>
                     <td><div id="suggestions" style="display: none; position: absolute; background: white;"></div></td>
                      <td id="ndid"></td>
@@ -77,7 +78,14 @@
                      <td id="noty"></td>
                  </tr>
              </tbody>
+
+
             </table>
+
+            <div class="addRemove">
+                    <button data-key="add-button" class="btn btn-add" onclick="create_sale(); return false;">+</button>
+            </div>
+
             <div class="grand_total">
                 <div class="form-group">
                     <label data-key="sub-total" for="grand_total">Sub Total</label>
@@ -90,14 +98,12 @@
                     <input type="date" name="dueDate" id="dueDate" autocomplete="off">
                 </div>
             </div>
-        </form>
-        <div class="insertButtons">
-            <div class="addRemove">
-                <button data-key="add-button" class="btn btn-add" onclick="create_sale(); return false;">+</button>
-                <button data-key="remove-button" class="btn btn-remove" onclick="delete_last_row(); return false;">-</button>
+
+            <div class="insertButtons">
+                <button data-key="save-button" class="btn btn-save" onclick="validate()">Save</button>
             </div>
-            <button data-key="save-button" class="btn btn-save" onclick="validate()">Save</button>
-        </div>
+        </form>
+
         <!-- fetching footer from server-->
         <?php include '../php/footer.php' ?>
 
@@ -431,16 +437,6 @@
                 document.getElementById("qnt").value = qnt;  // Update the hidden input field
             }
 
-
-            // Delete the last row
-            function delete_last_row() {
-                if (qnt > 1) {
-                    document.querySelector("table tbody").lastElementChild.remove();
-                    qnt--;
-                } else {
-                alert("Cannot delete the last row!");
-            }
-            }
 
             // Validate function before form submission
             function validate() {

@@ -469,12 +469,17 @@ input {
     justify-content: space-around;
     margin-bottom: 20px;
 }
-.addRemove{
+.addRemove {
     height: auto;
     width: 80px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: 140px; /* Ensures it's at the left */
 }
+
+
+
 
 .btn-add {
     background-color: lightgreen; /* Green */
