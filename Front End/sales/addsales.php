@@ -307,7 +307,7 @@
                 const newRow = document.createElement("tr");
                 newRow.id = `row_${qnt}`;
                 newRow.innerHTML = `
-                    <td><div class="delete-btn" id="delete_${qnt}" onclick="deleteRow(${qnt})"><img style="width:25px;" src="../images/delete.png" alt="Delete"></div></td>
+        
                     <td><p id="no_${qnt}">${qnt}</p></td>
                     <input type="hidden" name="Amount_${qnt}" id="Amount_${qnt}">
                     <td>
@@ -319,6 +319,7 @@
                     <td><input type="number" name="Price_${qnt}" id="pr_${qnt}" autocomplete="off"></td>
                     <td><input type="number" name="Total_${qnt}" id="tl_${qnt}" autocomplete="off"></td>
                     <td><input type="text" name="Note_${qnt}" id="Note_${qnt}" autocomplete="off"></td>
+                    <td><div class="delete-btn" id="delete_${qnt}" onclick="deleteRow(${qnt})"><img style="width:25px;" src="../images/delete.png" alt="Delete"></div></td>
                 `;
                 tbody.appendChild(newRow);
 
