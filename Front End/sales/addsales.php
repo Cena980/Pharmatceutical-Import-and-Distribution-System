@@ -102,11 +102,13 @@
         <?php include '../php/footer.php' ?>
 
         <script>
+            let qnt = 1;
             function deleteRow(rowNumber) {
                 const row = document.getElementById(`row_${rowNumber}`);
                 if (row) {
                     row.remove();
                     qnt--;
+                    document.getElementById("qnt").value = qnt;
                     renumberRows(rowNumber);
                 }
             }
@@ -230,7 +232,6 @@
                     suggestionBox.style.display = "none";
                 }
             });
-            let qnt = 1;
             document.querySelector("table tbody").addEventListener("input", function (e) {
                 if (e.target.name.startsWith("Drug_Name_")) {
                     const rowNumber = e.target.name.split("_")[2]; // Extract the row number
