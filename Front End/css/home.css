@@ -475,7 +475,7 @@ input {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-left: 140px; /* Ensures it's at the left */
+    margin-left: 100px; /* Ensures it's at the left */
 }
 
 

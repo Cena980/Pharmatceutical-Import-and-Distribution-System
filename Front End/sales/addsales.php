@@ -38,21 +38,19 @@
             <table class="table table-success">
              <thead>
              <tr>
-                <th data-key="Delete">Delete</th>
                 <th data-key="no">No</th>
                  <th data-key="drug-name">Drug Name</th>
-                 
                  <th data-key="quantity">Quantity</th>
                  <th data-key="discount">Discount</th>
                  <th data-key="price">Price</th>
                  <th data-key="total">Total</th>
                  <th data-key="note">Note</th>
+                 <th data-key="Delete"></th>
              </tr>
              </thead>
              <tbody>
                 <tr id="row_1">
                     <input type="hidden" name="Amount_1" id="Amount_1">
-                    <td><div class="delete-btn" id="delete_1" onclick="deleteRow(1)"><img style="width:25px;" src="../images/delete.png" alt="Delete"></div></td>
                     <td><p id="no_1">1</p></td>
                     <td>
                         <input type="text" name="Drug_Name_1" id="drug_name_1" autocomplete="off" placeholder="Enter Drug Name">
@@ -63,6 +61,7 @@
                     <td><input type="number" name="Price_1" id="pr_1" autocomplete="off"></td>
                     <td><input type="number" name="Total_1" id="tl_1" autocomplete="off"></td>
                     <td><input type="text" name="Note_1" id="Note_1" autocomplete="off"></td>
+                    <td><div class="delete-btn" id="delete_1" onclick="deleteRow(1)"><img style="width:25px;" src="../images/delete.png" alt="Delete"></div></td>
                 </tr>
 
                  <tr>
@@ -84,7 +83,7 @@
 
             <div class="addRemove">
                     <button data-key="add-button" class="btn btn-add" onclick="create_sale(); return false;">+</button>
-            </div>
+                </div>
 
             <div class="grand_total">
                 <div class="form-group">
