@@ -25,12 +25,12 @@ echo '<script>
                     <form name="search" method="post" action="php/search.php">
                         <input type="text" placeholder="Search for Drugs" name="query" id="search" required data-key="search-placeholder">
                     </form>
-                    <button type="submit" onclick="validate1()" data-key="search-button">Search</button>
+                    <button class=\'button\' type="submit" onclick="validate1()" data-key="search-button">Search</button>
                 </div>
                 <div class="barr">
                     <div id="switch">
-                        <button onclick="setLanguage(\'en\')">English</button>
-                        <button onclick="setLanguage(\'fa\')">فارسی</button>
+                        <button  id=\'buttonSwitchR\' onclick="setLanguage(\'en\')">En</button>
+                        <button id=\'buttonSwitchL\'  onclick="setLanguage(\'fa\')">فا</button>
                     </div>
                 </div>
             </div>

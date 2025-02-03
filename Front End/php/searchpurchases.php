@@ -13,7 +13,8 @@ if (isset($_GET['query'])) {
 $sql = "SELECT * FROM purchase_report WHERE
         drug_name LIKE '%$query%' OR
         vendor_name LIKE '%$query%' OR
-        purchase_date LIKE '%$query%'";
+        purchase_date LIKE '%$query%' OR
+        po_id LIKE '%$query%'";
 
 $res = mysqli_query($connect, $sql);
 
@@ -22,19 +23,19 @@ if ($res && mysqli_num_rows($res) > 0) {
     echo "<table border='1' id='tblreport'>";
     echo "<tr>
                 <th>Purchase ID</th><th>Vendor Name</th><th>Drug Name</th><th>price</th><th>Quantity</th><th>Discount</th>
-                <th>Purchase Date</th><th>Total Amount</th><th>Amount Paid</th>
+                <th>Purchase Date</th><th>Total Amount</th><th>Purcahse Order</th>
             </tr>";
     while ($r = mysqli_fetch_assoc($res)) {
         echo "<tr>";
-        echo "<td>" . htmlspecialchars($r['purchase_id']) . "</td>";
-        echo "<td>" . htmlspecialchars($r['vendor_name']) . "</td>";
-        echo "<td>" . htmlspecialchars($r['drug_name']) . "</td>";
+        echo "<td>" . htmlspecialchars($r['purchase_ID']) . "</td>";
+        echo "<td>" . htmlspecialchars($r['Vendor_Name']) . "</td>";
+        echo "<td>" . htmlspecialchars($r['Drug_Name']) . "</td>";
         echo "<td>" . htmlspecialchars($r['price']) . "</td>";
         echo "<td>" . htmlspecialchars($r['quantity']) . "</td>";
         echo "<td>" . htmlspecialchars($r['discount']) . "</td>";
         echo "<td>" . htmlspecialchars($r['purchase_date']) . "</td>";
         echo "<td>" . htmlspecialchars($r['total_amount']) . "</td>";
-        echo "<td>" . htmlspecialchars($r['amount_paid']) . "</td>";
+        echo "<td>" . htmlspecialchars($r['po_id']) . "</td>";
         echo "</tr>";
     }
     echo "</table>";

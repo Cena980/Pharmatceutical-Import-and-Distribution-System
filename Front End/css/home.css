@@ -59,7 +59,7 @@ main {
     height: 50px;
 }
 
-.barr button {
+.barr .button {
     font-weight: bold;
     font-size: 16px;
     color: rgb(45, 105, 137);
@@ -77,15 +77,23 @@ main {
 .barr button:hover {
     transform: scale(0.95);
 }
+#switch{
+    display: block;
+}
 
 #switch button {
-    border-radius: 15px;
+    border-style: none;
+    background-color:  rgb(44, 78, 109);
+    height: 52px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
     transition: transform 0.3s ease;
 }
 
 #switch button:hover {
-    transform: scale(0.95);
-    box-shadow: 0 6px 8px rgb(0, 0,0 , 0.4);
+    transform: scale(1.2);
 }
 
 /* Original Design for #bar2over */
@@ -98,15 +106,13 @@ main {
     justify-content: center;
     align-items: center;
     height: 60px;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
 }
 
 #bar2 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    max-width:80%;
 }
 
 #bar2 .logo {
@@ -138,7 +144,7 @@ ul {
     display: flex;
     justify-content: center; /* Center links horizontally */
     margin: 0;
-    width: 100%;
+    max-width: 90%;
 }
 
 .button {
@@ -708,11 +714,11 @@ input {
 
 /* Pop effect on click */
 #btn-circle:active {
-    transform: scale(1.2); /* Make it "pop" */
+    transform: scale(1.05); /* Make it "pop" */
 }
 
 #btn-circle:active img {
-    transform: rotate(90deg) scale(1.2); /* Rotate and pop */
+    transform: rotate(90deg) scale(1.05); /* Rotate and pop */
 }
 
 

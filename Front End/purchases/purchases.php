@@ -16,7 +16,7 @@
                 <form name="searchpurchases" method="post">
                     <input type="text" placeholder="Search for purchases" name="query" id="searchpurchases" required data-key="search-placeholder">
                 </form>
-                <button type="submit" onclick="purchases()" data-key="search-button">Search</button>
+                <button class="button" type="submit" onclick="purchases()" data-key="search-button">Search</button>
             </div>
         </div>
         <div id="search_result"></div>

@@ -15,7 +15,7 @@
                 <form name="searchdrugs" method="post">
                     <input type="text" placeholder="Search for drugs" name="query" id="searchdrugs" required data-key="search-placeholder">
                 </form>
-                <button type="submit" onclick="drugs()" data-key="search-button">Search</button>
+                <button class="button" type="submit" onclick="drugs()" data-key="search-button">Search</button>
             </div>
         </div>
         <div id="search_result"></div>

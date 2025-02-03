@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -220,6 +219,7 @@
                 const tbody = document.querySelector("table tbody");
                 const newRow = document.createElement("tr");
                 newRow.innerHTML = `
+                    <td><div class="delete-btn" id="delete_${qnt}" onclick="deleteRow(${qnt})"><img style="width:25px;" src="../images/delete.png" alt="Delete"></div></td>
                     <td><p id="row_${qnt}">${qnt}</p></td>
                     <input type="hidden" name="Amount_${qnt}" id="Amount_${qnt}">
                     <td>
@@ -380,4 +380,3 @@
         </script>
     </body>
 </html>
-
