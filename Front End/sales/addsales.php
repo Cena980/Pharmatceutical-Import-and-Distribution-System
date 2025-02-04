@@ -51,6 +51,7 @@
              <tbody>
                 <tr id="row_1">
                     <input type="hidden" name="Amount_1" id="Amount_1">
+                    <input type="hidden" name="Expiration_1" id="Expiration_1">
                     <td><p id="no_1">1</p></td>
                     <td>
                         <input type="text" name="Drug_Name_1" id="drug_name_1" autocomplete="off" placeholder="Enter Drug Name">
@@ -147,6 +148,13 @@
                     if (drugAmount) {
                         drugAmount.id = `Amount_${rowNum}`;
                         drugAmount.name = `Amount_${rowNum}`;
+                    }
+
+                    
+                    const drugExp = document.getElementById(`Expiration_${NewRowNumber}`);
+                    if (drugExp) {
+                        drugExp.id = `Expiration_${rowNum}`;
+                        drugExp.name = `Expiration_${rowNum}`;
                     }
 
                     const Delete = document.getElementById(`delete_${NewRowNumber}`);
@@ -274,6 +282,7 @@
                                         row.onclick = () => {
                                             document.getElementById(`drug_name_${rowNumber}`).value = drug.Drug_Name;
                                             document.getElementById(`Amount_${rowNumber}`).value = drug.Amount;
+                                            document.getElementById(`Expiration_${rowNumber}`).value = drug.Expiration_Date;
                                             suggestionBox.style.display = "none";
                                             fetchPrice(rowNumber);
                                         };
@@ -310,6 +319,7 @@
         
                     <td><p id="no_${qnt}">${qnt}</p></td>
                     <input type="hidden" name="Amount_${qnt}" id="Amount_${qnt}">
+                    <input type="hidden" name="Expiration_${qnt}" id="Expiration_${qnt}">
                     <td>
                         <input type="text" name="Drug_Name_${qnt}" id="drug_name_${qnt}" autocomplete="off" placeholder="Enter Drug Name">
                         <div class="suggestion-box" id="suggestion_${qnt}" style="display: none; position: absolute; background: white;"></div>

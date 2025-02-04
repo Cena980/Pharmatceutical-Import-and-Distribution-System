@@ -118,9 +118,10 @@ if (!empty($customerID)) {
 
         $drugName = $_POST["Drug_Name_$i"] ?? null;
         $drugAmount = $_POST["Amount_$i"] ?? null;
+        $drugExp = $_POST["Expiration_$i"] ?? null;
         // Query to get the Inventory_ID for the given drug name
         if(!empty($drugName)){
-            $name = "SELECT Inventory_ID FROM inventory WHERE Drug_ID = (SELECT Drug_ID FROM drugs WHERE Drug_Name = '$drugName') AND Amount_Left = '$drugAmount'";
+            $name = "SELECT Inventory_ID FROM inventory WHERE Drug_ID = (SELECT Drug_ID FROM drugs WHERE Drug_Name = '$drugName') AND Amount_Left = '$drugAmount' AND Expiration = '$drugExp'";
             $Inventory_ID_result = mysqli_query($connect, $name);
         
             if ($Inventory_ID_result) {
