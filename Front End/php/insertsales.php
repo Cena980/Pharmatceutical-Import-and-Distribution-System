@@ -132,7 +132,7 @@ if (!empty($customerID)) {
                 }else{
                     echo "<div class='alerts'> Could not fetch inventory ID for " . $drugName; echo "</div>";
                     echo "<div class='alerts'> نمبر موجودی یافت نشد " . $drugName. "برای"; echo "</div>";
-                    echo "<div class='alerts'>لطفا از این دکمه استفاده کنید تا به صفحه قبلی برگشته و دوا جاگزین انتخاب کنید"; echo "</div>";
+                    echo "<div class='alerts'>لطفا از این دکمه استفاده کنید تا به صفحه قبلی برگشته و دوا جاگزین از لیست پیشنهادات انتخاب کنید"; echo "</div>";
                         echo "<div class='button-print'>";
                         echo '
                             <button class="btn btn-back" onclick="GoBack()">Go Back</button>';

@@ -229,11 +229,74 @@ li:hover {
 @media (max-width: 768px) {
     #bottom {
         flex-direction: column;
-        text-align: center;
+        text-align: left;
         padding: 10px;
     }
 }
 
+.chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    height: 300px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .bar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  
+  .bar {
+    width: 40px;
+    background-color: #4CAF50;
+    border-radius: 4px 4px 0 0;
+    animation: grow 1.5s ease-in-out forwards;
+    transform-origin: bottom;
+    cursor: pointer;
+  }
+  
+  .month {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  /* Tooltip */
+  .bar-container::after {
+    content: attr(data-amount);
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  
+  .bar-container:hover::after {
+    opacity: 1;
+  }
+  
+  /* Animation */
+  @keyframes grow {
+    0% {
+      transform: scaleY(0);
+    }
+    100% {
+      transform: scaleY(1);
+    }
+  }
 /* Section Titles */
 .section_title {
     font-size: 22px;

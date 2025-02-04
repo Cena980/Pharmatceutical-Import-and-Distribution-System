@@ -22,12 +22,94 @@
         <div class="button-group">
             <button data-key="insert-over" class="btn btn-save" onclick="location.href='addsales.php'">Add</button>
         </div>
-        <div id="report">
-            <p>reports will appear here...</p>
+        <div class="inventory">
+            <div class="invenroy-left">
+                <div class="section_title">Monthly Sales Report</div>
+                <div class="chart">
+                </div>
+            </div>
+            <div class="inventory-right">
+                <div class="section_title">Yearly Sales Report</div>
+                <div class="chart">
+                    <!-- January -->
+                    <div class="bar-container">
+                    <div class="bar" style="height: 100px;"></div>
+                    <div class="month">2022</div>
+                    </div>
+                    <!-- February -->
+                    <div class="bar-container">
+                    <div class="bar" style="height: 150px;"></div>
+                    <div class="month">2023</div>
+                    </div>
+                    <!-- March -->
+                    <div class="bar-container">
+                    <div class="bar" style="height: 120px;"></div>
+                    <div class="month">2024</div>
+                    </div>
+                    <!-- April -->
+                    <div class="bar-container">
+                    <div class="bar" style="height: 180px;"></div>
+                    <div class="month">2025</div>
+                    </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        
         </div>
         <?php include '../php/footer.php' ?>
         <script>
+           const salesData = [
+                { month: 'Jan', amount: 5000 },
+                { month: 'Feb', amount: 8000 },
+                { month: 'Mar', amount: 12000 },
+                { month: 'Apr', amount: 7000 },
+                { month: 'May', amount: 9000 },
+                { month: 'Jun', amount: 11000 },
+                { month: 'Jul', amount: 5000 },
+                { month: 'Aug', amount: 8000 },
+                { month: 'Sep', amount: 12000 },
+                { month: 'Oct', amount: 7000 },
+                { month: 'Nov', amount: 9000 },
+                { month: 'Dec', amount: 11000 }
+            ];
+
+            const chart = document.querySelector('.chart');
+
+            // Find min and max sales first
+            const amounts = salesData.map(data => data.amount);
+            const minAmount = Math.min(...amounts);
+            const maxAmount = Math.max(...amounts);
+
+            // Function to interpolate colors between red and green
+            function getBarColor(amount, min, max) {
+                const ratio = (amount - min) / (max - min); // Normalize to range [0,1]
+                const red = Math.round(255 * (1 - ratio));  // Decrease red as sales increase
+                const green = Math.round(255 * ratio);      // Increase green as sales increase
+                return `rgb(${red}, ${green}, 76)`; // Keeps some depth to the color
+            }
+
+            // Loop to generate bars dynamically
+            salesData.forEach(data => {
+                const barContainer = document.createElement('div');
+                barContainer.classList.add('bar-container');
+
+                const bar = document.createElement('div');
+                bar.classList.add('bar');
+                bar.style.height = `${data.amount / 100}px`;
+                bar.setAttribute('data-amount', data.amount);  // Store numeric value
+                bar.style.backgroundColor = getBarColor(data.amount, minAmount, maxAmount);
+
+                const month = document.createElement('div');
+                month.classList.add('month');
+                month.textContent = data.month;
+
+                barContainer.appendChild(bar);
+                barContainer.appendChild(month);
+                chart.appendChild(barContainer);
+            });
+
+
             async function Sales() {
                 const searchTerm = document.getElementById('searchsales').value.trim();
                 const resultDiv = document.getElementById('search_result');
