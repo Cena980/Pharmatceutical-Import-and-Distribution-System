@@ -63,7 +63,7 @@ echo '<script>
                         <img class="logo" src="images/purchases.png" alt="Purchases Icon">
                         <a href="purchases/purchases.php" data-key="nav-purchases">Purchases</a>
                     </li>
-                        <li class="button" onclick = "location.href=\'reports/reports.php\'">
+                    <li class="button" onclick = "location.href=\'reports/reports.php\'">
                         <img class="logo" src="images/reports.png" alt="Reports Icon">
                         <a href="reports/reports.php" data-key="nav-reports">Reports</a>
                     </li>
