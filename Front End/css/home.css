@@ -85,14 +85,16 @@ main {
     transform: scale(0.95);
 }
 #switch{
-    display: block;
+    display: flex;
+    width: 140px;
+    justify-content: flex-end;
 }
 
 #switch button {
     border-style: none;
     background-color:  rgb(44, 78, 109);
     height: 52px;
-    width: 70px;
+    width: auto;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
