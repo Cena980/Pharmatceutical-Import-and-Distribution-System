@@ -125,11 +125,94 @@ if (!empty($customerID)) {
         
             if ($Inventory_ID_result) {
                 $Inventory_ID_row = mysqli_fetch_assoc($Inventory_ID_result);
-                $Inventory_ID = $Inventory_ID_row['Inventory_ID'];
+                if(isset($Inventory_ID_row['Inventory_ID'])){
+                    $Inventory_ID = $Inventory_ID_row['Inventory_ID'];
+
+                }else{
+                    echo "<div class='alerts'> Could not fetch inventory ID for " . $drugName; echo "</div>";
+                    echo "<div class='alerts'> نمبر موجودی یافت نشد " . $drugName. "برای"; echo "</div>";
+                    echo "<div class='alerts'>لطفا از این دکمه استفاده کنید تا به صفحه قبلی برگشته و دوا جاگزین انتخاب کنید"; echo "</div>";
+                        echo "<div class='button-print'>";
+                        echo '
+                            <button class="btn btn-back" onclick="GoBack()">Go Back</button>';
+                        echo "</div>";
+
+                        echo '
+                            <script src="https://cdn.jsdelivr.net/npm/jalaali-js/dist/jalaali.min.js"></script>
+                            <script>
+                                function GoBack(){
+                                    history.back();}
+                                window.onload = function() {
+                                    // Ensure the PHP variables are safely converted to JavaScript strings
+                                    const gregorianDate = "' . $date . '";
+                                    const gregorianDueDate = "' . $dueDate . '";
+
+                                    // Convert Gregorian dates to Hijri Shamsi and update the DOM
+                                    document.getElementById("date").innerHTML = convertToHijriShamsi(gregorianDate);
+                                    document.getElementById("dueDate").innerHTML = convertToHijriShamsi(gregorianDueDate);
+                                }
+
+                                // Function to print a specific section of the page
+                                function printSection(sectionId) {
+                                    const section = document.getElementById(sectionId);
+                            
+                                    if (section) {
+                                        const originalContent = document.body.innerHTML;
+                                        document.body.innerHTML = section.outerHTML;
+                                        window.print();
+                                        document.body.innerHTML = originalContent;
+                                    } else {
+                                        console.error("Section not found: " + sectionId);
+                                    }
+                                }
+
+                                // Function to convert Gregorian date to Hijri Shamsi (Solar Hijri)
+                                function convertToHijriShamsi(gregorianDate) {
+                                    const date = new Date(gregorianDate);
+                                    const { jy, jm, jd } = jalaali.toJalaali(
+                                        date.getFullYear(),
+                                        date.getMonth() + 1,
+                                        date.getDate()
+                                    );
+                                    return `${String(jd).padStart(2, "0")}/${String(jm).padStart(2, "0")}/${jy}`;
+                                }
+                            </script>
+                        ';
+
+                        echo '
+                            <div id="bottom">
+                                <div class="bott">
+                                    <h3 class="section_title">Database Usage Guidelines</h3>
+                                    <div id="points">
+                                        <div class="points">Authorized Access Only: Access to this database is restricted to authorized personnel only.</div>
+                                        <div class="points">Data Integrity: Ensure the accuracy and completeness of all data entries.</div>
+                                        <div class="points">Privacy Protection: Handle user data responsibly and comply with relevant privacy regulations.</div>
+                                        <div class="points">Activity Monitoring: All activities may be logged and monitored for security purposes.</div>
+                                        <div class="points">Reporting Issues: Report any technical issues or security concerns immediately to the system administrator.</div>
+                                        <div class="points">Prohibited Actions: Unauthorized copying, redistribution, or alteration of the database or its components is strictly prohibited.</div>
+                                    </div>
+
+                                </div>
+                                <div class="bott">
+                                    <h3 class="section_title">Technical Support</h3>
+                                    <div id="points">
+                                        <div class="points">BSDatabases.tech@gmail.com</div>
+                                    </div>
+
+                                </div>
+                                <div class="bott">
+                                    <h3>...</h3>
+                                </div>
+                            </div>
+                        </body>
+                    </html>';
+                    exit;  // Skip this iteration if Inventory_ID is not found
+                }
+                
             } else {
                 echo "<div class='alerts'> Could not fetch inventory ID for " . $drugName; echo "</div>";
                 echo "<div class='alerts'> نمبر موجودی یافت نشد " . $drugName. "برای"; echo "</div>";
-                continue;  // Skip this iteration if Inventory_ID is not found
+                exit;  // Skip this iteration if Inventory_ID is not found
             }
         }else{
             echo "<div class='alerts'> لطفا نام دوا را وارد کنید "; echo "خط" . $i; echo "</div>";
@@ -213,7 +296,9 @@ if (!empty($customerID)) {
         }
     }
     #upadating balance
-    $Current_Balance = $Amount_Received + $Balance - $totalSales;
+    //$Current_Balance = $Amount_Received + $Balance - $totalSales;
+    $Current_Balance = $Balance - ($Amount_Received - $totalSales);
+    $message = "Thank you for choosing us—we appreciate your business and look forward to working with you again!";
     #upadintg balance in database
     $sql = "UPDATE customer SET balance = ? WHERE customer_id = ?";
 
@@ -325,9 +410,9 @@ if (!empty($customerID)) {
     } else {
         echo "<div class= 'alerts'>" . json_encode(['status' => 'error', 'message' => 'Failed to prepare the query']); echo "</div>";
     }
-
+    /*
     $owed = 0;
-    if (($Amount_Received + $Balance - $totalSales)<0){
+    if (($Amount_Received - $totalSales - $Balance)<0){
         $owed = $Amount_Received + $Balance - $totalSales;
     }else {
         $owed = 0;
@@ -358,6 +443,7 @@ if (!empty($customerID)) {
     } else {
         echo "<div class= 'alerts'>" . json_encode(['status' => 'error', 'message' => 'Failed to prepare the query']); echo "</div>";
     }
+        */
 
     if (!empty($invoice_ID)) {
         $query = "select * from sales_bill where invoice_no = '$invoice_ID'";
@@ -459,10 +545,13 @@ if (!empty($customerID)) {
                     echo "</tr>";
                     echo "<td>" . $totalSales . "</td>";
                     echo "<td>" . $Amount_Received . "</td>";
-                    echo "<td>" . -1 * $Balance . "</td>";
-                    echo "<td>" . -1 * $Current_Balance . "</td>";
+                    echo "<td>" . $Balance . "</td>";
+                    echo "<td>" . $Current_Balance . "</td>";
                     echo "</tr>";
                 echo "</table>";
+                echo "<div id='invoice-msg'>";
+                    echo "<p>". $message . "</p>";
+                echo"</div>";
             echo "</div>";
             echo "</div>";
         } else {

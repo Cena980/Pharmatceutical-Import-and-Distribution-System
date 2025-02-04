@@ -85,6 +85,7 @@ main {
     border-style: none;
     background-color:  rgb(44, 78, 109);
     height: 52px;
+    width: 70px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
@@ -475,7 +476,8 @@ input {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-left: 100px; /* Ensures it's at the left */
+    margin-top: 30px;
+    margin-left: 150px; /* Ensures it's at the left */
 }
 
 
@@ -784,9 +786,11 @@ input:focus {
     margin-bottom: 8px;
 }
 .alerts {
-    max-width: 200px;
+    width: 200px;
+    max-width: 300px;
     margin: auto;
     text-align: center;
+    border-bottom: 1px solid black;
 }
 
 /*search on main pages */
@@ -805,6 +809,19 @@ input:focus {
 
 
 /* INVOICE */
+#invoice-msg {
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    max-width: 800px;
+    text-align: center;
+    justify-content: center;
+}
+#invoice-msg p{
+    font-weight: bold;
+    font-style: italic;
+    text-align: center;
+}
 
 #printableSection{
     max-width: 1000px;
