@@ -388,13 +388,24 @@
         addCustomerShopEventListener(qnt);
 
 
-                    // Function to fetch price for each drug row
-            function fetchPrice(rowNumber) {
+        // Function to fetch price for each drug row
+        function fetchPrice(rowNumber) {
             const drugName = document.getElementById(`drug_name_${rowNumber}`).value.trim();
+            const amount = document.getElementById(`Amount_${rowNumber}`).value.trim();
 
-            if (drugName.trim() !== "") {
-                fetch(`../php/get_price.php?Drug_Name=${encodeURIComponent(drugName)}`)
-                    .then(response => response.json())
+            if (drugName !== "") {
+                let url = `../php/get_price.php?Drug_Name=${encodeURIComponent(drugName)}`;
+                if (amount !== "") {
+                    url += `&Amount=${encodeURIComponent(amount)}`;
+                }
+
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
                     .then(data => {
                         if (data.price) {
                             document.getElementById(`pr_${rowNumber}`).value = data.price;
@@ -402,9 +413,14 @@
                         } else {
                             alert("Price not found for the selected drug.");
                         }
+                    })
+                    .catch(error => {
+                        console.error("Fetch error:", error);
+                        alert("Error fetching price. Please try again.");
                     });
             }
         }
+
         // Function to calculate total for each row
         function calculateTotal() {
             const rows = document.querySelectorAll("table tbody tr");
