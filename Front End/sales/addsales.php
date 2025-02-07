@@ -266,6 +266,7 @@
                                     table.style.width = "100%";
                                     const header = document.createElement("tr");
                                     header.innerHTML = `
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Drug Type</th>
                                         <th style="border: 1px solid #ccc; padding: 8px;">Drug Name</th>
                                         <th style="border: 1px solid #ccc; padding: 8px;">Expiration Date</th>
                                         <th style="border: 1px solid #ccc; padding: 8px;">Amount</th>
@@ -274,6 +275,7 @@
                                     data.forEach(drug => {
                                         const row = document.createElement("tr");
                                         row.innerHTML = `
+                                            <td style="border: 1px solid #ccc; padding: 8px;">${drug.Drug_Type}</td>
                                             <td style="border: 1px solid #ccc; padding: 8px;">${drug.Drug_Name}</td>
                                             <td style="border: 1px solid #ccc; padding: 8px;">${drug.Expiration_Date}</td>
                                             <td style="border: 1px solid #ccc; padding: 8px;">${drug.Amount}</td>

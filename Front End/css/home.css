@@ -66,6 +66,15 @@ main {
     height: 50px;
 }
 
+.barr .buttonS {
+    font-weight: bold;
+    font-size: 16px;
+    color: rgb(45, 105, 137);
+    border-radius: 0 50px 50px 0;
+    height: 52px;
+    width: 70px;
+    transition: transform 0.3s ease;
+}
 .barr .button {
     font-weight: bold;
     font-size: 16px;

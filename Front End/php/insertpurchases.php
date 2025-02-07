@@ -19,7 +19,7 @@ echo '<!DOCTYPE html>
     include 'connection.php';
 
     $qnt = isset($_POST['qnt']) ? intval($_POST['qnt']) : 0;
-    echo "Number of rows submitted: " . $qnt;
+    echo "<div class='alerts'>Number of rows submitted: " . $qnt ."</div>";
     $purchaseData = []; // Array to store purchase data
 
 
@@ -137,15 +137,24 @@ echo '<!DOCTYPE html>
             'po_id' => $order_id,
             
         ];
-/*
-        $sql = "insert into purchases (vendor_id, drug_id, price, quantity, Discount, Expiration, purchase_date, total_amount, po_id)
-             values ('$vendor_id', '$drug_id', '$price','$quantity', '$discount', '$expiration', '$date', '$total_amount', '$amount')";
-        if(mysqli_query($connect, $sql)){
-            echo "Record has been inserted";
-        }else{echo "Failed";}
-        */
-
     }
+
+    //fetching old debt balance from purcahse order table before insertion
+    $Remaining_Debt_O = 0;
+    if (!empty($order_id)) {
+        $sql32 = "SELECT Remaining_Debt FROM `purchase order` WHERE po_id = '$order_id'";
+        $received_result = mysqli_query($connect, $sql32);
+    
+        if ($received_result && mysqli_num_rows($received_result) > 0) {
+            $received_result_row = mysqli_fetch_assoc($received_result);
+            $Remaining_Debt_O = $received_result_row['Remaining_Debt'];
+        } else {
+            // Set balance to 0 if no balance was retrieved
+            $Remaining_Debt_O = 0;
+            //echo "<div class='alerts'>recieved not found for invoice, defaulting to 0."; echo "</div>";
+        }
+    }
+
     // Build bulk INSERT query
     $sql = "INSERT into purchases (vendor_id, drug_id, price, quantity, Discount, Expiration, purchase_date, total_amount, po_id)
              values ";
@@ -173,22 +182,19 @@ echo '<!DOCTYPE html>
     //setting balances to zero
     $Total_amount_o = 0;
     $Amount_Paid_o = 0;
-    $Remaining_Debt_o = 0;
     #Fetching old Recieved from invoice
     if (!empty($order_id)) {
-        $sql31 = "SELECT Total_amount, Amount_Paid, Remaining_Debt FROM `purchase order` WHERE po_id = '$order_id'";
+        $sql31 = "SELECT Total_amount, Amount_Paid FROM `purchase order` WHERE po_id = '$order_id'";
         $received_result = mysqli_query($connect, $sql31);
     
         if ($received_result && mysqli_num_rows($received_result) > 0) {
             $received_result_row = mysqli_fetch_assoc($received_result);
             $Total_amount_o = $received_result_row['Total_amount'];
             $Amount_Paid_o = $received_result_row['Amount_Paid'];
-            $Remaining_Debt_o = $received_result_row['Remaining_Debt'];
         } else {
             // Set balance to 0 if no balance was retrieved
             $Total_amount_o = 0;
             $Amount_Paid_o = 0;
-            $Remaining_Debt_o = 0;
             //echo "<div class='alerts'>recieved not found for invoice, defaulting to 0."; echo "</div>";
         }
     }
@@ -207,14 +213,27 @@ echo '<!DOCTYPE html>
             //echo "<div class='alerts'>recieved not found for invoice, defaulting to 0."; echo "</div>";
         }
     }
+    //fetching debt balance from purcahse order table
+    $Remaining_Debt_F = 0;
+    if (!empty($order_id)) {
+        $sql32 = "SELECT Remaining_Debt FROM `purchase order` WHERE po_id = '$order_id'";
+        $received_result = mysqli_query($connect, $sql32);
+    
+        if ($received_result && mysqli_num_rows($received_result) > 0) {
+            $received_result_row = mysqli_fetch_assoc($received_result);
+            $Remaining_Debt_F = $received_result_row['Remaining_Debt'];
+        } else {
+            // Set balance to 0 if no balance was retrieved
+            $Remaining_Debt_F = 0;
+            //echo "<div class='alerts'>recieved not found for invoice, defaulting to 0."; echo "</div>";
+        }
+    }
 
     #upadating balance
     $Total_amount_F = $Total_amount_o + $total_purchase;
     $Amount_Paid_F = $amount_paid + $Amount_Paid_o;
-    $Remaining_Debt_F = $Remaining_Debt_o + ($total_purchase-$amount_paid);
-    $vendor_debt_F = $vendor_debt + $Remaining_Debt_F;
     #upadintg balance in database
-    $sql = "UPDATE `purchase order` SET Total_amount = ?, Amount_Paid = ?, Remaining_Debt = ? WHERE po_id = ?";
+    $sql = "UPDATE `purchase order` SET Total_amount = ?, Amount_Paid = ? WHERE po_id = ?";
 
     // Use prepared statements to prevent SQL injection
     $stmt = mysqli_prepare($connect, $sql);
@@ -226,7 +245,7 @@ echo '<!DOCTYPE html>
         // $amount_paid is the amount paid (double)
         // $remaining_debt is the remaining debt (double)
         // $po_id is the purchase order ID (integer)
-        mysqli_stmt_bind_param($stmt, "dddi", $Total_amount_F, $Amount_Paid_F, $Remaining_Debt_F, $order_id);
+        mysqli_stmt_bind_param($stmt, "ddi", $Total_amount_F, $Amount_Paid_F, $order_id);
 
         // Execute the query
         mysqli_stmt_execute($stmt);
@@ -368,7 +387,7 @@ echo '<!DOCTYPE html>
                     echo "<th>" . 'Owed:' ."</th>";
                     echo "</tr>";
                     echo "<td>" . $total_purchase . "</td>";
-                    echo "<td>" . $Remaining_Debt_o . "</td>";
+                    echo "<td>" . $Remaining_Debt_O . "</td>";
                     echo "<td>" . $amount_paid . "</td>";
                     echo "<td>" . $Remaining_Debt_F . "</td>";
                     echo "</tr>";
