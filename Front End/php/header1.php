@@ -8,7 +8,7 @@ echo '<script>
                 }else{
                     const form = document.forms["search"];
                     form.action = "php/search.php";
-                    form.method = "post";
+                    form.method = "get";
                     const popup = window.open("", "SearchResults", "width=600,height=400");
                     form.target = "SearchResults"; // Send the form to the popup window
                     form.submit();
@@ -22,10 +22,10 @@ echo '<script>
                     <p data-key="database-title">Phoenix Pharma</p>
                 </div>
                 <div class="barr">
-                    <form name="search" method="post" action="php/search.php">
+                    <form name="search">
                         <input type="text" placeholder="Search for Drugs" name="query" id="search" required data-key="search-placeholder">
                     </form>
-                    <button class=\'button\' type="submit" onclick="validate()" data-key="search-button">Search</button>
+                    <button class=\'buttonS\' type="submit" onclick="validate()" data-key="search-button">Search</button>
                 </div>
                 <div class="barr">
                     <div id="switch">
