@@ -58,8 +58,10 @@
                 </table>
                 
             </form>
-            <button data-key="save-button" class="btn btn-update" onclick="validate()">Update</button>
-            <button data-key="delete-button" class="btn btn-delete" onclick="remove()">Delete</button>
+            <div class="multi-button">
+                <button data-key="save-button" class="btn btn-update" onclick="validate()">Update</button>
+                <button data-key="delete-button" class="btn btn-delete" onclick="remove()">Delete</button>
+                </div>
         
             <script>
             

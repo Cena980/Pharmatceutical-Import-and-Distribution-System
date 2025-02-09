@@ -44,7 +44,7 @@ echo '<!DOCTYPE html>
     if (!empty($customerID)) { // Check if input is not empty
         $customer_name = "SELECT balance, customer_name, address FROM customer WHERE customer_id = '$customerID'";
         $customer_name_results = mysqli_query($connect, $customer_name);
-    
+        
         if ($customer_name_results && mysqli_num_rows($customer_name_results) > 0) {
             $customer_name_row = mysqli_fetch_assoc($customer_name_results);
             $customerName = $customer_name_row['customer_name'];
@@ -394,7 +394,7 @@ echo '<!DOCTYPE html>
 
     if (!empty($invoice_ID)) {
         $message = "Thank you for choosing us—we appreciate your business and look forward to working with you again!";
-        $query = "select * from sales_bill where invoice_no = '$invoice_ID'";
+        $query = "select * from sales_bill where invoice_no = '$invoice_ID' order by Name asc";
         $res = mysqli_query($connect, $query);
     
         $num_rows = mysqli_num_rows($res);
@@ -470,10 +470,19 @@ echo '<!DOCTYPE html>
             echo "</div>";
                 echo "<table id='tblinvoice'>";
                 echo "<tr>
-                            <th>Drug Type</th><th>Drug Name</th><th>Quantity</th><th>Price</th><th>Discount</th><th>Total Price</th>
+                            <th>No</th>
+                            <th>Drug Type</th>
+                            <th>Drug Name</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Discount</th>
+                            <th>Total Price</th>
                         </tr>";
+                $rownumber = 1;
                 while ($r = mysqli_fetch_assoc($res)) {
                     echo "<tr>";
+                    echo "<td>" . $rownumber . "</td>";
+                    $rownumber++;
                     echo "<td>" . $r['Type'] . "</td>";
                     echo "<td>" . $r['Name'] . "</td>";
                     echo "<td>" . $r['Quantity'] . "</td>";
