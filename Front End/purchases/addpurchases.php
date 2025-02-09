@@ -33,6 +33,7 @@
                     
                 </div>
                 <tr>
+                    <th data-key="no">No</th>
                     <th data-key="drug-name">Drug Name</th>
                     <th data-key="price">Price</th>
                     <th data-key="quantity">Quantity</th>
@@ -41,7 +42,8 @@
                     <th data-key="total">Total Amount</th>
                     
                 </tr>
-                <tr>
+                <tr id="row_1">
+                    <td><p id="no_1">1</p></td>
                     <td>
                         <input type="text" name="drug_name_1" id="drug_name_1" autocomplete="off">
                         <div id="suggestion_1" class="suggestion-box" style="display: none; position: absolute; background-color: white;"></div>
@@ -50,7 +52,8 @@
                     <td><input type="number" name="quantity_1" id="quantity_1" autocomplete="off"></td>
                     <td><input type="number" name="discount_1" id="discount_1" autocomplete="off"></td>
                     <td><input type="month" name="expiration_1" id="expiration_1" autocomplete="off"></td>
-                    <td><input data-key="total" type="number" name="total_amount_1" id="total_amount_1" autocomplete="off"></td>
+                    <td><input type="number" name="total_amount_1" id="total_amount_1" autocomplete="off"></td>
+                    <td><div class="delete-btn" id="delete_1" onclick="deleteRow(1)"><img style="width:25px;" src="../images/delete.png" alt="Delete"></div></td>
                 </tr>
                 <tr>
                     <td id="nvendor_id"></td>
@@ -68,25 +71,126 @@
             </table>
             
         </div>
-        </form>
-    </div>
-    <div class="grand_total">
-        <div class="form-group">
-            <label data-key="sub-total" for="grand_total">Sub Total</label>
-            <input type="number" name="grand_total" id="grand_total" autocomplete="off">
-        </div>
-    </div>
-            <div class="insertButtons">
-                <div class="addRemove">
+            <div class="addRemove">
                 <button class="btn btn-add" onclick="create_purchase(); return false;">+</button>
-                <button class="btn btn-remove" onclick="delete_last_row(); return false;">-</button>
+            </div>
+
+            <div class="grand_total">
+                <div class="form-group">
+                    <label data-key="sub-total" for="grand_total">Sub Total</label>
+                    <input type="number" name="grand_total" id="grand_total" autocomplete="off">
                 </div>
+            </div>
+
+
+            <div class="insertButtons">
                 <button  class="btn btn-save" onclick="validate()" >Save</button>
             </div>
+        </form>
+        </div>
 
         <?php include '../php/footer.php' ?>
         <script>
             let qnt = 1;
+            function addPriceEventListeners(rowNumber) {
+                const priceInput = document.getElementById(`price_${rowNumber}`);
+                if (priceInput) {
+                    priceInput.addEventListener('input', function() {
+                        calculateTotalAmount(rowNumber);
+                    });
+                }
+
+                const quantityInput = document.getElementById(`quantity_${rowNumber}`);
+                if (quantityInput) {
+                    quantityInput.addEventListener('input', function() {
+                        calculateTotalAmount(rowNumber);
+                    });
+                }
+
+                const discountInput = document.getElementById(`discount_${rowNumber}`);
+                if (discountInput) {
+                    discountInput.addEventListener('input', function() {
+                        calculateTotalAmount(rowNumber);
+                    });
+                }
+            }
+            function deleteRow(rowNumber) {
+                const row = document.getElementById(`row_${rowNumber}`);
+                if (row) {
+                    row.remove();
+                    qnt--;
+                    document.getElementById("qnt").value = qnt;
+                    renumberRows(rowNumber);
+                }
+            }
+            function renumberRows(number){
+                for (let i = 1; i <= qnt; i++) {
+                    let NewRowNumber = number + i; // This should be inside the loop
+                    let rowNum = NewRowNumber - 1; // One less than NewRowNumber
+
+                    const Row = document.getElementById(`row_${NewRowNumber}`);
+                    if (Row) Row.id = `row_${rowNum}`;
+
+                    const drugInput = document.getElementById(`drug_name_${NewRowNumber}`);
+                    if (drugInput) {
+                        drugInput.id = `drug_name_${rowNum}`;
+                        drugInput.name = `drug_name_${rowNum}`;
+                    }
+                    const rowNo = document.getElementById(`no_${NewRowNumber}`);
+                    if (rowNo) {
+                        rowNo.id = `no_${rowNum}`;
+                        rowNo.textContent = rowNum;
+
+                    }
+
+                    const drugSuggestion = document.getElementById(`suggestion_${NewRowNumber}`);
+                    if (drugSuggestion) {
+                        drugSuggestion.id = `suggestion_${rowNum}`;
+                        drugSuggestion.name = `suggestion_${rowNum}`;
+                    }
+
+                    
+                    const drugExp = document.getElementById(`expiration_${NewRowNumber}`);
+                    if (drugExp) {
+                        drugExp.id = `expiration_${rowNum}`;
+                        drugExp.name = `expiration_${rowNum}`;
+                    }
+
+                    const Delete = document.getElementById(`delete_${NewRowNumber}`);
+                    if (Delete) {
+                        Delete.id = `delete_${rowNum}`;
+                        Delete.onclick = function () {
+                            deleteRow(rowNum); // Call the function properly
+                        };
+                    }
+                    const price = document.getElementById(`price_${NewRowNumber}`);
+                    if (price) {
+                        price.id = `price_${rowNum}`;
+                        price.name = `price_${rowNum}`;
+                    }
+
+
+                    const quantity = document.getElementById(`quantity_${NewRowNumber}`);
+                    if (quantity) {
+                        quantity.id = `quantity_${rowNum}`;
+                        quantity.name = `quantity_${rowNum}`;
+                    }
+
+                    const discount = document.getElementById(`discount_${NewRowNumber}`);
+                    if (discount) {
+                        discount.id = `discount_${rowNum}`;
+                        discount.name = `discount_${rowNum}`;
+                    }
+
+                    const total = document.getElementById(`total_amount_${NewRowNumber}`);
+                    if (total) {
+                        total.id = `total_amount_${rowNum}`;
+                        total.name = `total_amount_${rowNum}`;
+                    }
+                    addPriceEventListeners(rowNum);
+                }
+
+            }
             window.onload = function() {
                 const dateInput = document.getElementById("purchase_date_1");
                 const today = new Date();
@@ -112,7 +216,10 @@
                 const totalAmount = (price * quantity) - discountAmount;
 
                 // Update the total amount field
-                document.getElementById(`total_amount_${rowNumber}`).value = totalAmount.toFixed(2);
+                const totalAmountInput = document.getElementById(`total_amount_${rowNumber}`);
+                if (totalAmountInput) {
+                    totalAmountInput.value = totalAmount.toFixed(2);
+                }
 
                 // Recalculate grand total
                 recalculateGrandTotal();
@@ -322,37 +429,29 @@
 
                 const tbody = document.querySelector("table tbody");
                 const newRow = document.createElement("tr");
+                newRow.id = `row_${qnt}`;
                 newRow.innerHTML = `
+                    <td><p id="no_${qnt}">${qnt}</p></td>
                     <td>
                         <input type="text" name="drug_name_${qnt}" id="drug_name_${qnt}" autocomplete="off">
-                        <div id="suggestion_${qnt}" class ='suggestion-box' style="display: none; position: absolute; background-color: white;"></div>
+                        <div id="suggestion_${qnt}" class='suggestion-box' style="display: none; position: absolute; background-color: white;"></div>
                     </td>
                     <td><input type="number" name="price_${qnt}" id="price_${qnt}" autocomplete="off"></td>
                     <td><input type="number" name="quantity_${qnt}" id="quantity_${qnt}" autocomplete="off"></td>
                     <td><input type="number" name="discount_${qnt}" id="discount_${qnt}" autocomplete="off"></td>
                     <td><input type="month" name="expiration_${qnt}" id="expiration_${qnt}" autocomplete="off"></td>
-                    <td><input type="number" name="total_amount_${qnt}" id="total_amount_${qnt}" autocomplete="off" readonly></td>
+                    <td><input type="number" name="total_amount_${qnt}" id="total_amount_${qnt}" autocomplete="off"></td>
+                    <td><div class="delete-btn" id="delete_${qnt}" onclick="deleteRow(${qnt})"><img style="width:25px;" src="../images/delete.png" alt="Delete"></div></td>
                 `;
                 tbody.appendChild(newRow);
 
-                // Add event listeners for the new row after it's added to the DOM
+                // Add event listeners for the new row
                 addTotalAmountEventListeners(qnt);
 
                 // Update the hidden input field
                 document.getElementById("qnt").value = qnt;
             }
 
-
-            function delete_last_row() {
-                const tbody = document.querySelector("table tbody");
-                if (tbody.rows.length > 1 && qnt > 1) {
-                    tbody.removeChild(tbody.lastElementChild);
-                    qnt -= 1;
-                    document.getElementById("qnt").value = qnt; // Update the hidden input field
-                } else {
-                    alert("Cannot delete the last row!");
-                }
-            };
 
             function validate() {
 
