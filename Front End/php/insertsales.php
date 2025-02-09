@@ -42,20 +42,23 @@ echo '<!DOCTYPE html>
 
     //Getting Customer Name
     if (!empty($customerID)) { // Check if input is not empty
-        $customer_name = "SELECT customer_name, address FROM customer WHERE customer_id = '$customerID'";
+        $customer_name = "SELECT balance, customer_name, address FROM customer WHERE customer_id = '$customerID'";
         $customer_name_results = mysqli_query($connect, $customer_name);
     
         if ($customer_name_results && mysqli_num_rows($customer_name_results) > 0) {
             $customer_name_row = mysqli_fetch_assoc($customer_name_results);
             $customerName = $customer_name_row['customer_name'];
             $customerAddress = $customer_name_row['address'];
+            $Balance_O = $customer_name_row['balance'];
         } else {
             $customerName= ""; // Set a default value if the query fails
             $customerAddress= "";
+            $Balance_O = 0;
         }
     } else {
         $customerName = ""; // Set a default value if input is empty
         $customerAddress= "";
+        $Balance_O = 0;
     }
     // Continue with other code logic    
 
@@ -69,49 +72,36 @@ echo '<!DOCTYPE html>
     $count = 0;
     $rowTotals = []; // Store individual row totals
 
-// Ensure customer_id is not null/empty before proceeding
-if (!empty($customerID)) {
-    // Check if the invoice already exists
-    $invoice_check = "SELECT * FROM invoices WHERE date = '$date' AND customer_id = '$customerID'";
-    $invoice_check_results = mysqli_query($connect, $invoice_check);
 
-    if ($invoice_check_results === false) {
-        // Query failed (alert for database issue)
-        echo "Error checking for existing invoice: " . mysqli_error($connect);
-    } else {
-        // Check if the invoice already exists
-        if (mysqli_num_rows($invoice_check_results) > 0) {
-            // Invoice exists (alert with invoice details)
-            $invoice_check_row = mysqli_fetch_assoc($invoice_check_results);
-            $invoice_ID = $invoice_check_row['invoice_id'];
-            echo "<div class='alerts'>Invoice already exists with ID: $invoice_ID and Date: $date</div>";
+    if (!empty($customerID)) {
+        // Check if an invoice already exists
+        $invoice_check = "SELECT * FROM invoices WHERE date = '$date' AND customer_id = '$customerID'";
+        $invoice_check_results = mysqli_query($connect, $invoice_check);
+    
+        if ($invoice_check_results === false) {
+            echo "Error checking for existing invoice: " . mysqli_error($connect);
         } else {
-            // No invoice found, create a new one
-            $sql = "INSERT INTO invoices (customer_id, date, sales_officer) VALUES ('$customerID', '$date', '$Sales_Officer')";
-            
-            if (mysqli_query($connect, $sql)) {
-                //echo "<div class='alerts'>Invoice has been created.</div>";
-                
-                // Fetch the newly created invoice
-                $invoice_check = "SELECT * FROM invoices WHERE date = '$date' AND customer_id = '$customerID'";
-                $invoice_check_results = mysqli_query($connect, $invoice_check);
-                
-                if ($invoice_check_results) {
-                    $invoice_check_row = mysqli_fetch_assoc($invoice_check_results);
-                    $invoice_ID = $invoice_check_row['invoice_id'];
-                    //echo "<div class='alerts'>Invoice ID: $invoice_ID"; echo "</div>";
-                } else {
-                    echo "<div class='alerts'>Error fetching invoice after creation: " . mysqli_error($connect); echo "</div>";
-                }
+            if (mysqli_num_rows($invoice_check_results) > 0) {
+                // Invoice exists
+                $invoice_check_row = mysqli_fetch_assoc($invoice_check_results);
+                $invoice_ID = $invoice_check_row['invoice_id'];
+                echo "<div class='alerts'>Invoice already exists with ID: $invoice_ID and Date: $date</div>";
             } else {
-                echo "<div class='alerts'>Invoice creation failed: " . mysqli_error($connect); echo "</div>";
+                // No invoice found, create a new one
+                $sql = "INSERT INTO invoices (customer_id, date, sales_officer) VALUES ('$customerID', '$date', '$Sales_Officer')";
+                if (mysqli_query($connect, $sql)) {
+                    // Use mysqli_insert_id to get the new invoice ID reliably
+                    $invoice_ID = mysqli_insert_id($connect);
+                    echo "<div class='alerts'>Invoice has been created with ID: $invoice_ID.</div>";
+                } else {
+                    echo "<div class='alerts'>Invoice creation failed: " . mysqli_error($connect) . "</div>";
+                }
             }
         }
+    } else {
+        $invoice_ID = null;
+        // Skip invoice creation silently if customer_id is empty
     }
-} else {
-    $invoice_ID = null;
-    // Skip invoice creation silently if customer_id is empty or amount_received is not zero
-}
 
     // Gather all the rows of data dynamically
     for ($i = 1; $i <= $rowCount; $i++) {
@@ -281,50 +271,6 @@ if (!empty($customerID)) {
 
     }
 
-    $Balance = 0;
-    #Fetching old Balance
-    if (!empty($invoice_ID)) {
-        $sql1 = "SELECT balance FROM customer WHERE customer_id = '$customerID'";
-        $balance_result = mysqli_query($connect, $sql1);
-    
-        if ($balance_result && mysqli_num_rows($balance_result) > 0) {
-            $balance_result_row = mysqli_fetch_assoc($balance_result);
-            $Balance = $balance_result_row['balance'];
-        } else {
-            // Set balance to 0 if no balance was retrieved
-            $Balance = 0;
-            //echo "<div class='alerts'>Balance not found for customer, defaulting to 0."; echo "</div>";
-        }
-    }
-    #upadating balance
-    //$Current_Balance = $Amount_Received + $Balance - $totalSales;
-    $Current_Balance = $Balance - ($Amount_Received - $totalSales);
-    $message = "Thank you for choosing us—we appreciate your business and look forward to working with you again!";
-    #upadintg balance in database
-    $sql = "UPDATE customer SET balance = ? WHERE customer_id = ?";
-
-    // Use prepared statements to prevent SQL injection
-    $stmt = mysqli_prepare($connect, $sql);
-
-    if ($stmt) {
-        // Bind parameters
-        mysqli_stmt_bind_param($stmt, "di", $Current_Balance, $customerID);
-
-        // Execute the query
-        mysqli_stmt_execute($stmt);
-
-        // Check if any row was updated
-        if (mysqli_stmt_affected_rows($stmt) > 0) {
-            //echo "<div class= 'alerts'>" . json_encode(['status' => 'success', 'message' => 'Balance updated successfully']); echo "</div>";
-        } else {
-            echo "<div class= 'alerts'>" . json_encode(['status' => 'warning', 'message' => 'No changes made (customer not found or same balance)']); echo "</div>";
-        }
-
-        // Close the statement
-        mysqli_stmt_close($stmt);
-    } else {
-        echo "<div class= 'alerts'>" . json_encode(['status' => 'error', 'message' => 'Failed to prepare the query']); echo "</div>";
-    }
     $received_invoice = 0;
     #Fetching old Recieved from invoice
     if (!empty($invoice_ID)) {
@@ -382,6 +328,9 @@ if (!empty($customerID)) {
             echo "<div class='alerts'>Could not fetch total sales for " . $customer_shop . "invoice" . $invoice_ID; echo "</div>";
         }
     }
+
+
+
     #new total sales
     $new_total_sales = $totalSales + $invoice_total_sales;
 
@@ -411,42 +360,40 @@ if (!empty($customerID)) {
     } else {
         echo "<div class= 'alerts'>" . json_encode(['status' => 'error', 'message' => 'Failed to prepare the query']); echo "</div>";
     }
-    /*
-    $owed = 0;
-    if (($Amount_Received - $totalSales - $Balance)<0){
-        $owed = $Amount_Received + $Balance - $totalSales;
-    }else {
-        $owed = 0;
-    }
 
-    #inserting owed into database
-    $sql44 = "UPDATE invoices SET owed = ? WHERE invoice_id = ?";
 
-    // Use prepared statements to prevent SQL injection
-    $stmt = mysqli_prepare($connect, $sql44);
+    #upadating balance
+    $Current_Balance = $Balance_O + $totalSales - $Amount_Received;
+    if(!empty($Current_Balance)){
+        #upadintg balance in database
+        $sql = "UPDATE customer SET balance = ? WHERE customer_id = ?";
 
-    if ($stmt) {
-        // Bind parameters
-        mysqli_stmt_bind_param($stmt, "di", $owed, $invoice_ID);
+        // Use prepared statements to prevent SQL injection
+        $stmt = mysqli_prepare($connect, $sql);
 
-        // Execute the query
-        mysqli_stmt_execute($stmt);
+        if ($stmt) {
+            // Bind parameters
+            mysqli_stmt_bind_param($stmt, "di", $Current_Balance, $customerID);
 
-        // Check if any row was updated
-        if (mysqli_stmt_affected_rows($stmt) > 0) {
-            //echo "<div class= 'alerts'>" . json_encode(['status' => 'success', 'message' => 'owed inserted successfully']); echo "</div>";
+            // Execute the query
+            mysqli_stmt_execute($stmt);
+
+            // Check if any row was updated
+            if (mysqli_stmt_affected_rows($stmt) > 0) {
+                echo "<div class= 'alerts'>" . json_encode(['status' => 'success', 'message' => 'Balance updated successfully']); echo "</div>";
+            } else {
+                echo "<div class= 'alerts'>" . json_encode(['status' => 'warning', 'message' => 'No changes made (customer not found or same balance)']); echo "</div>";
+            }
+
+            // Close the statement
+            mysqli_stmt_close($stmt);
         } else {
-            echo "<div class= 'alerts'>" . json_encode(['status' => 'warning', 'message' => 'No changes made (invoice not found or same owed)']); echo "</div>";
+            echo "<div class= 'alerts'>" . json_encode(['status' => 'error', 'message' => 'Failed to prepare the query']); echo "</div>";
         }
-
-        // Close the statement
-        mysqli_stmt_close($stmt);
-    } else {
-        echo "<div class= 'alerts'>" . json_encode(['status' => 'error', 'message' => 'Failed to prepare the query']); echo "</div>";
     }
-        */
 
     if (!empty($invoice_ID)) {
+        $message = "Thank you for choosing us—we appreciate your business and look forward to working with you again!";
         $query = "select * from sales_bill where invoice_no = '$invoice_ID'";
         $res = mysqli_query($connect, $query);
     
@@ -546,7 +493,7 @@ if (!empty($customerID)) {
                     echo "</tr>";
                     echo "<td>" . $totalSales . "</td>";
                     echo "<td>" . $Amount_Received . "</td>";
-                    echo "<td>" . $Balance . "</td>";
+                    echo "<td>" . $Balance_O . "</td>";
                     echo "<td>" . $Current_Balance . "</td>";
                     echo "</tr>";
                 echo "</table>";
