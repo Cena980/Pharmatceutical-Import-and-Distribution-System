@@ -30,7 +30,6 @@ main {
     display: flex;
     justify-content: center;
     background-color: rgb(44, 78, 109);
-    color: rgb(85, 113, 129);
     font-weight: bold;
 }
 
@@ -44,17 +43,25 @@ main {
 }
 
 .barr {
+    color: white;
     display: flex;
     height: 70px;
     align-items: center;
 }
 
 .barr form input {
+    background: url('../images/search.png') no-repeat 10px center;
+    background-color:  rgb(59, 88, 116);
+    background-size: 20px;
+    color: white;
+    padding: 0 10px;
+    padding-left: 35px;
+    border: 1px solid #ccc;
+    outline: none;
     margin-right: 10px;
     font-size: 16px;
     border-radius: 50px 0 0 50px;
     height: 50px;
-    padding: 0 10px;
     transition: transform 0.3s ease;
 }
 
@@ -67,20 +74,24 @@ main {
 }
 
 .barr .buttonS {
+    cursor: pointer;
     font-weight: bold;
     font-size: 16px;
-    color: rgb(45, 105, 137);
+    color: white;
+    background-color:  rgb(59, 88, 116);
+    border: 1px solid white;
     border-radius: 0 50px 50px 0;
-    height: 52px;
+    height: 50px;
     width: 70px;
     transition: transform 0.3s ease;
 }
 .barr .button {
     font-weight: bold;
     font-size: 16px;
-    color: rgb(45, 105, 137);
+    color: black;
+    border: 1px solid black;
     border-radius: 0 50px 50px 0;
-    height: 52px;
+    height: 50px;
     width: 70px;
     transition: transform 0.3s ease;
 }
@@ -787,6 +798,7 @@ input {
     text-decoration: none;
 }
 #btn-circle {
+    height: 50px;
     border: none;
     background-color: transparent;
     transition: transform 0.3s ease-in-out; /* Apply transition to the button */
@@ -883,6 +895,11 @@ input:focus {
     margin-bottom: 30px;
 }
 .search-over .barr input{
+    background: url('../images/search.png') no-repeat 10px center;
+    background-size: 20px;
+    padding-left: 35px;
+    border: 1px solid #ccc;
+    outline: none;
     max-width: 400px;
     width: 300px;
 }
