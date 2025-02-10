@@ -18,6 +18,9 @@
         <main>
         <div class="left">
             <div data-key="goto" class="section_title">Go To</div>
+            <div class="tables">
+                <a href="invoices/invoiceManager.php">Invoice Manager</a>
+            </div>
             <?php $tables = getTables(); ?>
             <?php
             foreach ($tables as $table) {

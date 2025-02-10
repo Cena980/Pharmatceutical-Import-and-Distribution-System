@@ -655,6 +655,9 @@ input {
 #tblreportlimited tr:nth-child(even) {
     background-color: #cef2dc; /* Light gray for even rows */
 }
+#sales_data {
+    max-width: 200px;
+}
 
 /* Refill Table Design */
 /* Professional and Fine-Tuned Table Design */
@@ -899,6 +902,7 @@ input:focus {
     background-size: 20px;
     padding-left: 35px;
     border: 1px solid #ccc;
+    color: black;
     outline: none;
     max-width: 400px;
     width: 300px;
