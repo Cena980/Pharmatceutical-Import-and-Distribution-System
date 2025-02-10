@@ -82,6 +82,7 @@
                     <tbody id="sales_table_body">
                         <tr>
                             <th>No</th>
+                            <th>Name</th>
                             <th>Quantity</th>
                             <th>Price</th>
                             <th>Discount</th>
@@ -155,14 +156,33 @@
 
                         salesData.forEach((sale, index) => {
                             const row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td>${index + 1}</td>
-                                <td>${sale.quantity}</td>
-                                <td>${sale.price.toFixed(2)}</td>
-                                <td>${sale.discount.toFixed(2)}</td>
-                                <td>${sale.total_price.toFixed(2)}</td>
-                            `;
-                            salesTableBody.appendChild(row);
+
+                            // Fetch drug name using inventory_id
+                            fetch(`../php/getDrugName.php?inventory_id=${sale.inventory_id}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    row.innerHTML = `
+                                        <td>${index + 1}</td>
+                                        <td>${data.drug_name}</td> <!-- Display drug name -->
+                                        <td>${sale.quantity}</td>
+                                        <td>${sale.price.toFixed(2)}</td>
+                                        <td>${sale.discount.toFixed(2)}</td>
+                                        <td>${sale.total_price.toFixed(2)}</td>
+                                    `;
+                                    salesTableBody.appendChild(row);
+                                })
+                                .catch(error => {
+                                    console.error("Error fetching drug name:", error);
+                                    row.innerHTML = `
+                                        <td>${index + 1}</td>
+                                        <td>N/A</td> <!-- Display N/A if drug name fetch fails -->
+                                        <td>${sale.quantity}</td>
+                                        <td>${sale.price.toFixed(2)}</td>
+                                        <td>${sale.discount.toFixed(2)}</td>
+                                        <td>${sale.total_price.toFixed(2)}</td>
+                                    `;
+                                    salesTableBody.appendChild(row);
+                                });
                         });
                     } catch (error) {
                         console.error("Error parsing sales_data:", error);
