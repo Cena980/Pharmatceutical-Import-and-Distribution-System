@@ -8,8 +8,14 @@
     if($num_rows>0){
         echo "<table border='1' id='tblreport'>";
         echo "<tr>
-                    <th>Customer ID</th><th>Customer Shop No</th><th>Customer Name</th><th>Address</th>
-                    <th>Phone</th><th>Balance</th><th>Useful Info</th>
+                    <th data-key='customer-id'>Customer ID</th>
+                    <th data-key='shop'>Customer Shop No</th>
+                    <th data-key='customer-name'>Customer Name</th>
+                    <th data-key='address'>Address</th>
+                    <th data-key='phone'>Phone</th>
+                    <th data-key='balance'>Balance</th>
+                    <th data-key='info'>Useful Info</th>
+                    <th data-key='actions' colspan= '2'>Actions</th>
                 </tr>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
@@ -31,6 +37,8 @@
                     <input type='hidden' name='useful_info' value='" . $r['useful_info'] . "'>
                     <button type='submit'>Update</button>
                 </form>
+              </td>";
+            echo "<td>
                 <form action='updatecustomer.php' method='GET'>
                     <input type='hidden' name='customer_id' value='" . $r['customer_id'] . "'>
                     <input type='hidden' name='customer_shop' value='" . $r['customer_shop'] . "'>

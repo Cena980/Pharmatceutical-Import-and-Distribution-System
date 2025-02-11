@@ -16,6 +16,7 @@
                     <th data-key='company-name'>Company Name</th>
                     <th data-key='type'>Type</th>
                     <th data-key='demo'>Demography</th>
+                    <th data-key='actions' colspan='2'>Actions</th>
                 </tr>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
@@ -38,6 +39,8 @@
 
                 <button data-key='update-button' type='submit' class=' btn-link'>Update</button>
             </form>
+          </td>";
+            echo "<td>
             <form action='updatedrugs.php' method='GET'>
                 <input type='hidden' name='Drug_ID' value='" . $r['drug_id'] . "'>
                 <input type='hidden' name='Comp' value='" . $r['company'] . "'>

@@ -48,7 +48,7 @@ echo '<script>
                         <a href="sales/sales.php" data-key="nav-sales">Sales</a>
                     </li>
                     <li class="button" onclick = "location.href=\'drugs/drugs.php\'">
-                        <img class="logo" src="images/drug.png" alt="Drug Icon">
+                        <img class="logo" src="images/drug1.png" alt="Drug Icon">
                         <a href="drugs/drugs.php" data-key="nav-drugs">Drugs</a>
                     </li>
                     <li class="button" onclick = "location.href=\'employees/employees.php\'">

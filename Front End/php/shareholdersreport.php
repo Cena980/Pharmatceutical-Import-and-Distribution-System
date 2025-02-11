@@ -8,7 +8,10 @@
     if($num_rows>0){
         echo "<table border='1' id='tblreport'>";
         echo "<tr>
-                    <th>ID</th><th>Name</th><th>Phone</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th data-key='actions' colspan='2'>Actions</th>
                 </tr>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
@@ -22,6 +25,8 @@
                         <input type='hidden' name='Phone' value='" . $r['Phone'] . "'>
                         <button type='submit' class=' btn-link'>Update</button>
                     </form>
+                    </td>";
+            echo "<td>
                     <form action='updateshareholders.php' method='GET'>
                         <input type='hidden' name='Share_ID' value='" . $r['Share_ID'] . "'>
                         <input type='hidden' name='Holder_Name' value='" . $r['Holder_Name'] . "'>
