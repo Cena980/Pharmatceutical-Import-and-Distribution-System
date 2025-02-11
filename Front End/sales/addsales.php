@@ -116,6 +116,7 @@
                     qnt--;
                     document.getElementById("qnt").value = qnt;
                     renumberRows(rowNumber);
+                    addEventForClickOutSide();
                 }
             }
             function renumberRows(number){
@@ -245,6 +246,17 @@
                     suggestionBox.style.display = "none";
                 }
             });
+            // Hide the suggestion box when clicking outside
+            function addEventForClickOutSide() {
+                for(let i=1; i<=qnt; i++){
+                    document.addEventListener("click", function (e) {
+                        const suggestionBox = document.getElementById(`suggestion_${i}`);
+                        if (!e.target.closest(`#Drug_Name_${i}`) && !e.target.closest(`suggestion_${i}`)) {
+                            suggestionBox.style.display = "none";
+                        }
+                    });
+                }
+            }
             document.querySelector("table tbody").addEventListener("input", function (e) {
                 if (e.target.name.startsWith("Drug_Name_")) {
                     const rowNumber = e.target.name.split("_")[2]; // Extract the row number
@@ -337,6 +349,7 @@
 
                 // Update the hidden input field for quantity
                 document.getElementById("qnt").value = qnt;
+                addEventForClickOutSide();
             }
             function addCustomerShopEventListener(rowNumber) {
             document.getElementById(`customer_shop_${rowNumber}`).addEventListener("input", function () {

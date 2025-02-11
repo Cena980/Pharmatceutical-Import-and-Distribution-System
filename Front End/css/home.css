@@ -421,43 +421,108 @@ input {
 
 /* Suggestion Popups */
 .suggestion-box, .suggestion {
-    z-index: 1000; /* Ensure this is higher than the footer's z-index */
-    position: absolute; /* Ensure the position is set to absolute or fixed */
-    background: white;
-    border: 1px solid #ccc;
-    display: none;
-}
-.suggestion {
-    border: 1px solid #ccc;
-    display: none;
-    position: absolute;
-    background: white;
     z-index: 1000;
-    width: calc(100% - 2px);
+    position: absolute;
+    background: #ffffff;
+    border-radius: 8px;
+    display: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    margin-top: 4px;
+    width: 350px; /* Fixed width for better control */
+    max-height: 300px;
+    overflow-y: auto;
+    animation: fadeIn 0.2s ease-out;
 }
 
-.suggestion-box table tr,
-.suggestions_vendors table tr {
-    padding: 5px;
-    border-bottom: 1px solid #ccc;
-    border-radius: 15px;
-    transition: transform 0.3s ease;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.suggestion-box table, .suggestion table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.suggestion-box table tr, .suggestions_vendors table tr {
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.suggestion-box table tr:last-child,
+.suggestions_vendors table tr:last-child {
+    border-bottom: none;
 }
 
 .suggestion-box table tr:hover,
 .suggestions_vendors table tr:hover {
-    background-color: #f0f0f0;
-    transform: scale(1.05);
+    background: #ebf1f6;
+    transform: none;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
+
+/* Customer Specific Styling */
 #suggestion_customer table tr {
-    padding: 5px;
-    border-bottom: 1px solid #ccc;
-    border-radius: 15px;
-    transition: transform 0.3s ease;
+    padding: 12px 16px;
+    transition: all 0.2s ease;
 }
+
 #suggestion_customer table tr:hover {
-    background-color: #f0f0f0;
-    transform: scale(1.05);
+    background: #f1f3f5;
+    box-shadow: none;
+}
+
+/* Highlight Matching Text */
+.highlight-match {
+    font-weight: 600;
+    color: #2b8a3e;
+}
+
+/* Scrollbar Styling */
+.suggestion-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+.suggestion-box::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.suggestion-box::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+/* Category Badges */
+.suggestion-category {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: #e9ecef;
+    margin-left: 8px;
+}
+
+/* Vendor Specific Styling */
+.suggestion-vendor {
+    position: relative;
+    padding-left: 32px;
+}
+
+.suggestion-vendor::before {
+    content: "•";
+    color: #2b8a3e;
+    position: absolute;
+    left: 16px;
+}
+
+/* No Results State */
+.no-results {
+    padding: 16px;
+    color: #868e96;
+    text-align: center;
 }
 
 
