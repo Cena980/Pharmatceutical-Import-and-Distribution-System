@@ -41,6 +41,21 @@ echo '<!DOCTYPE html>
     } else {
         echo 'Could not fetch Vendor ID for ' . $Vendor_Name;
     }
+    //fetching debt balance from vendors table
+    $vendor_debt_O = 0;
+    if (!empty($vendor_id)) {
+        $sql31 = "SELECT Debt FROM vendors WHERE vendor_id = '$vendor_id'";
+        $received_result = mysqli_query($connect, $sql31);
+
+        if ($received_result && mysqli_num_rows($received_result) > 0) {
+            $received_result_row = mysqli_fetch_assoc($received_result);
+            $vendor_debt_O = $received_result_row['Debt'];
+        } else {
+            // Set balance to 0 if no balance was retrieved
+            $vendor_debt_O = 0;
+            //echo "<div class='alerts'>recieved not found for invoice, defaulting to 0."; echo "</div>";
+        }
+    }
 
     if (!empty($vendor_id)) {
         // Check if the invoice already exists
@@ -139,22 +154,6 @@ echo '<!DOCTYPE html>
         ];
     }
 
-    //fetching old debt balance from purcahse order table before insertion
-    $Remaining_Debt_O = 0;
-    if (!empty($order_id)) {
-        $sql32 = "SELECT Remaining_Debt FROM `purchase order` WHERE po_id = '$order_id'";
-        $received_result = mysqli_query($connect, $sql32);
-    
-        if ($received_result && mysqli_num_rows($received_result) > 0) {
-            $received_result_row = mysqli_fetch_assoc($received_result);
-            $Remaining_Debt_O = $received_result_row['Remaining_Debt'];
-        } else {
-            // Set balance to 0 if no balance was retrieved
-            $Remaining_Debt_O = 0;
-            //echo "<div class='alerts'>recieved not found for invoice, defaulting to 0."; echo "</div>";
-        }
-    }
-
     // Build bulk INSERT query
     $sql = "INSERT into purchases (vendor_id, drug_id, price, quantity, Discount, Expiration, purchase_date, total_amount, po_id)
              values ";
@@ -198,53 +197,16 @@ echo '<!DOCTYPE html>
             //echo "<div class='alerts'>recieved not found for invoice, defaulting to 0."; echo "</div>";
         }
     }
-    //fetching debt balance from vendors table
-    $vendor_debt = 0;
-    if (!empty($vendor_id)) {
-        $sql31 = "SELECT Debt FROM vendors WHERE vendor_id = '$vendor_id'";
-        $received_result = mysqli_query($connect, $sql31);
-    
-        if ($received_result && mysqli_num_rows($received_result) > 0) {
-            $received_result_row = mysqli_fetch_assoc($received_result);
-            $vendor_debt = $received_result_row['Debt'];
-        } else {
-            // Set balance to 0 if no balance was retrieved
-            $vendor_debt = 0;
-            //echo "<div class='alerts'>recieved not found for invoice, defaulting to 0."; echo "</div>";
-        }
-    }
-    //fetching debt balance from purcahse order table
-    $Remaining_Debt_F = 0;
-    if (!empty($order_id)) {
-        $sql32 = "SELECT Remaining_Debt FROM `purchase order` WHERE po_id = '$order_id'";
-        $received_result = mysqli_query($connect, $sql32);
-    
-        if ($received_result && mysqli_num_rows($received_result) > 0) {
-            $received_result_row = mysqli_fetch_assoc($received_result);
-            $Remaining_Debt_F = $received_result_row['Remaining_Debt'];
-        } else {
-            // Set balance to 0 if no balance was retrieved
-            $Remaining_Debt_F = 0;
-            //echo "<div class='alerts'>recieved not found for invoice, defaulting to 0."; echo "</div>";
-        }
-    }
 
     #upadating balance
     $Total_amount_F = $Total_amount_o + $total_purchase;
     $Amount_Paid_F = $amount_paid + $Amount_Paid_o;
     #upadintg balance in database
     $sql = "UPDATE `purchase order` SET Total_amount = ?, Amount_Paid = ? WHERE po_id = ?";
-
     // Use prepared statements to prevent SQL injection
     $stmt = mysqli_prepare($connect, $sql);
 
     if ($stmt) {
-        // Bind parameters
-        // Assuming:
-        // $total_amount is the total amount (double)
-        // $amount_paid is the amount paid (double)
-        // $remaining_debt is the remaining debt (double)
-        // $po_id is the purchase order ID (integer)
         mysqli_stmt_bind_param($stmt, "ddi", $Total_amount_F, $Amount_Paid_F, $order_id);
 
         // Execute the query
@@ -262,6 +224,12 @@ echo '<!DOCTYPE html>
     } else {
         echo "<div class='alerts'>" . json_encode(['status' => 'error', 'message' => 'Failed to prepare the query']); echo "</div>";
     }
+
+    #I used to fetch remaining_debt_o from purchase order here
+    $Remaining_Debt_O = $total_purchase - $amount_paid;
+
+    $Remaining_Debt_F = $Remaining_Debt_O + $vendor_debt_O;
+
     #upadintg balance in database
     $sql = "UPDATE vendors SET Debt = ? WHERE vendor_id = ?";
 
@@ -270,7 +238,7 @@ echo '<!DOCTYPE html>
 
     if ($stmt) {
         // Bind parameters
-        mysqli_stmt_bind_param($stmt, "di", $vendor_debt_F, $vendor_id);
+        mysqli_stmt_bind_param($stmt, "di", $Remaining_Debt_F, $vendor_id);
 
         // Execute the query
         mysqli_stmt_execute($stmt);
@@ -360,8 +328,15 @@ echo '<!DOCTYPE html>
             echo "</div>";
                 echo "<table id='tblinvoice'>";
                 echo "<tr>
-                            <th>Drug Type</th><th>Drug Name</th><th>Quantity</th><th>price</th><th>Discount</th>
-                            <th>Total_Price</th><th>Order ID</th><th>Date</th><th>Debt</th><th>Vendor</th>
+                            <th>Drug Type</th>
+                            <th>Drug Name</th>
+                            <th>Quantity</th>
+                            <th>price</th>
+                            <th>Discount</th>
+                            <th>Total_Price</th>
+                            <th>Order ID</th>
+                            <th>Date</th>
+                            <th>Vendor</th>
                         </tr>";
                 while ($r = mysqli_fetch_assoc($res)) {
                     echo "<tr>";
@@ -373,7 +348,6 @@ echo '<!DOCTYPE html>
                     echo "<td>" . $r['Total_Price'] . "</td>";
                     echo "<td>" . $r['po_id'] . "</td>";
                     echo "<td>" . $r['Purchase_Date'] . "</td>";
-                    echo "<td>" . $r['Remaining_Debt'] . "</td>";
                     echo "<td>" . $r['Vendor_Name'] . "</td>";
                     echo "</tr>";
                 }
@@ -384,10 +358,10 @@ echo '<!DOCTYPE html>
                     echo "<th>" . 'Sub Total:' ."</th>";
                     echo "<th>" . 'Old Balance:' ."</th>";
                     echo "<th>" . 'Paid:' ."</th>";
-                    echo "<th>" . 'Owed:' ."</th>";
+                    echo "<th>" . 'Grand Total:' ."</th>";
                     echo "</tr>";
                     echo "<td>" . $total_purchase . "</td>";
-                    echo "<td>" . $Remaining_Debt_O . "</td>";
+                    echo "<td>" . $vendor_debt_O . "</td>";
                     echo "<td>" . $amount_paid . "</td>";
                     echo "<td>" . $Remaining_Debt_F . "</td>";
                     echo "</tr>";
