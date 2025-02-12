@@ -111,7 +111,12 @@ echo '<!DOCTYPE html>
         $drugExp = $_POST["Expiration_$i"] ?? null;
         // Query to get the Inventory_ID for the given drug name
         if(!empty($drugName)){
-            $name = "SELECT Inventory_ID FROM inventory WHERE Drug_ID = (SELECT Drug_ID FROM drugs WHERE Drug_Name = '$drugName') AND Amount_Left = '$drugAmount' AND Expiration = '$drugExp'";
+            $name = "SELECT i.Inventory_ID 
+         FROM inventory i
+         JOIN drugs d ON i.Drug_ID = d.Drug_ID
+         WHERE d.Drug_Name = '$drugName'
+           AND i.Amount_Left = '$drugAmount'
+           AND i.Expiration = '$drugExp'";
             $Inventory_ID_result = mysqli_query($connect, $name);
         
             if ($Inventory_ID_result) {
