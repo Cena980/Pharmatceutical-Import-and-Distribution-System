@@ -19,7 +19,7 @@ echo '<!DOCTYPE html>
     include 'connection.php';
 
     $qnt = isset($_POST['qnt']) ? intval($_POST['qnt']) : 0;
-    echo "<div class='alerts'>Number of rows submitted: " . $qnt ."</div>";
+    //echo "<div class='alerts'>Number of rows submitted: " . $qnt ."</div>";
     $purchaseData = []; // Array to store purchase data
 
 
@@ -71,7 +71,7 @@ echo '<!DOCTYPE html>
                 // Invoice exists (alert with invoice details)
                 $order_check_row = mysqli_fetch_assoc($order_check_results);
                 $order_id = $order_check_row['po_id'];
-                echo "<div class='alerts'>PO already exists with ID: $order_id and Date: $date</div>";
+                //echo "<div class='alerts'>PO already exists with ID: $order_id and Date: $date</div>";
             } else {
                 // No purcahse order found, create a new one
                 $sql = "INSERT INTO `purchase order` (vendor_id, po_date, ordered_by) VALUES ('$vendor_id', '$date', '$order_by')";
@@ -214,9 +214,9 @@ echo '<!DOCTYPE html>
 
         // Check if any row was updated
         if (mysqli_stmt_affected_rows($stmt) > 0) {
-            echo "<div class='alerts'>" . json_encode(['status' => 'success', 'message' => 'Record updated successfully']); echo "</div>";
+            //echo "<div class='alerts'>" . json_encode(['status' => 'success', 'message' => 'Record updated successfully']); echo "</div>";
         } else {
-            echo "<div class='alerts'>" . json_encode(['status' => 'warning', 'message' => 'No changes made (invoice not found or same values)']); echo "</div>";
+            //echo "<div class='alerts'>" . json_encode(['status' => 'warning', 'message' => 'No changes made (invoice not found or same values)']); echo "</div>";
         }
 
         // Close the statement
@@ -245,9 +245,9 @@ echo '<!DOCTYPE html>
 
         // Check if any row was updated
         if (mysqli_stmt_affected_rows($stmt) > 0) {
-            echo "<div class='alerts'>" . json_encode(['status' => 'success', 'message' => 'Record updated successfully']); echo "</div>";
+            //echo "<div class='alerts'>" . json_encode(['status' => 'success', 'message' => 'Record updated successfully']); echo "</div>";
         } else {
-            echo "<div class='alerts'>" . json_encode(['status' => 'warning', 'message' => 'No changes made (vendor not found or same values)']); echo "</div>";
+            //echo "<div class='alerts'>" . json_encode(['status' => 'warning', 'message' => 'No changes made (vendor not found or same values)']); echo "</div>";
         }
 
         // Close the statement
@@ -266,7 +266,6 @@ echo '<!DOCTYPE html>
             echo "<div id='printableSection'>";
             echo "<div class='row'>";
                 echo "<div class='column'>";
-                echo "<div><h1>Vendor INFO</h1> </div>";
                     echo "<table class='invoice-table'>";
                                 echo "<tr>
                                 <td>Purcahsed From: </td>
@@ -303,7 +302,7 @@ echo '<!DOCTYPE html>
                         echo "</table>";
                 echo "</div>";
                 echo "<div class='column'>";
-                    echo "<div><h1>Our INFO</h1>";
+                    echo "<div>";
                     echo "<table class='invoice-table'>";
                                 echo "<tr>
                                 <td>Address:</td>

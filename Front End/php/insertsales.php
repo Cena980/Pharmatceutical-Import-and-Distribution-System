@@ -79,20 +79,20 @@ echo '<!DOCTYPE html>
         $invoice_check_results = mysqli_query($connect, $invoice_check);
     
         if ($invoice_check_results === false) {
-            echo "Error checking for existing invoice: " . mysqli_error($connect);
+            //echo "Error checking for existing invoice: " . mysqli_error($connect);
         } else {
             if (mysqli_num_rows($invoice_check_results) > 0) {
                 // Invoice exists
                 $invoice_check_row = mysqli_fetch_assoc($invoice_check_results);
                 $invoice_ID = $invoice_check_row['invoice_id'];
-                echo "<div class='alerts'>Invoice already exists with ID: $invoice_ID and Date: $date</div>";
+                //echo "<div class='alerts'>Invoice already exists with ID: $invoice_ID and Date: $date</div>";
             } else {
                 // No invoice found, create a new one
                 $sql = "INSERT INTO invoices (customer_id, date, sales_officer) VALUES ('$customerID', '$date', '$Sales_Officer')";
                 if (mysqli_query($connect, $sql)) {
                     // Use mysqli_insert_id to get the new invoice ID reliably
                     $invoice_ID = mysqli_insert_id($connect);
-                    echo "<div class='alerts'>Invoice has been created with ID: $invoice_ID.</div>";
+                    //echo "<div class='alerts'>Invoice has been created with ID: $invoice_ID.</div>";
                 } else {
                     echo "<div class='alerts'>Invoice creation failed: " . mysqli_error($connect) . "</div>";
                 }
@@ -310,7 +310,7 @@ echo '<!DOCTYPE html>
         if (mysqli_stmt_affected_rows($stmt) > 0) {
             //echo "<div class= 'alerts'>" . json_encode(['status' => 'success', 'message' => 'recieved updated successfully']); echo "</div>";
         } else {
-            echo "<div class= 'alerts'>" . json_encode(['status' => 'warning', 'message' => 'No changes made (invoice not found or same received)']); echo "</div>";
+            //echo "<div class= 'alerts'>" . json_encode(['status' => 'warning', 'message' => 'No changes made (invoice not found or same received)']); echo "</div>";
         }
 
         // Close the statement
@@ -357,7 +357,7 @@ echo '<!DOCTYPE html>
         if (mysqli_stmt_affected_rows($stmt) > 0) {
             //echo "<div class= 'alerts'>" . json_encode(['status' => 'success', 'message' => 'total sales inserted successfully']); echo "</div>";
         } else {
-            echo "<div class= 'alerts'>" . json_encode(['status' => 'warning', 'message' => 'No changes made (invoice not found or same total_sales)']); echo "</div>";
+            //echo "<div class= 'alerts'>" . json_encode(['status' => 'warning', 'message' => 'No changes made (invoice not found or same total_sales)']); echo "</div>";
         }
 
         // Close the statement
@@ -385,9 +385,9 @@ echo '<!DOCTYPE html>
 
             // Check if any row was updated
             if (mysqli_stmt_affected_rows($stmt) > 0) {
-                echo "<div class= 'alerts'>" . json_encode(['status' => 'success', 'message' => 'Balance updated successfully']); echo "</div>";
+                //echo "<div class= 'alerts'>" . json_encode(['status' => 'success', 'message' => 'Balance updated successfully']); echo "</div>";
             } else {
-                echo "<div class= 'alerts'>" . json_encode(['status' => 'warning', 'message' => 'No changes made (customer not found or same balance)']); echo "</div>";
+                //echo "<div class= 'alerts'>" . json_encode(['status' => 'warning', 'message' => 'No changes made (customer not found or same balance)']); echo "</div>";
             }
 
             // Close the statement

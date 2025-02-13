@@ -949,11 +949,14 @@ input:focus {
     margin-bottom: 8px;
 }
 .alerts {
-    width: 200px;
-    max-width: 300px;
+    width: 300px;
+    margin-bottom: 10px;
+    background-color: rgb(176, 214, 250);
+    border-radius: 10px;
+    max-width: 500px;
     margin: auto;
+    margin-top: 10px;
     text-align: center;
-    border-bottom: 1px solid black;
 }
 
 /*search on main pages */
