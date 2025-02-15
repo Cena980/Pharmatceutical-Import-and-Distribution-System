@@ -8,6 +8,7 @@
     </head>
     <body>
         <?php include '../php/header2.php' ?>
+        <origin>
         <div id="over"><h1 data-key="sales">Invoice Manager</h1></div>
         <div class="search-over">
             <div class="barr">
@@ -26,6 +27,7 @@
             <?php include '../php/invoicesreport.php';?>
         </div>
         </div>
+        </origin>
         <?php include '../php/footer.php' ?>
         <script>
             async function Invoices() {

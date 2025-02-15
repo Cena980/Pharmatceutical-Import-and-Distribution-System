@@ -8,6 +8,7 @@
     </head>
     <body>
         <?php include '../php/header2.php' ?>
+        <origin>
         <div id="over"><h1>Shareholders records</h1></div>
         <div class="button-group">
             <button class="btn btn-save" onclick="location.href='insertshareholders.php'">Add</button>
@@ -17,6 +18,7 @@
         </div>
 
         </div>
+        </origin>
         <?php include '../php/footer.php' ?>
     </body>
 </html>

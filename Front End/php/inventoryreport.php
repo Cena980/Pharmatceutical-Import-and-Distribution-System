@@ -1,7 +1,7 @@
 <?php
 
     include 'connection.php';
-    $query = "select * from main order by drug_name asc";
+    $query = "select * from main order by drug_name asc limit 200";
     $res = mysqli_query($connect, $query);
 
     $num_rows = mysqli_num_rows($res);

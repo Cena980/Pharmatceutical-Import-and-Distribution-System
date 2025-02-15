@@ -8,6 +8,7 @@
     </head>
     <body>
         <?php include '../php/header2.php' ?>
+        <origin>
         <div id="over"><h1>Employee records</h1></div>
         <div class="button-group">
             <button class="btn btn-save" onclick="location.href='Insertemployee.php'">Add </button>
@@ -16,6 +17,7 @@
             <?php include '../php/employeereport.php';?>
         </div>
      </div>
+     </origin>
      <?php include '../php/footer.php' ?>
     </body>
 </html>

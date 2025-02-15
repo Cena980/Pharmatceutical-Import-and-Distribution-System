@@ -10,6 +10,7 @@
     </head>
     <body>
         <?php include 'php/header1.php' ?>
+        <origin>
         <main>
             <?php $Shareholders = getShareholders() ?>
             <?php
@@ -27,6 +28,7 @@
                 }
             ?>
         </main>
+        </origin>
         <?php include 'php/footer.php' ?>
     </body>
 </html>

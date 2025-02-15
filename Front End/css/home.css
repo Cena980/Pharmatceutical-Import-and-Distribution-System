@@ -1,15 +1,27 @@
-/* General Body and Layout */
+/* Ensure header loads instantly */
 body {
     font-family: 'Times New Roman', Times, serif;
     font-size: 12pt;
     padding: 0;
     background-color: #f4f4f4;
-    transition: opacity 0.5s ease-in-out;
-    height: 100%;
     margin: 0;
     display: flex;
     flex-direction: column;
 }
+
+/* Hide main content initially */
+origin {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+/* Show main content when the page loads */
+body.loaded origin {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* The main container should take up remaining space */
 #content {
     flex: 1;
@@ -51,7 +63,7 @@ main {
 
 .barr form input {
     background: url('../images/search.png') no-repeat 10px center;
-    background-color:  rgb(59, 88, 116);
+    background-color:  rgb(74, 97, 119);
     background-size: 20px;
     color: white;
     padding: 0 10px;
@@ -112,7 +124,7 @@ main {
 
 #switch button {
     border-style: none;
-    background-color:  rgb(44, 78, 109);
+    background-color: transparent;
     height: 52px;
     width: auto;
     font-size: 16px;
@@ -146,7 +158,7 @@ main {
 }
 
 #bar2 .logo {
-    height: 25px;
+    height: 50%;
     margin: 0;
 }
 
@@ -185,9 +197,9 @@ ul {
     justify-content: center;
     text-align: center;
     cursor: pointer;
+    margin-top: 5px;
     border-radius: 8px;
     color: white;
-    transition: transform 0.3s ease;
 }
 
 .button a {
@@ -950,13 +962,14 @@ input:focus {
 }
 .alerts {
     width: 300px;
-    margin-bottom: 10px;
-    background-color: rgb(176, 214, 250);
+    margin-bottom: 5px;
+    margin-top: 5px;
     border-radius: 10px;
     max-width: 500px;
     margin: auto;
     margin-top: 10px;
     text-align: center;
+    font-weight: bold;
 }
 
 /*search on main pages */
@@ -1078,14 +1091,27 @@ input:focus {
 
 
 /*navbar active status */
-.button.active {
-    background-color: #f4f4f4;
-    color: black;
+.button {
+    /* Default styles for the button */
+    background-color: transparent; /* Initial background color */
+    color: inherit; /* Inherit text color */
     border-radius: 5px;
     padding: 5px;
     font-weight: bold;
     height: 55px;
+    transition: background-color 1.5s ease, color 1.4s ease, transform 0.5s ease; /* Smooth transition for background and text color */
 }
-.button.active a{
-    color: black;
+
+.button.active {
+    height: 65px;
+    background-color: rgb(212, 210, 210); /* Final background color */
+    color: black; /* Final text color */
+}
+
+.button.active a {
+    font-size: 20px;
+    color: black; /* Ensure the link text color matches */
+}
+.button.active .logo {
+    height: 30px;
 }

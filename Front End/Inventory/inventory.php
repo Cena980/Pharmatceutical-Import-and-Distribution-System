@@ -8,6 +8,7 @@
     </head>
     <body>
         <?php include '../php/header2.php' ?>
+        <origin>
         <div class="search-over">
             <div class="barr">
             <button onclick="resetSearch()" id="btn-circle" ><img src="../images/clear.png"></button>
@@ -37,6 +38,7 @@
             </div>
         </div>
         </div>
+        </origin>
 
         <?php include '../php/footer.php' ?>
         <script>

@@ -30,6 +30,7 @@ echo '<script>
                 <div class="barr">
                     <div id="switch">
                         <button  id=\'buttonSwitchR\' onclick="setLanguage(\'en\')">En</button>
+                        <p>|</p>
                         <button id=\'buttonSwitchL\'  onclick="setLanguage(\'fa\')">فا</button>
                     </div>
                 </div>
@@ -75,58 +76,42 @@ echo '<script>
                 </ul>
             </div>
         </div>
-
+        
         <script>
-            // Get all `li` elements with the class `button`
-            const buttons = document.querySelectorAll(\'.button\');
-
-            // Add a click event listener to each button
-            buttons.forEach(button => {
-                button.addEventListener(\'click\', () => {
-                    // Remove the `active` class from all buttons
-                    buttons.forEach(btn => btn.classList.remove(\'active\'));
-
-                    // Add the `active` class to the clicked button
-                    button.classList.add(\'active\');
+            (function() {
+                const currentPath = window.location.pathname.split(\'/\').pop();
+                document.addEventListener(\'DOMContentLoaded\', () => {
+                    document.querySelectorAll(\'.button a\').forEach(link => {
+                        const linkPath = new URL(link.href, window.location.origin).pathname.split(\'/\').pop();
+                        if (linkPath === currentPath) {
+                            link.parentElement.classList.add(\'active\'); // Apply before full load
+                        }
+                    });
                 });
-            });
-            window.onload = function () {
-            // Get the last part of the current path (everything after the last slash)
-            const currentPath = window.location.pathname.substring(window.location.pathname.lastIndexOf(\'/\') + 1);
-
-            const buttons = document.querySelectorAll(\'.button\');
-
-            buttons.forEach(button => {
-                const link = button.querySelector(\'a\');
-
-                if (link) {
-                    // Get the last part of the href path
-                    const linkPath = new URL(link.getAttribute(\'href\'), window.location.origin).pathname;
-                    const linkLastPart = linkPath.substring(linkPath.lastIndexOf(\'/\') + 1);
-
-                    // Compare the last parts of the paths
-                    if (linkLastPart === currentPath) {
-                        button.classList.add(\'active\');
-                    } else {
-                        button.classList.remove(\'active\');
-                    }
-                }
-            });
-        };
-            
-
-
-
+            })();
         </script>
 
-
         <script>
-            document.querySelectorAll(\'.button\').forEach(li => {
-                li.addEventListener(\'click\', () => {
-                    const url = li.getAttribute(\'data-url\');
-                    if (url) {
-                        window.location.href = url;
-                    }
+        document.addEventListener(\'DOMContentLoaded\', () => {
+            document.body.classList.add(\'loaded\');
+        });
+            document.addEventListener(\'DOMContentLoaded\', () => {
+                // Get the last part of the current path (everything after the last slash)
+                const currentPath = window.location.pathname.substring(window.location.pathname.lastIndexOf(\'/\') + 1);
+
+                // Get all `li` elements with the class `button`
+                const buttons = document.querySelectorAll(\'.button\');
+
+                // Set the `active` class on the matching button as soon as the DOM is ready
+
+                // Add click event listeners for navigation
+                buttons.forEach(button => {
+                    button.addEventListener(\'click\', () => {
+                        const url = button.getAttribute(\'data-url\');
+                        if (url) {
+                            window.location.href = url;
+                        }
+                    });
                 });
             });
 

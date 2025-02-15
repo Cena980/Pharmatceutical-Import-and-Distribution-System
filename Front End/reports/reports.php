@@ -8,6 +8,7 @@
     </head>
     <body>
         <?php include '../php/header2.php' ?>
+        <origin>
         <div id="over"><h1 data-key="sales">Reports</h1></div>
         <div class="search-over">
             <div class="barr">
@@ -57,6 +58,7 @@
         </div>
         
         </div>
+        </origin>
         <?php include '../php/footer.php' ?>
         <script>
            const salesData = [

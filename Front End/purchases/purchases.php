@@ -9,6 +9,7 @@
     </head>
     <body>
         <?php include '../php/header2.php' ?>
+        <origin>
         <div id="over"><h1>Purchases</h1></div>
         <div class="search-over">
             <div class="barr">
@@ -27,6 +28,7 @@
             <?php include '../php/purchasesreport.php';?>
         </div>
         </div>
+        </origin>
         <?php include '../php/footer.php' ?>
         <script>
             async function purchases() {

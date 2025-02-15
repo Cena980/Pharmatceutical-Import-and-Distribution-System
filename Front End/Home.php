@@ -15,6 +15,7 @@
     <body>
         <!-- fetching header from server  -->
         <?php include 'php/header1.php' ?>
+        <origin>
         <main>
         <div class="left">
             <div data-key="goto" class="section_title">Go To</div>
@@ -48,7 +49,7 @@
 
             <div class="right">
                 <div data-key="products" class="section_title">Products</div>
-                <?php $Drugs = getDrugs(4) ?>
+                <?php $Drugs = getDrugs(3) ?>
                 <div class="product">
                     <?php
                         foreach($Drugs as $Drug){
@@ -79,6 +80,7 @@
             </div>
             
         </main>
+                    </origin>
         <!-- fetching footer from server -->
          <?php include 'php/footer.php' ?>
     </body>
