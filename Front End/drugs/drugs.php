@@ -59,6 +59,13 @@
                 document.getElementById('search_result').innerHTML = '';
             }
 
+            // Add event listener to the input field
+            document.getElementById('searchdrugs').addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // Prevent the default form submission
+                    drugs(); // Call the drugs function to perform the search
+                }
+            });
         </script>
     </body>
 </html>

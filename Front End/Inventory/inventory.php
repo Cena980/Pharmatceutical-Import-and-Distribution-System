@@ -42,6 +42,13 @@
 
         <?php include '../php/footer.php' ?>
         <script>
+            // Add event listener to the input field
+            document.getElementById('searchinventory').addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // Prevent the default form submission
+                    Inventory(); // Call the drugs function to perform the search
+                }
+            });
             async function Inventory() {
                 const searchTerm = document.getElementById('searchinventory').value.trim();
                 const resultDiv = document.getElementById('search_result');

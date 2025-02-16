@@ -78,6 +78,13 @@ echo '<script>
         </div>
         
         <script>
+            // Add event listener to the input field
+            document.getElementById(\'search\').addEventListener(\'keypress\', function(event) {
+                if (event.key === \'Enter\') {
+                    event.preventDefault(); // Prevent the default form submission
+                    validate1(); // Call the validate function to perform the search
+                }
+            });
             (function() {
                 const currentPath = window.location.pathname.split(\'/\').pop();
                 document.addEventListener(\'DOMContentLoaded\', () => {
