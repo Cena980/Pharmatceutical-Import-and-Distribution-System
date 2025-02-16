@@ -6,9 +6,15 @@
 </head>
 <body>
     <?php include '../php/header2.php' ?>
-    <div id="over"><h1>Update</h1></div>
+    <div id="over"><h1>Update Invoice</h1></div>
     <form name="sale" method="post">
         <input type="hidden" name="qnt" id="qnt" value="1">
+        <div class="fixed-input">
+            <div class="form-group">
+                <label data-key="invoice-id" for="invoice_id">Invoice ID</label>
+                <input type="number" name="invoice_id" id="invoice_id" autocomplete="off">
+            </div>
+        </div>
         <div class="fixed-input">
             <div class="form-group">
                 <label data-key="date" for="Date_1">Date</label>
@@ -170,6 +176,7 @@
             const urlParams = new URLSearchParams(window.location.search);
 
             // Populate the fixed inputs
+            document.getElementById('invoice_id').value = urlParams.get('invoice_id');
             document.getElementById('Date_1').value = urlParams.get('date');
             document.getElementById('AR_1').value = urlParams.get('received');
             document.getElementById('ci_1').value = urlParams.get('cut_id');
