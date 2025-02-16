@@ -303,7 +303,7 @@ echo '<!DOCTYPE html>
                 echo "</div>";
                 echo "<div class='column'>";
                     echo "<div>";
-                    echo "<table class='invoice-table'>";
+                    echo "<table class='invoice-tablen'>";
                                 echo "<tr>
                                 <td>Address:</td>
                                 <td>Mazar Hotel</td>

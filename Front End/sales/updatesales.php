@@ -80,7 +80,6 @@
                 document.getElementById('Cut_ID').value = urlParams.get('Cut_ID') || '';
                 document.getElementById('Customer_ID').value = urlParams.get('Customer_ID') || '';
                 document.getElementById('Total_Price').value = urlParams.get('Total_Price') || '';
-                document.getElementById('Amount_Received').value = urlParams.get('Amount_Received') || '';
                 document.getElementById('Note').value = urlParams.get('Note') || '';
             };
             function validate(){

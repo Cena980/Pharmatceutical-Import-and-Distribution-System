@@ -30,6 +30,7 @@ echo '<script>
                 <div class="barr">
                     <div id="switch">
                         <button id=\'buttonSwitchR\' onclick="setLanguage(\'en\')">En</button>
+                        <p>|</p>
                         <button id=\'buttonSwitchL\' onclick="setLanguage(\'fa\')">فا</button>
                     </div>
                 </div>

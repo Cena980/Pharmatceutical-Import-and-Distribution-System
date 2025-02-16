@@ -107,6 +107,9 @@ main {
     width: 70px;
     transition: transform 0.3s ease;
 }
+.barr2 .button {
+    margin-top: 5px;
+}
 #barover #bar .barr p{
     font-weight: bold;
     color: white;
@@ -197,7 +200,6 @@ ul {
     justify-content: center;
     text-align: center;
     cursor: pointer;
-    margin-top: 5px;
     border-radius: 8px;
     color: white;
 }
@@ -408,6 +410,9 @@ input {
     margin: auto;
     margin-top: 30px;
     width: auto;
+}
+.table-success{
+    max-width: 90%;
 }
 .inventory {
     border-top: 2px solid black;
@@ -686,7 +691,7 @@ input {
 
 
 #tblreport {
-    max-width: 100%; /* Adjust overall table width */
+    max-width: 98%; /* Adjust overall table width */
     border-collapse: collapse;
     margin: auto;
     font-family: 'Arial', sans-serif;
@@ -698,7 +703,7 @@ input {
     table-layout: auto; /* Allow columns to adjust based on content */
     margin-bottom: 80px;
 }
-#tbreport th,
+#tblreport th,
 #tblreport td {
     padding: 8px 10px; /* Adjust padding inside cells */
     text-align: left;
@@ -876,7 +881,14 @@ input {
     text-decoration: none;
     background-color: none;
     font-weight: bold;
+    border-radius: 5px;
     text-decoration: none;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    border: 1px solid white;
+}
+.btn-link:hover{
+    transform: scale(1.1);
 }
 #btn-circle {
     height: 50px;

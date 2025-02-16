@@ -14,6 +14,7 @@
                 <table class="table table-warning">
                     <thead>
                         <tr>
+                            <th data-key="no">No</th>
                             <th data-key="company-id">Company</th>
                             <th data-key="drug-name">Drug Name</th>
                             <th data-key="ingredients">Ingredients</th>
@@ -23,22 +24,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr id="row_1">
+                            <td><p id="no_1">1</p></td>
                             <td>
                                 <input type="text" name="Comp_Name_1" id="Comp_Name_1">
                                 <div id="suggestion_1" class="suggestion-box" style="display: none; position: absolute; background-color: white;"></div>
                                 <div id="nc1" class="error"></div>
                             </td>
                             <td>
-                                <input type="text" name="Drug_Name_1" id="dr1">
+                                <input type="text" name="Drug_Name_1" id="Drug_Name_1">
                                 <div id="ndr1" class="error"></div>
                             </td>
                             <td>
-                                <input type="text" name="Ingredients_1" id="i1">
+                                <input type="text" name="Ingredients_1" id="Ingredients_1">
                                 <div id="ni1" class="error"></div>
                             </td>
                             <td>
-                                <input type="number" name="Tablet_PB_1" id="t1">
+                                <input type="number" name="Tablet_PB_1" id="Tablet_PB_1">
                                 <div id="nt1" class="error"></div>
                             </td>
                             <td>
@@ -51,40 +53,212 @@
                                 <div id="suggestionDemo_1" class="suggestion-box" style="display: none; position: absolute; background-color: white;"></div>
                                 <div id="nde1" class="error"></div>
                             </td>
+                            <td>
+                                <div class="delete-btn" id="delete_1" onclick="deleteRow(1)">
+                                    <img style="width:25px;" src="../images/delete.png" alt="Delete">
+                                </div>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
+
+                <div class="addRemove">
+                    <button data-key="add-button" class="btn btn-add" type="button" onclick="create_drugs()">+</button>
+                </div>
+                <div class="insertButtons" >
+                    <button data-key="save-button" class="btn btn-save" onclick="validate()">Save</button>
+                </div>
                
             </form>
-            <div class="insertButtons" >
-                <div class="addRemove">
-                <button data-key="add-button" class="btn btn-add" onclick="create_drugs(); return false;">+</button>
-                <button data-key="remove-button" class="btn btn-remove" onclick="delete_last_row(); return false;">-</button>
-                </div>
-                <button data-key="save-button" class="btn btn-save" onclick="validate()">Save</button>
-
-            </div>
         </div>
         <?php include '../php/footer.php' ?>
         <script>
             let qnt = 1;
+            function deleteRow(rowNumber) {
+                const row = document.getElementById(`row_${rowNumber}`);
+                if (row) {
+                    row.remove();
+                    qnt--;
+                    document.getElementById("qnt").value = qnt;
+                    renumberRows(rowNumber);
+                    addEventForClickOutSide();
+                }
+            }
+            function renumberRows(number) {
+                for (let i = 1; i <= qnt; i++) {
+                    let NewRowNumber = number + i; // This should be inside the loop
+                    let rowNum = NewRowNumber - 1;
+
+                    // Update the row ID
+                    const row = document.getElementById(`row_${NewRowNumber}`);
+                    if (row) row.id = `row_${rowNum}`;
+
+                    // Update the row number text
+                    const rowNo = document.getElementById(`no_${NewRowNumber}`);
+                    if (rowNo) {
+                        rowNo.id = `no_${rowNum}`;
+                        rowNo.textContent = rowNum;
+                    }
+
+                    // Update Company Name input and suggestion box
+                    const compInput = document.getElementById(`Comp_Name_${NewRowNumber}`);
+                    if (compInput) {
+                        compInput.id = `Comp_Name_${rowNum}`;
+                        compInput.name = `Comp_Name_${rowNum}`;
+                    }
+                    const compSuggestion = document.getElementById(`suggestion_${NewRowNumber}`);
+                    if (compSuggestion) {
+                        compSuggestion.id = `suggestion_${rowNum}`;
+                    }
+
+                    // Update Drug Name input and error div
+                    const drugInput = document.getElementById(`Drug_Name_${NewRowNumber}`);
+                    if (drugInput) {
+                        drugInput.id = `Drug_Name_${rowNum}`;
+                        drugInput.name = `Drug_Name_${rowNum}`;
+                    }
+                    const drugError = document.getElementById(`ndr${NewRowNumber}`);
+                    if (drugError) {
+                        drugError.id = `ndr${rowNum}`;
+                    }
+
+                    // Update Ingredients input and error div
+                    const ingredientsInput = document.getElementById(`Ingredients_${NewRowNumber}`);
+                    if (ingredientsInput) {
+                        ingredientsInput.id = `Ingredients_${rowNum}`;
+                        ingredientsInput.name = `Ingredients_${rowNum}`;
+                    }
+                    const ingredientsError = document.getElementById(`ni${NewRowNumber}`);
+                    if (ingredientsError) {
+                        ingredientsError.id = `ni${rowNum}`;
+                    }
+
+                    // Update Quantity per Box input and error div
+                    const quantityInput = document.getElementById(`Tablet_PB_${NewRowNumber}`);
+                    if (quantityInput) {
+                        quantityInput.id = `Tablet_PB_${rowNum}`;
+                        quantityInput.name = `Tablet_PB_${rowNum}`;
+                    }
+                    const quantityError = document.getElementById(`nt${NewRowNumber}`);
+                    if (quantityError) {
+                        quantityError.id = `nt${rowNum}`;
+                    }
+
+                    // Update Type input, suggestion box, and error div
+                    const typeInput = document.getElementById(`Type_${NewRowNumber}`);
+                    if (typeInput) {
+                        typeInput.id = `Type_${rowNum}`;
+                        typeInput.name = `Type_${rowNum}`;
+                    }
+                    const typeSuggestion = document.getElementById(`suggestionType_${NewRowNumber}`);
+                    if (typeSuggestion) {
+                        typeSuggestion.id = `suggestionType_${rowNum}`;
+                    }
+                    const typeError = document.getElementById(`nty${NewRowNumber}`);
+                    if (typeError) {
+                        typeError.id = `nty${rowNum}`;
+                    }
+
+                    // Update Demography input, suggestion box, and error div
+                    const demoInput = document.getElementById(`Demography_${NewRowNumber}`);
+                    if (demoInput) {
+                        demoInput.id = `Demography_${rowNum}`;
+                        demoInput.name = `Demography_${rowNum}`;
+                    }
+                    const demoSuggestion = document.getElementById(`suggestionDemo_${NewRowNumber}`);
+                    if (demoSuggestion) {
+                        demoSuggestion.id = `suggestionDemo_${rowNum}`;
+                    }
+                    const demoError = document.getElementById(`nde${NewRowNumber}`);
+                    if (demoError) {
+                        demoError.id = `nde${rowNum}`;
+                    }
+
+                    // Update Delete button
+                    const deleteButton = document.getElementById(`delete_${NewRowNumber}`);
+                    if (deleteButton) {
+                        deleteButton.id = `delete_${rowNum}`;
+                        deleteButton.onclick = function () {
+                            deleteRow(rowNum);
+                        };
+                    }
+                }
+            }
+
+            function create_drugs() {
+                qnt += 1;
+
+                const tbody = document.querySelector("table tbody");
+                const newRow = document.createElement("tr");
+                newRow.id = `row_${qnt}`;
+                newRow.innerHTML = `
+                    <td><p id="no_${qnt}">${qnt}</p></td>
+                    <td>
+                        <input type="text" name="Comp_Name_${qnt}" id="Comp_Name_${qnt}" autocomplete="off">
+                        <div id="suggestion_${qnt}" class="suggestion-box" style="display: none; position: absolute; background-color: white;"></div>
+                        <div id="nc${qnt}" class="error"></div>
+                    </td>
+                    <td>
+                        <input type="text" name="Drug_Name_${qnt}" id="Drug_Name_${qnt}" autocomplete="off">
+                        <div id="ndr${qnt}" class="error"></div>
+                    </td>
+                    <td>
+                        <input type="text" name="Ingredients_${qnt}" id="Ingredients_${qnt}" autocomplete="off">
+                        <div id="ni${qnt}" class="error"></div>
+                    </td>
+                    <td>
+                        <input type="number" name="Tablet_PB_${qnt}" id="Tablet_PB_${qnt}" autocomplete="off">
+                        <div id="nt${qnt}" class="error"></div>
+                    </td>
+                    <td>
+                        <input type="text" name="Type_${qnt}" id="Type_${qnt}" autocomplete="off">
+                        <div id="suggestionType_${qnt}" class="suggestion-box" style="display: none; position: absolute; background-color: white;"></div>
+                        <div id="nty${qnt}" class="error"></div>
+                    </td>
+                    <td>
+                        <input type="text" name="Demography_${qnt}" id="Demography_${qnt}" autocomplete="off">
+                        <div id="suggestionDemo_${qnt}" class="suggestion-box" style="display: none; position: absolute; background-color: white;"></div>
+                        <div id="nde${qnt}" class="error"></div>
+                    </td>
+                    <td>
+                        <div class="delete-btn" id="delete_${qnt}" onclick="deleteRow(${qnt})">
+                            <img style="width:25px;" src="../images/delete.png" alt="Delete">
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(newRow);
+
+                // Update the hidden input field
+                document.getElementById("qnt").value = qnt;
+
+                // Add event listeners to the new inputs
+                const newInputs = newRow.querySelectorAll("input");
+                newInputs.forEach(input => {
+                    input.addEventListener("input", handleInputEvent);
+                });
+            }
+            // Hide the suggestion box when clicking outside
+            function addEventForClickOutSide() {
+                for(let i=1; i<=qnt; i++){
+                    document.addEventListener("click", function (e) {
+                        const suggestionBox = document.getElementById(`suggestion_${i}`);
+                        if (!e.target.closest(`#Comp_Name_${i}`) && !e.target.closest(`suggestion_${i}`)) {
+                            suggestionBox.style.display = "none";
+                        }
+                    });
+                }
+            }
 
             // Function to handle input events for all input fields
-            document.querySelector("table tbody").addEventListener("input", function (e) {
+            function handleInputEvent(e) {
                 const target = e.target;
 
                 // Handle Company Name input
                 if (target.name.startsWith("Comp_Name_")) {
                     const parts = target.name.split("_");
-                    if (parts.length < 2) {
-                        console.error(`Invalid name attribute: ${target.name}. Expected format: Comp_Name_<rowNumber>`);
-                        return;
-                    }
-                    const rowNumber = parts[2]; // Extract the row number
+                    const rowNumber = parts[2];
                     const query = target.value;
                     const suggestionBox = document.getElementById(`suggestion_${rowNumber}`);
-
-                    //console.log(`Looking for suggestion_${rowNumber}:`, suggestionBox); // Debugging log
 
                     if (suggestionBox) {
                         if (query.length > 1) {
@@ -124,23 +298,15 @@
                         } else {
                             suggestionBox.style.display = "none";
                         }
-                    } else {
-                        console.error(`Suggestion box with ID suggestion_${rowNumber} not found.`);
                     }
                 }
 
                 // Handle Type input
                 if (target.name.startsWith("Type_")) {
                     const parts = target.name.split("_");
-                    if (parts.length < 2) {
-                        console.error(`Invalid name attribute: ${target.name}. Expected format: Type_<rowNumber>`);
-                        return;
-                    }
-                    const rowNumber = parts[1]; // Extract the row number
+                    const rowNumber = parts[1];
                     const query = target.value;
                     const suggestionBox = document.getElementById(`suggestionType_${rowNumber}`);
-
-                    //console.log(`Looking for suggestionType_${rowNumber}:`, suggestionBox); // Debugging log
 
                     if (suggestionBox) {
                         if (query.length > 1) {
@@ -180,23 +346,15 @@
                         } else {
                             suggestionBox.style.display = "none";
                         }
-                    } else {
-                        console.error(`Suggestion box with ID suggestionType_${rowNumber} not found.`);
                     }
                 }
 
                 // Handle Demography input
                 if (target.name.startsWith("Demography_")) {
                     const parts = target.name.split("_");
-                    if (parts.length < 2) {
-                        console.error(`Invalid name attribute: ${target.name}. Expected format: Demography_<rowNumber>`);
-                        return;
-                    }
-                    const rowNumber = parts[1]; // Extract the row number
+                    const rowNumber = parts[1];
                     const query = target.value;
                     const suggestionBox = document.getElementById(`suggestionDemo_${rowNumber}`);
-
-                    //console.log(`Looking for suggestionDemo_${rowNumber}:`, suggestionBox); // Debugging log
 
                     if (suggestionBox) {
                         if (query.length > 1) {
@@ -236,52 +394,12 @@
                         } else {
                             suggestionBox.style.display = "none";
                         }
-                    } else {
-                        console.error(`Suggestion box with ID suggestionDemo_${rowNumber} not found.`);
                     }
                 }
-            });
-
-            // Function to create new drug rows
-            function create_drugs() {
-                qnt += 1;
-
-                const tbody = document.querySelector("table tbody");
-                const newRow = document.createElement("tr");
-                newRow.innerHTML = `
-                    <td>
-                        <input type="text" name="Comp_Name_${qnt}" id="Comp_Name_${qnt}">
-                        <div id="suggestion_${qnt}" class="suggestion-box" style="display: none; position: absolute; background-color: white;"></div>
-                    </td>
-                    <td><input type="text" name="Drug_Name_${qnt}" autocomplete="off"></td>
-                    <td><input type="text" name="Ingredients_${qnt}" autocomplete="off"></td>
-                    <td><input type="number" name="Tablet_PB_${qnt}" autocomplete="off"></td>
-                    <td>
-                        <input type="text" name="Type_${qnt}" id="Type_${qnt}">
-                        <div id="suggestionType_${qnt}" class="suggestion-box" style="display: none; position: absolute; background-color: white;"></div>
-                    </td>
-                    <td>
-                        <input type="text" name="Demography_${qnt}" id="Demography_${qnt}">
-                        <div id="suggestionDemo_${qnt}" class="suggestion-box" style="display: none; position: absolute; background-color: white;"></div>
-                    </td>
-                `;
-                tbody.appendChild(newRow);
-
-                // Update the hidden input field
-                document.getElementById("qnt").value = qnt;
             }
 
-            // Function to delete the last row
-            function delete_last_row() {
-                const tbody = document.querySelector("table tbody");
-                if (tbody.rows.length > 1 && qnt > 1) {
-                    tbody.removeChild(tbody.lastElementChild);
-                    qnt -= 1;
-                    document.getElementById("qnt").value = qnt;
-                } else {
-                    alert("Cannot delete the last row!");
-                }
-            }
+            // Add event listener to the table for input events
+            document.querySelector("table tbody").addEventListener("input", handleInputEvent);
 
             // Function to validate the form
             function validate() {
