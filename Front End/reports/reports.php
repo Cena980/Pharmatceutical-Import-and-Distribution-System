@@ -111,9 +111,15 @@
                 chart.appendChild(barContainer);
             });
 
-
-            async function Sales() {
-                const searchTerm = document.getElementById('searchsales').value.trim();
+            // Add event listener to the input field
+            document.getElementById('searchreports').addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // Prevent the default form submission
+                    reports(); // Call the drugs function to perform the search
+                }
+            });
+            async function reports() {
+                const searchTerm = document.getElementById('searchreports').value.trim();
                 const resultDiv = document.getElementById('search_result');
                 
                 // Clear the previous result
@@ -122,7 +128,7 @@
                 if (searchTerm) {
                     try {
                         // Fetch the search results from the backend
-                        const response = await fetch(`../php/searchsales.php?query=${encodeURIComponent(searchTerm)}`);
+                        const response = await fetch(`../php/searchreports.php?query=${encodeURIComponent(searchTerm)}`);
                         
                         if (!response.ok) {
                             throw new Error('Error fetching search results.');
@@ -138,7 +144,7 @@
                 }
             }
             function resetSearch(){
-                document.getElementById('searchsales').value= '';
+                document.getElementById('searchreports').value= '';
                 document.getElementById('search_result').innerHTML = '';
             }
 

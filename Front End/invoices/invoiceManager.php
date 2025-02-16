@@ -30,6 +30,13 @@
         </origin>
         <?php include '../php/footer.php' ?>
         <script>
+            // Add event listener to the input field
+            document.getElementById('searchInvoices').addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // Prevent the default form submission
+                    Invoices(); // Call the drugs function to perform the search
+                }
+            });
             async function Invoices() {
                 const searchTerm = document.getElementById('searchInvoices').value.trim();
                 const resultDiv = document.getElementById('search_result');

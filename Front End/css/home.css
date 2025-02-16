@@ -3,7 +3,7 @@ body {
     font-family: 'Times New Roman', Times, serif;
     font-size: 12pt;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #e8e8e8;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -43,6 +43,8 @@ main {
     justify-content: center;
     background-color: rgb(44, 78, 109);
     font-weight: bold;
+    /* Animation for sliding in from the top */
+    animation: slideInFromTop 0.5s ease-out;
 }
 
 #bar {
@@ -151,6 +153,9 @@ main {
     justify-content: center;
     align-items: center;
     height: 60px;
+    /* Animation for sliding in from the top */
+    animation: slideInFromTop 0.5s ease-out 0.2s; /* Delayed start */
+    animation-fill-mode: both; /* Ensures the element stays in the final state */
 }
 
 #bar2 {
@@ -229,6 +234,18 @@ li {
 li:hover {
     border-radius: 15px;
     transform: scale(1.3);
+}
+
+/* Keyframes for sliding animation */
+@keyframes slideInFromTop {
+    0% {
+        transform: translateY(-30%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 #over{
