@@ -33,6 +33,7 @@ if ($res && mysqli_num_rows($res) > 0) {
             <th data-key='note'>Note</th>
             <th data-key='total_sales'>Total sales</th>
             <th data-key='sales_data'>Sales Data</th>
+            <th data-key='actions' colspan='3'>Actions</th>
             </tr>";
     while ($r = mysqli_fetch_assoc($res)) {
         echo "<tr>";
@@ -46,6 +47,51 @@ if ($res && mysqli_num_rows($res) > 0) {
         echo "<td>" . $r['note'] . "</td>";
         echo "<td>" . $r['total_sales'] . "</td>";
         echo "<td id='sales_data'>" . $r['sales_data'] . "</td>";
+        echo "<td>
+                <form action='updateinvoice.php' method='GET'>
+                    <input type='hidden' name='invoice_id' value='" . $r['invoice_id'] . "'>
+                    <input type='hidden' name='customer_id' value='" . $r['customer_id'] . "'>
+                    <input type='hidden' name='shop' value='" . $r['customer_shop'] . "'>
+                    <input type='hidden' name='date' value='" . $r['date'] . "'>
+                    <input type='hidden' name='received' value='" . $r['received'] . "'>
+                    <input type='hidden' name='owed' value='" . $r['owed'] . "'>
+                    <input type='hidden' name='sales_officer' value='" . $r['sales_officer'] . "'>
+                    <input type='hidden' name='note' value='" . $r['note'] . "'>
+                    <input type='hidden' name='total_sales' value='" . $r['total_sales'] . "'>
+                    <input type='hidden' name='sales_data' value='" . $r['sales_data'] . "'>
+                    <button type='submit' class=' btn-link'>Update</button>
+                </form>
+            </td>
+            <td>
+                <form action='updateinvoice.php' method='GET'>
+                    <input type='hidden' name='invoice_id' value='" . $r['invoice_id'] . "'>
+                    <input type='hidden' name='customer_id' value='" . $r['customer_id'] . "'>
+                    <input type='hidden' name='shop' value='" . $r['customer_shop'] . "'>
+                    <input type='hidden' name='date' value='" . $r['date'] . "'>
+                    <input type='hidden' name='received' value='" . $r['received'] . "'>
+                    <input type='hidden' name='owed' value='" . $r['owed'] . "'>
+                    <input type='hidden' name='sales_officer' value='" . $r['sales_officer'] . "'>
+                    <input type='hidden' name='note' value='" . $r['note'] . "'>
+                    <input type='hidden' name='total_sales' value='" . $r['total_sales'] . "'>
+                    <input type='hidden' name='sales_data' value='" . $r['sales_data'] . "'>
+                    <button type='submit' class=' btn-link'>Delete</button>
+                </form>
+              </td>
+              <td>
+              <form action='printinvoice.php' method='GET'>
+                  <input type='hidden' name='invoice_id' value='" . $r['invoice_id'] . "'>
+                  <input type='hidden' name='customer_id' value='" . $r['customer_id'] . "'>
+                  <input type='hidden' name='shop' value='" . $r['customer_shop'] . "'>
+                  <input type='hidden' name='date' value='" . $r['date'] . "'>
+                  <input type='hidden' name='received' value='" . $r['received'] . "'>
+                  <input type='hidden' name='owed' value='" . $r['owed'] . "'>
+                  <input type='hidden' name='sales_officer' value='" . $r['sales_officer'] . "'>
+                  <input type='hidden' name='note' value='" . $r['note'] . "'>
+                  <input type='hidden' name='total_sales' value='" . $r['total_sales'] . "'>
+                  <input type='hidden' name='sales_data' value='" . $r['sales_data'] . "'>
+                  <button type='submit' class=' btn-link'>Print</button>
+              </form>
+            </td>";
         echo "</tr>";
     }
     echo "</table>";
