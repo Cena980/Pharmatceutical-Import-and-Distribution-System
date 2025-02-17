@@ -16,8 +16,11 @@ if (is_dir($directory)) {
     if (count($sqlFiles) > 0) {
         echo "<table id='tblreport'>";
         foreach ($sqlFiles as $file) {
+            $fileUrl = urlencode($directory . '/' . $file); // Make it URL friendly
             echo "<tr>";
-            echo "<td><a href='$directory/$file' download>$file</a></td>";
+            echo "<td><a href='$directory/$file' download>Download $file</a></td>";
+            echo "<td><a href='mailto:?subject=Backup File&body=Here is the backup file: $fileUrl' target='_blank'>Share via Email</a></td>";
+            echo "<td><a href='https://api.whatsapp.com/send?text=Backup%20File:%20$fileUrl' target='_blank'>Share via WhatsApp</a></td>";
             echo "</tr>";
         }
         echo "</table>";

@@ -27,14 +27,38 @@
         </div>
         <div id="search_result"></div>
         <div class="button-group">
-            <button class="btn btn-save" onclick="location.href='../php/backup.php'" data-key="insert-button">Create New Backup</button>
+            <button class="btn btn-save" id="createBackupButton" data-key="insert-button">Create New Backup</button>
         </div>
+        <div class="alerts" id="noty"></div>
+        <div class="alerts" id="responseMessage"></div>
         <div id="report">
             <?php include '../php/sql.php';?>
         </div>
         </origin>
         <?php include '../php/footer.php' ?>
         <script>
+            document.getElementById('createBackupButton').addEventListener('click', function() {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', '../php/backup.php', true);
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        // Update the div with the response from the PHP file
+                        document.getElementById('responseMessage').innerHTML = xhr.responseText;
+                        document.getElementById('noty').innerHTML = "Success!";
+                        document.getElementById('noty').style.backgroundColor = "green";
+                        document.getElementById('noty').style.color = "white";
+
+                    } else {
+                        // Handle errors
+                        document.getElementById('responseMessage').innerHTML = 'Error: ' + xhr.statusText;
+                    }
+                };
+                xhr.onerror = function() {
+                    // Handle network errors
+                    document.getElementById('responseMessage').innerHTML = 'Network Error';
+                };
+                xhr.send();
+            });
             async function Backup() {
                 const searchTerm = document.getElementById('searchBackup').value.trim();
                 const searchBy = document.getElementById('searchBy').value;
