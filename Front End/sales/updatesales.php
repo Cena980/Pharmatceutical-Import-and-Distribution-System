@@ -39,7 +39,7 @@
                      <td><input type="number" name="Customer_ID" id="Customer_ID" autocomplete="off"></td>
                      <td><input type="number" name="Total_Price" id="Total_Price" autocomplete="off"></td>
                      
-                     <td><input type="number" name="Note" id="Note" autocomplete="off"></td>
+                     <td><input type="text" name="Note" id="Note" autocomplete="off"></td>
                      
                  </tr>
          

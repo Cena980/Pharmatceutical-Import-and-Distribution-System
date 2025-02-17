@@ -22,6 +22,9 @@
             <div class="tables">
                 <a href="invoices/invoiceManager.php">Invoice Manager</a>
             </div>
+            <div class="tables">
+                <a href="backup/backup.php">Database Backup</a>
+            </div>
             <?php $tables = getTables(); ?>
             <?php
             foreach ($tables as $table) {

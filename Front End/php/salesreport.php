@@ -1,7 +1,7 @@
 <?php
 
     include 'connection.php';
-    $query = "select * from sales order by Sale_Date desc limit 20";
+    $query = "select * from sales_view order by Sale_Date desc limit 20";
     $res = mysqli_query($connect, $query);
 
     $num_rows = mysqli_num_rows($res);
@@ -10,12 +10,14 @@
         echo "<tr>
             <th data-key='sale_id'>Sale ID</th>
             <th data-key='inventory_id'>Inventory ID</th>
+            <th data-key='name'>Name</th>
             <th data-key='date'>Date</th>
             <th data-key='quantity'>Quantity</th>
             <th data-key='discount'>Discount</th>
             <th data-key='price'>Price</th>
             <th data-key='cut_id'>Cut ID</th>
             <th data-key='customer_id'>Customer ID</th>
+            <th data-key='customer_id'>Customer</th>
             <th data-key='total_price'>Total Price</th>
             <th data-key='note'>Note</th>
             <th data-key='actions' colspan='2'>Actions</th>
@@ -24,12 +26,14 @@
             echo "<tr>";
             echo "<td>" . $r['Sales_ID'] . "</td>";
             echo "<td>" . $r['Inventory_ID'] . "</td>";
+            echo "<td>" . $r['drug_name'] . "</td>";
             echo "<td>" . $r['Sale_Date'] . "</td>";
             echo "<td>" . $r['Quantity'] . "</td>";
             echo "<td>" . $r['Discount'] . "</td>";
             echo "<td>" . $r['Price'] . "</td>";
             echo "<td>" . $r['Cut_ID'] . "</td>";
             echo "<td>" . $r['Customer_ID'] . "</td>";
+            echo "<td>" . $r['Customer'] . "</td>";
             echo "<td>" . $r['Total_Price'] . "</td>";
             echo "<td>" . $r['Note'] . "</td>";
             echo "<td>

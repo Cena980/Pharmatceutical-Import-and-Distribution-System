@@ -75,6 +75,7 @@
 
         <div class="insertButtons">
             <button class="btn btn-update" onclick="updateSales()">Update</button>
+            <button class="btn btn-refresh" onclick="window.location.reload()">Refresh</button>
             <button class="btn btn-delete" onclick="deleteSales()">Delete</button>
         </div>
     </form>

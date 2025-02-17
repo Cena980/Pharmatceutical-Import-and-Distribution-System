@@ -877,6 +877,22 @@ input {
 .btn-update:active {
     transform: scale(1.1);
 }
+.btn-refresh {
+    background-color: rgb(66, 119, 154); /* Green */
+    color: white;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.btn-refresh:hover {
+    background-color: rgb(48, 110, 90); /* Darker Green */
+    transform: scale(1.05);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-refresh:active {
+    transform: scale(1.1);
+}
 
 .btn-delete {
     background-color: rgb(189, 69, 69); /* Green */
@@ -1006,7 +1022,7 @@ input:focus {
 
 /*search on main pages */
 .search-over {
-    max-width: 500px;
+    max-width: 416.5px;
     margin: auto;
     margin-top: 30px;
     justify-content: center;
@@ -1019,7 +1035,6 @@ input:focus {
     border: 1px solid #ccc;
     color: black;
     outline: none;
-    max-width: 400px;
     width: 300px;
     margin-right: 0;
 }
@@ -1029,6 +1044,32 @@ input:focus {
 .search-over .barr .button{
     border-radius: 0 50px 50px 0;
     margin-left: 0;
+}
+
+/* backup search select */
+.search-over select {
+    background-color: #ccc;
+    padding: 5px;
+    width: 416.5px;
+    margin: auto;
+    margin-top: 5px;
+    font-size: 16px;
+    border-radius: 10px;
+    text-align: center;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    margin: 5px 0;
+}
+a {
+    text-decoration: none;
+    color: #007BFF;
+}
+a:hover {
+    text-decoration: underline;
 }
 
 
