@@ -9,7 +9,6 @@
     <body>
         <?php include '../php/header2.php' ?>
         <origin>
-        <div id="over"><h1 data-key="drug-records">Backup records</h1></div>
         <div class="search-over">
             <select id="searchBy" name="searchBy">
                 <option value="name">Search by Name</option>
@@ -31,6 +30,7 @@
         </div>
         <div class="alerts" id="noty"></div>
         <div class="alerts" id="responseMessage"></div>
+        <div id="over"><h1 data-key="drug-records">Backup records</h1></div>
         <div id="report">
             <?php include '../php/sql.php';?>
         </div>

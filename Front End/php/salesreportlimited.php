@@ -29,7 +29,7 @@
             echo "<td>" . $r['Customer'] . "</td>";
             echo "<td>" . $r['Total_Price'] . "</td>";
             echo "<td>
-                <form action='updatesales.php' method='GET'>
+                <form action='sales/updatesales.php' method='GET'>
                     <input type='hidden' name='Sales_ID' value='" . $r['Sales_ID'] . "'>
                     <input type='hidden' name='Inventory_ID' value='" . $r['Inventory_ID'] . "'>
                     <input type='hidden' name='Sale_Date' value='" . $r['Sale_Date'] . "'>
@@ -45,7 +45,7 @@
                 </form>
             </td>";
             echo "<td>
-                <form action='updatesales.php' method='GET'>
+                <form action='sales/updatesales.php' method='GET'>
                     <input type='hidden' name='Sales_ID' value='" . $r['Sales_ID'] . "'>
                     <input type='hidden' name='Inventory_ID' value='" . $r['Inventory_ID'] . "'>
                     <input type='hidden' name='Sale_Date' value='" . $r['Sale_Date'] . "'>
