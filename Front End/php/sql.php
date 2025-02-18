@@ -21,13 +21,19 @@ if (is_dir($directory)) {
             echo "<td><a href='$directory/$file' download>Download $file</a></td>";
             echo "<td><a href='mailto:?subject=Backup File&body=Here is the backup file: $fileUrl' target='_blank'>Share via Email</a></td>";
             echo "<td><a href='https://api.whatsapp.com/send?text=Backup%20File:%20$fileUrl' target='_blank'>Share via WhatsApp</a></td>";
+            echo "<td>
+                <form method='post' action='../php/restore.php'>
+                    <input type='hidden' id='backup_file' name='backup_file' value='$file'>
+                    <button type='submit' class='btn-link'>Restore</button>
+                </form>
+            </td>";
             echo "</tr>";
         }
         echo "</table>";
     } else {
-        echo "<p>No SQL files found in the directory.</p>";
+        echo "<p style='color: red; width: 200px; margin: auto; margin-bottom:20px'>No SQL files found in the directory.</p>";
     }
 } else {
-    echo "<p>The directory '$directory' does not exist.</p>";
+    echo "<p style='color: red; width: 200px; margin: auto; margin-bottom:20px'>The directory '$directory' does not exist.</p>";
 }
 ?>
