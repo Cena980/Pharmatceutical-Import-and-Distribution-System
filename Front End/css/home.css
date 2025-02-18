@@ -109,9 +109,6 @@ main {
     width: 70px;
     transition: transform 0.3s ease;
 }
-.barr2 .button {
-    margin-top: 5px;
-}
 #barover #bar .barr p{
     font-weight: bold;
     color: white;
@@ -148,7 +145,7 @@ main {
     background-color: rgb(72, 100, 143);
     font-weight: bold;
     display: flex;
-    width: 100%;
+    width:100%;
     margin: auto;
     justify-content: center;
     align-items: center;
@@ -162,7 +159,8 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width:80%;
+    max-width:710.49px;
+
 }
 
 #bar2 .logo {
@@ -195,7 +193,7 @@ ul {
     display: flex;
     justify-content: center; /* Center links horizontally */
     margin: 0;
-    max-width: 90%;
+    max-width: 100%;
 }
 
 .button {
@@ -232,8 +230,7 @@ li {
 }
 
 li:hover {
-    border-radius: 15px;
-    transform: scale(1.3);
+    transform: scale(1.1);
 }
 
 /* Keyframes for sliding animation */
@@ -593,6 +590,7 @@ input {
     text-align: center;
     padding: 12px 24px;
     border-radius: 8px;
+    width: 100px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
 }
@@ -1177,11 +1175,12 @@ a:hover {
     /* Default styles for the button */
     background-color: transparent; /* Initial background color */
     color: inherit; /* Inherit text color */
-    border-radius: 5px;
     padding: 5px;
+    padding-top: 10px;
+    
     font-weight: bold;
     height: 55px;
-    transition: background-color 1.5s ease, color 1.4s ease, transform 0.5s ease; /* Smooth transition for background and text color */
+    transition: height 0.3s ease, background-color 1.5s ease, color 1.4s ease, transform 0.5s ease; /* Smooth transition for background and text color */
 }
 
 .button.active {
