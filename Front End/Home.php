@@ -51,13 +51,13 @@
         </div>
 
             <div class="right">
-                <div data-key="products" class="section_title">Products</div>
-                <?php $Drugs = getDrugs(3) ?>
+                <div data-key="products" class="section_title">Popular Products</div>
+                <?php $Drugs = getDrugs(4) ?>
                 <div class="product">
                     <?php
                         foreach($Drugs as $Drug){
                             ?>
-                                <div class="product_left">
+                            <div class="product_left">
                                 <img src="product.png" alt="product">
                             </div>
                             <div class="product_right" >
@@ -67,8 +67,9 @@
                                 <p class="description">
                                     <?php echo $Drug['Ingredient'] ?>
                                 </p>
-                                <P class="expiration">Exp Date: <?php echo $Drug['Expiration']?></P>
-                                <P class="expiration"><?php echo $Drug['Initial_Amount']?> Items Available</P>
+                                <p class="description" style="font-weight:bold;">
+                                    Total sales: <?php echo $Drug['total_sales'] ?>
+                                </p>
                                 <p class="price"><?php echo $Drug['Price']?> ؋</p>
                             </div>
 

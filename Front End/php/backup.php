@@ -29,7 +29,7 @@ exec($command, $output, $return_var);
 
 // Check result
 if ($return_var === 0) {
-    echo "<p style='color: green; width: 200px; margin: auto; margin-bottom:20px'>Backup created: $BackupFile </p>";
+    echo "<p style='color: red; width: 200px; margin: auto; margin-bottom:20px'>Backup created: $BackupFile";
 } else {
     echo "<p style='color: red; width: 200px; margin: auto; margin-bottom:20px'>Backup failed. Error output:\n" . implode("\n", $output) . "\n </p>";
     echo "<p style='color: red; width: 200px; margin: auto; margin-bottom:20px'>Return code: $return_var\n </p>";
