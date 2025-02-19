@@ -10,22 +10,22 @@
         echo "<table border='1' id='tblreport'>";
         echo "<tr>
                     <th data-key='drug-id'>Drug ID</th>
+                    <th data-key='type'>Type</th>
                     <th data-key='drug-name'>Name</th>
                     <th data-key='ingredients'>Ingredients</th>
                     <th data-key='quantity-pb'>PB</th>
                     <th data-key='company-name'>Company Name</th>
-                    <th data-key='type'>Type</th>
                     <th data-key='demo'>Demography</th>
                     <th data-key='actions' colspan='2'>Actions</th>
                 </tr>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
             echo "<td>" . $r['drug_id'] . "</td>";
+            echo "<td>" . $r['type'] . "</td>";
             echo "<td>" . $r['drug_name'] . "</td>";
             echo "<td>" . $r['ingredient'] . "</td>";
             echo "<td>" . $r['PB'] . "</td>";
             echo "<td>" . $r['company'] . "</td>";
-            echo "<td>" . $r['type'] . "</td>";
             echo "<td>" . $r['demo'] . "</td>";
             echo "<td>
             <form action='updatedrugs.php' method='GET'>

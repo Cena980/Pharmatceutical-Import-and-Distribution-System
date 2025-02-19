@@ -444,13 +444,15 @@ input {
 }
 .inventory .inventory-right{
     display: block;
+    margin-top: 55px;
     margin-left: 0;
 }
 #report {
     margin-top: 20px;
+    height: 500px;
+    overflow-y: auto;
+    margin-bottom: 30px;
 }
-
-
 /* Suggestion Popups */
 .suggestion-box, .suggestion {
     z-index: 1000;
@@ -761,8 +763,6 @@ input {
 /* Refill Table Design */
 /* Professional and Fine-Tuned Table Design */
 #tblrefill {
-    width: 50%; /* Adjust overall table width */
-    max-width: 70%; /* Ensure it doesn't overflow the screen */
     border-collapse: collapse;
     margin: 20px 0;
     font-family: 'Arial', sans-serif;
@@ -777,10 +777,11 @@ input {
 #tblrefill th,
 #tblrefill td {
     padding: 8px 10px; /* Adjust padding inside cells */
+    width: auto; /* Width based on content */
     text-align: left;
-    white-space: nowrap; /* Prevent text wrapping */
-    overflow:hidden; /* Hide overflow */
+    overflow: hidden; /* Hide overflow */
     text-overflow: ellipsis; /* Add ellipsis for overflow text */
+    white-space: normal; /* Allow text to wrap */
 }
 
 #tblrefill th {
