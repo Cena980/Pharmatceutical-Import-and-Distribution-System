@@ -19,10 +19,12 @@
         <main>
         <div class="left">
             <div data-key="goto" class="section_title">Go To</div>
-            <div class="tables">
+            <div class="tables" onclick="location.href='invoices/invoiceManager.php'">
+                <img class="logo1" src="images/invoice.png" alt="icon">
                 <a href="invoices/invoiceManager.php">Invoice Manager</a>
             </div>
-            <div class="tables">
+            <div class="tables" onclick="location.href='backup/backup.php'">
+                <img class="logo1" src="images/backup.png" alt="icon">
                 <a href="backup/backup.php">Database Backup</a>
             </div>
             <?php $tables = getTables(); ?>
@@ -33,7 +35,8 @@
                     $filePath = strtolower($tableName) . '/' . strtolower($tableName) . '.php';
                     if (file_exists($filePath)) {
                         ?>
-                        <div class="tables">
+                        <div class="tables" onclick="location.href='<?php echo htmlspecialchars($filePath); ?>'">
+                            <img class="logo1" src="images/<?php echo htmlspecialchars(($tableName)); ?>.png" alt="icon">
                             <a href="<?php echo $filePath; ?>">
                                 <?php echo htmlspecialchars(ucfirst($tableName)); ?>
                             </a>

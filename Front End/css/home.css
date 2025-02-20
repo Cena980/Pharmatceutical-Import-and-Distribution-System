@@ -63,13 +63,26 @@ main {
 @media screen and (max-aspect-ratio: 1/1) {
     main {
         flex-direction: column;
+        gap: 20px;
+        padding: 10px;
         align-items: center;
+    }
+    .left {
+        text-align: center;
     }
 
     .left, .right, .far_right {
         width: 100%; /* Full width when stacked */
-        max-width: 600px; /* Optional: limit max width */
+        max-width: 400px; /* Optional: limit max width */
     }
+    #tblreport{
+        width: 50%;
+        max-width: 400px;
+    }
+}
+.logo1 {
+    width: 25px;
+    margin: 0;
 }
 
 
@@ -460,10 +473,34 @@ input {
 }
 
 /* Tables */
+
 .table {
     margin: auto;
     margin-top: 30px;
     width: auto;
+}
+.tables {
+    padding-left: 10px;
+    margin: auto;
+    height: 40px;
+    width: auto;
+    align-items: center;
+    font-size: 18px;
+    display: flex;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.tables a{
+    margin-left: 8px;
+    text-decoration: none;
+    color: black;
+    
+}
+.tables:hover{
+    transform: scale(1.1);
+    background-color: #485f76;
 }
 .table-success{
     max-width: 90%;
@@ -1101,13 +1138,6 @@ ul {
 }
 li {
     margin: 5px 0;
-}
-a {
-    text-decoration: none;
-    color: #007BFF;
-}
-a:hover {
-    text-decoration: underline;
 }
 
 
