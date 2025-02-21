@@ -97,6 +97,7 @@
                     Backup(); // Call the drugs function to perform the search
                 }
             });
+            
         </script>
     </body>
 </html>

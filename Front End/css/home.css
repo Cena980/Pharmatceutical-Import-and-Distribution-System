@@ -523,12 +523,7 @@ input {
     margin-top: 55px;
     margin-left: 0;
 }
-#report {
-    margin-top: 20px;
-    height: 500px;
-    overflow-y: auto;
-    margin-bottom: 30px;
-}
+
 /* Suggestion Popups */
 .suggestion-box, .suggestion {
     z-index: 1000;
@@ -782,28 +777,63 @@ input {
 .delete-btn img:active {
     transform: scale(1.2);
 }
-
+#report {
+    margin-top: 20px;
+    max-height: 500px; /* Controls vertical scrolling */
+    overflow-y: auto; /* Enables scrolling */
+    margin-bottom: 30px;
+    position: relative;
+    border-radius: 8px;
+}
 
 #tblreport {
-    max-width: 90%; /* Adjust overall table width */
+    max-width: 100%; /* Keeps your width setting */
     border-collapse: collapse;
     margin: auto;
     font-family: 'Arial', sans-serif;
-    font-size: 13px; /* Adjust font size */
+    font-size: 13px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
     border-radius: 8px;
-    overflow: hidden;
-    table-layout: auto; /* Allow columns to adjust based on content */
-    margin-bottom: 80px;
+    table-layout: fixed; /* Ensures consistent column width */
 }
-#tblreport th,
-#tblreport td {
-    padding: 8px 10px; /* Adjust padding inside cells */
+
+#tblreport thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: table-header-group; /* Ensures proper sticky behavior */
+}
+
+#tblreport thead tr {
+    background-color: inherit; /* Keeps your existing header background */
+}
+#tblreport thead tr:first-child th:first-child {
+    border-top-left-radius: 8px; /* Round top-left corner */
+}
+
+#tblreport thead tr:first-child th:last-child {
+    border-top-right-radius: 8px; /* Round top-right corner */
+}
+#tblreport tr:last-child td:first-child {
+    border-bottom-left-radius: 8px; /* Round bottom-left corner */
+}
+
+#tblreport tr:last-child td:last-child {
+    border-bottom-right-radius: 8px; /* Round bottom-right corner */
+}
+
+#tblreport th, #tblreport td {
+    padding: 8px;
     text-align: left;
-    white-space: nowrap; /* Prevent text wrapping */
-    overflow: hidden; /* Hide overflow */
-    text-overflow: ellipsis; /* Add ellipsis for overflow text */
+    border: 1px solid #e8e8e8;
+    white-space: nowrap; /* Prevents text wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#tblreport tbody {
+    display: table-row-group; /* Ensures correct table behavior */
 }
 #tblreport th {
     background-color: #2c3e50; /* Dark blue-gray */
@@ -812,9 +842,12 @@ input {
     text-transform: uppercase;
     font-size: 13px; /* Adjust font size for headers */
 }
+
 #tblreport tr:nth-child(even) {
-    background-color: #cef2dc;
+    background-color: #cef2dc; /* Keeps your row styling */
 }
+
+
 #tblreportlimited {
     width: 98%;
     max-width: 100%; /* Adjust overall table width */
@@ -828,6 +861,21 @@ input {
     overflow: hidden;
     table-layout: auto; /* Allow columns to adjust based on content */
 }
+#tblreportlimited th,
+#tblreportlimited td {
+    padding: 8px 10px; /* Adjust padding inside cells */
+    text-align: left;
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Add ellipsis for overflow text */
+}
+#tblreportlimited th {
+    background-color: #2c3e50; /* Dark blue-gray */
+    color: #ffffff;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 13px; /* Adjust font size for headers */
+}
 
 #tblreportlimited tr:nth-child(even) {
     background-color: #cef2dc; /* Light gray for even rows */
@@ -839,37 +887,62 @@ input {
 /* Refill Table Design */
 /* Professional and Fine-Tuned Table Design */
 #tblrefill {
-    border-collapse: collapse;
-    margin: 20px 0;
+    width: 100%; /* Ensures the table fits within the wrapper */
+    border-collapse: separate; /* Allows border-radius to work */
+    border-spacing: 0; /* Ensures borders align properly */
     font-family: 'Arial', sans-serif;
-    font-size: 13px; /* Adjust font size */
+    font-size: 13px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-    border-radius: 8px;
-    overflow: hidden;
-    table-layout: auto; /* Allow columns to adjust based on content */
+    background-color: #e8e8e8;
+    border: none;
+    table-layout: fixed;
 }
 
-#tblrefill th,
-#tblrefill td {
-    padding: 8px 10px; /* Adjust padding inside cells */
-    width: auto; /* Width based on content */
+#tblrefill thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: table-header-group; /* Ensures proper sticky behavior */
+}
+
+#tblrefill thead tr:first-child th:first-child {
+    border-top-left-radius: 8px; /* Round top-left corner */
+}
+
+#tblrefill thead tr:first-child th:last-child {
+    border-top-right-radius: 8px; /* Round top-right corner */
+}
+
+#tblrefill th, #tblrefill td {
+    padding: 8px;
     text-align: left;
-    overflow: hidden; /* Hide overflow */
-    text-overflow: ellipsis; /* Add ellipsis for overflow text */
-    white-space: normal; /* Allow text to wrap */
+    border: 1px solid #e8e8e8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#tblrefill tbody {
+    display: table-row-group;
+}
+
+#tblrefill tr:last-child td:first-child {
+    border-bottom-left-radius: 8px; /* Round bottom-left corner */
+}
+
+#tblrefill tr:last-child td:last-child {
+    border-bottom-right-radius: 8px; /* Round bottom-right corner */
 }
 
 #tblrefill th {
-    background-color: #2c3e50; /* Dark blue-gray */
+    background-color: #2c3e50;
     color: #ffffff;
     font-weight: bold;
     text-transform: uppercase;
-    font-size: 13px; /* Adjust font size for headers */
+    font-size: 13px;
 }
 
 #tblrefill tr {
-    border-bottom: 1px solid #dddddd;
     transition: background-color 0.3s ease;
 }
 
@@ -1093,6 +1166,9 @@ input:focus {
     margin-top: 10px;
     text-align: center;
     font-weight: bold;
+}
+#responsemessage {
+    color: green;
 }
 
 /*search on main pages */

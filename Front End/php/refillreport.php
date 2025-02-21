@@ -26,7 +26,7 @@ echo "<div class='alerts'>Number of Refill: " . $num_rows . "</div>"; // Debuggi
 
 if ($num_rows > 0) {
     echo "<table border='1' id='tblrefill'>";
-    echo "<tr>
+    echo "<thead><tr>
             <th>Inventory ID</th>
             <th>Drug ID</th>
             <th>Drug Name</th>
@@ -34,7 +34,7 @@ if ($num_rows > 0) {
             <th>Initial Amount</th>
             <th>Amount Left</th>
             <th>Alert Type</th>
-          </tr>";
+          </tr></thead><tbody>";
 
     while ($r = mysqli_fetch_assoc($res)) {
         $alert_type = [];
@@ -70,7 +70,7 @@ if ($num_rows > 0) {
         echo "<td>" . implode(", ", $alert_type) . "</td>";
         echo "</tr>";
     }
-    echo "</table>";
+    echo "</tbody></table>";
 } else {
     echo "No records found.";
 }

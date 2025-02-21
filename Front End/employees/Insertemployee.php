@@ -9,6 +9,7 @@
     <body>
     <?php include '../php/header2.php' ?>
         <div id="over"><h1>Insert into Employee</h1></div>
+        <div class="alerts" id="feedback"></div>
         <form name="employee">
             <input type="hidden" name="qnt" id="qnt" value="1">
             <table class="table table-success">
@@ -110,27 +111,38 @@
                 }
 
             }
-            function validate(){
+            function validate() {
                 let valid = true;
-                for (let i=1; i<=qnt; i++){
-                    let Tazkira = document.getElementById(`Tazkira_${qnt}`).value;
-            
-                    if(!/^\d+$/.test(Tazkira) || Tazkira === ""){
-                            document.getElementById(`tazkira_1`).innerHTML = `Please enter a valid Tazkira Number at line ${qnt}`;
-                            document.getElementById(`tazkira_1`).style.color="red";
-                            valid = false;
-                        } else {
-                            document.getElementById(`tazkira_${qnt}`).innerHTML = "";
-                        }
+                for(let i =1; i<=qnt; i++){
+                    let tazkira = document.getElementById(`Tazkira_${qnt}`).value;
+
+                    // Validate Tazkira Number
+                    if (!/^\d+$/.test(tazkira) || tazkira === "") {
+                        document.getElementById("feedback").innerHTML = "Please enter a valid Tazkira Number.";
+                        valid = false;
+                    } else {
+                        document.getElementById("feedback").innerHTML = "";
+                    }
                 }
-                if(valid){
+
+                if (valid) {
                     const form = document.forms['employee'];
-                    form.action="../php/insertemployee.php";
-                    form.method="post";
-                    form.submit();
+                    const formData = new FormData(form);
+
+                    // Send form data using AJAX (fetch)
+                    fetch("../php/insertemployee.php", {
+                        method: "POST",
+                        body: formData
+                    })
+                    .then(response => response.text()) // Use .json() if PHP returns JSON
+                    .then(data => {
+                        document.getElementById("feedback").innerHTML = data; // Display response in a div
+                        alert(data); // Optional alert for user feedback
+                    })
+                    .catch(error => console.error("Error:", error));
                 }
-        
             }
+
             function create_employee(event) {
                 event.preventDefault(); // Prevent form submission
 

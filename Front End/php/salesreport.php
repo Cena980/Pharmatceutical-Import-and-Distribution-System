@@ -7,7 +7,7 @@
     $num_rows = mysqli_num_rows($res);
     if($num_rows>0){
         echo "<table border='1' border-collapse=collapse id='tblreport'>";
-        echo "<tr>
+        echo "<thead><tr>
             <th data-key='sale_id'>Sale ID</th>
             <th data-key='inventory_id'>Inventory ID</th>
             <th data-key='name'>Name</th>
@@ -21,7 +21,7 @@
             <th data-key='total_price'>Total Price</th>
             <th data-key='note'>Note</th>
             <th data-key='actions' colspan='2'>Actions</th>
-                </tr>";
+                </tr></thead><tbody>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
             echo "<td>" . $r['Sales_ID'] . "</td>";
@@ -70,7 +70,7 @@
               </td>";
             echo "</tr>";
         }
-        echo "</table>";
+        echo "</tbody></table>";
     } else {
         echo "No records found.";  
     }

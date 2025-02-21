@@ -8,10 +8,10 @@
     if($num_rows>0){
         echo "<div class='alerts'>". $num_rows. " Records</div>";
         echo "<table border='1' id='tblreport'>";
-        echo "<tr>
+        echo "<thead><tr>
                     <th>ID</th><th>Drug ID</th><th>Name</th><th>Expiration</th><th>Cost</th>
                     <th>Price</th><th>Amount</th><th colspan='2'>Actions</th>
-                </tr>";
+                </tr></thead><tbody>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
             echo "<td>" . $r['Inventory_ID'] . "</td>";
@@ -45,7 +45,7 @@
           </td>";
             echo "</tr>";
         }
-        echo "</table>";
+        echo "</tbody></table>";
     } else {
         echo "No records found.";  
     }

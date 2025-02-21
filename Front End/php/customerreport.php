@@ -7,7 +7,7 @@
     $num_rows = mysqli_num_rows($res);
     if($num_rows>0){
         echo "<table border='1' id='tblreport'>";
-        echo "<tr>
+        echo "<thead><tr>
                     <th data-key='customer-id'>Customer ID</th>
                     <th data-key='shop'>Customer Shop No</th>
                     <th data-key='customer-name'>Customer Name</th>
@@ -16,7 +16,7 @@
                     <th data-key='balance'>Balance</th>
                     <th data-key='info'>Useful Info</th>
                     <th data-key='actions' colspan= '2'>Actions</th>
-                </tr>";
+                </tr></thead><tbody>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
             echo "<td>" . $r['customer_id'] . "</td>";
@@ -35,7 +35,7 @@
                     <input type='hidden' name='phone' value='" . $r['phone'] . "'>
                     <input type='hidden' name='balance' value='" . $r['balance'] . "'>
                     <input type='hidden' name='useful_info' value='" . $r['useful_info'] . "'>
-                    <button type='submit'>Update</button>
+                    <button class='btn-link' type='submit'>Update</button>
                 </form>
               </td>";
             echo "<td>
@@ -47,12 +47,12 @@
                     <input type='hidden' name='phone' value='" . $r['phone'] . "'>
                     <input type='hidden' name='balance' value='" . $r['balance'] . "'>
                     <input type='hidden' name='useful_info' value='" . $r['useful_info'] . "'>
-                    <button type='submit'>Delete</button>
+                    <button class='btn-link' type='submit'>Delete</button>
                 </form>
               </td>";
             echo "</tr>";
         }
-        echo "</table>";
+        echo "</tbody></table>";
     } else {
         echo "No records found.";  
     }

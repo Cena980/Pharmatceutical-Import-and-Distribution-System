@@ -7,12 +7,12 @@
     $num_rows = mysqli_num_rows($res);
     if($num_rows>0){
         echo "<table border='1' id='tblreport'>";
-        echo "<tr>
+        echo "<thead><tr>
                     <th>Company ID</th><th>Company Name</th><th>Head Quarters</th>
                     <th>Phone</th>
                     <th>Email</th>
                     <th data-key='actions' colspan='2'>Actions</th>
-                </tr>";
+                </tr></thead><tbody>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
             echo "<td>" . $r['Comp_ID'] . "</td>";
@@ -42,7 +42,7 @@
         </td>";
             echo "</tr>";
         }
-        echo "</table>";
+        echo "</tbody></table>";
     } else {
         echo "No records found.";  
     }

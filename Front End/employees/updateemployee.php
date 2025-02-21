@@ -9,6 +9,7 @@
     <body>
         <?php include '../php/header2.php' ?>
         <div id="over"><h1>Update Employee</h1></div>
+        <div class="alerts" id="feedback"></div>
         <form name="employee" >
             <table class="table table-success">
              <thead>
@@ -44,7 +45,7 @@
          </div>
          <div class="multi-button">
             <button class="btn btn-update" onclick="validate()" >Update</button>
-            <button class="btn btn-delete" onclick="deleteemployee()" >Delete</button>
+            <button class="btn btn-delete" onclick="deleteEmployee()" >Delete</button>
          </div>
          <?php include '../php/footer.php' ?>
         <script>
@@ -59,43 +60,61 @@
                 document.getElementById('Job_ID').value = urlParams.get('Job_ID') || '';
                 document.getElementById('Salary_ID').value = urlParams.get('Salary_ID') || '';
             };
-            function validate(){
-        
+            function validate() {
                 let valid = true;
                 let emp = document.getElementById("Emp_ID").value;
-        
-                if(!/^\d+$/.test(emp) || emp === ""){
-                        document.getElementById("emp2").innerHTML = "Please enter a valid Employee ID.";
-                        valid = false;
-                    } else {
-        
-                        document.getElementById("emp2").innerHTML = "";
-        
-                    }
-        
-                let Tazkira = document.getElementById("Tazkira").value;
-        
-                if(!/^\d+$/.test(Tazkira) || Tazkira === ""){
-                        document.getElementById("tazkira2").innerHTML = "Please enter a valid Tazkira Number.";
-                        valid = false;
-                    } else {
-                        document.getElementById("tazkira2").innerHTML = "";
-                    }
-                if(valid){
-                    const form = document.forms['employee'];
-                    form.action="../php/updateemployee.php";
-                    form.method="post";
-                    form.submit();
+                let tazkira = document.getElementById("Tazkira").value;
+
+                // Validate Employee ID
+                if (!/^\d+$/.test(emp) || emp === "") {
+                    document.getElementById("emp2").innerHTML = "Please enter a valid Employee ID.";
+                    valid = false;
+                } else {
+                    document.getElementById("emp2").innerHTML = "";
                 }
 
+                // Validate Tazkira Number
+                if (!/^\d+$/.test(tazkira) || tazkira === "") {
+                    document.getElementById("tazkira2").innerHTML = "Please enter a valid Tazkira Number.";
+                    valid = false;
+                } else {
+                    document.getElementById("tazkira2").innerHTML = "";
+                }
 
+                if (valid) {
+                    const form = document.forms['employee'];
+                    const formData = new FormData(form);
+
+                    // Send form data using AJAX (fetch)
+                    fetch("../php/updateemployee.php", {
+                        method: "POST",
+                        body: formData
+                    })
+                    .then(response => response.text()) // Use .json() if PHP returns JSON
+                    .then(data => {
+                        document.getElementById("feedback").innerHTML = data; // Display response in a div
+                        alert(data); // Optional alert for user feedback
+                    })
+                    .catch(error => console.error("Error:", error));
+                }
             }
-            function deleteemployee(){
+
+            function deleteEmployee() {
                 const form = document.forms['employee'];
-                form.action="../php/deleteemployee.php";
-                form.method="post";
-                form.submit();
+                const formData = new FormData(form); // Collect form data
+
+                fetch('../php/deleteemployee.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.text()) // Change to response.json() if PHP returns JSON
+                .then(data => {
+                    document.getElementById('feedback').innerHTML = data; // Show response in a div
+                    alert(data); // Optional alert
+                })
+                .catch(error => console.error('Error:', error));
             }
+
             </script>
     </body>
 </html>
