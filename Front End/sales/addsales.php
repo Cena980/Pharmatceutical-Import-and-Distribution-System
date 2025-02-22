@@ -117,6 +117,7 @@
                     document.getElementById("qnt").value = qnt;
                     renumberRows(rowNumber);
                     addEventForClickOutSide();
+                    calculateTotal();
                 }
             }
             function renumberRows(number){

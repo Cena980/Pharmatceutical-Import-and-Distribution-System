@@ -11,6 +11,7 @@ if (isset($_GET['query'])) {
 
 // Prepare the SQL query
 $sql = "SELECT * FROM sales_view WHERE 
+        Sales_ID LIKE '%$query%' OR
         drug_name LIKE '%$query%' OR 
         Invoice_No LIKE '%$query%' OR 
         Sale_Date LIKE '%$query%' OR 
@@ -22,7 +23,7 @@ $res = mysqli_query($connect, $sql);
 // Check if any results were found
 if ($res && mysqli_num_rows($res) > 0) {
     echo "<table border='1' id='tblreport'>";
-    echo "<tr>
+    echo "<thead><tr>
             <th data-key='sale_id'>Sale ID</th>
             <th data-key='inventory_id'>Inventory ID</th>
             <th data-key='name'>Name</th>
@@ -36,7 +37,7 @@ if ($res && mysqli_num_rows($res) > 0) {
             <th data-key='total_price'>Total Price</th>
             <th data-key='note'>Note</th>
             <th data-key='actions' colspan='2'>Actions</th>
-            </tr>";
+            </tr></thead><tbody>";
     while ($r = mysqli_fetch_assoc($res)) {
         echo "<tr>";
         echo "<td>" . $r['Sales_ID'] . "</td>";
@@ -85,7 +86,7 @@ if ($res && mysqli_num_rows($res) > 0) {
               </td>";
         echo "</tr>";
     }
-    echo "</table>";
+    echo "</tbody></table>";
 } else {
     echo "<p style='color: red; width: 150px; margin: auto; margin-bottom:20px;'>No records found.</p>";  
 }

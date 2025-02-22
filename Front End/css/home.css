@@ -103,9 +103,39 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 100px;
     padding: 0 30px;
     width: 100%;
+    transition: height 0.4s ease;
+    min-height: 100px; /* Default height */
+}
+
+#bar.expand {
+    transition: height 0.4s ease;
+    height: auto !important; /* Allow JS to control height */
+}
+
+
+.barr {
+    display: flex;
+    align-items: center;
+}
+
+/* Make the center section grow */
+.barr:nth-child(2) {
+    flex-grow: 3;  /* Center section takes up more space */
+    justify-content: center;
+}
+
+/* Left and right sections take up less space */
+.barr:first-child,
+.barr:last-child {
+    flex-grow: 1;  /* They will be smaller */
+}
+.barr:first-child{
+    justify-content: flex-start;
+}
+.barr:last-child{
+    justify-content: flex-end;
 }
 
 .barr {
@@ -113,6 +143,47 @@ main {
     display: flex;
     height: 70px;
     align-items: center;
+}
+/* Ensure bar-in wraps input, button, and result correctly */
+.bar-in {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+/* Search container to align input and button horizontally */
+.search-container {
+    display: flex;
+    align-items: center;
+    max-width: 700px; /* Prevent it from being too wide */
+    margin: auto;
+    position: relative;
+}
+
+/*table for search bar*/
+#searchport {
+    overflow-y: auto; /* Enables scrolling */
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 700px;
+    color: black;
+    margin: auto;
+    margin-top: 10px;
+    display: block; /* Ensure it's always visible */
+}
+
+#searchport.expand{
+    transition: height 0.4s ease-in-out;
+    width: 100%;
+    max-width: 700px;
+    color: black;
+    margin: auto;
+    margin-top: 10px;
+}
+#search_result{
+    margin-bottom: 20px;
 }
 
 .barr form input {
@@ -790,6 +861,7 @@ input {
     max-width: 100%; /* Keeps your width setting */
     border-collapse: collapse;
     margin: auto;
+    margin-bottom: 30px;
     font-family: 'Arial', sans-serif;
     font-size: 13px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -882,6 +954,68 @@ input {
 }
 #sales_data {
     max-width: 200px;
+}
+
+
+#tblsearch {
+    max-width: 60%; /* Keeps your width setting */
+    border-collapse: collapse;
+    margin: auto;
+    font-family: 'Arial', sans-serif;
+    font-size: 13px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-radius: 8px;
+    table-layout: fixed; /* Ensures consistent column width */
+}
+
+#tblsearch thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: table-header-group; /* Ensures proper sticky behavior */
+}
+
+#tblsearch thead tr {
+    background-color: inherit; /* Keeps your existing header background */
+}
+#tblsearch thead tr:first-child th:first-child {
+    border-top-left-radius: 8px; /* Round top-left corner */
+}
+
+#tblsearch thead tr:first-child th:last-child {
+    border-top-right-radius: 8px; /* Round top-right corner */
+}
+#tblsearch tr:last-child td:first-child {
+    border-bottom-left-radius: 8px; /* Round bottom-left corner */
+}
+
+#tblsearch tr:last-child td:last-child {
+    border-bottom-right-radius: 8px; /* Round bottom-right corner */
+}
+
+#tblsearch th, #tblsearch td {
+    padding: 8px;
+    text-align: left;
+    white-space: nowrap; /* Prevents text wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+}
+
+#tblsearch tbody {
+    display: table-row-group; /* Ensures correct table behavior */
+}
+#tblsearch th {
+    background-color: #2c3e50; /* Dark blue-gray */
+    color: #ffffff;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 13px; /* Adjust font size for headers */
+}
+
+#tblsearch tr:nth-child(even) {
+    background-color: #cef2dc; /* Keeps your row styling */
 }
 
 /* Refill Table Design */
@@ -1075,6 +1209,7 @@ input {
 #btn-circle {
     height: 50px;
     border: none;
+    cursor: pointer;
     background-color: transparent;
     transition: transform 0.3s ease-in-out; /* Apply transition to the button */
 }

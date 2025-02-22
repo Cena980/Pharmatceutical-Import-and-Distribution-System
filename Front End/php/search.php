@@ -18,8 +18,8 @@ $res = mysqli_query($connect, $sql);
 
 $num_rows = mysqli_num_rows($res);
 if($num_rows>0){
-    echo "<table border='1' id='tblreport'>";
-    echo "<tr>
+    echo "<table id='tblsearch'>";
+    echo "<thead><tr>
                 <th data-key='drug-id'>Drug ID</th>
                     <th data-key='drug-name'>Name</th>
                     <th data-key='ingredients'>Ingredients</th>
@@ -27,7 +27,7 @@ if($num_rows>0){
                     <th data-key='company-name'>Company Name</th>
                     <th data-key='type'>Type</th>
                     <th data-key='demo'>Demography</th>
-            </tr>";
+            </tr></thead><tbody>";
     while ($r = mysqli_fetch_assoc($res)) {
         echo "<tr>";
             echo "<td>" . $r['drug_id'] . "</td>";
@@ -39,7 +39,7 @@ if($num_rows>0){
             echo "<td>" . $r['demo'] . "</td>";
         echo "</tr>";
     }
-    echo "</table>";
+    echo "</tbody></table>";
 } else {
     echo "<div class='alerts' style = 'color:red;'>No records found.</div>";  
 }

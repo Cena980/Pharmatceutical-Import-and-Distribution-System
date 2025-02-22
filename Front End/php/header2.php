@@ -1,37 +1,80 @@
 <?php
 
 echo '<script>
-            function validate1() {
-                a =document.getElementById(\'search\');
-                if (a.value.length<1){
-                    alert("Cannot search for empty string")
-                }else{
-                    const form = document.forms["search"];
-                    form.action = "../php/search.php";
-                    form.method = "get";
-                    const popup = window.open("", "SearchResults", "width=600,height=400");
-                    form.target = "SearchResults"; // Send the form to the popup window
-                    form.submit();
-                }
+            function validate(event) {
+            if (event) event.preventDefault(); // Prevent form from reloading page
+
+            let searchInput = document.getElementById("search");
+            let searchport = document.getElementById("searchport");
+            let bar = document.getElementById("bar");
+
+            if (searchInput.value.trim().length < 1) {
+                alert("Cannot search for an empty string");
+                return;
             }
+
+            const formData = new FormData(document.forms["search"]);
+            const query = new URLSearchParams(formData).toString();
+
+            fetch("../php/search.php?" + query, {
+                method: "GET",
+            })
+            .then(response => response.text()) // Use .json() if PHP returns JSON
+            .then(data => {
+                if (data.trim()) {
+                    searchport.innerHTML = data;
+                    searchport.style.display = "block"; // Show results
+
+                    // Wait for the DOM to update before calculating height
+                    setTimeout(() => {
+                        let rows = searchport.querySelectorAll("tr").length;
+                        let rowHeight = 30.67; // Approximate row height in pixels
+                        let minHeight = 100; // Minimum height for #bar
+                        
+                        let newHeight = Math.min(minHeight + rows * rowHeight);
+                        
+                        bar.style.height = newHeight + "px"; // Dynamically adjust height
+                    }, 10);
+                } else {
+                    searchport.style.display = "none"; 
+                    bar.style.height = "100px"; // Reset height when no results
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+        function reset() {
+            document.getElementById(\'search\').value = \'\';
+            document.getElementById(\'searchport\').innerHTML = \'\';
+            let bar = document.getElementById("bar");
+            bar.style.height = "100px"; // Reset height
+        }
+
+
         </script>
         <div id="barover">
             <div id="bar">
-                <div class="barr">
+                <div class="barr bar-left">
                     <img src="../images/logoSmall.png" style="scale: 0.8;" alt="logo">
                     <p data-key="database-title">Phoenix Pharma</p>
                 </div>
-                <div class="barr">
-                    <form name="search">
-                        <input type="text" placeholder="Search for Drugs" name="query" id="search" required data-key="search-placeholder">
-                    </form>
-                    <button class=\'buttonS\' type="submit" onclick="validate1()" data-key="search-button">Search</button>
+                <div class="barr  bar-center">
+                    <div class="bar-in">
+                        <div class="search-container">
+                            <button onclick="reset()" id="btn-circle" ><img src="../images/clear.png"></button>
+                            <form name="search" onsubmit="validate(event); return false;">
+                                <input type="text" placeholder="Search for Drugs" name="query" id="search" required data-key="search-placeholder">
+                            </form>
+                            <button class="buttonS" type="submit" onclick="validate(event)" data-key="search-button">Search</button>
+                        </div>
+                            <div id="searchport"></div>
+                    </div>
                 </div>
-                <div class="barr">
+                <div class="barr bar-right">
                     <div id="switch">
-                        <button  id=\'buttonSwitchR\' onclick="setLanguage(\'en\')">En</button>
+                        <button id="buttonSwitchR" onclick="setLanguage(\'en\')">En</button>
                         <p>|</p>
-                        <button id=\'buttonSwitchL\'  onclick="setLanguage(\'fa\')">فا</button>
+                        <button id="buttonSwitchL" onclick="setLanguage(\'fa\')">فا</button>
                     </div>
                 </div>
             </div>
@@ -82,7 +125,7 @@ echo '<script>
             document.getElementById(\'search\').addEventListener(\'keypress\', function(event) {
                 if (event.key === \'Enter\') {
                     event.preventDefault(); // Prevent the default form submission
-                    validate1(); // Call the validate function to perform the search
+                    validate(); // Call the validate function to perform the search
                 }
             });
             (function() {
