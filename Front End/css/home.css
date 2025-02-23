@@ -167,7 +167,7 @@ main {
     overflow-y: auto; /* Enables scrolling */
     overflow-x: hidden;
     width: 100%;
-    max-width: 700px;
+    max-width: 800px;
     color: black;
     margin: auto;
     margin-top: 10px;
@@ -177,7 +177,7 @@ main {
 #searchport.expand{
     transition: height 0.4s ease-in-out;
     width: 100%;
-    max-width: 700px;
+    max-width: 810px;
     color: black;
     margin: auto;
     margin-top: 10px;
@@ -1000,8 +1000,13 @@ input {
     white-space: nowrap; /* Prevents text wrapping */
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100px;
+    max-width: 90px;
 }
+#tblsearch th:not(:first-child):not(:last-child) {
+    border: 1px solid white;
+}
+
+
 
 #tblsearch tbody {
     display: table-row-group; /* Ensures correct table behavior */

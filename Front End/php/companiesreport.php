@@ -27,7 +27,7 @@
                 <input type='hidden' name='Head_Quarters' value='" . $r['Head_Quarters'] . "'>
                 <input type='hidden' name='Phone' value='" . $r['Phone'] . "'>
                 <input type='hidden' name='Email' value='" . $r['Email'] . "'>
-                <button type='submit'>Update</button>
+                <button class='btn-link' type='submit'>Update</button>
             </form>
           </td>";
           echo "<td>
@@ -37,7 +37,7 @@
             <input type='hidden' name='Head_Quarters' value='" . $r['Head_Quarters'] . "'>
             <input type='hidden' name='Phone' value='" . $r['Phone'] . "'>
             <input type='hidden' name='Email' value='" . $r['Email'] . "'>
-            <button type='submit'>Update</button>
+            <button class='btn-link' type='submit'>Delete</button>
         </form>
         </td>";
             echo "</tr>";

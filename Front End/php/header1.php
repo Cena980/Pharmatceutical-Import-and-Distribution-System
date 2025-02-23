@@ -16,7 +16,7 @@ echo '<script>
             const formData = new FormData(document.forms["search"]);
             const query = new URLSearchParams(formData).toString();
 
-            fetch("php/search.php?" + query, {
+            fetch("php/searchhome.php?" + query, {
                 method: "GET",
             })
             .then(response => response.text()) // Use .json() if PHP returns JSON
@@ -28,7 +28,7 @@ echo '<script>
                     // Wait for the DOM to update before calculating height
                     setTimeout(() => {
                         let rows = searchport.querySelectorAll("tr").length;
-                        let rowHeight = 30.67; // Approximate row height in pixels
+                        let rowHeight = 35; // Approximate row height in pixels
                         let minHeight = 100; // Minimum height for #bar
                         
                         let newHeight = Math.min(minHeight + rows * rowHeight);

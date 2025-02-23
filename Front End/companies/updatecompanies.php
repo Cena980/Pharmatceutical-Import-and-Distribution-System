@@ -23,11 +23,11 @@
                 </thead>
                 <tbody>
                    <tr>
-                       <td><input type="number" name="Comp_ID" id="sid" autocomplete="off"></td>
-                       <td><input type="text" name="Comp_Name" id="did" autocomplete="off"></td>
-                       <td><input type="text" name="Head_Quarters" id="de" autocomplete="off"></td>
-                       <td><input type="text" name="Phone" id="qy" autocomplete="off"></td>
-                       <td><input type="text" name="Email" id="dt" autocomplete="off"></td>
+                       <td><input type="number" name="Comp_ID" id="Comp_ID" autocomplete="off"></td>
+                       <td><input type="text" name="Comp_Name" id="Comp_Name" autocomplete="off"></td>
+                       <td><input type="text" name="Head_Quarters" id="Head_Quarters" autocomplete="off"></td>
+                       <td><input type="text" name="Phone" id="Phone" autocomplete="off"></td>
+                       <td><input type="text" name="Email" id="Email" autocomplete="off"></td>
                
                    </tr>
             
@@ -44,33 +44,17 @@
         </div>
         <?php include '../php/footer.php' ?>
         <script>
-            function validate(){
-                var message = document.getElementById("noty");
-                message.style.color = "green";
-                message.innerHTML = "Your record has been saved.";
+            window.onload = function () {
+                const urlParams = new URLSearchParams(window.location.search);
         
-                let valid = true;
-                let sale = document.getElementById("sid").value;
-        
-                if(!/^\d+$/.test(sale) || sale === ""){
-                        document.getElementById("nsid").innerHTML = "Please enter a valid Drug ID.";
-                        valid = false;
-                    } else {
-        
-                        document.getElementById("nsid").innerHTML = "";
-        
-                    }
-        
-                let drug = document.getElementById("did");
-        
-                if(!/^\d+$/.test(drug) || drug === ""){
-                        document.getElementById("ndid").innerHTML = "Please enter a valid Drug ID.";
-                        valid = false;
-                    } else {
-                        document.getElementById("ndid").innerHTML = "";
-                    }
-        
-            }
+                // Populate input fields with values from URL parameters
+                document.getElementById('Comp_ID').value = urlParams.get('Comp_ID') || '';
+                document.getElementById('Comp_Name').value = urlParams.get('Comp_Name') || '';
+                document.getElementById('Head_Quarters').value = urlParams.get('Head_Quarters') || '';
+                document.getElementById('Phone').value = urlParams.get('Phone') || '';
+                document.getElementById('Email').value = urlParams.get('Email') || '';
+
+            };
             </script>
     </body>
 </html>

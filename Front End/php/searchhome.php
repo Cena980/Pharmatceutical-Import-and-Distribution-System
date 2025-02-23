@@ -39,7 +39,7 @@ if($num_rows>0){
             echo "<td>" . $r['type'] . "</td>";
             echo "<td>" . $r['demo'] . "</td>";
             echo "<td>
-                <form action='../drugs/updatedrugs.php' method='GET'>
+                <form action='drugs/updatedrugs.php' method='GET'>
                     <input type='hidden' name='Drug_ID' value='" . $r['drug_id'] . "'>
                     <input type='hidden' name='Drug_Name' value='" . $r['drug_name'] . "'>
                     <input type='hidden' name='Ingredient' value='" . $r['ingredient'] . "'>
@@ -51,7 +51,7 @@ if($num_rows>0){
                 </form>
             </td>";
             echo "<td>
-                <form action='../drugs/updatedrugs.php' method='GET'>
+                <form action='drugs/updatedrugs.php' method='GET'>
                     <input type='hidden' name='Drug_ID' value='" . $r['drug_id'] . "'>
                     <input type='hidden' name='Drug_Name' value='" . $r['drug_name'] . "'>
                     <input type='hidden' name='Ingredient' value='" . $r['ingredient'] . "'>
