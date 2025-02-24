@@ -9,6 +9,7 @@
     <body>
         <?php include '../php/header2.php' ?>
         <div id="over"><h1>Update inventory</h1></div>
+        <div class="alerts" id="feedback"></div>
         <form name="inventory" action="../php/updateinventory.php" method="post">
             <table class="table table-success">
              <thead>
@@ -75,12 +76,19 @@
                 
                 const form = document.forms["inventory"];
                 if (valid) {
-                    var message = document.getElementById("noty");
-                    message.style.color = "green";
-                    message.innerHTML = "Your record has been saved.";
-                    form.action = "../php/updateinventory.php"; // Set action to the desired PHP script
-                    form.method = "post";
-                    form.submit();
+                    const formData = new FormData(form);
+
+                    // Send form data using AJAX (fetch)
+                    fetch("../php/updateinventory.php", {
+                        method: "POST",
+                        body: formData
+                    })
+                    .then(response => response.text()) // Use .json() if PHP returns JSON
+                    .then(data => {
+                        document.getElementById("feedback").innerHTML = data; // Display response in a div
+                        alert(data); // Optional alert for user feedback
+                    })
+                    .catch(error => console.error("Error:", error));
                 } else {
                     form.action = "";
                     message.style.color = "red";
@@ -91,9 +99,19 @@
             }
             function deleteinventory(){
                 const form = document.forms["inventory"];
-                form.action = "../php/deleteinventory.php"; // Set action to the desired PHP script
-                form.method = "post";
-                form.submit();
+                    const formData = new FormData(form);
+
+                    // Send form data using AJAX (fetch)
+                    fetch("../php/deleteinventory.php", {
+                        method: "POST",
+                        body: formData
+                    })
+                    .then(response => response.text()) // Use .json() if PHP returns JSON
+                    .then(data => {
+                        document.getElementById("feedback").innerHTML = data; // Display response in a div
+                        alert(data); // Optional alert for user feedback
+                    })
+                    .catch(error => console.error("Error:", error));
             }
             </script>
     </body>

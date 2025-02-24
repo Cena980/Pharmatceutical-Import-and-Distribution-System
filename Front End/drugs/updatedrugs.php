@@ -9,6 +9,7 @@
     <body>
         <?php include '../php/header2.php' ?>
         <div id="over"><h1 data-key="update-over">Update</h1></div>
+        <div class="alerts" id="feedback"></div>
         
             <form name="updatedrug">
                 <table class="table table-warning">
@@ -31,6 +32,7 @@
                             </td>
                             <td>
                                 <input type="text" name="Comp_Name" id="c1">
+                                <div id="suggestion_1" class="suggestion-box" style="display: none; position: absolute; background-color: white;"></div>
                                 <div id="nc1" class="error"></div>
                             </td>
                             <td>
@@ -47,10 +49,12 @@
                             </td>
                             <td>
                                 <input type="text" name="Type" id="ty1">
+                                <div id="suggestionType_1" class="suggestion-box" style="display: none; position: absolute; background-color: white;"></div>
                                 <div id="nty1" class="error"></div>
                             </td>
                             <td>
                                 <input type="text" name="Demo" id="de1">
+                                <div id="suggestionDemo_1" class="suggestion-box" style="display: none; position: absolute; background-color: white;"></div>
                                 <div id="nde1" class="error"></div>
                             </td>
                         </tr>
@@ -76,6 +80,11 @@
                 document.getElementById('t1').value = urlParams.get('Tablet_PB') || '';
                 document.getElementById('ty1').value = urlParams.get('Type') || '';
                 document.getElementById('de1').value = urlParams.get('Demo') || '';
+
+
+                document.getElementById('c1').addEventListener('input', handleInputEvent);
+                document.getElementById('ty1').addEventListener('input', handleInputEvent);
+                document.getElementById('de1').addEventListener('input', handleInputEvent);
 
             };
             function validate() {
@@ -121,12 +130,20 @@
                 // Final success or error message
                 let message = document.getElementById("noty");
                 if (valid) {
-                    const form = document.forms["updatedrug"];
-                    form.action = "../php/updatedrug.php";
-                    form.method = "post";
-                    form.submit();  // Submit the form after successful validation
-                    message.style.color = "green";
-                    message.innerHTML = "Your record has been saved.";
+                    const form = document.forms['updatedrug'];
+                    const formData = new FormData(form);
+
+                    // Send form data using AJAX (fetch)
+                    fetch("../php/updatedrug.php", {
+                        method: "POST",
+                        body: formData
+                    })
+                    .then(response => response.text()) // Use .json() if PHP returns JSON
+                    .then(data => {
+                        document.getElementById("feedback").innerHTML = data; // Display response in a div
+                        alert(data); // Optional alert for user feedback
+                    })
+                    .catch(error => console.error("Error:", error));
                 } else {
                     message.style.color = "red";
                     message.innerHTML = "Please correct the errors above.";
@@ -135,11 +152,162 @@
             }
            
                 function remove(){
-                    const form1 = document.forms["updatedrug"];
-                    form1.action = "../php/deletedrug.php";
-                    form1.method = "post";
-                    form1.submit();
+                    const form = document.forms["updatedrug"];
+                    const formData = new FormData(form);
+
+                    // Send form data using AJAX (fetch)
+                    fetch("../php/deletedrug.php", {
+                        method: "POST",
+                        body: formData
+                    })
+                    .then(response => response.text()) // Use .json() if PHP returns JSON
+                    .then(data => {
+                        document.getElementById("feedback").innerHTML = data; // Display response in a div
+                        alert(data); // Optional alert for user feedback
+                    })
+                    .catch(error => console.error("Error:", error));
                 }
+                function handleInputEvent(e) {
+                const target = e.target;
+
+                // Handle Company Name input
+                if (target.name.startsWith("Comp")) {
+                    const query = target.value;
+                    const suggestionBox = document.getElementById(`suggestion_1`);
+
+                    if (suggestionBox) {
+                        if (query.length > 1) {
+                            fetch(`../php/get_company_suggestions.php?query=${encodeURIComponent(query)}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    suggestionBox.innerHTML = "";
+                                    suggestionBox.style.display = "block";
+
+                                    if (!data.error) {
+                                        const table = document.createElement("table");
+                                        table.style.borderCollapse = "collapse";
+                                        table.style.width = "100%";
+                                        const header = document.createElement("tr");
+                                        header.innerHTML = `
+                                            <th style="border: 1px solid #ccc; padding: 8px;">Company Name</th>
+                                        `;
+                                        table.appendChild(header);
+                                        data.forEach(comp => {
+                                            const row = document.createElement("tr");
+                                            row.innerHTML = `
+                                                <td style="border: 1px solid #ccc; padding: 8px;">${comp.Comp_Name}</td>
+                                            `;
+                                            row.style.cursor = "pointer";
+                                            row.onclick = () => {
+                                                document.getElementById(`c1`).value = comp.Comp_Name;
+                                                suggestionBox.style.display = "none";
+                                            };
+                                            table.appendChild(row);
+                                        });
+                                        suggestionBox.appendChild(table);
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error("Error fetching company suggestions:", error);
+                                });
+                        } else {
+                            suggestionBox.style.display = "none";
+                        }
+                    }
+                }
+
+                // Handle Type input
+                if (target.name.startsWith("Type")) {
+                    const query = target.value;
+                    const suggestionBox = document.getElementById(`suggestionType_1`);
+
+                    if (suggestionBox) {
+                        if (query.length > 1) {
+                            fetch(`../php/get_type_suggestions.php?query=${encodeURIComponent(query)}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    suggestionBox.innerHTML = "";
+                                    suggestionBox.style.display = "block";
+
+                                    if (!data.error) {
+                                        const table = document.createElement("table");
+                                        table.style.borderCollapse = "collapse";
+                                        table.style.width = "100%";
+                                        const header = document.createElement("tr");
+                                        header.innerHTML = `
+                                            <th style="border: 1px solid #ccc; padding: 8px;">Type</th>
+                                        `;
+                                        table.appendChild(header);
+                                        data.forEach(type => {
+                                            const row = document.createElement("tr");
+                                            row.innerHTML = `
+                                                <td style="border: 1px solid #ccc; padding: 8px;">${type.Type_Name}</td>
+                                            `;
+                                            row.style.cursor = "pointer";
+                                            row.onclick = () => {
+                                                document.getElementById(`ty1`).value = type.Type_Name;
+                                                suggestionBox.style.display = "none";
+                                            };
+                                            table.appendChild(row);
+                                        });
+                                        suggestionBox.appendChild(table);
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error("Error fetching type suggestions:", error);
+                                });
+                        } else {
+                            suggestionBox.style.display = "none";
+                        }
+                    }
+                }
+
+                // Handle Demography input
+                if (target.name.startsWith("Demo")) {
+                    const query = target.value;
+                    const suggestionBox = document.getElementById(`suggestionDemo_1`);
+
+                    if (suggestionBox) {
+                        if (query.length > 1) {
+                            fetch(`../php/get_demo_suggestions.php?query=${encodeURIComponent(query)}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    suggestionBox.innerHTML = "";
+                                    suggestionBox.style.display = "block";
+
+                                    if (!data.error) {
+                                        const table = document.createElement("table");
+                                        table.style.borderCollapse = "collapse";
+                                        table.style.width = "100%";
+                                        const header = document.createElement("tr");
+                                        header.innerHTML = `
+                                            <th style="border: 1px solid #ccc; padding: 8px;">Demography</th>
+                                        `;
+                                        table.appendChild(header);
+                                        data.forEach(demo => {
+                                            const row = document.createElement("tr");
+                                            row.innerHTML = `
+                                                <td style="border: 1px solid #ccc; padding: 8px;">${demo.demo_name}</td>
+                                            `;
+                                            row.style.cursor = "pointer";
+                                            row.onclick = () => {
+                                                document.getElementById(`de1`).value = demo.demo_name;
+                                                suggestionBox.style.display = "none";
+                                            };
+                                            table.appendChild(row);
+                                        });
+                                        suggestionBox.appendChild(table);
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error("Error fetching demography suggestions:", error);
+                                });
+                        } else {
+                            suggestionBox.style.display = "none";
+                        }
+                    }
+                }
+            }
             </script>
         </div>
         

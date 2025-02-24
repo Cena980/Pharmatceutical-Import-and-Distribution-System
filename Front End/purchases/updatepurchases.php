@@ -43,6 +43,7 @@
     <body>
         <?php include '../php/header2.php' ?>
         <div id="over"><h1>Update</h1></div>
+        <div class="alerts" id="feedback"></div>
         <form name="updatepurchases">
                 <table class="table table-success">
                 <thead>
@@ -118,18 +119,21 @@
         
                     }
         
-                let drug = document.getElementById("drug_id");
-        
-                /*if(!/^\d+$/.test(drug)){
-                        document.getElementById("did").innerHTML = "Please enter a valid Drug ID.";
-                        valid = false;
-                    } else {
-                        document.getElementById("did").innerHTML = "";
-                    }*/
                 const form = document.forms["updatepurchases"]; // Get the form by name
                 if (valid) {
-                    form.action = "../php/updatepurchases.php"; // Set action to the desired PHP script
-                    form.method = "post"; // Ensure the method is correct
+                    const formData = new FormData(form);
+
+                    // Send form data using AJAX (fetch)
+                    fetch("../php/updatepurchases.php", {
+                        method: "POST",
+                        body: formData
+                    })
+                    .then(response => response.text()) // Use .json() if PHP returns JSON
+                    .then(data => {
+                        document.getElementById("feedback").innerHTML = data; // Display response in a div
+                        alert(data); // Optional alert for user feedback
+                    })
+                    .catch(error => console.error("Error:", error));
                 } else {
                     // Reset action to prevent unintended submission
                     form.action = "";
@@ -166,8 +170,19 @@
                     }*/
                 const form = document.forms["updatepurchases"]; // Get the form by name
                 if (valid) {
-                    form.action = "../php/deletepurchases.php"; // Set action to the desired PHP script
-                    form.method = "post"; // Ensure the method is correct
+                    const formData = new FormData(form);
+
+                    // Send form data using AJAX (fetch)
+                    fetch("../php/deletepurchases.php", {
+                        method: "POST",
+                        body: formData
+                    })
+                    .then(response => response.text()) // Use .json() if PHP returns JSON
+                    .then(data => {
+                        document.getElementById("feedback").innerHTML = data; // Display response in a div
+                        alert(data); // Optional alert for user feedback
+                    })
+                    .catch(error => console.error("Error:", error));
                 } else {
                     // Reset action to prevent unintended submission
                     form.action = "";

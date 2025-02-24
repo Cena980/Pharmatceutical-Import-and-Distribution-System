@@ -20,11 +20,11 @@ $num_rows = mysqli_num_rows($res);
 if($num_rows>0){
     echo "<table id='tblsearch'>";
     echo "<thead><tr>
-                <th data-key='drug-id'>Drug ID</th>
+                <th data-key='drug-id'>ID</th>
                     <th data-key='drug-name'>Name</th>
                     <th data-key='ingredients'>Ingredients</th>
                     <th data-key='quantity-pb'>PB</th>
-                    <th data-key='company-name'>Company Name</th>
+                    <th data-key='company-name'>Company</th>
                     <th data-key='type'>Type</th>
                     <th data-key='demo'>Demography</th>
                     <th data-key='actions' colspan='2'>Actions</th>

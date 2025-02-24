@@ -105,12 +105,12 @@ main {
     align-items: center;
     padding: 0 30px;
     width: 100%;
-    transition: height 0.4s ease;
+    transition: height 0.5s ease;
     min-height: 100px; /* Default height */
 }
 
 #bar.expand {
-    transition: height 0.4s ease;
+    transition: height 0.5s ease;
     height: auto !important; /* Allow JS to control height */
 }
 
@@ -171,11 +171,12 @@ main {
     color: black;
     margin: auto;
     margin-top: 10px;
+    transition: height 0.5s ease;
     display: block; /* Ensure it's always visible */
 }
 
 #searchport.expand{
-    transition: height 0.4s ease-in-out;
+    transition: height 0.5s ease;
     width: 100%;
     max-width: 810px;
     color: black;

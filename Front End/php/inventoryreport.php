@@ -29,6 +29,7 @@
                 <input type='hidden' name='Cost' value='" . $r['Cost'] . "'>
                 <input type='hidden' name='Price' value='" . $r['Price'] . "'>
                 <input type='hidden' name='Initial_Amount' value='" . $r['Initial_Amount'] . "'>
+                <input type='hidden' name='Amount_Left' value='" . $r['Amount_Left'] . "'>
                 <button type='submit' class=' btn-link'>Update</button>
             </form>
             </td>";
@@ -40,6 +41,7 @@
                 <input type='hidden' name='Cost' value='" . $r['Cost'] . "'>
                 <input type='hidden' name='Price' value='" . $r['Price'] . "'>
                 <input type='hidden' name='Initial_Amount' value='" . $r['Initial_Amount'] . "'>
+                <input type='hidden' name='Amount_Left' value='" . $r['Amount_Left'] . "'>
                 <button type='submit' class=' btn-link'>Delete</button>
             </form>
           </td>";

@@ -11,6 +11,7 @@ if (isset($_GET['query'])) {
 
 // Prepare the SQL query
 $sql = "SELECT * FROM purchase_report WHERE
+        purchase_id LIKE '%$query%' OR
         Drug_Name LIKE '%$query%' OR
         vendor_name LIKE '%$query%' OR
         purchase_date LIKE '%$query%' OR

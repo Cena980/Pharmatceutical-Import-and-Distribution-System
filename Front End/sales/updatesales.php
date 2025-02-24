@@ -9,6 +9,7 @@
     <body>
         <?php  include '../php/header2.php' ?>
         <div id="over"><h1>Update</h1></div>
+        <div class="alerts" id="feedback"></div>
         <form name="sale" action="../php/updatesales.php" method="post">
             <table class="table table-success">
              <thead>
@@ -109,17 +110,37 @@
             }
             const form = document.forms['sale'];
             function updateSales(){
+                const formData = new FormData(form);
+
+                // Send form data using AJAX (fetch)
+                fetch("../php/updatesales.php", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.text()) // Use .json() if PHP returns JSON
+                .then(data => {
+                    document.getElementById("feedback").innerHTML = data; // Display response in a div
+                    alert(data); // Optional alert for user feedback
+                })
+                .catch(error => console.error("Error:", error));
                 var message = document.getElementById("noty");
                 message.style.color = "green";
                 message.innerHTML = "Your record has been saved.";
-                form.action="../php/updatesales.php";
-                form.method="post";
-                form.submit();
             }
             function deleteSales(){
-                form.action="../php/deletesales.php";
-                form.method="post";
-                form.submit();
+                const formData = new FormData(form);
+
+                // Send form data using AJAX (fetch)
+                fetch("../php/deletesales.php", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.text()) // Use .json() if PHP returns JSON
+                .then(data => {
+                    document.getElementById("feedback").innerHTML = data; // Display response in a div
+                    alert(data); // Optional alert for user feedback
+                })
+                .catch(error => console.error("Error:", error));
             }
             </script>
     </body>
