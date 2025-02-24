@@ -275,6 +275,35 @@ echo '<!DOCTYPE html>
 
 
     }
+    // Convert salesData to match the second URL's format
+    $formattedSalesData = array_map(function ($item) {
+        return [
+            "note" => $item["Note"] ?? "",
+            "price" => isset($item["Price"]) ? floatval($item["Price"]) : 0.0,
+            "cut_id" => isset($item["Cut_ID"]) ? ($item["Cut_ID"] !== "" ? intval($item["Cut_ID"]) : null) : null,
+            "discount" => isset($item["Discount"]) ? floatval($item["Discount"]) : 0.0,
+            "quantity" => isset($item["Quantity"]) ? intval($item["Quantity"]) : 0,
+            "sale_date" => $item["Sale_Date"] ?? "",
+            "customer_id" => isset($item["Customer_ID"]) ? intval($item["Customer_ID"]) : null,
+            "total_price" => isset($item["Total_Price"]) ? floatval($item["Total_Price"]) : 0.0,
+            "inventory_id" => isset($item["Inventory_ID"]) ? intval($item["Inventory_ID"]) : null
+        ];
+    }, $salesData);
+
+    // Convert array to JSON
+    $json_data = json_encode($formattedSalesData);
+
+    // Update existing record
+    $sql = "UPDATE invoices SET sales_data = ? WHERE invoice_id = ?";
+    $stmt = $connect->prepare($sql);
+    $stmt->bind_param("si", $json_data, $invoice_ID);
+
+    if ($stmt->execute()) {
+        // echo "Data updated successfully!";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
 
     $received_invoice = 0;
     #Fetching old Recieved from invoice
