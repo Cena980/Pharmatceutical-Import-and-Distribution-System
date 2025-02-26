@@ -90,6 +90,7 @@
                     document.getElementById("qnt").value = qnt;
                     renumberRows(rowNumber);
                     addEventForClickOutSide();
+                    calculateTotal();
                 }
             }
             function renumberRows(number){
@@ -214,6 +215,7 @@
 
             // Create rows with drug names
             for (const [index, sale] of salesData.entries()) {
+                document.getElementById('ci_1').value = sale.cut_id;
                 const drugName = await fetchDrugName(sale.inventory_id);
 
                 const row = document.createElement('tr');
@@ -242,6 +244,7 @@
                     <td><div class="delete-btn" id="delete_${index + 1}" onclick="deleteRow(${index + 1})">
                         <img style="width:25px;" src="../images/delete.png" alt="Delete"></div></td>
                 `;
+
 
                 salesRows.appendChild(row);
             }
@@ -385,7 +388,7 @@
                         <div class="suggestion-box" id="suggestion_${qnt}" style="display: none; position: absolute; background: white;"></div>
                     </td>
                     <td><input type="number" name="Quantity_${qnt}" id="qi_${qnt}" autocomplete="off"></td>
-                    <td><input type="number" name="Discount_${qnt}" id="dt_${qnt}" autocomplete="off"></td>
+                    <td><input type="number" name="Discount_${qnt}" id="dt_${qnt}" value="0" autocomplete="off"></td>
                     <td><input type="number" name="Price_${qnt}" id="pr_${qnt}" autocomplete="off"></td>
                     <td><input type="number" name="Total_${qnt}" id="tl_${qnt}" autocomplete="off"></td>
                     <td><input type="text" name="Note_${qnt}" id="Note_${qnt}" autocomplete="off"></td>

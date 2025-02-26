@@ -15,6 +15,15 @@ include '../php/header2.php';
 mysqli_begin_transaction($connect);
 
 try {
+    $date=$_POST['Date_1'];
+    if (isset($_POST['Date_1'])) {
+        $Date = new DateTime($_POST['Date_1']); // Get the posted date
+        $Date->modify('+7 days'); // Add 7 days to the date
+        $dueDate = $Date->format('Y-m-d'); // Format the new date
+    }
+
+    $customer_shop = $_POST['Customer_Shop_1'];
+    $Sales_Officer= $_POST['Sales_Officer'] ?? '';
     // Validate input
     $invoice_ID = isset($_POST['invoice_id']) ? intval($_POST['invoice_id']) : null;
     if (!$invoice_ID) throw new Exception("Missing invoice ID");
@@ -39,6 +48,46 @@ try {
     $original_received = $invoice['received'];
     $customerID = $invoice['customer_id'];
 
+    //Getting Customer Name
+    $customerName= ""; // Set a default value if the query fails
+    $customerAddress= "";
+    $Balance_O = 0;
+    if (!empty($customerID)) { // Check if input is not empty
+        $customer_name = "SELECT balance, customer_name, address FROM customer WHERE customer_id = '$customerID'";
+        $customer_name_results = mysqli_query($connect, $customer_name);
+        
+        if ($customer_name_results && mysqli_num_rows($customer_name_results) > 0) {
+            $customer_name_row = mysqli_fetch_assoc($customer_name_results);
+            $customerName = $customer_name_row['customer_name'];
+            $customerAddress = $customer_name_row['address'];
+            $Balance = $customer_name_row['balance'];
+        } else {
+            $customerName= ""; // Set a default value if the query fails
+            $customerAddress= "";
+            $Balance = 0;
+        }
+    } else {
+        $customerName = ""; // Set a default value if input is empty
+        $customerAddress= "";
+        $Balance = 0;
+    }
+
+    $Owed = 0;
+    if (!empty($invoice_ID)) { // Check if input is not empty
+        $invoice = "SELECT owed FROM invoices WHERE invoice_id = '$invoice_ID'";
+        $owed_result = mysqli_query($connect, $invoice);
+        
+        if ($owed_result && mysqli_num_rows($owed_result) > 0) {
+            $owed_result_row = mysqli_fetch_assoc($owed_result);
+            $owed = $owed_result_row['owed'];
+        } else {
+            $owed = 0;
+        }
+    } else {
+        $owed = 0;
+    }
+    $Balance_O = $Balance - $Owed;
+
     foreach ($existing_sales as $sale) {
         $restore_query = "UPDATE inventory 
                          SET Amount_Left = Amount_Left + ? 
@@ -50,15 +99,15 @@ try {
         }
     }
 
-    // 4. Reverse original balance impact
+    // 4. Reverse original balance impact (corrected)
     $balance_query = "UPDATE customer 
-                     SET balance = balance - (? - ?)
-                     WHERE customer_id = ?";
+    SET balance = balance - (? - ?)
+    WHERE customer_id = ?";
     $stmt = $connect->prepare($balance_query);
+    // Correct parameter order: original_total, original_received
     $stmt->bind_param("ddi", $original_total, $original_received, $customerID);
-    if (!$stmt->execute()) {
-        throw new Exception("Balance reversal failed");
-    }
+    
+
 
     // 5. Delete old sales records
     $delete_query = "DELETE FROM sales WHERE invoice_no = ?";
@@ -85,17 +134,13 @@ try {
         // Inventory check
         $drugName = $_POST["Drug_Name_$i"];
         $quantity = intval($_POST["Quantity_$i"]);
-        $drugAmount = $_POST["Amount_$i"] ?? null;
-        $drugExp = $_POST["Expiration_$i"] ?? null;
-
         // Get inventory ID with prepared statement
         $inv_query = "SELECT i.Inventory_ID 
                      FROM inventory i
                      JOIN drugs d ON i.Drug_ID = d.Drug_ID
-                     WHERE d.Drug_Name = ?
-                       AND i.Expiration = ?";
+                     WHERE d.Drug_Name = ?";
         $stmt = $connect->prepare($inv_query);
-        $stmt->bind_param("ss", $drugName, $drugExp);
+        $stmt->bind_param("s", $drugName);
         $stmt->execute();
         $invResult = $stmt->get_result();
         
@@ -159,19 +204,23 @@ try {
     }
 
     // 8. Update invoice
-    $json_data = json_encode(array_map(function($item) {
+    // Convert salesData to match the second URL's format
+    $formattedSalesData = array_map(function ($item) {
         return [
-            "note" => $item['Note'],
-            "price" => floatval($item['Price']),
-            "cut_id" => $item['Cut_ID'] ? intval($item['Cut_ID']) : null,
-            "discount" => floatval($item['Discount']),
-            "quantity" => intval($item['Quantity']),
-            "sale_date" => $item['Sale_Date'],
-            "customer_id" => intval($item['Customer_ID']),
-            "total_price" => floatval($item['Total_Price']),
-            "inventory_id" => intval($item['Inventory_ID'])
+            "note" => $item["Note"] ?? "",
+            "price" => isset($item["Price"]) ? floatval($item["Price"]) : 0.0,
+            "cut_id" => isset($item["Cut_ID"]) ? ($item["Cut_ID"] !== "" ? intval($item["Cut_ID"]) : null) : null,
+            "discount" => isset($item["Discount"]) ? floatval($item["Discount"]) : 0.0,
+            "quantity" => isset($item["Quantity"]) ? intval($item["Quantity"]) : 0,
+            "sale_date" => $item["Sale_Date"] ?? "",
+            "customer_id" => isset($item["Customer_ID"]) ? intval($item["Customer_ID"]) : null,
+            "total_price" => isset($item["Total_Price"]) ? floatval($item["Total_Price"]) : 0.0,
+            "inventory_id" => isset($item["Inventory_ID"]) ? intval($item["Inventory_ID"]) : null
         ];
-    }, $salesData));
+    }, $salesData);
+
+    // Convert array to JSON
+    $json_data = json_encode($formattedSalesData);
 
     $update_invoice = "UPDATE invoices 
                       SET date = ?, sales_officer = ?, received = ?, 
@@ -193,14 +242,29 @@ try {
 
     // 9. Update customer balance
     $new_received = floatval($_POST['Amount_Received_1']);
+    $Amount_Received = $new_received;
     $balance_update = "UPDATE customer 
-                      SET balance = balance + (? - ?)
+                      SET balance = balance - (? - ?)
                       WHERE customer_id = ?";
     $stmt = $connect->prepare($balance_update);
-    $stmt->bind_param("ddi", $totalSales, $new_received, $customerID);
+    $stmt->bind_param("ddi", $new_received, $totalSales, $customerID);
     
     if (!$stmt->execute()) {
         throw new Exception("Balance update failed");
+    }
+    $Current_Balance = 0;
+    if (!empty($customerID)) { // Check if input is not empty
+        $customer_name = "SELECT balance FROM customer WHERE customer_id = '$customerID'";
+        $customer_name_results = mysqli_query($connect, $customer_name);
+        
+        if ($customer_name_results && mysqli_num_rows($customer_name_results) > 0) {
+            $customer_name_row = mysqli_fetch_assoc($customer_name_results);
+            $Current_Balance = $customer_name_row['balance'];
+        } else {
+            $Current_Balance = 0;
+        }
+    } else {
+        $Current_Balance = 0;
     }
 
     // Commit transaction
