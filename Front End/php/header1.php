@@ -222,7 +222,17 @@ echo '<script>
                     actions: "Actions",
                     products: "Products",
                     salesreport: "Sales Report",
-                    goto: "Go To"
+                    goto: "Go To",
+                    "invoice-manager": "ّInvoice Manager",
+                    "databse-backup": "Database Backup",
+                    "companies": "Companies",
+                    "drug_type": "Drug Type",
+                    "drugs": "Drugs",
+                    "employee": "Employees",
+                    "inventory": "Inventory",
+                    "purchases": "Purchases",
+                    "sales": "Sales",
+                    "shareholders": "Share holders"
 
                 },
                 fa: {
@@ -282,7 +292,17 @@ echo '<script>
                     actions: "اقدامات",
                     products: "محصولات",
                     salesreport: "گزارش فروشات",
-                    goto: "برو به"
+                    goto: "برو به",
+                    "invoice-manager": "مدیریت فاکتور",
+                    "database-backup": "پشتیبان گیری دیتابیس",
+                    "companies": "شرکت ها",
+                    "drug_type": "Drug Type",
+                    "drugs": "Drugs",
+                    "employee": "Employees",
+                    "inventory": "Inventory",
+                    "purchases": "Purchases",
+                    "sales": "Sales",
+                    "shareholders": "Share holders"
                 }
             };
 

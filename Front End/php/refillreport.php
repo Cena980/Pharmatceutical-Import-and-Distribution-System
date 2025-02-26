@@ -27,10 +27,10 @@ echo "<div class='alerts'>Number of Refill: " . $num_rows . "</div>"; // Debuggi
 if ($num_rows > 0) {
     echo "<table border='1' id='tblrefill'>";
     echo "<thead><tr>
-            <th>Inventory ID</th>
+            <th>Inv. ID</th>
             <th>Drug ID</th>
             <th>Drug Name</th>
-            <th>Expiration</th>
+            <th>Exp.</th>
             <th>Initial Amount</th>
             <th>Amount Left</th>
             <th>Alert Type</th>

@@ -7,7 +7,7 @@
 <body>
     <?php include '../php/header2.php' ?>
     <div id="over"><h1>Update Invoice</h1></div>
-    <form name="sale" method="post">
+    <form name="sale">
         <input type="hidden" name="qnt" id="qnt" value="1">
         <div class="fixed-input">
             <div class="form-group">
@@ -74,9 +74,9 @@
         </div>
 
         <div class="insertButtons">
-            <button class="btn btn-update" onclick="updateSales()">Update</button>
+            <button class="btn btn-update" onclick="updateInvoice(event)">Update</button>
             <button class="btn btn-refresh" onclick="window.location.reload()">Refresh</button>
-            <button class="btn btn-delete" onclick="deleteSales()">Delete</button>
+            <button class="btn btn-delete" onclick="deleteInvoice(event)">Delete</button>
         </div>
     </form>
     <?php include '../php/footer.php' ?>
@@ -255,17 +255,17 @@
             await parseURLAndPopulateForm();
         });
 
-        function updateSales() {
-            var message = document.getElementById("noty");
-            message.style.color = "green";
-            message.innerHTML = "Your record has been saved.";
-            form.action = "../php/updateinvoices.php";
+        function updateInvoice(event) {
+            event.preventDefault(); // Prevent default form submission
+            const form = document.forms["sale"];
+            form.action = "../php/updateinvoice.php"; // Set action to the desired PHP script
             form.method = "post";
             form.submit();
         }
 
-        function deleteSales() {
-            form.action = "../php/deleteinvoices.php";
+        function deleteInvoice(event) {
+            event.preventDefault();
+            form.action = "../php/deleteinvoice.php";
             form.method = "post";
             form.submit();
         }
