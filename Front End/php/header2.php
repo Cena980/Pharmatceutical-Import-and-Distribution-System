@@ -7,16 +7,17 @@ echo '<script>
             let searchInput = document.getElementById("search");
             let searchport = document.getElementById("searchport");
             let bar = document.getElementById("bar");
+            let barover = document.getElementById("barover");
 
             if (searchInput.value.trim().length < 1) {
                 alert("Cannot search for an empty string");
                 return;
             }
-
+            const bar1 = document.querySelector(".bar-center");
             const formData = new FormData(document.forms["search"]);
             const query = new URLSearchParams(formData).toString();
 
-            fetch("../php/search.php?" + query, {
+            fetch("../php/searchhome.php?" + query, {
                 method: "GET",
             })
             .then(response => response.text()) // Use .json() if PHP returns JSON
@@ -28,16 +29,23 @@ echo '<script>
                     // Wait for the DOM to update before calculating height
                     setTimeout(() => {
                         let rows = searchport.querySelectorAll("tr").length;
-                        let rowHeight = 30.67; // Approximate row height in pixels
-                        let minHeight = 100; // Minimum height for #bar
+                        let rowHeight = 35; // Approximate row height in pixels
+                        let minHeight = 180; // Minimum height for #bar
                         
                         let newHeight = Math.min(minHeight + rows * rowHeight);
                         
                         bar.style.height = newHeight + "px"; // Dynamically adjust height
+                        bar1.style.height= newHeight-140 + "px";
+                        bar1.style.display= "block";
+                        
+
+
                     }, 10);
                 } else {
-                    searchport.style.display = "none"; 
-                    bar.style.height = "100px"; // Reset height when no results
+                    searchport.style.display = "none";
+                    bar.style.height = "180px"; // Reset height when no results
+                    bar1.style.height = "70px";
+                    barover.style.height = "180px"; // Reset height when no results
                 }
             })
             .catch(error => console.error("Error:", error));
@@ -47,9 +55,9 @@ echo '<script>
             document.getElementById(\'search\').value = \'\';
             document.getElementById(\'searchport\').innerHTML = \'\';
             let bar = document.getElementById("bar");
-            bar.style.height = "100px"; // Reset height
+            bar.style.height = "210px"; // Reset height
+            bar1.style.height = "70px";
         }
-
 
         </script>
         <div id="barover">

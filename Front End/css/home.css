@@ -73,11 +73,18 @@ main {
 
     .left, .right, .far_right {
         width: 100%; /* Full width when stacked */
-        max-width: 400px; /* Optional: limit max width */
     }
     #tblreport{
         width: 50%;
         max-width: 400px;
+    }
+    .tables {
+        max-width: 200px;
+    }
+    .right{
+        max-width: 400px;
+        margin: auto;
+        text-align: center;
     }
 }
 .logo1 {
@@ -113,7 +120,6 @@ main {
     transition: height 0.5s ease;
     height: auto !important; /* Allow JS to control height */
 }
-
 
 .barr {
     display: flex;
@@ -263,6 +269,21 @@ main {
 #switch button:hover {
     transform: scale(1.2);
 }
+/* Make header responsive */
+@media (max-width: 768px) {
+    #bar {
+        display: block;
+    }
+    .barr:first-child{
+        justify-content: center;
+    }
+    .barr:last-child{
+        justify-content: center;
+    }
+    #switch{
+        justify-content: center;
+    }
+}
 
 /* Original Design for #bar2over */
 #bar2over {
@@ -274,6 +295,7 @@ main {
     justify-content: center;
     align-items: center;
     height: 60px;
+    transition: height 0.4s ease;
     /* Animation for sliding in from the top */
     animation: slideInFromTop 0.5s ease-out 0.2s; /* Delayed start */
     animation-fill-mode: both; /* Ensures the element stays in the final state */
@@ -310,6 +332,7 @@ main {
 
 /* Navbar Links */
 ul {
+    transition: display 0.4s ease;
     list-style: none;
     font-family: 'Times New Roman', Times, serif;
     font-size: 12pt;
@@ -366,6 +389,16 @@ li:hover {
     100% {
         transform: translateY(0);
         opacity: 1;
+    }
+}
+/* Make header responsive */
+@media (max-width: 768px) {
+    #bar2 ul{
+        display: block;
+        
+    }
+    #bar2over {
+        height: 641px;
     }
 }
 
