@@ -1294,6 +1294,7 @@ input {
     width: 90%;
     grid-template-columns: auto auto auto auto auto;
     gap: 20px; /* Space between form groups */
+    justify-content: center;
 }
 
 .form-group {

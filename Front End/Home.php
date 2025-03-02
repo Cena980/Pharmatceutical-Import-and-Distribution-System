@@ -27,6 +27,10 @@
                 <img class="logo1" src="images/backup.png" alt="icon">
                 <a data-key="database-backup" href="backup/backup.php">Database Backup</a>
             </div>
+            <div class="tables" onclick="location.href='payments/payments.php'">
+                <img class="logo1" src="images/payments.png" alt="icon">
+                <a data-key="payments" href="payments/payments.php">Payment Processing</a>
+            </div>
             <?php $tables = getTables(); ?>
             <?php
             foreach ($tables as $table) {
