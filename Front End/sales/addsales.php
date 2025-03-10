@@ -13,21 +13,32 @@
             <input type="hidden" name="qnt" id="qnt" value="1">
             <div class="fixed-input">
                 <div class="form-group">
-                    <label data-key="date" for="Date_1">Date</label>
-                    <input type="date" name="Date_1" id="Date_1" autocomplete="off">
-                </div>
-                <div class="form-group">
                     <label data-key="amount-received" for="AR_1">Amount Received</label>
                     <input type="number" name="Amount_Received_1" id="AR_1" autocomplete="off">
                 </div>
                 <div class="form-group">
-                    <label data-key="cut-id" for="ci_1">Employee Cut ID</label>
-                    <input type="number" name="Cut_ID_1" id="ci_1" autocomplete="off">
+                    <label data-key="currency" for="currency">Currency</label>
+                    <input type="text" name="currency" id="currency" autocomplete="off" value="AFN">
+                    <div class="suggestion" id="suggestion_currency" style="border: 1px solid #ccc; display: none; position: fixed; background: white;"></div>
+                </div>
+                <div class="form-group">
+                    <label data-key="conversion_rate" for="conversion_rate">Conversion Rate</label>
+                    <input type="number" name="conversion_rate" id="conversion_rate" autocomplete="off" value="1">
+                </div>
+            </div>
+            <div class="fixed-input">
+                <div class="form-group">
+                    <label data-key="date" for="Date_1">Date</label>
+                    <input type="date" name="Date_1" id="Date_1" autocomplete="off">
                 </div>
                 <div class="form-group">
                     <label data-key="customer" for="customer_shop_1">Customer</label>
                     <input type="text" name="Customer_Shop_1" id="customer_shop_1" autocomplete="off">
                     <div class="suggestion" id="suggestion_customer" style="border: 1px solid #ccc; display: none; position: fixed; background: white;"></div>
+                </div>
+                <div class="form-group">
+                    <label data-key="cut-id" for="ci_1">Employee Cut ID</label>
+                    <input type="number" name="Cut_ID_1" id="ci_1" autocomplete="off">
                 </div>
                 <div class="form-group">
                     <label data-key="sales-officer" for="Sales_Officer">Sales Officer</label>
@@ -401,7 +412,79 @@
         }
 
         // Call the function for row 1
-        addCustomerShopEventListener(qnt);
+        function addCurrencyCodeEventListener() {
+            document.getElementById(`currency`).addEventListener("input", function () {
+                const query = this.value;
+                const suggestionsDiv = document.getElementById("suggestion_currency"); // Updated to match your HTML
+
+                if (query.length > 1) {
+                    fetch(`../php/get_currency_code.php?query=${encodeURIComponent(query)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            suggestionsDiv.innerHTML = ""; // Clear previous suggestions
+                            suggestionsDiv.style.display = "block"; // Show suggestions
+
+                            if (data.error) {
+                                suggestionsDiv.style.display = "none"; // Hide if there is an error
+                            } else {
+                                const table = document.createElement("table");
+                                table.style.borderCollapse = "collapse";
+                                table.style.width = "100%";
+
+                                const header = document.createElement("tr");
+                                header.innerHTML = `<th style="border: 1px solid #ccc; padding: 8px;">Currency Code</th>`;
+                                table.appendChild(header);
+
+                                data.forEach(currency => {
+                                    const row = document.createElement("tr");
+                                    row.innerHTML = `<td style="border: 1px solid #ccc; padding: 8px;">${currency.currency_code}</td>`;
+                                    row.style.cursor = "pointer";
+
+                                    row.onclick = () => {
+                                        document.getElementById(`currency`).value = currency.currency_code;
+                                        suggestionsDiv.style.display = "none"; // Hide suggestions when an item is clicked
+                                    };
+
+                                    table.appendChild(row);
+                                });
+
+                                suggestionsDiv.appendChild(table);
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error fetching currency suggestions:", error);
+                        });
+                } else {
+                    suggestionsDiv.style.display = "none"; // Hide suggestions if query length is <= 1
+                }
+            });
+        }
+
+        // Call the function for row 1
+        addCurrencyCodeEventListener();
+        document.getElementById("currency").addEventListener("input", function () {
+                const inputField = this;
+                const suggestionBox = document.getElementById("suggestion_currency");
+
+                // Get the position and size of the input field
+                const rect = inputField.getBoundingClientRect();
+
+                // Position the suggestion box below the input field
+                suggestionBox.style.top = rect.bottom + window.scrollY + "px"; // Add window.scrollY for scrolling
+                suggestionBox.style.left = rect.left + window.scrollX + "px"; // Add window.scrollX for horizontal scrolling
+                suggestionBox.style.width = rect.width + "px";
+
+                // Show the suggestion box
+                suggestionBox.style.display = "block";
+            });
+
+            // Hide the suggestion box when clicking outside
+            document.addEventListener("click", function (e) {
+                const suggestionBox = document.getElementById("suggestion_currency");
+                if (!e.target.closest("#currency") && !e.target.closest("#suggestion_currency")) {
+                    suggestionBox.style.display = "none";
+                }
+            });
 
 
         // Function to fetch price for each drug row

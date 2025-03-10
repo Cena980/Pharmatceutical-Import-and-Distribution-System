@@ -222,8 +222,9 @@ echo '<!DOCTYPE html>
     // Continue with other code logic    
 
     $employeeID = !empty($_POST['Cut_ID_1']) ? $_POST['Cut_ID_1'] : null;
-    $Amount_Received = !empty($_POST["Amount_Received_1"]) && is_numeric($_POST["Amount_Received_1"])
-    ? floatval($_POST["Amount_Received_1"]): 0.00;
+    $Amount_Received_1 = !empty($_POST["Amount_Received_1"]) && is_numeric($_POST["Amount_Received_1"]) ? floatval($_POST["Amount_Received_1"]): 0.00;
+    $Conversion_rate = !empty($_POST["conversion_rate"]) && is_numeric($_POST["conversion_rate"]) ? floatval($_POST["conversion_rate"]): 1;
+    $Amount_Received = $Amount_Received_1 * $Conversion_rate;
     $Sales_Officer = $_POST['Sales_Officer'] ?? null;
 
 

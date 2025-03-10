@@ -47,11 +47,12 @@ try {
     $original_total = $invoice['total_sales'];
     $original_received = $invoice['received'];
     $customerID = $invoice['customer_id'];
+    $Owed = $invoice['owed'];
 
     //Getting Customer Name
     $customerName= ""; // Set a default value if the query fails
     $customerAddress= "";
-    $Balance_O = 0;
+    $Balance = 0;
     if (!empty($customerID)) { // Check if input is not empty
         $customer_name = "SELECT balance, customer_name, address FROM customer WHERE customer_id = '$customerID'";
         $customer_name_results = mysqli_query($connect, $customer_name);
@@ -71,22 +72,8 @@ try {
         $customerAddress= "";
         $Balance = 0;
     }
-
-    $Owed = 0;
-    if (!empty($invoice_ID)) { // Check if input is not empty
-        $invoice = "SELECT owed FROM invoices WHERE invoice_id = '$invoice_ID'";
-        $owed_result = mysqli_query($connect, $invoice);
-        
-        if ($owed_result && mysqli_num_rows($owed_result) > 0) {
-            $owed_result_row = mysqli_fetch_assoc($owed_result);
-            $owed = $owed_result_row['owed'];
-        } else {
-            $owed = 0;
-        }
-    } else {
-        $owed = 0;
-    }
     $Balance_O = $Balance - $Owed;
+    echo $Balance_O, $Owed;
 
     foreach ($existing_sales as $sale) {
         $restore_query = "UPDATE inventory 
@@ -101,11 +88,11 @@ try {
 
     // 4. Reverse original balance impact (corrected)
     $balance_query = "UPDATE customer 
-    SET balance = balance - (? - ?)
+    SET balance = balance - ?
     WHERE customer_id = ?";
     $stmt = $connect->prepare($balance_query);
     // Correct parameter order: original_total, original_received
-    $stmt->bind_param("ddi", $original_total, $original_received, $customerID);
+    $stmt->bind_param("di",  $owed, $customerID);
     
 
 
@@ -158,7 +145,7 @@ try {
         $checkResult = $stmt->get_result()->fetch_assoc();
         
         if ($checkResult['Amount_Left'] < $quantity) {
-            throw new Exception("Insufficient stock for $drugName");
+            echo "<div class='alerts'>Quantity Higher than Available stock for $drugName</div>";
         }
 
         // Update inventory
@@ -241,17 +228,7 @@ try {
     }
 
     // 9. Update customer balance
-    $new_received = floatval($_POST['Amount_Received_1']);
-    $Amount_Received = $new_received;
-    $balance_update = "UPDATE customer 
-                      SET balance = balance - (? - ?)
-                      WHERE customer_id = ?";
-    $stmt = $connect->prepare($balance_update);
-    $stmt->bind_param("ddi", $new_received, $totalSales, $customerID);
     
-    if (!$stmt->execute()) {
-        throw new Exception("Balance update failed");
-    }
     $Current_Balance = 0;
     if (!empty($customerID)) { // Check if input is not empty
         $customer_name = "SELECT balance FROM customer WHERE customer_id = '$customerID'";
