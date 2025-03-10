@@ -117,7 +117,7 @@ echo '<!DOCTYPE html>
         echo "<div class='alerts'>Payment Received successfully!" ; echo "</div>";
         echo "<div class='alerts'>رسید موفقانه ثبت گردید" ; echo "</div>";
         $receipt = "SELECT receipt_id FROM receipt WHERE customer_id = '$customerID' AND payment_date = '$date'
-        AND payment_amount = '$Amount_Received' AND recorded_by = '$Sales_Officer'";
+        AND payment_amount = '$Amount_Received' AND recorded_by = '$Sales_Officer' order by receipt_id desc";
         $receipt_results = mysqli_query($connect, $receipt);
     
         if ($receipt_results && mysqli_num_rows($receipt_results) > 0) {
@@ -178,6 +178,9 @@ echo '<!DOCTYPE html>
                                 <td rowspan='2'>Date: </td>
                                 <td>$date</td>
                                 </tr>";
+                                echo "<tr>
+                                <td id='date'></td>
+                                </tr>";
                     echo "</table>";
                 echo "</div>";
                 echo "<div class='column'>";
@@ -212,9 +215,6 @@ echo '<!DOCTYPE html>
                                 <td>Currency:</td>
                                 <td>$currency_code</td>
                                 </tr>";
-                                echo "<tr>
-                                <td id='dueDate'></td>
-                                </tr>";
                     echo "</table>";
                 echo "</div>";
     
@@ -222,7 +222,6 @@ echo '<!DOCTYPE html>
                 echo "<table id='tblinvoice'>";
                 echo "<tr>
                         <th data-key='customer_shop'>Customer</th>
-                        <th data-key='payment_amount'>Amount</th>
                         <th data-key='old_balance'>Old Balance</th>
                         <th data-key='new_balance'>New Balance</th>
                         <th data-key='payment_date'>Date</th>
@@ -232,8 +231,6 @@ echo '<!DOCTYPE html>
                 $rownumber = 1;
                 while ($r = mysqli_fetch_assoc($res)) {
                     echo "<tr>";
-                    echo "<td>" . $rownumber . "</td>";
-                    $rownumber++;
                     echo "<td>" . $r['customer_shop'] . "</td>";
                     echo "<td>" . $r['payment_amount'] . "</td>";
                     echo "<td>" . $r['old_balance'] . "</td>";
@@ -286,7 +283,13 @@ echo '<!DOCTYPE html>
         <script>
             function GoBack(){
                 history.back();}
+            window.onload = function() {
+                // Ensure the PHP variables are safely converted to JavaScript strings
+                const gregorianDate = "' . $date . '";
 
+                // Convert Gregorian dates to Hijri Shamsi and update the DOM
+                document.getElementById("date").innerHTML = convertToHijriShamsi(gregorianDate);
+            }
 
             // Function to print a specific section of the page
             function printSection(sectionId) {
@@ -300,6 +303,16 @@ echo '<!DOCTYPE html>
                 } else {
                     console.error("Section not found: " + sectionId);
                 }
+            }
+                            // Function to convert Gregorian date to Hijri Shamsi (Solar Hijri)
+            function convertToHijriShamsi(gregorianDate) {
+                const date = new Date(gregorianDate);
+                const { jy, jm, jd } = jalaali.toJalaali(
+                    date.getFullYear(),
+                    date.getMonth() + 1,
+                    date.getDate()
+                );
+                return `${String(jd).padStart(2, "0")}/${String(jm).padStart(2, "0")}/${jy}`;
             }
         </script>
     ';
