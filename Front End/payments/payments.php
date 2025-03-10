@@ -24,7 +24,7 @@
             <button data-key="insert-over" class="btn btn-save" onclick="location.href='addpayments.php'">Add</button>
         </div>
         <div id="report">
-            <?php include '../php/paymentsreport.php';?>
+            <?php include '../php/receiptreport.php';?>
         </div>
         </origin>
         <?php include '../php/footer.php' ?>
@@ -46,7 +46,7 @@
                 if (searchTerm) {
                     try {
                         // Fetch the search results from the backend
-                        const response = await fetch(`../php/searchpayments.php?query=${encodeURIComponent(searchTerm)}`);
+                        const response = await fetch(`../php/searchreceipt.php?query=${encodeURIComponent(searchTerm)}`);
                         
                         if (!response.ok) {
                             throw new Error('Error fetching search results.');
