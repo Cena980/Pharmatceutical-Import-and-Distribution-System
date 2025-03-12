@@ -73,7 +73,6 @@ try {
         $Balance = 0;
     }
     $Balance_O = $Balance - $Owed;
-    echo $Balance_O, $Owed;
 
     foreach ($existing_sales as $sale) {
         $restore_query = "UPDATE inventory 
@@ -249,9 +248,6 @@ try {
 
     // Display success
     echo "<div class='alerts'>Update successful!</div>";
-    
-    // Display invoice (similar to your original code)
-    // ... [Include your invoice display code here] ...
     
     if (!empty($invoice_ID)) {
         $message = "Thank you for choosing us—we appreciate your business and look forward to working with you again!";

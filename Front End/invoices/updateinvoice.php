@@ -267,6 +267,7 @@
         }
 
         function deleteInvoice(event) {
+            const form = document.forms["sale"];
             event.preventDefault();
             form.action = "../php/deleteinvoice.php";
             form.method = "post";
