@@ -363,6 +363,7 @@
                 document.getElementById("qnt").value = qnt;
                 addEventForClickOutSide();
             }
+            addCustomerShopEventListener(1);
             function addCustomerShopEventListener(rowNumber) {
             document.getElementById(`customer_shop_${rowNumber}`).addEventListener("input", function () {
                 const query = this.value;

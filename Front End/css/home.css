@@ -304,6 +304,7 @@ main {
     /* Animation for sliding in from the top */
     animation: slideInFromTop 0.5s ease-out 0.2s; /* Delayed start */
     animation-fill-mode: both; /* Ensures the element stays in the final state */
+    border-radius: 0 0 10px 10px;
 }
 
 #bar2 {
@@ -435,6 +436,7 @@ li:hover {
     align-items: center;
     box-sizing: border-box;
     text-align: left;
+    border-radius:10px 10px 0 0 ;
 }
 
 /* Make footer responsive */
