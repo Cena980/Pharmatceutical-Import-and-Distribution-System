@@ -21,29 +21,39 @@ $num_rows = mysqli_num_rows($res);
 if($num_rows>0){
     echo "<table id='tblsearch'>";
     echo "<thead><tr>
-                <th data-key='drug-id'>Drug ID</th>
+                <th data-key='drug-type'>Type</th>
+                <th data-key='drug-id'>ID</th>
                     <th data-key='drug-name'>Name</th>
-                    <th data-key='ingredients'>Ingredients</th>
+                    <th data-key='ingredients'>Ingre.</th>
+                    <th data-key='expiration'>Exp.</th>
+                    <th data-key='amount'>Amount</th>
                     <th data-key='quantity-pb'>PB</th>
-                    <th data-key='company-name'>Company Name</th>
+                    <th data-key='company-name'>Company</th>
                     <th data-key='type'>Type</th>
-                    <th data-key='demo'>Demography</th>
+                    <th data-key='demo'>Demo.</th>
+                    
                     <th data-key='actions' colspan='2'>Actions</th>
             </tr></thead><tbody>";
     while ($r = mysqli_fetch_assoc($res)) {
         echo "<tr>";
+            echo "<td>" . $r['type'] . "</td>";
             echo "<td>" . $r['drug_id'] . "</td>";
             echo "<td>" . $r['drug_name'] . "</td>";
             echo "<td>" . $r['ingredient'] . "</td>";
+            echo "<td>" . $r['expiration'] . "</td>";
+            echo "<td>" . $r['amount'] . "</td>";
             echo "<td>" . $r['PB'] . "</td>";
             echo "<td>" . $r['company'] . "</td>";
             echo "<td>" . $r['type'] . "</td>";
             echo "<td>" . $r['demo'] . "</td>";
             echo "<td>
                 <form action='../drugs/updatedrugs.php' method='GET'>
+                    <input type='hidden' name='Drug_Type' value='" . $r['type'] . "'>
                     <input type='hidden' name='Drug_ID' value='" . $r['drug_id'] . "'>
                     <input type='hidden' name='Drug_Name' value='" . $r['drug_name'] . "'>
                     <input type='hidden' name='Ingredient' value='" . $r['ingredient'] . "'>
+                    <input type='hidden' name='Expiration' value='" . $r['expiration'] . "'>
+                    <input type='hidden' name='Amount' value='" . $r['amount'] . "'>
                     <input type='hidden' name='Tablet_PB' value='" . $r['PB'] . "'>
                     <input type='hidden' name='Comp' value='" . $r['company'] . "'>
                     <input type='hidden' name='Type' value='" . $r['type'] . "'>
@@ -53,9 +63,12 @@ if($num_rows>0){
             </td>";
             echo "<td>
                 <form action='../drugs/updatedrugs.php' method='GET'>
+                    <input type='hidden' name='Drug_Type' value='" . $r['type'] . "'>
                     <input type='hidden' name='Drug_ID' value='" . $r['drug_id'] . "'>
                     <input type='hidden' name='Drug_Name' value='" . $r['drug_name'] . "'>
                     <input type='hidden' name='Ingredient' value='" . $r['ingredient'] . "'>
+                    <input type='hidden' name='Expiration' value='" . $r['expiration'] . "'>
+                    <input type='hidden' name='Amount' value='" . $r['amount'] . "'>
                     <input type='hidden' name='Tablet_PB' value='" . $r['PB'] . "'>
                     <input type='hidden' name='Comp' value='" . $r['company'] . "'>
                     <input type='hidden' name='Type' value='" . $r['type'] . "'>

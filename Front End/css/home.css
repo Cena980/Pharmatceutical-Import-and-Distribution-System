@@ -98,7 +98,7 @@ main {
 /* Original Design for Navbar */
 #barover {
     margin-top: -7.5px;
-    display: flex;
+    display:block;
     justify-content: center;
     background-color: rgb(44, 78, 109);
     font-weight: bold;
@@ -111,12 +111,12 @@ main {
     justify-content: space-between;
     align-items: center;
     padding: 0 30px;
-    width: 100%;
+    max-width: 95%;
     transition: height 0.5s ease;
     min-height: 100px; /* Default height */
 }
 
-#bar.expand {
+#searchport.expand {
     transition: height 0.5s ease;
     height: auto !important; /* Allow JS to control height */
 }
@@ -173,7 +173,7 @@ main {
     overflow-y: auto; /* Enables scrolling */
     overflow-x: hidden;
     width: 100%;
-    max-width: 800px;
+    max-width: 1000px;
     color: black;
     margin: auto;
     margin-top: 10px;

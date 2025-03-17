@@ -41,7 +41,7 @@
                 if (searchTerm) {
                     try {
                         // Fetch the search results from the backend
-                        const response = await fetch(`../php/search.php?query=${encodeURIComponent(searchTerm)}`);
+                        const response = await fetch(`../php/searchdrugs.php?query=${encodeURIComponent(searchTerm)}`);
                         
                         if (!response.ok) {
                             throw new Error('Error fetching search results.');

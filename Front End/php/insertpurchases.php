@@ -113,8 +113,8 @@ echo '<!DOCTYPE html>
             echo 'Could not fetch Drug ID for ' . $Drug_Name;
             continue;  // Skip this iteration if Inventory_ID is not found
         }
-        $price = $_POST["price_$i"] ?? null;
-        $quantity = $_POST["quantity_$i"] ?? null;
+        $price = $_POST["price_$i"] ?? 0;
+        $quantity = $_POST["quantity_$i"] ?? 0;
         $discount = $_POST["discount_$i"] ?? 0;
 
         // Ensure the discount is a valid number
@@ -125,7 +125,7 @@ echo '<!DOCTYPE html>
         // Cast to float for consistency
         $discount = (float)$discount;
         $expiration = $_POST["expiration_$i"] ?? null;
-        $total_amount = $_POST["total_amount_$i"] ?? null;
+        $total_amount = $_POST["total_amount_$i"] ?? 0;
         if($i < $qnt){
             $amount = 0;
         }else{

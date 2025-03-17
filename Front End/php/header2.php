@@ -17,7 +17,7 @@ echo '<script>
             const formData = new FormData(document.forms["search"]);
             const query = new URLSearchParams(formData).toString();
 
-            fetch("../php/searchhome.php?" + query, {
+            fetch("../php/searchdrugs.php?" + query, {
                 method: "GET",
             })
             .then(response => response.text()) // Use .json() if PHP returns JSON
@@ -34,30 +34,32 @@ echo '<script>
                         
                         let newHeight = Math.min(minHeight + rows * rowHeight);
                         
-                        bar.style.height = newHeight + "px"; // Dynamically adjust height
-                        bar1.style.height= newHeight-140 + "px";
-                        bar1.style.display= "block";
+                        barover.style.height = newHeight + "px"; // Dynamically adjust height
+                        searchport.style.height= newHeight-140 + "px";
+                        searchport.style.display= "block";
                         
 
 
                     }, 10);
                 } else {
                     searchport.style.display = "none";
-                    bar.style.height = "180px"; // Reset height when no results
-                    bar1.style.height = "70px";
-                    barover.style.height = "180px"; // Reset height when no results
+                    searchport.style.height = "0px"; // Reset height when no results
+                    searchport.style.height = "70px";
+                    barover.style.height = "100px"; // Reset height when no results
                 }
             })
             .catch(error => console.error("Error:", error));
         }
 
-        function reset() {
+        function resetSearch1() {
             document.getElementById(\'search\').value = \'\';
             document.getElementById(\'searchport\').innerHTML = \'\';
-            let bar = document.getElementById("bar");
-            bar.style.height = "210px"; // Reset height
-            bar1.style.height = "70px";
+            let searchport = document.getElementById("bar");
+            searchport.style.height = "0px"; // Reset height
+            bar.style.height = "100px";
+            barover.style.height = "110px";
         }
+
 
         </script>
         <div id="barover">
@@ -69,13 +71,13 @@ echo '<script>
                 <div class="barr  bar-center">
                     <div class="bar-in">
                         <div class="search-container">
-                            <button onclick="reset()" id="btn-circle" ><img src="../images/clear.png"></button>
+                            <button onclick="resetSearch1()" id="btn-circle" ><img src="../images/clear.png"></button>
                             <form name="search" onsubmit="validate(event); return false;">
                                 <input type="text" placeholder="Search for Drugs" name="query" id="search" required data-key="search-placeholder">
                             </form>
                             <button class="buttonS" type="submit" onclick="validate(event)" data-key="search-button">Search</button>
                         </div>
-                            <div id="searchport"></div>
+                            
                     </div>
                 </div>
                 <div class="barr bar-right">
@@ -85,6 +87,9 @@ echo '<script>
                         <button id="buttonSwitchL" onclick="setLanguage(\'fa\')">فا</button>
                     </div>
                 </div>
+            </div>
+            <div>
+                <div id="searchport"></div>
             </div>
         </div>
 
