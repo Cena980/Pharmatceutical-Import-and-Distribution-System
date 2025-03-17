@@ -21,13 +21,10 @@
         </div>
         <div id="search_result"></div>
         <div class="button-group">
-            <button data-key="insert-over" class="btn btn-save" onclick="location.href='addpayments.php'">Add</button>
+            <button data-key="insert-over" class="btn btn-back" onclick="history.back()">Go Back</button>
         </div>
         <div id="report">
-            <?php include '../php/receiptreportLimited.php';?>
-        </div>
-        <div class="button-group">
-            <button data-key="insert-over" class="btn btn-back" onclick="location.href='paymentsExpanded.php'">View All</button>
+            <?php include '../php/receiptreport.php';?>
         </div>
         </origin>
         <?php include '../php/footer.php' ?>

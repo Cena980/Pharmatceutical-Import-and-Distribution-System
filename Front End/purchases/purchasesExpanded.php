@@ -2,45 +2,44 @@
 <html lang="en">
     <head>
         <title>
-            Payment Processing
+            Purchase Page
         </title>
         <link rel="stylesheet" href="../css/home.css">
+        
     </head>
     <body>
         <?php include '../php/header2.php' ?>
         <origin>
-        <div id="over"><h1 data-key="sales">Payment Processing</h1></div>
+        <div id="over"><h1>Purchases</h1></div>
         <div class="search-over">
             <div class="barr">
             <button onclick="resetSearch()" id="btn-circle" ><img src="../images/clear.png"></button>
-                <form name="searchpayments" method="post">
-                    <input type="text" placeholder="Search for Payment records" name="query" id="searchpayments" required data-key="search-placeholder">
+                <form name="searchpurchases" method="post">
+                    <input type="text" placeholder="Search for purchases" name="query" id="searchpurchases" required data-key="search-placeholder">
                 </form>
-                <button class="button" type="submit" onclick="Pyament()" data-key="search-button">Search</button>
+                <button class="button" type="submit" onclick="purchases()" data-key="search-button">Search</button>
             </div>
         </div>
         <div id="search_result"></div>
-        <div class="button-group">
-            <button data-key="insert-over" class="btn btn-save" onclick="location.href='addpayments.php'">Add</button>
-        </div>
         <div id="report">
-            <?php include '../php/receiptreportLimited.php';?>
+            <div class="button-group">
+                <button class="btn btn-back" onclick="history.back()">Go Back</button>
+            </div>
+            <?php include '../php/purchasesreport.php';?>
         </div>
-        <div class="button-group">
-            <button data-key="insert-over" class="btn btn-back" onclick="location.href='paymentsExpanded.php'">View All</button>
         </div>
         </origin>
         <?php include '../php/footer.php' ?>
         <script>
             // Add event listener to the input field
-            document.getElementById('searchpayments').addEventListener('keypress', function(event) {
+            document.getElementById('searchpurchases').addEventListener('keypress', function(event) {
                 if (event.key === 'Enter') {
                     event.preventDefault(); // Prevent the default form submission
-                    Payments(); // Call the drugs function to perform the search
+                    purchases(); // Call the drugs function to perform the search
                 }
             });
-            async function Payments() {
-                const searchTerm = document.getElementById('searchpayments').value.trim();
+            async function purchases() {
+                const searchTerm = document.getElementById('searchpurchases').value.trim();
                 const resultDiv = document.getElementById('search_result');
                 
                 // Clear the previous result
@@ -49,7 +48,7 @@
                 if (searchTerm) {
                     try {
                         // Fetch the search results from the backend
-                        const response = await fetch(`../php/searchreceipt.php?query=${encodeURIComponent(searchTerm)}`);
+                        const response = await fetch(`../php/searchpurchases.php?query=${encodeURIComponent(searchTerm)}`);
                         
                         if (!response.ok) {
                             throw new Error('Error fetching search results.');
@@ -58,14 +57,14 @@
                         const result = await response.text(); // Use .json() if the backend sends JSON
                         resultDiv.innerHTML = result;
                     } catch (error) {
-                        resultDiv.innerHTML = `<p style="color: red; font-weight:bold; width: 150px; margin: auto; margin-bottom:20px; text-align:center;">Error: ${error.message}</p>`;
+                        resultDiv.innerHTML = `<p style="color: red; width: 150px; margin: auto; margin-bottom:20px;">Error: ${error.message}</p>`;
                     }
                 } else {
-                    resultDiv.innerHTML = '<p style="color: red; font-weight:bold; width: 150px; margin: auto; margin-bottom:20px; text-align:center;">Please enter a search term.</p>';
+                    resultDiv.innerHTML = '<p style="color: red; width: 150px; margin: auto; margin-bottom:20px;">Please enter a search term.</p>';
                 }
             }
             function resetSearch(){
-                document.getElementById('searchpayments').value= '';
+                document.getElementById('searchpurchases').value= '';
                 document.getElementById('search_result').innerHTML = '';
             }
 

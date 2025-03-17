@@ -2,22 +2,20 @@
 <html lang="en">
     <head>
         <title>
-            Drug Page
+            Companies Page
         </title>
         <link rel="stylesheet" href="../css/home.css">
     </head>
     <body>
         <?php include '../php/header2.php' ?>
         <origin>
-        <div id="over"><h1>Drug Types</h1></div>
+        <div id="over"><h1>Company records</h1></div>
         <div class="button-group">
-            <button onclick="location.href='Insertdrugtype.html'" class="btn btn-add">Add</button>
+            <button class="btn btn-back" onclick="history.back()">Go Back</button>
         </div>
         <div id="report">
-            <?php include '../php/drugtypereport.php';?>
+            <?php include '../php/companiesreport.php';?>
         </div>
-        <div class="button-group">
-            <button onclick="location.href='drug_typeExpanded.php'" class="btn btn-back">View All</button>
         </div>
         </origin>
         <?php include '../php/footer.php' ?>

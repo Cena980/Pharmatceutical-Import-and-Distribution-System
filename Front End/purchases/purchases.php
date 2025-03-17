@@ -25,9 +25,12 @@
             <div class="button-group">
                 <button class="btn btn-save" onclick="location.href='addpurchases.php'">Add</button>
             </div>
-            <?php include '../php/purchasesreport.php';?>
+            <?php include '../php/purchasesreportLimited.php';?>
         </div>
         </div>
+        <div class="button-group">
+                <button class="btn btn-back" onclick="location.href='purchasesExpanded.php'">View All</button>
+            </div>
         </origin>
         <?php include '../php/footer.php' ?>
         <script>

@@ -1,14 +1,15 @@
 <?php
 
     include 'connection.php';
-    $query = "select * from sales_view order by Sale_Date desc limit 20";
+    $query = "select * from sales_view order by Sale_Date desc, sales_ID desc limit 20";
     $res = mysqli_query($connect, $query);
 
     $num_rows = mysqli_num_rows($res);
     if($num_rows>0){
-        echo "<table border='1' border-collapse=collapse id='tblreportlimited'>";
-        echo "<tr>
+        echo "<table border='1' border-collapse=collapse id='tblreport'>";
+        echo "<thead><tr>
             <th data-key='sale_id'>Sale ID</th>
+            <th data-key='inventory_id'>Inventory ID</th>
             <th data-key='name'>Name</th>
             <th data-key='date'>Date</th>
             <th data-key='quantity'>Quantity</th>
@@ -17,10 +18,11 @@
             <th data-key='customer_id'>Customer</th>
             <th data-key='total_price'>Total Price</th>
             <th data-key='actions' colspan='2'>Actions</th>
-                </tr>";
+                </tr></thead><tbody>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
             echo "<td>" . $r['Sales_ID'] . "</td>";
+            echo "<td>" . $r['Inventory_ID'] . "</td>";
             echo "<td>" . $r['drug_name'] . "</td>";
             echo "<td>" . $r['Sale_Date'] . "</td>";
             echo "<td>" . $r['Quantity'] . "</td>";
@@ -29,7 +31,7 @@
             echo "<td>" . $r['Customer'] . "</td>";
             echo "<td>" . $r['Total_Price'] . "</td>";
             echo "<td>
-                <form action='sales/updatesales.php' method='GET'>
+                <form action='updatesales.php' method='GET'>
                     <input type='hidden' name='Sales_ID' value='" . $r['Sales_ID'] . "'>
                     <input type='hidden' name='Inventory_ID' value='" . $r['Inventory_ID'] . "'>
                     <input type='hidden' name='Sale_Date' value='" . $r['Sale_Date'] . "'>
@@ -45,7 +47,7 @@
                 </form>
             </td>";
             echo "<td>
-                <form action='sales/updatesales.php' method='GET'>
+                <form action='updatesales.php' method='GET'>
                     <input type='hidden' name='Sales_ID' value='" . $r['Sales_ID'] . "'>
                     <input type='hidden' name='Inventory_ID' value='" . $r['Inventory_ID'] . "'>
                     <input type='hidden' name='Sale_Date' value='" . $r['Sale_Date'] . "'>
@@ -62,7 +64,7 @@
               </td>";
             echo "</tr>";
         }
-        echo "</table>";
+        echo "</tbody></table>";
     } else {
         echo "No records found.";  
     }

@@ -14,7 +14,10 @@
             <button class="btn btn-save" onclick="location.href='insertcompanies.php'" data-key="insert-button">Add</button>
         </div>
         <div id="report">
-            <?php include '../php/companiesreport.php';?>
+            <?php include '../php/companiesreportLimited.php';?>
+        </div>
+        <div class="button-group">
+            <button class="btn btn-back" onclick="location.href='companiesExpanded.php'">All Companies</button>
         </div>
         </div>
         </origin>

@@ -26,7 +26,10 @@
             <button class="btn btn-save" onclick="location.href='Insertdrug.php'" data-key="insert-button">Add</button>
         </div>
         <div id="report">
-            <?php include '../php/drugreport.php';?>
+            <?php include '../php/drugreportLimited.php';?>
+        </div>
+        <div class="button-group">
+            <button class="btn btn-back" onclick="location.href='drugsExpanded.php'">All Drugs</button>
         </div>
         </origin>
         <?php include '../php/footer.php' ?>

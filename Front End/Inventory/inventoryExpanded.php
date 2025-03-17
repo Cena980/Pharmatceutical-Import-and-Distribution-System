@@ -19,14 +19,14 @@
             </div>
         </div>
         <div id="search_result"></div>
+        <div id="button-group">
+                        <button class="btn btn-back" onclick="history.back()">Go Back</button>
+                    </div>
         <div class="inventory">
             <div class="inventory-left">
                 <div id="over"><h1>Inventory Records</h1></div>
-                <div id="button-group">
-                        <button class="btn btn-save" onclick="location.href='insertinventory.php'">Add</button>
-                    </div>
-                <div id="report">
-                    <?php include '../php/inventoryreportLimited.php';?>
+                    <div id="report">
+                    <?php include '../php/inventoryreport.php';?>
                 </div>
 
 
@@ -34,15 +34,11 @@
             <div class="inventory-right">
                 <div id="over"><h1>Refill List</h1></div>
                 <div id="report">
-                    <?php include '../php/refillreportLimited.php';?>
+                    <?php include '../php/refillreport.php';?>
                 </div>
             </div>
-            
         </div>
         </div>
-        <div id="button-group">
-                        <button class="btn btn-back" onclick="location.href='inventoryExpanded.php'">View All</button>
-                    </div>
         </origin>
 
         <?php include '../php/footer.php' ?>

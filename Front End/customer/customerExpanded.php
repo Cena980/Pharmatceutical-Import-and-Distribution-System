@@ -10,13 +10,10 @@
         <?php include '../php/header2.php' ?>
         <div id="over"><h1>Customer records</h1></div>
         <div class="button-group">
-            <button class="btn btn-save" onclick="location.href='Insertcustomer.php'">Add</button>
+            <button class="btn btn-back" onclick="history.back()">Go Back</button>
         </div>
         <div id="report">
-            <?php include '../php/customerreportLimited.php';?>
-        </div>
-        <div class="button-group">
-            <button class="btn btn-back" onclick="location.href='customerExpanded.php'">View All</button>
+            <?php include '../php/customerreport.php';?>
         </div>
         </div>
         <?php include '../php/footer.php' ?>

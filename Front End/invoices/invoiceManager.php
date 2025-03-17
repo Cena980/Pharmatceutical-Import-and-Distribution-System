@@ -24,8 +24,11 @@
             <button data-key="insert-over" class="btn btn-save" onclick="location.href='addsales.php'">Add</button>
         </div>
         <div id="report">
-            <?php include '../php/invoicesreport.php';?>
+            <?php include '../php/invoicesreportLimited.php';?>
         </div>
+        </div>
+        <div class="button-group">
+            <button data-key="insert-over" class="btn btn-back" onclick="location.href='invoiceManagerExpanded.php'">View All</button>
         </div>
         </origin>
         <?php include '../php/footer.php' ?>

@@ -2,45 +2,42 @@
 <html lang="en">
     <head>
         <title>
-            Payment Processing
+            Sales Page
         </title>
         <link rel="stylesheet" href="../css/home.css">
     </head>
     <body>
         <?php include '../php/header2.php' ?>
         <origin>
-        <div id="over"><h1 data-key="sales">Payment Processing</h1></div>
+        <div id="over"><h1 data-key="sales">Sales</h1></div>
         <div class="search-over">
             <div class="barr">
             <button onclick="resetSearch()" id="btn-circle" ><img src="../images/clear.png"></button>
-                <form name="searchpayments" method="post">
-                    <input type="text" placeholder="Search for Payment records" name="query" id="searchpayments" required data-key="search-placeholder">
+                <form name="searchsales" method="post">
+                    <input type="text" placeholder="Search for Sales" name="query" id="searchsales" required data-key="search-placeholder">
                 </form>
-                <button class="button" type="submit" onclick="Pyament()" data-key="search-button">Search</button>
+                <button class="button" type="submit" onclick="Sales()" data-key="search-button">Search</button>
             </div>
         </div>
         <div id="search_result"></div>
         <div class="button-group">
-            <button data-key="insert-over" class="btn btn-save" onclick="location.href='addpayments.php'">Add</button>
+            <button data-key="insert-over" class="btn btn-back" onclick="history.back()">Go Back</button>
         </div>
         <div id="report">
-            <?php include '../php/receiptreportLimited.php';?>
-        </div>
-        <div class="button-group">
-            <button data-key="insert-over" class="btn btn-back" onclick="location.href='paymentsExpanded.php'">View All</button>
+            <?php include '../php/salesreport.php';?>
         </div>
         </origin>
         <?php include '../php/footer.php' ?>
         <script>
             // Add event listener to the input field
-            document.getElementById('searchpayments').addEventListener('keypress', function(event) {
+            document.getElementById('searchsales').addEventListener('keypress', function(event) {
                 if (event.key === 'Enter') {
                     event.preventDefault(); // Prevent the default form submission
-                    Payments(); // Call the drugs function to perform the search
+                    Sales(); // Call the drugs function to perform the search
                 }
             });
-            async function Payments() {
-                const searchTerm = document.getElementById('searchpayments').value.trim();
+            async function Sales() {
+                const searchTerm = document.getElementById('searchsales').value.trim();
                 const resultDiv = document.getElementById('search_result');
                 
                 // Clear the previous result
@@ -49,7 +46,7 @@
                 if (searchTerm) {
                     try {
                         // Fetch the search results from the backend
-                        const response = await fetch(`../php/searchreceipt.php?query=${encodeURIComponent(searchTerm)}`);
+                        const response = await fetch(`../php/searchsales.php?query=${encodeURIComponent(searchTerm)}`);
                         
                         if (!response.ok) {
                             throw new Error('Error fetching search results.');
@@ -65,7 +62,7 @@
                 }
             }
             function resetSearch(){
-                document.getElementById('searchpayments').value= '';
+                document.getElementById('searchsales').value= '';
                 document.getElementById('search_result').innerHTML = '';
             }
 

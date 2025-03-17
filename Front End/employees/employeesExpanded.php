@@ -11,13 +11,10 @@
         <origin>
         <div id="over"><h1>Employee records</h1></div>
         <div class="button-group">
-            <button class="btn btn-save" onclick="location.href='Insertemployee.php'">Add </button>
+            <button class="btn btn-back" onclick="history.back()">Go Back </button>
         </div>
         <div id="report">
-            <?php include '../php/employeereportLimited.php';?>
-        </div>
-        <div class="button-group">
-            <button class="btn btn-back" onclick="location.href='employeesExpanded.php'">View All </button>
+            <?php include '../php/employeereport.php';?>
         </div>
      </div>
      </origin>
