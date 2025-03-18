@@ -281,13 +281,17 @@
                                     table.style.width = "100%";
                                     const header = document.createElement("tr");
                                     header.innerHTML = `
-                                        <th style="border: 1px solid #ccc; padding: 8px;">Drug Name</th>
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Type</th>
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Name</th>
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Company
                                     `;
                                     table.appendChild(header);
                                     data.forEach(drug => {
                                         const row = document.createElement("tr");
                                         row.innerHTML = `
+                                            <td style="border: 1px solid #ccc; padding: 8px;">${drug.Type}</td>
                                             <td style="border: 1px solid #ccc; padding: 8px;">${drug.Drug_Name}</td>
+                                            <td style="border: 1px solid #ccc; padding: 8px;">${drug.Company}</td>
                                         `;
                                         row.style.cursor = "pointer";
                                         row.onclick = () => {
@@ -367,15 +371,30 @@
                     // Get the position and size of the current input field
                     const rect = inputField.getBoundingClientRect();
 
-                    // Set the suggestion box's position relative to the current input field
+                    // Set the suggestion box's position relative to the input field
                     suggestionBox.style.top = rect.bottom + window.scrollY + "px"; // Account for vertical scroll
                     suggestionBox.style.left = rect.left + window.scrollX + "px";  // Account for horizontal scroll
-                    suggestionBox.style.width = rect.width + "px"; // Match the input width
 
-                    // Show the suggestion box at the new position
+                    // Adjust width dynamically based on content
+                    suggestionBox.style.width = "auto";  // Let it adjust to content
+                    suggestionBox.style.minWidth = rect.width + "px"; // Ensure it’s at least as wide as input
+                    
+
+                    // Make sure the box is visible
                     suggestionBox.style.display = "block";
                 });
-            };
+            }
+            document.addEventListener("click", function (e) {
+                for (let i = 1; i <= qnt; i++) {
+                    const suggestionBox = document.getElementById(`suggestion_${i}`);
+                    
+                    if (suggestionBox && !e.target.closest(`#drug_name_${i}`) && !e.target.closest(`#suggestion_${i}`)) {
+                        suggestionBox.style.display = "none";
+                    }
+                }
+            });
+
+
 
             // Hide the suggestion box when clicking outside any of the input fields or the suggestion box
             document.addEventListener("click", function (e) {
