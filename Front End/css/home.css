@@ -103,7 +103,7 @@ main {
     background-color: rgb(44, 78, 109);
     font-weight: bold;
     /* Animation for sliding in from the top */
-    animation: slideInFromTop 0.5s ease-out;
+    animation: slideInFromTop 0.3s ease-out;
 }
 
 #bar {
@@ -302,7 +302,7 @@ main {
     height: 60px;
     transition: height 0.4s ease;
     /* Animation for sliding in from the top */
-    animation: slideInFromTop 0.5s ease-out 0.2s; /* Delayed start */
+    animation: slideInFromTop 0.3s ease-out 0.2s; /* Delayed start */
     animation-fill-mode: both; /* Ensures the element stays in the final state */
     border-radius: 0 0 10px 10px;
 }
