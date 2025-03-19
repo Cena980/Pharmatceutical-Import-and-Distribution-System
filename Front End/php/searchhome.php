@@ -12,7 +12,7 @@ $sql = "SELECT * from drugs_view
     or company like '%$query%'
     or ingredient like '%$query%'
     or demo like '%$query%'
-    or type like '%$query%' 
+    or type like '%$query%'
     order by drug_name asc ";
 $res = mysqli_query($connect, $sql);
 

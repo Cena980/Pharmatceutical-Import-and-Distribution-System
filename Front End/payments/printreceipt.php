@@ -1,6 +1,6 @@
 <?php
 // Include database connection
-require 'connection.php';
+require '../php/connection.php';
 
 echo '<!DOCTYPE html>
 <html lang="en">
@@ -14,143 +14,49 @@ echo '<!DOCTYPE html>
     <body>';
     include '../php/header2.php';
 
-    $Data = []; // Array to store sales data
 
-    // Shared fields
-    $date = $_POST['Date_1'] ?? null;
+    $receipt_ID = isset($_GET['receipt_id']) ? $_GET['receipt_id'] : '';
+    $customerID = isset($_GET['customer_id']) ? $_GET['customer_id'] : '';
+    $old_balance = isset($_GET['old_balance']) ? $_GET['old_balance'] : '';
+    $notes = isset($_GET['notes']) ? $_GET['notes'] : '';
+    $date = isset($_GET['payment_date']) ? $_GET['payment_date'] : '';
+    $payment_amount = isset($_GET['payment_amount']) ? $_GET['payment_amount'] : '';
+    $currency_code = isset($_GET['currency_id']) ? $_GET['currency_id'] : '';
+    $conversion_rate = isset($_GET['conversion_rate']) ? $_GET['conversion_rate'] : '';
+    $sales_officer = isset($_GET['recorded_by']) ? $_GET['recorded_by'] : '';
 
-    // Handle foreign keys explicitly
-    //Getting Customer ID
-    $customer_shop = !empty($_POST['Customer_Shop_1']) ? $_POST['Customer_Shop_1'] : null;
-    if (!empty($customer_shop)) { // Check if input is not empty
-        $shop = "SELECT customer_id FROM customer WHERE customer_shop = '$customer_shop'";
-        $customer_shop_results = mysqli_query($connect, $shop);
-    
-        if ($customer_shop_results && mysqli_num_rows($customer_shop_results) > 0) {
-            $customer_shop_row = mysqli_fetch_assoc($customer_shop_results);
-            $customerID = $customer_shop_row['customer_id'];
-        } else {
-            $customerID = null; // Set a default value if the query fails
+    // Convert date format to dd/mm/yyyy (if needed)
+    if (!empty($payment_date)) {
+        $dateObj = DateTime::createFromFormat('Y-m-d', $payment_date);
+        if ($dateObj) {
+            $payment_date = $dateObj->format('d/m/Y');
         }
-    } else {
-        $customerID = null; // Set a default value if input is empty
     }
 
-
-    //Getting Currency ID
-    $currency_code = !empty($_POST['currency']) ? $_POST['currency'] : null;
-    if (!empty($currency_code)) { // Check if input is not empty
-        $currency = "SELECT currency_id FROM currency WHERE currency_code = '$currency_code'";
-        $currency_result = mysqli_query($connect, $currency);
-    
-        if ($currency_result && mysqli_num_rows($currency_result) > 0) {
-            $currency_result_row = mysqli_fetch_assoc($currency_result);
-            $Currency_ID = $currency_result_row['currency_id'];
-        } else {
-            $Currency_ID = null; // Set a default value if the query fails
-        }
-    } else {
-        $Currency_ID = null; // Set a default value if input is empty
-    }
-
-    //Getting Customer Name
     if (!empty($customerID)) { // Check if input is not empty
-        $customer_name = "SELECT balance, customer_name, address FROM customer WHERE customer_id = '$customerID'";
+        $customer_name = "SELECT balance, customer_shop, customer_name, address FROM customer WHERE customer_id = '$customerID'";
         $customer_name_results = mysqli_query($connect, $customer_name);
         
         if ($customer_name_results && mysqli_num_rows($customer_name_results) > 0) {
             $customer_name_row = mysqli_fetch_assoc($customer_name_results);
             $customerName = $customer_name_row['customer_name'];
+            $customer_shop = $customer_name_row['customer_shop'];
             $customerAddress = $customer_name_row['address'];
-            $Balance_O = $customer_name_row['balance'];
+            $Balance_Current = $customer_name_row['balance'];
         } else {
             $customerName= ""; // Set a default value if the query fails
             $customerAddress= "";
-            $Balance_O = 0;
+            $Balance_Current = 0;
+            $customer_shop= "";
         }
     } else {
         $customerName = ""; // Set a default value if input is empty
         $customerAddress= "";
-        $Balance_O = 0;
+        $Balance_Current = 0;
+        $customer_shop= "";
     }
 
 
-    // Continue with other code logic
-    $Amount_Received_1 = !empty($_POST["Amount_Received_1"]) && is_numeric($_POST["Amount_Received_1"]) ? floatval($_POST["Amount_Received_1"]): 0.00;
-    $Conversion_rate = !empty($_POST["conversion_rate"]) && is_numeric($_POST["conversion_rate"]) ? floatval($_POST["conversion_rate"]): 1;
-    $Amount_Received = $Amount_Received_1 * $Conversion_rate;
-    $Sales_Officer = $_POST['Sales_Officer'] ?? null;
-    $note = $_POST['note'] ?? "";
-
-    
-    //New Balance
-    $Balance = $Balance_O - $Amount_Received;
-    // Include in the array for insertion
-    $Data[] = [
-        'customer_id' => $customerID,
-        'payment_amount' => $Amount_Received,
-        'old_balance' => $Balance_O,
-        'new_balance' => $Balance,
-        'payment_date' => $date,
-        'currency_id' => $Currency_ID,
-        'recorded_by' => $Sales_Officer,
-        'notes' => $note
-    ];
-
-
-    // Build bulk INSERT query
-     $sql = "INSERT INTO receipt (customer_id, payment_amount, old_balance, new_balance, payment_date, currency_id, recorded_by, notes) VALUES ";
-    $values = [];
-    $params = [];
-
-    foreach ($Data as $sale) {
-        $values[] = "(?, ?, ?, ?, ?, ?, ?, ?)";
-        $params = array_merge($params, array_values($sale));
-    }
-
-    $sql .= implode(", ", $values);
-
-    $stmt = $connect->prepare($sql);
-
-    // Bind and execute
-    if ($stmt->execute($params)) {
-        echo "<div class='alerts'>Payment Received successfully!" ; echo "</div>";
-        echo "<div class='alerts'>رسید موفقانه ثبت گردید" ; echo "</div>";
-        $receipt = "SELECT receipt_id FROM receipt WHERE customer_id = '$customerID' AND payment_date = '$date'
-        AND payment_amount = '$Amount_Received' AND recorded_by = '$Sales_Officer' order by receipt_id desc";
-        $receipt_results = mysqli_query($connect, $receipt);
-    
-        if ($receipt_results && mysqli_num_rows($receipt_results) > 0) {
-            $receipt_results_row = mysqli_fetch_assoc($receipt_results);
-            $receipt_ID = $receipt_results_row['receipt_id'];
-        } else {
-            $receipt_ID = null; // Set a default value if the query fails
-        }
-    } else {
-        echo "<div class='alerts'>Error: " . $stmt->error;echo "</div>";
-    }
-
-    #update Customer Balance
-    $sql = "UPDATE customer SET balance = ? WHERE customer_id = ?";
-    $stmt = $connect->prepare($sql);
-    $stmt->bind_param("di", $Balance, $customerID);
-
-    if ($stmt->execute()) {
-        // echo "balance updated successfully!";
-        $customer_name = "SELECT balance FROM customer WHERE customer_id = '$customerID'";
-        $customer_name_results = mysqli_query($connect, $customer_name);
-        
-        if ($customer_name_results && mysqli_num_rows($customer_name_results) > 0) {
-            $customer_name_row = mysqli_fetch_assoc($customer_name_results);
-            $Balance_Current = $customer_name_row['balance'];
-        } else {
-            $Balance_Current = 0;
-        }
-    } else {
-        echo "Error: " . $stmt->error;
-    }
-
-    if (!empty($receipt_ID)) {
         $message = "Thank you for choosing us—we appreciate your business and look forward to working with you again!";
         $query = "select * from receipt_view where receipt_id = '$receipt_ID'";
         $res = mysqli_query($connect, $query);
@@ -209,7 +115,7 @@ echo '<!DOCTYPE html>
                                 </tr>";
                                 echo "<tr>
                                 <td>Booked By: </td>
-                                <td>$Sales_Officer</td>
+                                <td>$sales_officer</td>
                                 </tr>";
                                 echo "<tr>
                                 <td>Currency:</td>
@@ -253,8 +159,8 @@ echo '<!DOCTYPE html>
                     echo "<th>" . 'Old Balance:' ."</th>";
                     echo "<th colspan='2'>" . 'Grand Total:' ."</th>";
                     echo "</tr>";
-                    echo "<td>" . $Amount_Received . "</td>";
-                    echo "<td>" . $Balance_O . "</td>";
+                    echo "<td>" . $payment_amount . "</td>";
+                    echo "<td>" . $old_balance . "</td>";
                     echo "<td>" . $Balance_Current . "</td>";
                     echo "</tr>";
                 echo "</table>";
@@ -266,7 +172,6 @@ echo '<!DOCTYPE html>
         } else {
             echo "No records found.";  
         }
-    }
     echo "<div class='button-print'>";
 
     echo '

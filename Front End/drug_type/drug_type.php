@@ -11,7 +11,7 @@
         <origin>
         <div id="over"><h1>Drug Types</h1></div>
         <div class="button-group">
-            <button onclick="location.href='Insertdrugtype.html'" class="btn btn-add">Add</button>
+            <button onclick="location.href='insertdrug_type.php'" class="btn btn-add">Add</button>
         </div>
         <div id="report">
             <?php include '../php/drugtypereport.php';?>
