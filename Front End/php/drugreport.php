@@ -14,7 +14,7 @@
                     <th data-key='drug-name'>Name</th>
                     <th data-key='ingredients'>Ingredients</th>
                     <th data-key='quantity-pb'>PB</th>
-                    <th data-key='company-name'>Company Name</th>
+                    <th data-key='company'>Company</th>
                     <th data-key='demo'>Demography</th>
                     <th data-key='actions' colspan='2'>Actions</th>
                 </tr></thead></tbody>";
