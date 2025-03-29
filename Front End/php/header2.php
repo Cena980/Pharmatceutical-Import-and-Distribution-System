@@ -336,10 +336,9 @@ echo '<script>
             };
 
 
-            // Function to switch language
             function setLanguage(language) {
-
-                // Update text content for elements with translation keys
+                document.cookie = "lang=" + language + "; path=/"; // Store in cookie
+                
                 document.querySelectorAll("[data-key]").forEach(el => {
                     const key = el.getAttribute("data-key");
                     el.textContent = translations[language][key] || el.textContent;
@@ -347,10 +346,15 @@ echo '<script>
                         el.placeholder = translations[language][key] || el.placeholder;
                     }
                 });
+
+                // Update URL without reloading
+                const newUrl = new URL(window.location);
+                newUrl.searchParams.set("lang", language);
+                window.history.replaceState(null, "", newUrl);
             }
 
-            // Default to English on page load
-            setLanguage("en");
+            // Set language based on PHP session value
+            setLanguage(currentLang);
         </script>';
 
 

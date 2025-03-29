@@ -1,124 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>
-            Sales Page
-        </title>
-        <link rel="stylesheet" href="../css/home.css">
-    </head>
-    <body>
-        <?php include '../php/header2.php' ?>
-        <origin>
-        <div id="over"><h1 data-key="sales">Reports</h1></div>
-        <div class="search-over">
-            <div class="barr">
-            <button onclick="resetSearch()" id="btn-circle" ><img src="../images/clear.png"></button>
-                <form name="searchreports" method="post">
-                    <input type="text" placeholder="Search for Reports" name="query" id="searchreports" required data-key="search-placeholder">
-                </form>
-                <button class="button" type="submit" onclick="reports()" data-key="search-button">Search</button>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <title>Sales Page</title>
+    <link rel="stylesheet" href="../css/home.css">
+</head>
+<body>
+    <?php include '../php/header2.php'; ?>
+    
+    <div id="over">
+        <h1 data-key="sales">Reports</h1>
+    </div>
+    
+    <div class="search-over">
+        <div class="barr">
+            <button onclick="resetSearch()" id="btn-circle">
+                <img src="../images/clear.png" alt="Clear Search">
+            </button>
+            <form name="searchreports" method="post">
+                <input type="date" placeholder="Search for Reports (yyyy-mm-dd)" name="query" id="searchreports" required data-key="search-placeholder">
+            </form>
+            <button class="button" type="submit" onclick="Reports()" data-key="search-button">Search</button>
         </div>
-        <div id="search_result"></div>
-        <div class="button-group">
-            <button data-key="insert-over" class="btn btn-save" onclick="location.href='addsales.php'">Add</button>
-        </div>
-        <div class="inventory">
-            <div class="invenroy-left">
-                <div class="section_title">Monthly Sales Report</div>
-                <div class="chart">
-                </div>
-            </div>
-            <div class="inventory-right">
-                <div class="section_title">Yearly Sales Report</div>
-                <div class="chart">
-                    <!-- January -->
-                    <div class="bar-container">
-                    <div class="bar" style="height: 100px;"></div>
-                    <div class="month">2022</div>
-                    </div>
-                    <!-- February -->
-                    <div class="bar-container">
-                    <div class="bar" style="height: 150px;"></div>
-                    <div class="month">2023</div>
-                    </div>
-                    <!-- March -->
-                    <div class="bar-container">
-                    <div class="bar" style="height: 120px;"></div>
-                    <div class="month">2024</div>
-                    </div>
-                    <!-- April -->
-                    <div class="bar-container">
-                    <div class="bar" style="height: 180px;"></div>
-                    <div class="month">2025</div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        </div>
-        </origin>
-        <?php include '../php/footer.php' ?>
-        <script>
-           const salesData = [
-                { month: 'Jan', amount: 5000 },
-                { month: 'Feb', amount: 8000 },
-                { month: 'Mar', amount: 12000 },
-                { month: 'Apr', amount: 7000 },
-                { month: 'May', amount: 9000 },
-                { month: 'Jun', amount: 11000 },
-                { month: 'Jul', amount: 5000 },
-                { month: 'Aug', amount: 8000 },
-                { month: 'Sep', amount: 12000 },
-                { month: 'Oct', amount: 7000 },
-                { month: 'Nov', amount: 9000 },
-                { month: 'Dec', amount: 11000 }
-            ];
+    </div>
+    
+    <div id="search_result"></div>
+    
+    <div class="button-group">
+        <button data-key="insert-over" class="btn btn-save" onclick="location.href='addsales.php'">Add</button>
+    </div>
+    
+    <div id="over"><h2>Sales Report (Last 7 Days)</h2></div>
+    <div id="tblreport-container">
+        <!-- The PHP file prints the table and builds the $data array -->
+        <?php include '../php/7_DayReport.php'; ?>
+    </div>
 
-            const chart = document.querySelector('.chart');
+    <div class="dashboard-grid">
+    <!-- Sales Graph -->
+    <div class="graph-container">
+        <h3>Sales (Last 7 Days)</h3>
+        <div id="sales-chart" class="chart"></div>
+    </div>
+    
+    <!-- Purchases Graph -->
+    <div class="graph-container">
+        <h3>Purchases (Last 7 Days)</h3>
+        <div id="purchases-chart" class="chart"></div>
+    </div>
+    
+    <!-- Expenses Graph -->
+    <div class="graph-container">
+        <h3>Expenses (Last 7 Days)</h3>
+        <div id="expenses-chart" class="chart"></div>
+    </div>
+    
+    <!-- Net Income Graph -->
+    <div class="graph-container">
+        <h3>Net Income (Last 7 Days)</h3>
+        <div id="netincome-chart" class="chart"></div>
+    </div>
+</div>
 
-            // Find min and max sales first
-            const amounts = salesData.map(data => data.amount);
-            const minAmount = Math.min(...amounts);
-            const maxAmount = Math.max(...amounts);
-
-            // Function to interpolate colors between red and green
-            function getBarColor(amount, min, max) {
-                const ratio = (amount - min) / (max - min); // Normalize to range [0,1]
-                const red = Math.round(255 * (1 - ratio));  // Decrease red as sales increase
-                const green = Math.round(255 * ratio);      // Increase green as sales increase
-                return `rgb(${red}, ${green}, 76)`; // Keeps some depth to the color
-            }
-
-            // Loop to generate bars dynamically
-            salesData.forEach(data => {
-                const barContainer = document.createElement('div');
-                barContainer.classList.add('bar-container');
-
-                const bar = document.createElement('div');
-                bar.classList.add('bar');
-                bar.style.height = `${data.amount / 100}px`;
-                bar.setAttribute('data-amount', data.amount);  // Store numeric value
-                bar.style.backgroundColor = getBarColor(data.amount, minAmount, maxAmount);
-
-                const month = document.createElement('div');
-                month.classList.add('month');
-                month.textContent = data.month;
-
-                barContainer.appendChild(bar);
-                barContainer.appendChild(month);
-                chart.appendChild(barContainer);
-            });
-
-            // Add event listener to the input field
-            document.getElementById('searchreports').addEventListener('keypress', function(event) {
-                if (event.key === 'Enter') {
-                    event.preventDefault(); // Prevent the default form submission
-                    reports(); // Call the drugs function to perform the search
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Colors for different graphs
+            const colors = {
+                sales: '#4CAF50',       // Green
+                purchases: '#2196F3',    // Blue
+                expenses: '#F44336',     // Red
+                netIncome: '#FFC107'     // Yellow
+            };
+            
+            // Create all graphs
+            createGraph('sales-chart', graphData.sales, colors.sales);
+            createGraph('purchases-chart', graphData.purchases, colors.purchases);
+            createGraph('expenses-chart', graphData.expenses, colors.expenses);
+            createGraph('netincome-chart', graphData.netIncome, colors.netIncome);
+            
+            function createGraph(containerId, data, color) {
+                const container = document.getElementById(containerId);
+                container.innerHTML = '';
+                
+                if (!data || !data.length) {
+                    container.innerHTML = "<p>No data available</p>";
+                    return;
                 }
-            });
-            async function reports() {
+                
+                const amounts = data.map(item => item.amount);
+                const maxAmount = Math.max(...amounts);
+                const minAmount = Math.min(...amounts);
+                const scaleFactor = maxAmount > 0 ? (200 / maxAmount) : 1;
+                
+                data.forEach(item => {
+                    const barContainer = document.createElement('div');
+                    barContainer.classList.add('bar-container');
+                    
+                    const bar = document.createElement('div');
+                    bar.classList.add('bar');
+                    bar.style.height = `${Math.abs(item.amount) * scaleFactor}px`;
+                    bar.style.backgroundColor = color;
+                    
+                    // Special handling for negative net income
+                    if (item.amount < 0 && containerId === 'netincome-chart') {
+                        bar.style.backgroundColor = '#F44336'; // Red for negative
+                    }
+                    
+                    const amountLabel = document.createElement('div');
+                    amountLabel.textContent = item.amount;
+                    amountLabel.style.fontSize = '10px';
+                    amountLabel.style.marginBottom = '3px';
+                    
+                    const dateLabel = document.createElement('div');
+                    dateLabel.classList.add('month');
+                    dateLabel.textContent = item.date;
+                    
+                    barContainer.appendChild(amountLabel);
+                    barContainer.appendChild(bar);
+                    barContainer.appendChild(dateLabel);
+                    container.appendChild(barContainer);
+                });
+            }
+        });
+            async function Reports() {
                 const searchTerm = document.getElementById('searchreports').value.trim();
                 const resultDiv = document.getElementById('search_result');
                 
@@ -128,7 +132,7 @@
                 if (searchTerm) {
                     try {
                         // Fetch the search results from the backend
-                        const response = await fetch(`../php/searchreports.php?query=${encodeURIComponent(searchTerm)}`);
+                        const response = await fetch(`../php/SearchReport.php?date=${encodeURIComponent(searchTerm)}`);
                         
                         if (!response.ok) {
                             throw new Error('Error fetching search results.');
@@ -137,17 +141,18 @@
                         const result = await response.text(); // Use .json() if the backend sends JSON
                         resultDiv.innerHTML = result;
                     } catch (error) {
-                        resultDiv.innerHTML = `<p style="color: red; width: 150px; margin: auto; margin-bottom:20px;">Error: ${error.message}</p>`;
+                        resultDiv.innerHTML = `<p style="color: red; font-weight:bold; width: 150px; margin: auto; margin-bottom:20px; text-align:center;">Error: ${error.message}</p>`;
                     }
                 } else {
-                    resultDiv.innerHTML = '<p style="color: red; width: 150px; margin: auto; margin-bottom:20px;">Please enter a search term.</p>';
+                    resultDiv.innerHTML = '<p style="color: red; font-weight:bold; width: 150px; margin: auto; margin-bottom:20px; text-align:center;">Please enter a search term.</p>';
                 }
             }
             function resetSearch(){
                 document.getElementById('searchreports').value= '';
                 document.getElementById('search_result').innerHTML = '';
             }
+    </script>
 
-        </script>
-    </body>
+
+</body>
 </html>

@@ -1549,3 +1549,52 @@ li {
 
 
 
+/*reports Chart*/
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.graph-container {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.graph-container h3 {
+    margin-top: 0;
+    color: #333;
+    font-size: 16px;
+    text-align: center;
+}
+
+.chart {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    height: 200px;
+    padding: 10px;
+}
+
+.bar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 5px;
+}
+
+.bar {
+    width: 30px;
+    transition: height 0.3s ease;
+    border-radius: 3px 3px 0 0;
+}
+
+.month {
+    margin-top: 5px;
+    font-size: 10px;
+    color: #555555;
+}
