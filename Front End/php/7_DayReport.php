@@ -17,58 +17,76 @@ $graphData = [
     'netIncome' => []
 ];
 
-// Start the table with full header
-echo "<table border='1' id='tblreport'>";
-echo '<thead>
-        <tr>
-            <th data-key="StartDate">Start Date</th>
-            <th data-key="TotalSales">Total Sales</th>
-            <th data-key="TotalReceived">Total Received</th>
-            <th data-key="TotalDebts">Total Debts</th>
-            <th data-key="TotalPurchases">Total Purchases</th>
-            <th data-key="TotalPaid">Total Paid</th>
-            <th data-key="TotalOwed">Total Owed</th>
-            <th data-key="TotalExpenses">Total Expenses</th>
-            <th data-key="NetIncome">Net Income</th>
-        </tr>
-      </thead>
-      <tbody>';
+// Start compact report container
+echo '<div class="compact-report">';
 
-foreach ($dates as $date) {
-    while ($connect->more_results()) {
-        $connect->next_result();
+// Modified function to accept &$graphData reference
+function generateCompactTable($title, $columns, $dates, $connect, &$graphData) {
+    echo '<div class="report-section">';
+    echo '<h3>' . htmlspecialchars($title) . '</h3>';
+    echo '<div class="table-scroll">';
+    echo '<table class="compact-table">';
+    echo '<thead><tr><th>Date</th>';
+    
+    foreach ($columns as $col) {
+        echo '<th>' . htmlspecialchars($col['title']) . '</th>';
     }
-
-    $query = "CALL drugwholesale.report('$date');";
-    $res = mysqli_query($connect, $query);
-
-    if ($res) {
-        while ($r = mysqli_fetch_assoc($res)) {
-            // Output the complete table row
-            echo "<tr>";
-            echo "<td>" . htmlspecialchars($r['StartDate']) . "</td>";
-            echo "<td>" . htmlspecialchars($r['TotalSales']) . "</td>";
-            echo "<td>" . htmlspecialchars($r['TotalReceived']) . "</td>";
-            echo "<td>" . htmlspecialchars($r['TotalDebts']) . "</td>";
-            echo "<td>" . htmlspecialchars($r['TotalPurchases']) . "</td>";
-            echo "<td>" . htmlspecialchars($r['TotalPaid']) . "</td>";
-            echo "<td>" . htmlspecialchars($r['TotalOwed']) . "</td>";
-            echo "<td>" . htmlspecialchars($r['TotalExpenses']) . "</td>";
-            echo "<td>" . htmlspecialchars($r['NetIncome']) . "</td>";
-            echo "</tr>";
-
-            // Prepare data for all graphs
+    echo '</tr></thead><tbody>';
+    
+    foreach ($dates as $date) {
+        while ($connect->more_results()) $connect->next_result();
+        $query = "CALL drugwholesale.report('$date');";
+        $res = mysqli_query($connect, $query);
+        
+        if ($res && $r = mysqli_fetch_assoc($res)) {
+            echo '<tr>';
             $formattedDate = date('M j', strtotime($r['StartDate']));
-            $graphData['sales'][] = ['date' => $formattedDate, 'amount' => (int)$r['TotalSales']];
-            $graphData['purchases'][] = ['date' => $formattedDate, 'amount' => (int)$r['TotalPurchases']];
-            $graphData['expenses'][] = ['date' => $formattedDate, 'amount' => (int)$r['TotalExpenses']];
-            $graphData['netIncome'][] = ['date' => $formattedDate, 'amount' => (int)$r['NetIncome']];
+            echo '<td>' . htmlspecialchars($formattedDate) . '</td>';
+            
+            foreach ($columns as $col) {
+                echo '<td>' . htmlspecialchars($r[$col['key']]) . '</td>';
+                
+                // Collect data for graphs if specified
+                if (isset($col['graph'])) {
+                    $graphData[$col['graph']][] = [
+                        'date' => $formattedDate,
+                        'amount' => (int)$r[$col['key']]
+                    ];
+                }
+            }
+            echo '</tr>';
         }
-        mysqli_free_result($res);
+        if ($res) mysqli_free_result($res);
     }
+    
+    echo '</tbody></table></div></div>';
 }
 
-echo "</tbody></table>";
+// Call functions with $graphData reference
+generateCompactTable('Sales Performance', [
+    ['title' => 'Sales', 'key' => 'TotalSales', 'graph' => 'sales'],
+    ['title' => 'Received', 'key' => 'TotalReceived'],
+    ['title' => 'Debts', 'key' => 'TotalDebts']
+], $dates, $connect, $graphData);
+
+generateCompactTable('Purchases & Payments', [
+    ['title' => 'Purchases', 'key' => 'TotalPurchases', 'graph' => 'purchases'],
+    ['title' => 'Paid', 'key' => 'TotalPaid'],
+    ['title' => 'Owed', 'key' => 'TotalOwed']
+], $dates, $connect, $graphData);
+
+generateCompactTable('Expenses', [
+    ['title' => 'Amount', 'key' => 'TotalExpenses', 'graph' => 'expenses']
+], $dates, $connect, $graphData);
+
+generateCompactTable('Net Income', [
+    ['title' => 'Amount', 'key' => 'NetIncome', 'graph' => 'netIncome']
+], $dates, $connect, $graphData);
+
+echo '</div>'; // Close compact-report container
+
+// Debug output before sending to JavaScript
+echo "<!-- Graph Data: " . print_r($graphData, true) . " -->";
 
 // Pass all data to JavaScript
 echo "<script>const graphData = " . json_encode($graphData) . ";</script>";

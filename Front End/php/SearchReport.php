@@ -1,43 +1,57 @@
 <?php
 include 'connection.php';
+
 $date = $_GET['date'];
+$query = "CALL drugwholesale.report('$date');";
+$res = mysqli_query($connect, $query);
 
-echo "<table border='1' border-collapse=collapse id='tblreport'>";
-echo '<thead>
-        <tr>
-            <th data-key="StartDate">Start Date</th>
-            <th data-key="TotalSales">Total Sales</th>
-            <th data-key="TotalReceived">Total Received</th>
-            <th data-key="TotalDebts">Total Debts</th>
-            <th data-key="TotalPurchases">Total Purchases</th>
-            <th data-key="TotalPaid">Total Paid</th>
-            <th data-key="TotalOwed">Total Owed</th>
-            <th data-key="TotalExpenses">Total Expenses</th>
-            <th data-key="NetIncome">Net Income</th>
-        </tr>
-      </thead>
-      <tbody>';
-
-    $query = "CALL drugwholesale.report('$date');";
-    $res = mysqli_query($connect, $query);
-
-    if ($res) {
-        while ($r = mysqli_fetch_assoc($res)) {
-            // Output the table row
-            echo "<tr>";
-            echo "<td>" . $r['StartDate'] . "</td>";
-            echo "<td>" . $r['TotalSales'] . "</td>";
-            echo "<td>" . $r['TotalReceived'] . "</td>";
-            echo "<td>" . $r['TotalDebts'] . "</td>";
-            echo "<td>" . $r['TotalPurchases'] . "</td>";
-            echo "<td>" . $r['TotalPaid'] . "</td>";
-            echo "<td>" . $r['TotalOwed'] . "</td>";
-            echo "<td>" . $r['TotalExpenses'] . "</td>";
-            echo "<td>" . $r['NetIncome'] . "</td>";
-            echo "</tr>";
+if ($res) {
+    $data = mysqli_fetch_assoc($res);
+    mysqli_free_result($res);
+    
+    // Function to generate grouped category tables
+    function generateGroupedTable($title, $items) {
+        echo '<div class="category-table">';
+        echo '<h3>' . htmlspecialchars($title) . '</h3>';
+        echo '<table border="1" class="data-table">';
+        echo '<tr><th>Metric</th><th>Amount</th></tr>';
+        
+        foreach ($items as $itemTitle => $value) {
+            echo '<tr>';
+            echo '<td>' . htmlspecialchars($itemTitle) . '</td>';
+            echo '<td>' . htmlspecialchars($value) . '</td>';
+            echo '</tr>';
         }
-        mysqli_free_result($res);
+        
+        echo '</table>';
+        echo '</div>';
     }
 
-echo "</tbody></table>";
+    // Sales Group Table
+    generateGroupedTable('Sales Summary', [
+        'Total Sales' => $data['TotalSales'],
+        'Amount Received' => $data['TotalReceived'],
+        'Outstanding Debts' => $data['TotalDebts']
+    ]);
+    
+    // Purchases Group Table
+    generateGroupedTable('Purchases Summary', [
+        'Total Purchases' => $data['TotalPurchases'],
+        'Amount Paid' => $data['TotalPaid'],
+        'Amount Owed' => $data['TotalOwed']
+    ]);
+    
+    // Expenses Table (standalone)
+    generateGroupedTable('Expenses', [
+        'Total Expenses' => $data['TotalExpenses']
+    ]);
+    
+    // Net Income Table (standalone)
+    generateGroupedTable('Net Income', [
+        'Net Profit/Loss' => $data['NetIncome']
+    ]);
+    
+} else {
+    echo "<p>Error retrieving report data.</p>";
+}
 ?>

@@ -61,9 +61,14 @@
         <div id="netincome-chart" class="chart"></div>
     </div>
 </div>
+<?php include '../php/footer.php' ?>
 
     <script>
+        
         document.addEventListener('DOMContentLoaded', function() {
+            // Debug the received data
+            console.log("Received graphData:", graphData);
+            
             // Colors for different graphs
             const colors = {
                 sales: '#4CAF50',       // Green
@@ -80,16 +85,22 @@
             
             function createGraph(containerId, data, color) {
                 const container = document.getElementById(containerId);
+                if (!container) {
+                    console.error(`Container #${containerId} not found`);
+                    return;
+                }
+                
                 container.innerHTML = '';
                 
                 if (!data || !data.length) {
+                    console.warn(`No data available for ${containerId}`);
                     container.innerHTML = "<p>No data available</p>";
                     return;
                 }
                 
-                const amounts = data.map(item => item.amount);
+                // Calculate scaling factor based on absolute values
+                const amounts = data.map(item => Math.abs(item.amount));
                 const maxAmount = Math.max(...amounts);
-                const minAmount = Math.min(...amounts);
                 const scaleFactor = maxAmount > 0 ? (200 / maxAmount) : 1;
                 
                 data.forEach(item => {
@@ -99,17 +110,17 @@
                     const bar = document.createElement('div');
                     bar.classList.add('bar');
                     bar.style.height = `${Math.abs(item.amount) * scaleFactor}px`;
-                    bar.style.backgroundColor = color;
                     
                     // Special handling for negative net income
                     if (item.amount < 0 && containerId === 'netincome-chart') {
                         bar.style.backgroundColor = '#F44336'; // Red for negative
+                    } else {
+                        bar.style.backgroundColor = color;
                     }
                     
                     const amountLabel = document.createElement('div');
                     amountLabel.textContent = item.amount;
-                    amountLabel.style.fontSize = '10px';
-                    amountLabel.style.marginBottom = '3px';
+                    amountLabel.className = 'bar-value';
                     
                     const dateLabel = document.createElement('div');
                     dateLabel.classList.add('month');
