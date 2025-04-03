@@ -24,13 +24,13 @@
         </div>
     </div>
     
-    <div id="search_result"></div>
+    <div id="report-container"></div>
     
     <div class="button-group">
         <button data-key="insert-over" class="btn btn-save" onclick="location.href='addsales.php'">Add</button>
     </div>
     
-    <div id="over"><h2>Sales Report (Last 7 Days)</h2></div>
+    <div id="over"><h2>Report (Last 7 Days)</h2></div>
     <div id="tblreport-container">
         <!-- The PHP file prints the table and builds the $data array -->
         <?php include '../php/7_DayReport.php'; ?>
@@ -135,7 +135,7 @@
         });
             async function Reports() {
                 const searchTerm = document.getElementById('searchreports').value.trim();
-                const resultDiv = document.getElementById('search_result');
+                const resultDiv = document.getElementById('report-container');
                 
                 // Clear the previous result
                 resultDiv.innerHTML = '';
@@ -160,7 +160,7 @@
             }
             function resetSearch(){
                 document.getElementById('searchreports').value= '';
-                document.getElementById('search_result').innerHTML = '';
+                document.getElementById('report-container').innerHTML = '';
             }
     </script>
 

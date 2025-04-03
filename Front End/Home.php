@@ -86,6 +86,19 @@
                 </div>
             </div>
             <div class="far_right">
+                <div data-key="today" class="section_title">Today</div>
+                <div id="report-container">Loading report...</div>
+                <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    let today = new Date().toISOString().split('T')[0];
+                    fetch("php/SearchReport.php?date=" + today)
+                        .then(response => response.text())
+                        .then(data => {
+                            document.getElementById("report-container").innerHTML = data;
+                        })
+                        .catch(error => console.error("Error fetching report:", error));
+                });
+                </script>
                 <div data-key="salesreport" class="section_title">Sales Reports</div>
                 <?php include 'php/salesreportlimited.php'?>
             </div>

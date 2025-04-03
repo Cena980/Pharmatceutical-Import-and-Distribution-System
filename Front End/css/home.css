@@ -1663,25 +1663,35 @@ li {
 
 
 /*Category Table for reports search */
-.category-tables-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    width: 90%;
-    margin-bottom: 30px;
+#report-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Force 4 columns */
+    gap: 20px; /* Space between tables */
+    width: 100%; /* Ensure full width */
+    max-width: 1200px; /* Prevent excessive stretching */
+    margin: 0 auto 30px; /* Center the grid */
+    padding: 10px; /* Optional padding */
 }
 
 .category-table {
-    flex: 1;
-    min-width: 300px;
-    max-width: 90%;
-    margin: auto;
-    margin-bottom: 10px;
     background: #f9f9f9;
     padding: 15px;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
+@media (max-width: 1024px) {
+    .category-tables-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets */
+    }
+}
+
+@media (max-width: 600px) {
+    .category-tables-container {
+        grid-template-columns: 1fr; /* 1 column for mobile */
+    }
+}
+
 
 .category-table h3 {
     margin-top: 0;
