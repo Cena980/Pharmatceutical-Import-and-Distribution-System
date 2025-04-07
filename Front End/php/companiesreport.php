@@ -11,7 +11,7 @@
                     <th>Company ID</th><th>Company Name</th><th>Head Quarters</th>
                     <th>Phone</th>
                     <th>Email</th>
-                    <th data-key='actions' colspan='2'>Actions</th>
+                    <th data-key='actions' colspan='3'>Actions</th>
                 </tr></thead><tbody>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
@@ -38,6 +38,13 @@
             <input type='hidden' name='Phone' value='" . $r['Phone'] . "'>
             <input type='hidden' name='Email' value='" . $r['Email'] . "'>
             <button class='btn-link' type='submit'>Delete</button>
+        </form>
+        </td>";
+        echo "<td>
+            <form action='companiesReport.php' method='GET'>
+            <input type='hidden' name='Comp_ID' value='" . $r['Comp_ID'] . "'>
+            <input type='hidden' name='Comp_Name' value='" . $r['Comp_Name'] . "'>
+            <button class='btn-link' type='submit'>Reports</button>
         </form>
         </td>";
             echo "</tr>";

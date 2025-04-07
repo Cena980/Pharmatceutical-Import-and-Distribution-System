@@ -432,6 +432,7 @@ li:hover {
     font-size: 12px;
     padding: 15px 20px;
     display: flex;
+    margin-top: 20px;
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
@@ -1304,6 +1305,20 @@ input {
     justify-content: center;
 }
 
+.fixed-input-two {
+    display: grid;
+    margin: auto;
+    margin-top: 20px;
+    width: 90%;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px; /* Space between form groups */
+    justify-content: center;
+}
+
+.fixed-input-two input{
+    text-align: center;
+}
+
 .form-group {
     display: grid;
     flex-direction: column;
@@ -1618,6 +1633,15 @@ li {
     margin: 20px auto 20px auto;
 }
 
+.dashboard-grid-one {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+    width: 95%;
+    margin: auto;
+    margin: 20px auto 20px auto;
+}
+
 .graph-container {
     background: white;
     padding: 15px;
@@ -1666,6 +1690,16 @@ li {
 #report-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* Force 4 columns */
+    gap: 20px; /* Space between tables */
+    width: 100%; /* Ensure full width */
+    max-width: 1200px; /* Prevent excessive stretching */
+    margin: 0 auto 30px; /* Center the grid */
+    padding: 10px; /* Optional padding */
+}
+
+#report-container-one {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* Force 4 columns */
     gap: 20px; /* Space between tables */
     width: 100%; /* Ensure full width */
     max-width: 1200px; /* Prevent excessive stretching */

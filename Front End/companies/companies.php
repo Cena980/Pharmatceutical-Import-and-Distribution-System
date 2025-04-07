@@ -17,7 +17,7 @@
             <?php include '../php/companiesreportLimited.php';?>
         </div>
         <div class="button-group">
-            <button class="btn btn-back" onclick="location.href='companiesExpanded.php'">All Companies</button>
+            <button class="btn btn-back" onclick="location.href='companiesExpanded.php'">View All</button>
         </div>
         </div>
         </origin>
