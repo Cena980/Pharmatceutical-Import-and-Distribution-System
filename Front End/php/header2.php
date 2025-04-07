@@ -334,7 +334,7 @@ echo '<script>
                     "full-name": "نام کامل"
                 }
             };
-
+            currentLang="en";
 
             function setLanguage(language) {
                 document.cookie = "lang=" + language + "; path=/"; // Store in cookie
