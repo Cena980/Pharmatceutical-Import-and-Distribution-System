@@ -35,7 +35,7 @@ function generateCompactTable($title, $columns, $dates, $connect, &$graphData) {
     
     foreach ($dates as $date) {
         while ($connect->more_results()) $connect->next_result();
-        $query = "CALL drugwholesale.report('$date');";
+        $query = "CALL drugwholesale.report('$date', '$date');";
         $res = mysqli_query($connect, $query);
         
         if ($res && $r = mysqli_fetch_assoc($res)) {
