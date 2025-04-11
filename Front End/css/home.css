@@ -1685,6 +1685,67 @@ li {
 }
 
 
+/*reports Chart for Home Page*/
+
+.dashboard-grid-home {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 95%;
+    margin: auto;
+    margin: 20px auto 20px auto;
+}
+
+
+.graph-container-home {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.graph-container-home h3 {
+    margin-top: 0;
+    height: 30px;
+    color: #333;
+    font-size: 16px;
+    text-align: center;
+}
+
+.chart-home {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 200px;
+    padding: 10px;
+}
+
+.bar-container-home {
+    display: flex;
+    width: 6px;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 5px;
+}
+
+.bar-value{
+    rotate: 90deg;
+    font-size: 10px;
+}
+
+.bar-home {
+    width: 5px;
+    transition: height 0.3s ease;
+    border-radius: 3px 3px 0 0;
+}
+
+.month-home {
+    margin-top: 5px;
+    font-size: 10px;
+    color: #555555;
+}
+
+
 
 /*Category Table for reports search */
 #report-container {
