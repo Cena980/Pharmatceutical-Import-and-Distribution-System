@@ -25,6 +25,7 @@ echo '<!DOCTYPE html>
 
     $date = $_POST["purchase_date_1"] ?? null;
     $amount_paid = $_POST["amount_paid_1"] ?? 0;
+    
     $order_by = $_POST["order_by"] ?? '';
 
     $ven_add = '';
@@ -116,6 +117,7 @@ echo '<!DOCTYPE html>
         $price = $_POST["price_$i"] ?? 0;
         $quantity = $_POST["quantity_$i"] ?? 0;
         $discount = $_POST["discount_$i"] ?? 0;
+        $selling_price = $_POST["selling_price_$i"] ?? 0;
 
         // Ensure the discount is a valid number
         if (!is_numeric($discount)) {
@@ -146,6 +148,7 @@ echo '<!DOCTYPE html>
             'price' => $price,
             'quantity' => $quantity,
             'Discount' => $discount,
+            'selling_price' => $selling_price,
             'Expiration' => $expiration,
             'purchase_date' => $date,
             'total_amount' => $total_amount,
@@ -155,13 +158,13 @@ echo '<!DOCTYPE html>
     }
 
     // Build bulk INSERT query
-    $sql = "INSERT into purchases (vendor_id, drug_id, price, quantity, Discount, Expiration, purchase_date, total_amount, po_id)
+    $sql = "INSERT into purchases (vendor_id, drug_id, price, quantity, Discount, selling_price, Expiration, purchase_date, total_amount, po_id)
              values ";
     $values = [];
     $params = [];
 
     foreach ($purchaseData as $data) {
-        $values[] = "(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $values[] = "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $params = array_merge($params, array_values($data));
     }
 

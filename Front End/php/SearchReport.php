@@ -2,7 +2,7 @@
 include 'connection.php';
 
 $date = $_GET['date'];
-$query = "CALL drugwholesale.report('$date');";
+$query = "CALL drugwholesale.report('$date', '$date');";
 $res = mysqli_query($connect, $query);
 
 if ($res) {
