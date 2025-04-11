@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Update Page
+        </title>
+        <link rel="stylesheet" href="../css/home.css">
+    </head>
+    <body>
+        <script>
+            function search(){
+                a = document.getElementById("search");
+                    if (a.value.length<1){
+                        alert("Cannot search for empty string")
+                    }else{
+                        const form = document.forms["search"];
+                        form.action = "../php/search.php";
+                        form.method = "get";
+                    }
+            }
+        </script>
+        <div id="barover">
+            <div id="bar">
+                <div class="barr">
+                    <img>
+                    <p>B&S Database</p>
+                </div>
+                <div class="barr">
+                    <form method="GET" action="php/search.php">
+                        <input type="text" id="search" name="query" style="width: 85%;" id="search" required>
+                    </form>
+                    <button type="submit" value="Search" onclick="search()">Search</button>
+                </div>
+                <div class="barr">
+                    <div id="switch" >
+                        <button id="switch">En</button>
+                        <button id="switch">Fa</button>
+                    </div>
+                </div>
+            </div>  
+        </div>
+        <div id="bar2over">
+            <div id="bar2">
+                <ul class="barr2">
+                    <li>
+                        <a href="../home.php">Home</a>
+                    </li>
+                    <li><a href="../sales/sales.php">Sales</a></li>
+                    <li><a href="../drugs/drugs.php">Drug</a></li>
+                    <li><a href="../employees/employees.php">Employee</a></li>
+                    <li><a href="../Inventory/inventory.php">Inventory</a></li>
+                    <li><a href="../purchases/purchases.php">Purchases</a></li>
+                    <li><a href="../contact.php">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="over"><h1>Update Employee</h1></div>
+        <form name="employee" >
+            <table class="table table-success">
+             <thead>
+             <tr>
+                <th>Employee ID</th>
+                <th>Tazkira</th>
+                <th>Name</th>
+                <th>Last Name</th>
+                <th>Job ID</th>
+                <th>Salary ID</th>
+                 
+             </tr>
+             </thead>
+             <tbody>
+                 <tr>
+                     <td><input type="number" name="Emp_ID" id="Emp_ID" autocomplete="off"></td>
+                     <div id="emp2"></div>
+                     <td><input type="number" name="Tazkira" id="Tazkira" autocomplete="off"></td>
+                     <div id="tazkira2"></div>
+                     <td><input type="text" name="Emp_Name" id="Emp_Name" autocomplete="off"></td>
+                     <td><input type="text" name="Emp_Last_Name" id="Emp_Last_Name" autocomplete="off"></td>
+                     <td><input type="number" name="Job_ID" id="Job_ID" autocomplete="off"></td>
+                     <td><input type="number" name="Salary" id="Salary_ID" autocomplete="off"></td>
+                 </tr>
+         
+             <tr>
+                 
+             </tr>
+             </tbody>
+            </table>
+            </form>
+        </div>
+            <button class="btn btn-update" onclick="validate()" >Update</button>
+            <button class="btn btn-delete" onclick="deleteemployee()" >Delete</button>
+            <div id="bottom">
+                <div class="bott">
+                    <h3 class="section_title">Database Usage Guidelines</h3>
+                    <div id="points">
+                        <div class="points">Authorized Access Only: Access to this database is restricted to authorized personnel only.</div>
+                        <div class="points">Data Integrity: Ensure the accuracy and completeness of all data entries.</div>
+                        <div class="points">Privacy Protection: Handle user data responsibly and comply with relevant privacy regulations.</div>
+                        <div class="points">Activity Monitoring: All activities may be logged and monitored for security purposes.</div>
+                        <div class="points">Reporting Issues: Report any technical issues or security concerns immediately to the system administrator.</div>
+                        <div class="points">Prohibited Actions: Unauthorized copying, redistribution, or alteration of the database or its components is strictly prohibited.</div>
+                    </div>
+    
+                </div>
+                <div class="bott">
+                    <h3 class="section_title">Technical Support</h3>
+                    <div id="points">
+                        <div class="points">BSDatabases.tech@gmail.com</div>
+                    </div>
+    
+                </div>
+                <div class="bott">
+                    <h3>...</h3>
+                </div>
+            </div>
+
+
+
+        </div>
+        <script>
+            window.onload = function () {
+                const urlParams = new URLSearchParams(window.location.search);
+        
+                // Populate input fields with values from URL parameters
+                document.getElementById('Emp_ID').value = urlParams.get('Emp_ID') || '';
+                document.getElementById('Tazkira').value = urlParams.get('Tazkira') || '';
+                document.getElementById('Emp_Name').value = urlParams.get('Emp_Name') || '';
+                document.getElementById('Emp_Last_Name').value = urlParams.get('Emp_Last_Name') || '';
+                document.getElementById('Job_ID').value = urlParams.get('Job_ID') || '';
+                document.getElementById('Salary_ID').value = urlParams.get('Salary_ID') || '';
+            };
+            function validate(){
+        
+                let valid = true;
+                let emp = document.getElementById("Emp_ID").value;
+        
+                if(!/^\d+$/.test(emp) || emp === ""){
+                        document.getElementById("emp2").innerHTML = "Please enter a valid Employee ID.";
+                        valid = false;
+                    } else {
+        
+                        document.getElementById("emp2").innerHTML = "";
+        
+                    }
+        
+                let Tazkira = document.getElementById("Tazkira").value;
+        
+                if(!/^\d+$/.test(Tazkira) || Tazkira === ""){
+                        document.getElementById("tazkira2").innerHTML = "Please enter a valid Tazkira Number.";
+                        valid = false;
+                    } else {
+                        document.getElementById("tazkira2").innerHTML = "";
+                    }
+                if(valid){
+                    const form = document.forms['employee'];
+                    form.action="../php/updateemployee.php";
+                    form.method="post";
+                    form.submit();
+                }
+
+
+            }
+            function deleteemployee(){
+                const form = document.forms['employee'];
+                form.action="../php/deleteemployee.php";
+                form.method="post";
+                form.submit();
+            }
+            </script>
+    </body>
+</html>
