@@ -73,14 +73,34 @@ echo '<!DOCTYPE html>
     $rowTotals = []; // Store individual row totals
 
 
-    // Create New Invoice
-    $sql = "INSERT INTO invoices (customer_id, date, sales_officer) VALUES ('$customerID', '$date', '$Sales_Officer')";
-    if (mysqli_query($connect, $sql)) {
-        // Use mysqli_insert_id to get the new invoice ID reliably
-        $invoice_ID = mysqli_insert_id($connect);
-        //echo "<div class='alerts'>Invoice has been created with ID: $invoice_ID.</div>";
+    if (!empty($customerID)) {
+        // Check if an invoice already exists
+        $invoice_check = "SELECT * FROM invoices WHERE date = '$date' AND customer_id = '$customerID'";
+        $invoice_check_results = mysqli_query($connect, $invoice_check);
+    
+        if ($invoice_check_results === false) {
+            //echo "Error checking for existing invoice: " . mysqli_error($connect);
+        } else {
+            if (mysqli_num_rows($invoice_check_results) > 0) {
+                // Invoice exists
+                $invoice_check_row = mysqli_fetch_assoc($invoice_check_results);
+                $invoice_ID = $invoice_check_row['invoice_id'];
+                //echo "<div class='alerts'>Invoice already exists with ID: $invoice_ID and Date: $date</div>";
+            } else {
+                // No invoice found, create a new one
+                $sql = "INSERT INTO invoices (customer_id, date, sales_officer) VALUES ('$customerID', '$date', '$Sales_Officer')";
+                if (mysqli_query($connect, $sql)) {
+                    // Use mysqli_insert_id to get the new invoice ID reliably
+                    $invoice_ID = mysqli_insert_id($connect);
+                    //echo "<div class='alerts'>Invoice has been created with ID: $invoice_ID.</div>";
+                } else {
+                    echo "<div class='alerts'>Invoice creation failed: " . mysqli_error($connect) . "</div>";
+                }
+            }
+        }
     } else {
-        echo "<div class='alerts'>Invoice creation failed: " . mysqli_error($connect) . "</div>";
+        $invoice_ID = null;
+        // Skip invoice creation silently if customer_id is empty
     }
 
     // Gather all the rows of data dynamically
