@@ -1,0 +1,45 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales</title>
+    <link rel="stylesheet" type="text/css" href="file:///C:/Program%20Files%20(x86)/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <script type="text/javascript" src="file:///C:/Program%20Files%20(x86)/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <h1>Get Balance Sheet</h1>
+   <table class="table table-success">
+    <tr>
+        <th>Start Date</th>
+        <th>Total Sales</th>
+        <th>Total Purchase</th>
+        <th>Total Expenses</th>
+        <th>Net Income</th>
+        <th>Arsine's Cut</th>
+        <th>Zafar's Cut</th>
+        <th>Final Net Income</th>
+    </tr>
+    <tr>
+        <td id="noty" class="table"></td>
+    </tr>
+  
+   </table>
+   <button type="button" class="btn btn-success" onclick="validate()">Save</button>
+   <button type="button" class="btn btn-primary">Add</button>
+   <button type="button" class="btn btn-warning">Edit</button>
+   <button type="button" class="btn btn-danger" onclick="remove()">Delete</button>
+</body>
+<script>
+    function validate(){
+        var message = document.getElementById("noty");
+        message.style.color = "green";
+        message.innerHTML = "Your record has been saved.";
+    }
+
+    function remove(){
+        var message = document.getElementById("noty");
+        message.style.color = "red";
+        message.innerHTML = "The selected record is deleted."
+    }
+</script>
+</html>

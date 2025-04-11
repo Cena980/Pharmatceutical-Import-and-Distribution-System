@@ -1,0 +1,245 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header Bar Styling */
+#barover {
+    margin-top: -7.5px;
+    display: flex;
+    background-color: #5f6368; /* Soft gray background */
+    color: #ffffff;
+    font-weight: bold;
+    padding: 10px 0;
+    justify-content: center;
+}
+#bar {
+    width: 100%;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo {
+    height: 30px;
+    object-fit: contain;
+}
+.barr {
+    display: flex;
+    align-items: center;
+}
+.barr form input {
+    margin-right: 10px;
+    padding: 10px;
+    border-radius: 25px;
+    border: 2px solid #ccc;
+    font-size: 16px;
+    transition: transform 0.3s ease-in-out;
+}
+.barr form input:hover {
+    transform: scale(1.05);
+    border-color: #6c757d;
+}
+.barr button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+.barr button:hover {
+    background-color: #0056b3;
+}
+
+/* Navbar Styling */
+#bar2over {
+    display: flex;
+    background-color: #007bff;
+    padding: 10px 0;
+}
+#bar2 {
+    margin: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
+    justify-content: center;
+}
+ul {
+    list-style: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    gap: 20px;
+}
+.button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    padding: 10px;
+    border-radius: 8px;
+}
+.button:hover {
+    transform: scale(1.1);
+    background-color: #0056b3;
+}
+.button img {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 8px;
+}
+.button a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+.button a:hover {
+    text-decoration: underline;
+}
+
+/* Form Styling */
+input, select, button {
+    font-family: 'Roboto', sans-serif;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+input[type="text"] {
+    width: 250px;
+    border: 2px solid #ccc;
+}
+input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Footer */
+#bottom {
+    display: flex;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    justify-content: space-between;
+    font-size: 12px;
+}
+.bott {
+    text-align: left;
+}
+
+/* Button Groups */
+.button-group, .button-print {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+.button-group button, .btn {
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #28a745;
+    border: none;
+    color: white;
+    transition: background-color 0.3s ease-in-out;
+}
+.button-group button:hover, .btn:hover {
+    background-color: #218838;
+}
+.btn-save {
+    background-color: #28a745;
+}
+.btn-add {
+    background-color: #17a2b8;
+}
+.btn-remove {
+    background-color: #dc3545;
+}
+.btn-update {
+    background-color: #ffc107;
+}
+.btn-delete {
+    background-color: #dc3545;
+}
+.btn-link {
+    background-color: transparent;
+    color: #007bff;
+    text-decoration: underline;
+}
+
+/* Tables */
+#tblreport, #tblinvoice {
+    width: 100%;
+    margin: auto;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+#tblinvoice th, td {
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    padding: 12px;
+}
+#tblinvoice th {
+    background-color: #007bff;
+    color: white;
+}
+#tblreport tr:nth-child(even) {
+    background-color: rgba(150, 212, 212, 0.4);
+}
+#tblreport td {
+    padding: 10px;
+}
+
+/* Contact Card */
+.main .card {
+    width: 100%;
+    max-width: 300px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease-in-out;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: white;
+}
+.main .card:hover {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+.main .card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+.main .card .container_card {
+    padding: 20px;
+}
+
+/* Popup Styling */
+.popup {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 500px;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 9999;
+}
