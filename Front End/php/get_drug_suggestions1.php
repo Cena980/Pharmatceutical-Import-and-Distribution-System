@@ -31,8 +31,7 @@ if (isset($_GET['query'])) {
         $suggestions[] = [
             'Drug_Name' => $row['drug_name'],
             'Type' => $row['type'],
-            'Company' => $row['company'],
-            'Selling_Price' => $row['selling_price']
+            'Company' => $row['company']
         ];
     }
 

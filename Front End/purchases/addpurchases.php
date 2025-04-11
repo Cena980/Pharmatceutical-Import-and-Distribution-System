@@ -35,9 +35,11 @@
                 <tr>
                     <th data-key="no">No</th>
                     <th data-key="drug-name">Drug Name</th>
-                    <th data-key="price">Price</th>
+                    
                     <th data-key="quantity">Quantity</th>
-                    <th data-key="discount">Drug Discount</th>
+                    <th data-key="cost">Cost</th>
+                    <th data-key="discount">Discount</th>
+                    <th data-key="selling-price">Selling Price</th>
                     <th data-key="exp-date">Expiration</th>
                     <th data-key="total">Total Amount</th>
                     
@@ -51,6 +53,7 @@
                     <td><input type="number" name="quantity_1" id="quantity_1" autocomplete="off"></td>
                     <td><input type="number" name="price_1" id="price_1" autocomplete="off"></td>
                     <td><input type="number" name="discount_1" id="discount_1" autocomplete="off"></td>
+                    <td><input type="number" name="selling_price_1" id="selling_price_1" autocomplete="off"></td>
                     <td><input type="month" name="expiration_1" id="expiration_1" autocomplete="off"></td>
                     <td><input type="number" name="total_amount_1" id="total_amount_1" autocomplete="off"></td>
                     <td><div class="delete-btn" id="delete_1" onclick="deleteRow(1)"><img style="width:25px;" src="../images/delete.png" alt="Delete"></div></td>
@@ -182,6 +185,12 @@
                         discount.name = `discount_${rowNum}`;
                     }
 
+                    const selling_price = document.getElementById(`selling_price_${NewRowNumber}`);
+                    if (discount) {
+                        discount.id = `selling_price_${rowNum}`;
+                        discount.name = `selling_price_${rowNum}`;
+                    }
+
                     const total = document.getElementById(`total_amount_${NewRowNumber}`);
                     if (total) {
                         total.id = `total_amount_${rowNum}`;
@@ -283,7 +292,7 @@
                                     header.innerHTML = `
                                         <th style="border: 1px solid #ccc; padding: 8px;">Type</th>
                                         <th style="border: 1px solid #ccc; padding: 8px;">Name</th>
-                                        <th style="border: 1px solid #ccc; padding: 8px;">Selling Price</th>
+                                        
                                         <th style="border: 1px solid #ccc; padding: 8px;">Company</th>
                                     `;
                                     table.appendChild(header);
@@ -292,7 +301,6 @@
                                         row.innerHTML = `
                                             <td style="border: 1px solid #ccc; padding: 8px;">${drug.Type}</td>
                                             <td style="border: 1px solid #ccc; padding: 8px;">${drug.Drug_Name}</td>
-                                            <td style="border: 1px solid #ccc; padding: 8px;">${drug.Selling_Price}</td>
                                             <td style="border: 1px solid #ccc; padding: 8px;">${drug.Company}</td>
                                         `;
                                         row.style.cursor = "pointer";
@@ -460,6 +468,7 @@
                     <td><input type="number" name="quantity_${qnt}" id="quantity_${qnt}" autocomplete="off"></td>
                     <td><input type="number" name="price_${qnt}" id="price_${qnt}" autocomplete="off"></td>
                     <td><input type="number" name="discount_${qnt}" id="discount_${qnt}" autocomplete="off"></td>
+                    <td><input type="number" name="selling_price_${qnt}" id="selling_price_${qnt}" autocomplete="off"></td>
                     <td><input type="month" name="expiration_${qnt}" id="expiration_${qnt}" autocomplete="off"></td>
                     <td><input type="number" name="total_amount_${qnt}" id="total_amount_${qnt}" autocomplete="off"></td>
                     <td><div class="delete-btn" id="delete_${qnt}" onclick="deleteRow(${qnt})"><img style="width:25px;" src="../images/delete.png" alt="Delete"></div></td>
