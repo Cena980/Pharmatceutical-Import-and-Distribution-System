@@ -48,8 +48,8 @@
                         <input type="text" name="drug_name_1" id="drug_name_1" autocomplete="off">
                         <div id="suggestion_1" class="suggestion-box" style="display: none; position: absolute; background-color: white;"></div>
                     </td>
-                    <td><input type="number" name="price_1" id="price_1" autocomplete="off"></td>
                     <td><input type="number" name="quantity_1" id="quantity_1" autocomplete="off"></td>
+                    <td><input type="number" name="price_1" id="price_1" autocomplete="off"></td>
                     <td><input type="number" name="discount_1" id="discount_1" autocomplete="off"></td>
                     <td><input type="month" name="expiration_1" id="expiration_1" autocomplete="off"></td>
                     <td><input type="number" name="total_amount_1" id="total_amount_1" autocomplete="off"></td>
@@ -283,7 +283,8 @@
                                     header.innerHTML = `
                                         <th style="border: 1px solid #ccc; padding: 8px;">Type</th>
                                         <th style="border: 1px solid #ccc; padding: 8px;">Name</th>
-                                        <th style="border: 1px solid #ccc; padding: 8px;">Company
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Selling Price</th>
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Company</th>
                                     `;
                                     table.appendChild(header);
                                     data.forEach(drug => {
@@ -291,6 +292,7 @@
                                         row.innerHTML = `
                                             <td style="border: 1px solid #ccc; padding: 8px;">${drug.Type}</td>
                                             <td style="border: 1px solid #ccc; padding: 8px;">${drug.Drug_Name}</td>
+                                            <td style="border: 1px solid #ccc; padding: 8px;">${drug.Selling_Price}</td>
                                             <td style="border: 1px solid #ccc; padding: 8px;">${drug.Company}</td>
                                         `;
                                         row.style.cursor = "pointer";
@@ -455,8 +457,8 @@
                         <input type="text" name="drug_name_${qnt}" id="drug_name_${qnt}" autocomplete="off">
                         <div id="suggestion_${qnt}" class='suggestion-box' style="display: none; position: absolute; background-color: white;"></div>
                     </td>
-                    <td><input type="number" name="price_${qnt}" id="price_${qnt}" autocomplete="off"></td>
                     <td><input type="number" name="quantity_${qnt}" id="quantity_${qnt}" autocomplete="off"></td>
+                    <td><input type="number" name="price_${qnt}" id="price_${qnt}" autocomplete="off"></td>
                     <td><input type="number" name="discount_${qnt}" id="discount_${qnt}" autocomplete="off"></td>
                     <td><input type="month" name="expiration_${qnt}" id="expiration_${qnt}" autocomplete="off"></td>
                     <td><input type="number" name="total_amount_${qnt}" id="total_amount_${qnt}" autocomplete="off"></td>

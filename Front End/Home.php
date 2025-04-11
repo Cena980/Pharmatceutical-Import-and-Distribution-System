@@ -59,7 +59,7 @@
 
             <div class="right">
                 <div data-key="products" class="section_title">Popular Products</div>
-                <?php $Drugs = getDrugs(4) ?>
+                <?php $Drugs = getDrugs(5) ?>
                 <div class="product">
                     <?php
                         foreach($Drugs as $Drug){
@@ -99,12 +99,109 @@
                         .catch(error => console.error("Error fetching report:", error));
                 });
                 </script>
-                <div data-key="salesreport" class="section_title">Sales Reports</div>
-                <?php include 'php/salesreportlimited.php'?>
+            <div data-key="salesreport" class="section_title">This Month</div>
+                <?php include 'php/30_DayReport.php'?>
             </div>
             
         </main>
-                    </origin>
+        <div class="dashboard-grid-home">
+            <!-- Sales Graph -->
+            <div class="graph-container-home">
+                <h3>Sales (Last 7 Days)</h3>
+                <div id="sales-chart" class="chart-home"></div>
+            </div>
+            
+            <!-- Purchases Graph -->
+            <div class="graph-container-home">
+                <h3>Purchases (Last 7 Days)</h3>
+                <div id="purchases-chart" class="chart-home"></div>
+            </div>
+            
+            <!-- Expenses Graph -->
+            <div class="graph-container-home">
+                <h3>Expenses (Last 7 Days)</h3>
+                <div id="expenses-chart" class="chart-home"></div>
+            </div>
+            
+            <!-- Net Income Graph -->
+            <div class="graph-container-home">
+                <h3>Net Income (Last 7 Days)</h3>
+                <div id="netincome-chart" class="chart-home"></div>
+            </div>
+        </div>
+        </origin>
+        
+        <script>
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                // Debug the received data
+                console.log("Received graphData:", graphData);
+                
+                // Colors for different graphs
+                const colors = {
+                    sales: '#4CAF50',       // Green
+                    purchases: '#2196F3',    // Blue
+                    expenses: '#F44336',     // Red
+                    netIncome: '#FFC107'     // Yellow
+                };
+                
+                // Create all graphs
+                createGraph('sales-chart', graphData.sales, colors.sales);
+                createGraph('purchases-chart', graphData.purchases, colors.purchases);
+                createGraph('expenses-chart', graphData.expenses, colors.expenses);
+                createGraph('netincome-chart', graphData.netIncome, colors.netIncome);
+                
+                function createGraph(containerId, data, color) {
+                    const container = document.getElementById(containerId);
+                    if (!container) {
+                        console.error(`Container #${containerId} not found`);
+                        return;
+                    }
+                    
+                    container.innerHTML = '';
+                    
+                    if (!data || !data.length) {
+                        console.warn(`No data available for ${containerId}`);
+                        container.innerHTML = "<p>No data available</p>";
+                        return;
+                    }
+                    
+                    // Calculate scaling factor based on absolute values
+                    const amounts = data.map(item => Math.abs(item.amount));
+                    const maxAmount = Math.max(...amounts);
+                    const scaleFactor = maxAmount > 0 ? (200 / maxAmount) : 1;
+                    
+                    data.forEach(item => {
+                        const barContainer = document.createElement('div');
+                        barContainer.classList.add('bar-container-home');
+                        
+                        const bar = document.createElement('div');
+                        bar.classList.add('bar-home');
+                        bar.style.height = `${Math.abs(item.amount) * scaleFactor}px`;
+                        
+                        // Special handling for negative net income
+                        if (item.amount < 0 && containerId === 'netincome-chart') {
+                            bar.style.backgroundColor = '#F44336'; // Red for negative
+                        } else {
+                            bar.style.backgroundColor = color;
+                        }
+                        
+                        const amountLabel = document.createElement('div');
+                        amountLabel.textContent = item.amount;
+                        amountLabel.className = 'bar-value';
+                        
+                        const dateLabel = document.createElement('div');
+                        dateLabel.classList.add('month-home');
+                        dateLabel.textContent = item.date;
+                        
+                        barContainer.appendChild(amountLabel);
+                        barContainer.appendChild(bar);
+                        barContainer.appendChild(dateLabel);
+                        container.appendChild(barContainer);
+                    });
+                }
+            });
+        </script>
         <!-- fetching footer from server -->
          <?php include 'php/footer.php' ?>
     </body>
