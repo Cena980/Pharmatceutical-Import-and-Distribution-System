@@ -7,6 +7,7 @@
     $price = $_POST['price'];
     $quantity = $_POST['quantity'];
     $Discount = $_POST['Discount'];
+    $selling_price = $_POST['selling_price'];
     $purchase_date = $_POST['purchase_date'];
     $total_amount = $_POST['total_amount'];
     $po_id =$_POST['po_id'];
@@ -14,7 +15,7 @@
 
     $sql = "update purchases set vendor_id = '$vendor_id', 
         drug_id = '$drug_id', price = '$price', quantity = '$quantity', 
-        Discount ='$Discount', purchase_date = '$purchase_date', total_amount = '$total_amount' where purchase_id = '$purchase_id'";
+        Discount ='$Discount', selling_price = '$selling_price', purchase_date = '$purchase_date', total_amount = '$total_amount' where purchase_id = '$purchase_id'";
     if(mysqli_query($connect, $sql)){
         echo "Record has been updated";
     }else{echo "Failed";}

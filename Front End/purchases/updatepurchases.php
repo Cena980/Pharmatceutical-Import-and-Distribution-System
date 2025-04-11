@@ -27,6 +27,7 @@
                 setValue('quantity', 'quantity');
                 setValue('Discount', 'Discount');  // Fix case sensitivity here
                 setValue('purchase_date', 'purchase_date');
+                setValue('selling_price', 'selling_price');
                 setValue('expiration_date', 'expiration_date');
                 setValue('total_amount', 'total_amount');
                 setValue('po_id', 'po_id');
@@ -51,9 +52,10 @@
                     <th>purchase ID</th>
                     <th>Vendor ID</th>
                     <th>Drug ID</th>
-                    <th>Price</th>
                     <th>Quantity</th>
+                    <th>Cost</th>
                     <th>Discount</th>
+                    <th>Selling Price</th>
                     <th>Purchase Date</th>
                     <th>Expiration Date</th>
                     <th>Total Amount</th>
@@ -67,9 +69,11 @@
                         <td><input type="number" name="purchase_id" id="purchase_id" autocomplete="off"></td>
                         <td><input type="number" name="vendor_id" id="vendor_id" autocomplete="off"></td>
                         <td><input type="number" name="drug_id" id="drug_id" autocomplete="off"></td>
-                        <td><input type="number" name="price" id="price" autocomplete="off"></td>
+                        
                         <td><input type="number" name="quantity" id="quantity" autocomplete="off"></td>
+                        <td><input type="number" name="price" id="price" autocomplete="off"></td>
                         <td><input type="number" step="0.01" name="Discount" id="Discount" autocomplete="off"></td>
+                        <td><input type="number" name="selling_price" id="selling_price" autocomplete="off"></td>
                         <td><input type="date" name="purchase_date" id="purchase_date" autocomplete="off"></td>
                         <td><input type="date" name="expiration_date" id="expiration_date" autocomplete="off"></td>
                         <td><input type="number" name="total_amount" id="total_amount" autocomplete="off"></td>

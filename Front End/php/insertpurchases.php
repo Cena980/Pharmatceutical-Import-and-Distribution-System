@@ -158,7 +158,7 @@ echo '<!DOCTYPE html>
     }
 
     // Build bulk INSERT query
-    $sql = "INSERT into purchases (vendor_id, drug_id, price, quantity, Discount, selling_price, Expiration, purchase_date, total_amount, po_id)
+    $sql = "INSERT into purchases (vendor_id, drug_id, Expiration, quantity, price, Discount, selling_price, purchase_date, total_amount, po_id)
              values ";
     $values = [];
     $params = [];
