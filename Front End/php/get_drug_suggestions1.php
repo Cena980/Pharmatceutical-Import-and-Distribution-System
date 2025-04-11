@@ -10,7 +10,7 @@ if (isset($_GET['query'])) {
     
     // SQL query to join drugs and inventory tables
     $sql = "
-        SELECT drug_name, type, company
+        SELECT drug_name, type, company, cost
         FROM drugs_view
         WHERE drug_name LIKE ?
     ";
@@ -31,7 +31,8 @@ if (isset($_GET['query'])) {
         $suggestions[] = [
             'Drug_Name' => $row['drug_name'],
             'Type' => $row['type'],
-            'Company' => $row['company']
+            'Company' => $row['company'],
+            'cost' => $row['cost']
         ];
     }
 

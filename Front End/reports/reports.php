@@ -37,30 +37,30 @@
     </div>
 
     <div class="dashboard-grid">
-    <!-- Sales Graph -->
-    <div class="graph-container">
-        <h3>Sales (Last 7 Days)</h3>
-        <div id="sales-chart" class="chart"></div>
+        <!-- Sales Graph -->
+        <div class="graph-container">
+            <h3>Sales (Last 7 Days)</h3>
+            <div id="sales-chart" class="chart"></div>
+        </div>
+        
+        <!-- Purchases Graph -->
+        <div class="graph-container">
+            <h3>Purchases (Last 7 Days)</h3>
+            <div id="purchases-chart" class="chart"></div>
+        </div>
+        
+        <!-- Expenses Graph -->
+        <div class="graph-container">
+            <h3>Expenses (Last 7 Days)</h3>
+            <div id="expenses-chart" class="chart"></div>
+        </div>
+        
+        <!-- Net Income Graph -->
+        <div class="graph-container">
+            <h3>Net Income (Last 7 Days)</h3>
+            <div id="netincome-chart" class="chart"></div>
+        </div>
     </div>
-    
-    <!-- Purchases Graph -->
-    <div class="graph-container">
-        <h3>Purchases (Last 7 Days)</h3>
-        <div id="purchases-chart" class="chart"></div>
-    </div>
-    
-    <!-- Expenses Graph -->
-    <div class="graph-container">
-        <h3>Expenses (Last 7 Days)</h3>
-        <div id="expenses-chart" class="chart"></div>
-    </div>
-    
-    <!-- Net Income Graph -->
-    <div class="graph-container">
-        <h3>Net Income (Last 7 Days)</h3>
-        <div id="netincome-chart" class="chart"></div>
-    </div>
-</div>
 <?php include '../php/footer.php' ?>
 
     <script>

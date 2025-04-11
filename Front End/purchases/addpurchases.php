@@ -292,6 +292,7 @@
                                     header.innerHTML = `
                                         <th style="border: 1px solid #ccc; padding: 8px;">Type</th>
                                         <th style="border: 1px solid #ccc; padding: 8px;">Name</th>
+                                        <th style="border: 1px solid #ccc; padding: 8px;">Previous Cost</th>
                                         
                                         <th style="border: 1px solid #ccc; padding: 8px;">Company</th>
                                     `;
@@ -301,6 +302,7 @@
                                         row.innerHTML = `
                                             <td style="border: 1px solid #ccc; padding: 8px;">${drug.Type}</td>
                                             <td style="border: 1px solid #ccc; padding: 8px;">${drug.Drug_Name}</td>
+                                            <td style="border: 1px solid #ccc; padding: 8px;">${drug.cost}</td>
                                             <td style="border: 1px solid #ccc; padding: 8px;">${drug.Company}</td>
                                         `;
                                         row.style.cursor = "pointer";
