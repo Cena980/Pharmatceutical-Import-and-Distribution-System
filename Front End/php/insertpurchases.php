@@ -24,7 +24,7 @@ echo '<!DOCTYPE html>
 
 
     $date = $_POST["purchase_date_1"] ?? null;
-    $amount_paid = $_POST["amount_paid_1"] ?? 0;
+    $amount_paid = (!empty($_POST["amount_paid_1"]) && is_numeric($_POST["amount_paid_1"])) ? floatval($_POST["amount_paid_1"]) : 0.00;
     
     $order_by = $_POST["order_by"] ?? '';
 
@@ -116,8 +116,12 @@ echo '<!DOCTYPE html>
         }
         $price = $_POST["price_$i"] ?? 0;
         $quantity = $_POST["quantity_$i"] ?? 0;
-        $discount = $_POST["discount_$i"] ?? 0;
-        $selling_price = $_POST["selling_price_$i"] ?? 0;
+        $discount = (!empty($_POST["discount_$i"]) && is_numeric($_POST["discount_$i"])) ? floatval($_POST["discount_$i"]) : 0.00;
+        $selling_price = (!empty($_POST["selling_price_$i"]) && is_numeric($_POST["selling_price_$i"])) 
+        ? floatval($_POST["selling_price_$i"]) 
+        : null;
+
+
 
         // Ensure the discount is a valid number
         if (!is_numeric($discount)) {
@@ -126,7 +130,7 @@ echo '<!DOCTYPE html>
 
         // Cast to float for consistency
         $discount = (float)$discount;
-        $expiration = $_POST["expiration_$i"] ?? null;
+        $expiration = !empty($_POST["expiration_$i"]) ? $_POST["expiration_$i"] : date("Y") . "-12";
         $total_amount = $_POST["total_amount_$i"] ?? 0;
         if($i < $qnt){
             $amount = 0;
@@ -156,31 +160,44 @@ echo '<!DOCTYPE html>
             
         ];
     }
-
-    // Build bulk INSERT query
+    
     $sql = "INSERT into purchases (vendor_id, drug_id, Expiration, quantity, price, Discount, selling_price, purchase_date, total_amount, po_id)
-             values ";
-    $values = [];
-    $params = [];
-
-    foreach ($purchaseData as $data) {
-        $values[] = "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $params = array_merge($params, array_values($data));
-    }
-
-    $sql .= implode(", ", $values);
-
+             values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $connect->prepare($sql);
 
-    // Bind and execute
-    if ($stmt->execute($params)) {
-        echo "<div class='alerts'>Records added successfully!" ; echo "</div>";
-        echo "<div class='alerts'>خریدها موفقانه ثبت گردید" ; echo "</div>";
+    if (!$stmt) {
+        echo "<div class='alerts'>Prepare failed: " . $connect->error . "</div>";
     } else {
-        echo "<div class='alerts'>Error: " . $stmt->error;echo "</div>";
+        foreach ($purchaseData as $data) {
+            $stmt->bind_param(
+                "iisidddssi", 
+                $data['vendor_id'],
+                $data['drug_id'],
+                $data['Expiration'],
+                $data['quantity'],
+                $data['price'],
+                $data['Discount'],
+                $data['selling_price'],
+                $data['purchase_date'],
+                $data['total_amount'],
+                $data['po_id']
+            );
 
+            if ($stmt->execute()) {
+                $successCount++; // Increment counter on success
+            } else {
+                echo "<div class='alerts'>Error inserting item: " . $stmt->error . "</div>";
+            }
+        }
 
+        // NEW: Single success message after all inserts
+        if ($successCount > 0) {
+            echo "<div class='success'>$successCount purchases inserted successfully.</div>";
+            echo "<div class='alerts'>" . $successCount . " خریدها موفقانه ثبت گردید</div>";
+        }
     }
+
+
     //setting balances to zero
     $Total_amount_o = 0;
     $Amount_Paid_o = 0;
