@@ -59,48 +59,27 @@ echo '<!DOCTYPE html>
     }
 
     if (!empty($vendor_id)) {
-        // Check if the invoice already exists
-        $order_check = "SELECT * FROM `purchase order` WHERE po_date = '$date' AND vendor_id = '$vendor_id'";
-        $order_check_results = mysqli_query($connect, $order_check);
-    
-        if ($order_check_results === false) {
-            // Query failed (alert for database issue)
-            echo "Error checking for existing invoice: " . mysqli_error($connect);
+        // ALWAYS CREATE NEW PURCHASE ORDER (removed existence check)
+        $sql = "INSERT INTO `purchase order` (vendor_id, po_date, ordered_by) 
+                VALUES ('$vendor_id', '$date', '$order_by')";
+        
+        if (mysqli_query($connect, $sql)) {
+            // Get the newly created PO ID
+            $order_id = mysqli_insert_id($connect);
+            
+            // Optional: Uncomment if you want to show success message
+            // echo "<div class='alerts'>Purchase Order #$order_id created successfully.</div>";
         } else {
-            // Check if the invoice already exists
-            if (mysqli_num_rows($order_check_results) > 0) {
-                // Invoice exists (alert with invoice details)
-                $order_check_row = mysqli_fetch_assoc($order_check_results);
-                $order_id = $order_check_row['po_id'];
-                //echo "<div class='alerts'>PO already exists with ID: $order_id and Date: $date</div>";
-            } else {
-                // No purcahse order found, create a new one
-                $sql = "INSERT INTO `purchase order` (vendor_id, po_date, ordered_by) VALUES ('$vendor_id', '$date', '$order_by')";
-                
-                if (mysqli_query($connect, $sql)) {
-                    //echo "<div class='alerts'>Purcahse Order has been created.</div>";
-                    
-                    // Fetch the newly created PO
-                    $order_check = "SELECT * FROM `purchase order` WHERE po_date = '$date' AND vendor_id = '$vendor_id'";
-                    $order_check_results = mysqli_query($connect, $order_check);
-                    
-                    if ($order_check_results) {
-                        $order_check_row = mysqli_fetch_assoc($order_check_results);
-                        $order_id = $order_check_row['po_id'];
-                        //echo "<div class='alerts'>PO ID: $po_id"; echo "</div>";
-                    } else {
-                        echo "<div class='alerts'>Error fetching PO after creation: " . mysqli_error($connect); echo "</div>";
-                    }
-                } else {
-                    echo "<div class='alerts'>PO creation failed: " . mysqli_error($connect); echo "</div>";
-                }
-            }
+            echo "<div class='alerts'>PO creation failed: " . mysqli_error($connect) . "</div>";
+            $order_id = null; // Set to null if creation fails
         }
     } else {
         $order_id = null;
-        // Skip PO creation silently if vendor_id is empty
+        // Skip PO creation if vendor_id is empty
     }
+
     $total_purchase = 0;
+    $successCount = 0;
 
     for ($i = 1; $i <= $qnt; $i++) {
         $Drug_Name = $_POST["drug_name_$i"] ?? null;
