@@ -24,7 +24,7 @@ echo '<!DOCTYPE html>
 
 
     $date = $_POST["purchase_date_1"] ?? null;
-    $amount_paid = $_POST["amount_paid_1"] ?? 0;
+    $amount_paid = (!empty($_POST["amount_paid_1"]) && is_numeric($_POST["amount_paid_1"])) ? floatval($_POST["amount_paid_1"]) : 0.00;
     
     $order_by = $_POST["order_by"] ?? '';
 
@@ -59,48 +59,27 @@ echo '<!DOCTYPE html>
     }
 
     if (!empty($vendor_id)) {
-        // Check if the invoice already exists
-        $order_check = "SELECT * FROM `purchase order` WHERE po_date = '$date' AND vendor_id = '$vendor_id'";
-        $order_check_results = mysqli_query($connect, $order_check);
-    
-        if ($order_check_results === false) {
-            // Query failed (alert for database issue)
-            echo "Error checking for existing invoice: " . mysqli_error($connect);
+        // ALWAYS CREATE NEW PURCHASE ORDER (removed existence check)
+        $sql = "INSERT INTO `purchase order` (vendor_id, po_date, ordered_by) 
+                VALUES ('$vendor_id', '$date', '$order_by')";
+        
+        if (mysqli_query($connect, $sql)) {
+            // Get the newly created PO ID
+            $order_id = mysqli_insert_id($connect);
+            
+            // Optional: Uncomment if you want to show success message
+            // echo "<div class='alerts'>Purchase Order #$order_id created successfully.</div>";
         } else {
-            // Check if the invoice already exists
-            if (mysqli_num_rows($order_check_results) > 0) {
-                // Invoice exists (alert with invoice details)
-                $order_check_row = mysqli_fetch_assoc($order_check_results);
-                $order_id = $order_check_row['po_id'];
-                //echo "<div class='alerts'>PO already exists with ID: $order_id and Date: $date</div>";
-            } else {
-                // No purcahse order found, create a new one
-                $sql = "INSERT INTO `purchase order` (vendor_id, po_date, ordered_by) VALUES ('$vendor_id', '$date', '$order_by')";
-                
-                if (mysqli_query($connect, $sql)) {
-                    //echo "<div class='alerts'>Purcahse Order has been created.</div>";
-                    
-                    // Fetch the newly created PO
-                    $order_check = "SELECT * FROM `purchase order` WHERE po_date = '$date' AND vendor_id = '$vendor_id'";
-                    $order_check_results = mysqli_query($connect, $order_check);
-                    
-                    if ($order_check_results) {
-                        $order_check_row = mysqli_fetch_assoc($order_check_results);
-                        $order_id = $order_check_row['po_id'];
-                        //echo "<div class='alerts'>PO ID: $po_id"; echo "</div>";
-                    } else {
-                        echo "<div class='alerts'>Error fetching PO after creation: " . mysqli_error($connect); echo "</div>";
-                    }
-                } else {
-                    echo "<div class='alerts'>PO creation failed: " . mysqli_error($connect); echo "</div>";
-                }
-            }
+            echo "<div class='alerts'>PO creation failed: " . mysqli_error($connect) . "</div>";
+            $order_id = null; // Set to null if creation fails
         }
     } else {
         $order_id = null;
-        // Skip PO creation silently if vendor_id is empty
+        // Skip PO creation if vendor_id is empty
     }
+
     $total_purchase = 0;
+    $successCount = 0;
 
     for ($i = 1; $i <= $qnt; $i++) {
         $Drug_Name = $_POST["drug_name_$i"] ?? null;
@@ -116,8 +95,12 @@ echo '<!DOCTYPE html>
         }
         $price = $_POST["price_$i"] ?? 0;
         $quantity = $_POST["quantity_$i"] ?? 0;
-        $discount = $_POST["discount_$i"] ?? 0;
-        $selling_price = $_POST["selling_price_$i"] ?? 0;
+        $discount = (!empty($_POST["discount_$i"]) && is_numeric($_POST["discount_$i"])) ? floatval($_POST["discount_$i"]) : 0.00;
+        $selling_price = (!empty($_POST["selling_price_$i"]) && is_numeric($_POST["selling_price_$i"])) 
+        ? floatval($_POST["selling_price_$i"]) 
+        : null;
+
+
 
         // Ensure the discount is a valid number
         if (!is_numeric($discount)) {
@@ -126,7 +109,7 @@ echo '<!DOCTYPE html>
 
         // Cast to float for consistency
         $discount = (float)$discount;
-        $expiration = $_POST["expiration_$i"] ?? null;
+        $expiration = !empty($_POST["expiration_$i"]) ? $_POST["expiration_$i"] : date("Y") . "-12";
         $total_amount = $_POST["total_amount_$i"] ?? 0;
         if($i < $qnt){
             $amount = 0;
@@ -156,6 +139,7 @@ echo '<!DOCTYPE html>
             
         ];
     }
+<<<<<<< HEAD
 
     // Build bulk INSERT query
     $sql = "INSERT into purchases (vendor_id, drug_id, price, quantity, Discount, selling_price, Expiration, purchase_date, total_amount, po_id)
@@ -170,17 +154,46 @@ echo '<!DOCTYPE html>
 
     $sql .= implode(", ", $values);
 
+=======
+    
+    $sql = "INSERT into purchases (vendor_id, drug_id, Expiration, quantity, price, Discount, selling_price, purchase_date, total_amount, po_id)
+             values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+>>>>>>> bfcd20e5d9ad6ad285f2bca0a0249434d05e84b6
     $stmt = $connect->prepare($sql);
 
-    // Bind and execute
-    if ($stmt->execute($params)) {
-        echo "<div class='alerts'>Records added successfully!" ; echo "</div>";
-        echo "<div class='alerts'>خریدها موفقانه ثبت گردید" ; echo "</div>";
+    if (!$stmt) {
+        echo "<div class='alerts'>Prepare failed: " . $connect->error . "</div>";
     } else {
-        echo "<div class='alerts'>Error: " . $stmt->error;echo "</div>";
+        foreach ($purchaseData as $data) {
+            $stmt->bind_param(
+                "iisidddssi", 
+                $data['vendor_id'],
+                $data['drug_id'],
+                $data['Expiration'],
+                $data['quantity'],
+                $data['price'],
+                $data['Discount'],
+                $data['selling_price'],
+                $data['purchase_date'],
+                $data['total_amount'],
+                $data['po_id']
+            );
 
+            if ($stmt->execute()) {
+                $successCount++; // Increment counter on success
+            } else {
+                echo "<div class='alerts'>Error inserting item: " . $stmt->error . "</div>";
+            }
+        }
 
+        // NEW: Single success message after all inserts
+        if ($successCount > 0) {
+            echo "<div class='success'>$successCount purchases inserted successfully.</div>";
+            echo "<div class='alerts'>" . $successCount . " خریدها موفقانه ثبت گردید</div>";
+        }
     }
+
+
     //setting balances to zero
     $Total_amount_o = 0;
     $Amount_Paid_o = 0;
