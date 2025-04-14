@@ -793,6 +793,19 @@ input {
     transition: all 0.3s ease-in-out;
 }
 
+.btn-exp {
+    text-decoration: none; /* Remove underline */
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    padding: 12px 24px;
+    border-radius: 8px;
+    width: 200px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
 /* Save Button (Add) */
 .btn-save {
     background-color: #4CAF50; /* Green */
@@ -826,6 +839,7 @@ input {
 .btn-back:active {
     transform: scale(1.1);
 }
+
 /* Optional: If you want to style the button group */
 .button-group {
     margin: auto;
