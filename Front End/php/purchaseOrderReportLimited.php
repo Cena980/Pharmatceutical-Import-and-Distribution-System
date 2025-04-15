@@ -33,6 +33,7 @@
                     <input type='hidden' name='Total_amount' value='" . $r['Total_amount'] . "'>
                     <input type='hidden' name='Amount_Paid' value='" . $r['Amount_Paid'] . "'>
                     <input type='hidden' name='Remaining_Debt' value='" . $r['Remaining_Debt'] . "'>
+                    <input type='hidden' name='po_data' value='" . $r['po_data'] . "'>
                     
                     <button type='submit' class=' btn-link'>Update</button>
                 </form>
@@ -46,6 +47,7 @@
                     <input type='hidden' name='Total_amount' value='" . $r['Total_amount'] . "'>
                     <input type='hidden' name='Amount_Paid' value='" . $r['Amount_Paid'] . "'>
                     <input type='hidden' name='Remaining_Debt' value='" . $r['Remaining_Debt'] . "'>
+                    <input type='hidden' name='po_data' value='" . $r['po_data'] . "'>
                     
                     <button type='submit' class=' btn-link'>Print</button>
                 </form>
@@ -59,6 +61,7 @@
                     <input type='hidden' name='Total_amount' value='" . $r['Total_amount'] . "'>
                     <input type='hidden' name='Amount_Paid' value='" . $r['Amount_Paid'] . "'>
                     <input type='hidden' name='Remaining_Debt' value='" . $r['Remaining_Debt'] . "'>
+                    <input type='hidden' name='po_data' value='" . $r['po_data'] . "'>
                     
                     <button type='submit' class=' btn-link'>Delete</button>
                 </form>

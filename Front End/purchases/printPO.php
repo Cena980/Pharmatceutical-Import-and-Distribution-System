@@ -15,16 +15,12 @@
                 <div class='column'>
                     <table class='invoice-table'>
                                 <tr>
-                                <td>Bill To: </td>
-                                <td id="customer_shop"></td>
-                                </tr>
-                                <tr>
-                                <td>Name: </td>
-                                <td id="customer_name"></td>
+                                <td>Vendor: </td>
+                                <td id="vendor"></td>
                                 </tr>
                                 <tr>
                                 <td>Address: </td>
-                                <td id="customer_address"></td>
+                                <td id="vendor_address"></td>
                                 </tr>
                                 <tr class='date_r'>
                                 <td rowspan='2'>Date: </td>
@@ -36,7 +32,7 @@
                     </table>
                 </div>
                 <div class='column'>
-                    <h1 class ='title'>INVOICE</h1>
+                    <h1 class ='title'>Purchase Order</h1>
                     <div id='underHead'>
                                 <div class='topimage'>
                                     <img src='../images/logoLarge.png'>
@@ -44,8 +40,8 @@
                         </div>
                         <table class='invoice-table'>
                                     <tr>
-                                    <td class='no'>INVOICE NO: </td>
-                                    <td class='no' id="invoice_no"></td>
+                                    <td class='no'>Order NO: </td>
+                                    <td class='no' id="order_no"></td>
                                     </tr>
                         </table>
                 </div>
@@ -60,33 +56,26 @@
                                 <td>207</td>
                                 </tr>
                                 <tr>
-                                <td>Booked By: </td>
-                                <td id="sales_officer"></td>
+                                <td>Ordered By: </td>
+                                <td id="ordered_by"></td>
                                 </tr>
                                 <tr>
                                 <td>Currency:</td>
                                 <td>AFN ؋</td>
-                                </tr>
-                                <tr class='date_r'>
-                                <td rowspan='2'>Due Date:</td>
-                                <td id="dueDate1"></td>
-                                </tr>
-                                <tr>
-                                <td id='dueDate'></td>
                                 </tr>
                     </table>
                 </div>
     
             </div>
                 <table id='tblinvoice'>
-                    <tbody id="sales_table_body">
+                    <tbody id="purchase_table_body">
                         <tr>
-                            <th>No</th>
-                            <th>Name</th>
+                            <th>Drug Type</th>
+                            <th>Drug Name</th>
                             <th>Quantity</th>
-                            <th>Price</th>
+                            <th>Cost</th>
                             <th>Discount</th>
-                            <th>Total Price</th>
+                            <th>Total Cost</th>
                         </tr>
                         <tr id="row">
                         </tr>
@@ -95,17 +84,16 @@
                 <table id= 'tblinvoice'>
                     <tr>
                     <th>Sub Total:</th>
-                    <th>Received:</th>
-                    <th>Owed:</th>
+                    <th>Old Balance</th>
+                    <th>Amount Paid</th>
+                    <th>Grand Total</th>
                 </tr>
-                    <td id="total_sales"></td>
-                    <td id="received"></td>
-                    <td id="owed"></td>
+                    <td id="total_purchase"></td>
+                    <td id="balance_o"></td>
+                    <td id="paid"></td>
+                    <td id="grand"></td>
                 </tr>
                 </table>
-                <div id='invoice-msg'>
-                    <p>Thank you for choosing us—we appreciate your business and look forward to working with you again!</p>
-                </div>
             </div>
             </div>
     <div class='button-print'>
@@ -118,77 +106,84 @@
             window.onload = function () {
                 // Populate input fields with values from URL parameters
                 const urlParams = new URLSearchParams(window.location.search);
-                document.getElementById('invoice_no').innerHTML = urlParams.get('invoice_id') || '';
-                document.getElementById('customer_shop').innerHTML = urlParams.get('shop') || '';
-                document.getElementById('date1').innerHTML = urlParams.get('date') || '';
-                document.getElementById('received').innerHTML = urlParams.get('received') || '';
-                document.getElementById('owed').innerHTML = urlParams.get('owed') || '';
-                document.getElementById('sales_officer').innerHTML = urlParams.get('sales_officer') || '';
-                document.getElementById('total_sales').innerHTML = urlParams.get('total_sales') || '';
+                
+                document.getElementById('order_no').textContent = urlParams.get('po_id') || '';
+                document.getElementById('date1').textContent = urlParams.get('po_date') || '';
+                document.getElementById('paid').textContent = urlParams.get('Amount_Paid') || '';
+                document.getElementById('ordered_by').textContent = urlParams.get('ordered_by') || '';
+                document.getElementById('total_purchase').textContent = urlParams.get('Total_amount') || '';
 
                 // Convert Gregorian dates to Hijri Shamsi
-                const gregorianDate = document.getElementById("date1").innerHTML;
+                const gregorianDate = document.getElementById("date1").textContent;
                 const dateObj = new Date(gregorianDate);
-                if (!isNaN(dateObj.getTime())) { // Check if it's a valid date
-                    dateObj.setDate(dateObj.getDate() + 7); // Add 7 days
-                    
-                    // Format the date to YYYY-MM-DD
-                    const formattedDueDate = dateObj.toISOString().split('T')[0];
 
-                    // Set the due date in the element with id="dueDate"
-                    document.getElementById('dueDate1').innerHTML = formattedDueDate;
-                        } else {
-                    console.error("Invalid date format:", gregorianDate);
-                }
-                const gregorianDueDate = document.getElementById("dueDate1").innerHTML;
+                document.getElementById("date").textContent = convertToHijriShamsi(gregorianDate);
 
-                document.getElementById("date").innerHTML = convertToHijriShamsi(gregorianDate);
-                document.getElementById("dueDate").innerHTML = convertToHijriShamsi(gregorianDueDate);
-
-                // Process sales_data
-                const salesDataStr = urlParams.get('sales_data');
-                if (salesDataStr) {
+                // Process purchase_data
+                const po_data = urlParams.get('po_data');
+                if (po_data) {
                     try {
-                        const salesData = JSON.parse(decodeURIComponent(salesDataStr));
+                        const purchaseData = JSON.parse(decodeURIComponent(po_data));
 
                         // Reference to the table body
-                        const salesTableBody = document.getElementById('sales_table_body');
+                        const purchaseTableBody = document.getElementById('purchase_table_body');
 
-                        salesData.forEach((sale, index) => {
+                        purchaseData.forEach((purchase, index) => {
                             const row = document.createElement('tr');
 
                             // Fetch drug name using inventory_id
-                            fetch(`../php/getDrugName.php?inventory_id=${sale.inventory_id}`)
+                            fetch(`../php/getDrugNameDrugs.php?drug_id=${purchase.drug_id}`)
                                 .then(response => response.json())
                                 .then(data => {
                                     row.innerHTML = `
                                         <td>${index + 1}</td>
-                                        <td>${data.drug_name}</td> <!-- Display drug name -->
-                                        <td>${sale.quantity}</td>
-                                        <td>${sale.price.toFixed(2)}</td>
-                                        <td>${sale.discount.toFixed(2)}</td>
-                                        <td>${sale.total_price.toFixed(2)}</td>
+                                        <td>${data.drug_name}</td>
+                                        <td>${purchase.quantity}</td>
+                                        <td>${purchase.price.toFixed(2)}</td>
+                                        <td>${purchase.discount.toFixed(2)}</td>
+                                        <td>${purchase.total_amount.toFixed(2)}</td>
                                     `;
-                                    salesTableBody.appendChild(row);
+                                    purchaseTableBody.appendChild(row);
                                 })
                                 .catch(error => {
                                     console.error("Error fetching drug name:", error);
                                     row.innerHTML = `
                                         <td>${index + 1}</td>
                                         <td>N/A</td> <!-- Display N/A if drug name fetch fails -->
-                                        <td>${sale.quantity}</td>
-                                        <td>${sale.price.toFixed(2)}</td>
-                                        <td>${sale.discount.toFixed(2)}</td>
-                                        <td>${sale.total_price.toFixed(2)}</td>
+                                        <td>${purchase.quantity}</td>
+                                        <td>${purchase.price.toFixed(2)}</td>
+                                        <td>${purchase.discount.toFixed(2)}</td>
+                                        <td>${purchase.total_amount.toFixed(2)}</td>
                                     `;
-                                    salesTableBody.appendChild(row);
+                                    purchaseTableBody.appendChild(row);
                                 });
                         });
                     } catch (error) {
-                        console.error("Error parsing sales_data:", error);
+                        console.error("Error parsing purchase_data:", error);
                     }
                 }
             };
+            async function populateInput(){
+
+                const urlParams = new URLSearchParams(window.location.search);
+                const VendorName = await fetchVendorName(urlParams.get('vendor_id'));
+                document.getElementById('vendor').innerHTML = VendorName;
+
+            }
+
+            window.addEventListener('DOMContentLoaded', async () => {
+            await populateInput();
+        });
+            async function fetchVendorName(vendor_id) {
+                try {
+                    const response = await fetch(`../php/getVendorName.php?vendor_id=${vendor_id}`);
+                    const data = await response.json();
+                    return data.vendor_name || 'Unknown';
+                } catch (error) {
+                    console.error('Error fetching Vendor name:', error);
+                    return 'Unknown';
+                }
+            }
             function GoBack(){
                 history.back();}
 

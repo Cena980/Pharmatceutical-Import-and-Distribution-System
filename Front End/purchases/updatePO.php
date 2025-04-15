@@ -41,8 +41,8 @@
                     <th data-key="no">No</th>
                     <th data-key="drug-name">Drug Name</th>
                     <th data-key="quantity">Quantity</th>
-                    <th data-key="price">Price</th>
-                    <th data-key="discount">Discount</th>
+                    <th data-key="price">Cost</th>
+                    <th data-key="discount">Discount %</th>
                     <th data-key="selling-price">Selling Price</th>
                     <th data-key="expiration">Expiration</th>
                     <th data-key="total">Total</th>
@@ -54,8 +54,8 @@
             </tbody>
         </table>
         <div class="addRemove">
-                    <button data-key="add-button" class="btn btn-add" onclick="create_Purchase(); return false;">+</button>
-                </div>
+            <button type="button" data-key="add-button" class="btn btn-add" onclick="Create_Purchase(event)">+</button>
+        </div>
 
         <div class="grand_total">
             <div class="form-group">
@@ -184,7 +184,7 @@
             document.getElementById('vendor').value = VendorName;
 
             // Parse the purchases_data JSON
-            const purchaseData = JSON.parse(decodeURIComponent(urlParams.get('purchase_data')));
+            const purchaseData = JSON.parse(decodeURIComponent(urlParams.get('po_data')));
 
             // Create a variable to store the number of rows
             qnt = purchaseData.length; // Number of rows equals the length of purchasesData
@@ -194,7 +194,7 @@
             document.getElementById('qnt').value = qnt;
 
             // Fetch drug names and create rows
-            const purchaseRows = document.getElementById('purchaseRows');
+            const purchaseRows = document.getElementById('PurchaseRows');
 
             // Clear existing rows
             purchaseRows.innerHTML = '';
@@ -202,7 +202,7 @@
             // Helper function to fetch drug name
             async function fetchDrugName(drug_id) {
                 try {
-                    const response = await fetch(`../php/getDrugName.php?drug_id=${drug_id}`);
+                    const response = await fetch(`../php/getDrugNameDrugs.php?drug_id=${drug_id}`);
                     const data = await response.json();
                     return data.drug_name || 'Unknown';
                 } catch (error) {
@@ -227,33 +227,31 @@
                         <div class="suggestion-box" id="suggestion_${index + 1}" 
                             style="display: none; position: absolute; background: white;"></div>
                     </td>
-                    <td><input type="number" name="Quantity_${index + 1}" id="quantity_${index + 1}" 
+                    <td><input type="number" name="quantity_${index + 1}" id="quantity_${index + 1}" 
                             autocomplete="off" value="${purchase.quantity}"></td>
-                    <td><input type="number" name="Price_${index + 1}" id="price_${index + 1}" 
+                    <td><input type="number" name="price_${index + 1}" id="price_${index + 1}" 
                             autocomplete="off" value="${purchase.price}"></td>
-                    <td><input type="number" name="Discount_${index + 1}" id="discount_${index + 1}" 
+                    <td><input type="number" name="discount_${index + 1}" id="discount_${index + 1}" 
                             autocomplete="off" value="${purchase.discount}"></td>
                     <td><input type="number" name="selling_price_${index + 1}" id="selling_price_${index + 1}" 
                             autocomplete="off" value="${purchase.price}"></td>
-                    <td><input type="date" name="Expiration_${index + 1}" 
-                        id="expiration_${index + 1}"></td>
-                    <td><input type="number" name="Total_${index + 1}" id="tl_${index + 1}" 
+                    <td><input type="month" name="expiration_${index + 1}"
+                        id="expiration_${index + 1}" value="${purchase.expiration}"></td>
+                    <td><input type="number" name="total_${index + 1}" id="total_${index + 1}" 
                             autocomplete="off" value="${purchase.total_amount}"></td>
                     <td><div class="delete-btn" id="delete_${index + 1}" onclick="deleteRow(${index + 1})">
                         <img style="width:25px;" src="../images/delete.png" alt="Delete"></div></td>
                 `;
 
 
-                purchasesRows.appendChild(row);
+                purchaseRows.appendChild(row);
             }
-
-            // Set the grand total
-            document.getElementById('grand_total').value = urlParams.get('total_amount');
         }
+        
 
-        // Start the population process when the page loads
         window.addEventListener('DOMContentLoaded', async () => {
             await parseURLAndPopulateForm();
+            calculateTotal(); // Add this to calculate initial totals
         });
 
         function updatePO(event) {
@@ -343,10 +341,8 @@
                                         row.style.cursor = "pointer";
                                         row.onclick = () => {
                                             document.getElementById(`drug_name_${rowNumber}`).value = drug.Drug_Name;
-                                            document.getElementById(`Amount_${rowNumber}`).value = drug.Amount;
-                                            document.getElementById(`Expiration_${rowNumber}`).value = drug.Expiration_Date;
                                             suggestionBox.style.display = "none";
-                                            fetchPrice(rowNumber);
+                                            
                                         };
                                         table.appendChild(row);
                                     });
@@ -371,9 +367,9 @@
             });
 
             // Function to create a new purchase row
-            function create_purchase() {
+            function Create_Purchase(event) {
+                event.preventDefault();
                 qnt += 1;  // Increment the quantity to update the row number
-
                 const tbody = document.querySelector("table tbody");
                 const newRow = document.createElement("tr");
                 newRow.id = `row_${qnt}`;
@@ -388,7 +384,7 @@
                     <td><input type="number" name="discount_${qnt}" id="discount_${qnt}" autocomplete="off"></td>
                     <td><input type="number" name="selling_price_${qnt}" id="selling_price_${qnt}" autocomplete="off"></td>
                     <td><input type="month" name="expiration_${qnt}" id="expiration_${qnt}" autocomplete="off"></td>
-                    <td><input type="number" name="total_amount_${qnt}" id="total_amount_${qnt}" autocomplete="off"></td>
+                    <td><input type="number" name="total_${qnt}" id="total_${qnt}" autocomplete="off"></td>
                     <td><div class="delete-btn" id="delete_${qnt}" onclick="deleteRow(${qnt})"><img style="width:25px;" src="../images/delete.png" alt="Delete"></div></td>
                 `;
                 tbody.appendChild(newRow);
@@ -396,6 +392,9 @@
                 // Update the hidden input field for quantity
                 document.getElementById("qnt").value = qnt;
                 addEventForClickOutSide();
+                addTotalAmountEventListeners(qnt);
+                
+                
             }
             // Function to add event listeners for vendor name input
             function addVendorNameEventListener() {
@@ -448,40 +447,60 @@
             addVendorNameEventListener();
         // Function to calculate total for each row
         function calculateTotal() {
-            const rows = document.querySelectorAll("table tbody tr");
-            let grandTotal = 0; // Initialize grand total
+            // Only select rows that have IDs starting with 'row_'
+            const rows = document.querySelectorAll("table tbody tr[id^='row_']");
+            let grandTotal = 0;
 
             rows.forEach(row => {
-                const priceInput = row.querySelector('input[name^="Price_"]');
-                const quantityInput = row.querySelector('input[name^="Quantity_"]');
-                const discountInput = row.querySelector('input[name^="Discount_"]');
-                const totalInput = row.querySelector('input[name^="Total_"]');
+                // Get row number from the row ID
+                const rowNumber = row.id.split('_')[1];
+                
+                // Find inputs using consistent lowercase naming
+                const priceInput = row.querySelector(`input[name="price_${rowNumber}"]`);
+                const quantityInput = row.querySelector(`input[name="quantity_${rowNumber}"]`);
+                const discountInput = row.querySelector(`input[name="discount_${rowNumber}"]`);
+                const totalInput = row.querySelector(`input[name="total_${rowNumber}"]`);
 
-                // Ensure valid values for price, quantity, and discount
-                const price = parseFloat(priceInput?.value || 0);
-                const quantity = parseFloat(quantityInput?.value || 0);
-                const discount = parseFloat(discountInput?.value || 0);
+                // Parse values with proper fallbacks
+                const price = parseFloat(priceInput?.value) || 0;
+                const quantity = parseFloat(quantityInput?.value) || 0;
+                const discount = parseFloat(discountInput?.value) || 0;
 
-                // Calculate the discount amount
+                // Calculate totals
                 const discountAmount = (price * quantity * discount) / 100;
+                const rowTotal = (price * quantity) - discountAmount;
 
-                // Calculate the total
-                const total = (price * quantity) - discountAmount;
-
-                // Update the total input field
+                // Update row total if the input exists
                 if (totalInput) {
-                    totalInput.value = total.toFixed(2); // Ensure the total has two decimal places
+                    totalInput.value = rowTotal.toFixed(2);
                 }
 
-                // Add the current row's total to the grand total
-                grandTotal += total;
+                // Add to grand total
+                grandTotal += rowTotal;
             });
 
-            // Update the grand total input field
+            // Update grand total
             const grandTotalInput = document.getElementById("grand_total");
             if (grandTotalInput) {
-                grandTotalInput.value = grandTotal.toFixed(2); // Ensure the grand total has two decimal places
+                grandTotalInput.value = grandTotal.toFixed(2);
             }
+        }
+        // Function to add event listeners for total amount calculation
+        function addTotalAmountEventListeners(rowNumber) {
+            const inputs = [
+                document.getElementById(`price_${rowNumber}`),
+                document.getElementById(`quantity_${rowNumber}`),
+                document.getElementById(`discount_${rowNumber}`)
+            ];
+            
+            inputs.forEach(input => {
+                if (input) {
+                    // Remove any existing listener to avoid duplicates
+                    input.removeEventListener('input', calculateTotal);
+                    // Add new listener
+                    input.addEventListener('input', calculateTotal);
+                }
+            });
         }
 
             function updateQnt() {

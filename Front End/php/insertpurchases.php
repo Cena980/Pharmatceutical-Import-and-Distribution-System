@@ -139,26 +139,9 @@ echo '<!DOCTYPE html>
             
         ];
     }
-<<<<<<< HEAD
-
-    // Build bulk INSERT query
-    $sql = "INSERT into purchases (vendor_id, drug_id, price, quantity, Discount, selling_price, Expiration, purchase_date, total_amount, po_id)
-             values ";
-    $values = [];
-    $params = [];
-
-    foreach ($purchaseData as $data) {
-        $values[] = "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $params = array_merge($params, array_values($data));
-    }
-
-    $sql .= implode(", ", $values);
-
-=======
     
     $sql = "INSERT into purchases (vendor_id, drug_id, Expiration, quantity, price, Discount, selling_price, purchase_date, total_amount, po_id)
              values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
->>>>>>> bfcd20e5d9ad6ad285f2bca0a0249434d05e84b6
     $stmt = $connect->prepare($sql);
 
     if (!$stmt) {
