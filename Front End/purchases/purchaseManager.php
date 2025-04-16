@@ -27,7 +27,7 @@
             <?php include '../php/purchaseOrderReportLimited.php';?>
         </div>
         </div>
-        <div class="button-group">
+        <div class="button-group-two">
             <button data-key="view-all" class="btn btn-back" onclick="location.href='purchaseManagerExpanded.php'">View All</button>
             <button data-key="ind-purchase" class="btn-exp btn-back" onclick="location.href='purchases.php'">Individual Purchase Records</button>
         </div>

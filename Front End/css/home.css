@@ -840,7 +840,7 @@ input {
     transform: scale(1.1);
 }
 
-/* Optional: If you want to style the button group */
+/* to style the button group */
 .button-group {
     margin: auto;
     display: flex;
@@ -849,6 +849,16 @@ input {
     gap: 10px;
     margin-bottom: 20px;
 }
+
+.button-group-two {
+    margin: auto;
+    display: flex;
+    max-width: 300px; /* 100px View All + 200px all ind. records  */
+    justify-content: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
 #button-group {
     margin: auto;
     display: flex;
