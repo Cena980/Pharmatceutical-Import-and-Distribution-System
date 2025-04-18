@@ -12,7 +12,7 @@ if (isset($_GET['query'])) {
     $sql = "
         SELECT drug_name, type, company, cost
         FROM drugs_view
-        WHERE drug_name LIKE ?
+        WHERE drug_name LIKE ? OR ingredient LIKE ?
     ";
     
     $stmt = $connect->prepare($sql);
@@ -22,7 +22,7 @@ if (isset($_GET['query'])) {
         exit;
     }
 
-    $stmt->bind_param("s", $query);
+    $stmt->bind_param("ss", $query, $query);
     $stmt->execute();
     $result = $stmt->get_result();
 

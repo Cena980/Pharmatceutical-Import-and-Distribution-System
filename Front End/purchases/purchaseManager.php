@@ -38,7 +38,7 @@
             document.getElementById('searchPurchases').addEventListener('keypress', function(event) {
                 if (event.key === 'Enter') {
                     event.preventDefault(); // Prevent the default form submission
-                    Invoices(); // Call the drugs function to perform the search
+                    Purchases(); // Call the drugs function to perform the search
                 }
             });
             async function Purchases() {

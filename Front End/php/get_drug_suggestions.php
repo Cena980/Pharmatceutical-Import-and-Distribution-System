@@ -14,7 +14,7 @@ if (isset($_GET['query'])) {
         FROM inventory i
         INNER JOIN drugs d ON i.Drug_ID = d.Drug_ID
         INNER JOIN drug_type t ON d.Type_ID = t.Type_ID
-        WHERE d.Drug_Name LIKE ?
+        WHERE d.Drug_Name LIKE ? OR Ingredient LIKE ?
     ";
     
     $stmt = $connect->prepare($sql);
@@ -24,7 +24,7 @@ if (isset($_GET['query'])) {
         exit;
     }
 
-    $stmt->bind_param("s", $query);
+    $stmt->bind_param("ss", $query, $query);
     $stmt->execute();
     $result = $stmt->get_result();
 
