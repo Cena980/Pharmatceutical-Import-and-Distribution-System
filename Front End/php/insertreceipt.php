@@ -135,6 +135,12 @@ echo '<!DOCTYPE html>
     $stmt = $connect->prepare($sql);
     $stmt->bind_param("di", $Balance, $customerID);
 
+    
+    #Call process_payment procedure
+    $sql = "call drugwholesale.process_payment(?, ?)";
+    $stmt = $connect->prepare($sql);
+    $stmt->bind_param("di", $customerID, $Amount_Received);
+
     if ($stmt->execute()) {
         // echo "balance updated successfully!";
         $customer_name = "SELECT balance FROM customer WHERE customer_id = '$customerID'";
