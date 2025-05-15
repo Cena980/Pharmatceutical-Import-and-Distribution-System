@@ -84,6 +84,10 @@
                     calculateTotal();
                 }
             }
+            window.addEventListener('DOMContentLoaded', async () => {
+                await parseURLAndPopulateForm();
+                calculateTotal(); // Initial calculation
+            });
             function renumberRows(number){
                 for (let i = 1; i <= qnt; i++) {
                     let NewRowNumber = number + i; // This should be inside the loop
@@ -154,7 +158,7 @@
                         total.id = `total_amount_${rowNum}`;
                         total.name = `total_amount_${rowNum}`;
                     }
-                    addPriceEventListeners(rowNum);
+                    addTotalAmountEventListeners(rowNum);
                 }
 
             }
@@ -248,11 +252,6 @@
             }
         }
         
-
-        window.addEventListener('DOMContentLoaded', async () => {
-            await parseURLAndPopulateForm();
-            calculateTotal(); // Add this to calculate initial totals
-        });
 
         function updatePO(event) {
             event.preventDefault(); // Prevent default form submission
@@ -357,13 +356,13 @@
                     }
                 }
 
-                if (
-                    e.target.name.startsWith("Price_") ||
-                    e.target.name.startsWith("Quantity_") ||
-                    e.target.name.startsWith("Discount_")
-                ) {
-                    calculateTotal();
-                }
+                    if (
+                        e.target.name.startsWith("price_") || // Lowercase
+                        e.target.name.startsWith("quantity_") || // Lowercase
+                        e.target.name.startsWith("discount_") // Lowercase
+                    ) {
+                        calculateTotal();
+                    }
             });
 
             // Function to create a new purchase row
