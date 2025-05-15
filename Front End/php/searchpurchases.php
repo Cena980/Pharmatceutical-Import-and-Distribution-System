@@ -22,7 +22,7 @@ $res = mysqli_query($connect, $sql);
 // Check if any results were found
 if ($res && mysqli_num_rows($res) > 0) {
     echo "<table border='1' border-collapse=collapse id='tblreport'>";
-        echo "<tr>
+        echo "<thead>
                     <th data-key='purchase-id'>Purchase ID</th>
                     <th data-key='vendor-id'>Vendor ID</th>
                     <th data-key='vendor-id'>Vendor Name</th>
@@ -36,7 +36,7 @@ if ($res && mysqli_num_rows($res) > 0) {
                     <th data-key='total-amount'>Total Amount</th>
                     <th data-key='purchase-order'>Purchase Order id</th>
                     <th data-key='actions' colspan='2'>Actions</th>
-                </tr>";
+                </thead>";
         while ($r = mysqli_fetch_assoc($res)) {
             echo "<tr>";
             echo "<td>" . $r['purchase_ID'] . "</td>";
