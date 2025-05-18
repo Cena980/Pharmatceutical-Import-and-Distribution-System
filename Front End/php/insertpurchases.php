@@ -176,49 +176,37 @@ echo '<!DOCTYPE html>
         }
     }
 
+   
+    // Prepare the query with the dynamic po_id
+    $sql = "
+        UPDATE `purchase order` po
+        SET po.po_data = (
+            SELECT JSON_ARRAYAGG(
+                JSON_OBJECT(
+                    'purchase_id', p.purchase_id,
+                    'vendor_id', p.vendor_id,
+                    'drug_id', p.drug_id,
+                    'expiration', p.Expiration,
+                    'quantity', p.quantity,
+                    'price', p.price,
+                    'discount', p.Discount,
+                    'selling_price', p.selling_price,
+                    'purchase_date', p.purchase_date,
+                    'total_amount', p.total_amount
+                )
+            )
+            FROM purchases p
+            WHERE p.po_id = $order_id
+        )
+        WHERE po.po_id = $order_id
+    ";
 
-    /*I have added this but it is not compatible with the rest
-    // 1. Generate your purchase data array
-    $mappedData = array_map(function ($item) {
-        return [
-            'price' => $item['price'],
-            'drug_id' => $item['drug_id'],
-            'discount' => $item['Discount'],
-            'quantity' => $item['quantity'],
-            'vendor_id' => $item['vendor_id'],
-            'expiration' => $item['Expiration'],
-            'po_id' => $item['po_id'],
-            'total_amount' => $item['total_amount'],
-            'purchase_date' => $item['purchase_date'],
-            'selling_price' => $item['selling_price']
-        ];
-    }, $purchaseData);
-
-    // 2. Encode to JSON string (this is CRUCIAL)
-    $po_data_json = json_encode($mappedData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-
-    // Optional: Check for encoding failure
-    if ($po_data_json === false) {
-        echo "JSON encoding error: " . json_last_error_msg();
-        exit;
-    }
-
-    // 3. Insert into database
-    $sql = "UPDATE `purchase order` SET po_data = ? where po_id = ?";
-    $stmt = $connect->prepare($sql);
-    if (!$stmt) {
-        echo "Prepare failed: " . $connect->error;
-        exit;
-    }
-
-    // Use 's' since JSON is a string
-    $stmt->bind_param("si", $po_data_json, $order_id);
-
-    if ($stmt->execute()) {
-        echo "JSON inserted successfully!";
+    // Run the query
+    if ($connect->query($sql) === TRUE) {
+        echo "Purchase order $order_id updated successfully.";
     } else {
-        echo "Execution failed: " . $stmt->error;
-    } */
+        echo "Error: " . $connect->error;
+    }
 
 
     //setting balances to zero

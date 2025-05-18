@@ -134,6 +134,38 @@ try {
     $pstmt->execute();
     $pstmt->close();
 
+    // Prepare the query with the dynamic po_id
+    $sql = "
+        UPDATE `purchase order` po
+        SET po.po_data = (
+            SELECT JSON_ARRAYAGG(
+                JSON_OBJECT(
+                    'purchase_id', p.purchase_id,
+                    'vendor_id', p.vendor_id,
+                    'drug_id', p.drug_id,
+                    'expiration', p.Expiration,
+                    'quantity', p.quantity,
+                    'price', p.price,
+                    'discount', p.Discount,
+                    'selling_price', p.selling_price,
+                    'purchase_date', p.purchase_date,
+                    'total_amount', p.total_amount
+                )
+            )
+            FROM purchases p
+            WHERE p.po_id = $order_id
+        )
+        WHERE po.po_id = $order_id
+    ";
+
+    // Run the query
+    if ($connect->query($sql) === TRUE) {
+        echo "Purchase order $order_id updated successfully.";
+    } else {
+        echo "Error: " . $connect->error;
+    }
+
+
     // Update vendor debt
     $Remaining_Debt_F = ($total_purchase - $amount_paid) + $vendor_debt_prev;
     $vsql = "UPDATE vendors SET Debt=? WHERE vendor_id=?";

@@ -264,7 +264,7 @@
         function deletePO(event) {
             const form = document.forms["purchase"];
             event.preventDefault();
-            form.action = "../php/deletePurchaseOrder.php";
+            form.action = "../php/deletePO.php";
             form.method = "post";
             form.submit();
         }
