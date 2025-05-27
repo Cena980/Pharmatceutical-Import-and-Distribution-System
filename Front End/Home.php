@@ -65,7 +65,7 @@
                         foreach($Drugs as $Drug){
                             ?>
                             <div class="product_left">
-                                <img src="product.png" alt="product">
+                                <div class="vertical_line"></div>
                             </div>
                             <div class="product_right" >
                                 <p class="title">

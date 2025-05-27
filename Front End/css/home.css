@@ -554,14 +554,16 @@ li:hover {
 .product {
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-column-gap: 50px;
+    grid-column-gap: 30px;
     grid-row-gap: 30px;
 }
 
-.product_left img {
+.product_left .vertical_line{
+    width: 2px;
     height: 150px;
-    display: block;
-    margin: 0 auto;
+    margin-left: 20px;
+    margin-top: 15px;
+    background-color: black; /* Change to any color you like */
 }
 
 .product_right .title a {
