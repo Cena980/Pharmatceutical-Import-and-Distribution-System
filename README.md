@@ -28,3 +28,13 @@ A web-based system designed to manage pharmaceutical purchases, vendor tracking,
 - **Abdul Bashir Arsine**  
   - Responsible for designing and developing the entire **database structure**  
   - Managed data models for vendors, purchases, balances, and transaction history
+## 📸 Screenshots
+
+### Dashboard View
+![Dashboard Screenshot](ScreenShots/HomePage.png)
+
+### Invoice Print
+![Invoice Print](ScreenShots/InvoicePrint.png)
+
+### Sales Form
+![Sales Form](ScreenShots/SalesInsert.png)
