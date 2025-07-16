@@ -947,6 +947,7 @@ input {
 #report {
     margin-top: 20px;
     max-height: 500px; /* Controls vertical scrolling */
+    width: auto;
     overflow-y: auto; /* Enables scrolling */
     margin-bottom: 30px;
     position: relative;
@@ -963,6 +964,7 @@ input {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
     border-radius: 8px;
+    overflow: auto;
 }
 
 #tblreport thead {
